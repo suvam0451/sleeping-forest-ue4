@@ -1,0 +1,36 @@
+{
+    "Expand ISM": {
+        "prefix": "ism",
+        "body": [
+            "UInstancedStaticMesh"
+        ]
+    },
+    "Expand ISMC": {
+        "prefix": "ismc",
+        "body": [
+            "UInstancedStaticMeshComponent"
+        ]
+    },
+    "Initialize InstancedStaticMeshComponent(ISMC)": {
+        "prefix": "uinit_ismc",
+        "body": [
+            "$1 = NewObject<UInstancedStaticMeshComponent>(this);",
+            "$1->RegisterComponent();",
+            "$1->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);",
+            "$1->SetStaticMesh(${2:YourMeshHere});"
+        ],
+        "description": ["Initialises an uninitialized ISMC(NewObject/CDSo never used).",
+            "Use in actors: replace RootComponent with your SceneComponent(if any)",
+            "Use in ActorComps: use uinit_ismc_actorcomp instead",
+            "You may use uinit_ismc_actorcomp if you are uncomfortable."]
+    },
+    "Initialize InstancedStaticMeshComponent(ISMC) for ActorCompoennts": {
+        "prefix": "uinit_ismc_actorcomp",
+        "body": [
+            "$1 = NewObject<UInstancedStaticMeshComponent>(this->GetOwner()));",
+            "$1->RegisterComponent();",
+            "$1->AttachToComponent(GetOwner()->GetRootComponent(), FAttachmentTransformRules::KeepRelativeTransform);",
+            "$1->SetStaticMesh(${2:YourMeshHere});"
+        ]
+    }
+}

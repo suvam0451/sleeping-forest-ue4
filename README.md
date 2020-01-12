@@ -1,25 +1,25 @@
-# daedalus-globalnode-ue4
+# extension-terminal-sample
 
-This is a `visual studio code extension` meant to be run along-with Unreal Engine 4 projects.
+This extension shows how to leverage the extension terminal API proposed in v1.37 that enables an extension to handle a terminal's input and emit output.
 
-Goal is to aid with **procedural/material workflows** and improving the general development experience via convenience options. 
-This is my contribution to the gamedev community. The plug is free and always will be.
+## VS Code API
 
-### Features
----
-1. General use code completion: 
+### `vscode` module
 
-### Contributing
----
-You can mail me/open issue for requesting feature additions. I invite you to my Discord server. You can talk to me there as well.
+- [window.createTerminal](https://code.visualstudio.com/api/references/vscode-api#window.createTerminal)
 
-My Discord: suvam0451#8551
+### Proposed API
 
-### Motivation
----
-When I first started out with Unreal Engine 4, I had a cheap laptop with 4GB RAM and 15W processor. Many times, I would have coffee time while my projects compile.
-I have first-hand experience with pumping out as much performance as possibly by tweaking config files and following performance rules closely.
-Since then, I have improved a lot as a developer. But something I have not forgotton is the pleasure of FINALLY scavenging out snippets from 5 years ago in forums and the pain of seeing my RAM burning out while my intellisense is dead or something.
-So here's a **truckload!!!** of snippets, gimmicks and convenience tools.
+- `window.Pseudoterminal`
+- `window.ExtensionTerminalOptions`
 
-By a lazy developer, for lazy developers !!!
+### Contribution Points
+
+- [`contributes.commands`](https://code.visualstudio.com/api/references/contribution-points#contributes.commands)
+
+## Running the Sample
+
+- Run `npm install` in terminal to install dependencies
+- Run the `Run Extension` target in the Debug View. This will:
+	- Start a task `npm: watch` to compile the code
+	- Run the extension in a new VS Code window

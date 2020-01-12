@@ -1,0 +1,95 @@
+{
+	"name": "wan-chai",
+	"displayName": "Project Daedalus(VSCode:UE4)",
+	"description": "Command-line tools and snippets for non-replicated procedural/material editor workflow.",
+	"publisher": "suvam0451",
+	"version": "1.0.0",
+	"license": "MPL-2.0",
+	"repository": {
+		"type": "git",
+		"url": "https://gitlab.com/suvam0451/vscode-extension"
+	},
+	"engines": {
+		"vscode": "^1.39.0"
+	},
+	"categories": [
+		"Other"
+	],
+	"activationEvents": [
+		"onCommand:extension.helloWorld",
+		"onCommand:extension.compileShaders",
+		"onCommand:extension.onConstruction",
+		"onCommand:extension.include.procedural",
+		"onCommand:extension.include.spline"
+	],
+	"main": "/out/extension.js",
+	"contributes": {
+		"commands": [
+			{
+				"command": "extension.helloWorld",
+				"title": "Hello World"
+			},
+			{
+				"command": "extension.compileShaders",
+				"title": "Compile shaders for this project."
+			},
+			{
+				"command": "extension.onConstruction",
+				"title": "OnConstruction(Transform) added to this file."
+			},
+			{
+				"command": "extension.include.procedural",
+				"title": "Include procedural headers in current header file."
+			},
+			{
+				"command": "extension.include.spline",
+				"title": "Include Spline headers in current header file."
+			}
+		],
+		"snippets": [
+			{
+				"language": "cpp",
+				"path": "./snippets/ue4_suvam0451.json"
+			},
+			{
+				"language": "cpp",
+				"path": "./snippets/ue4_procedural.json"
+			},
+			{
+				"language": "cpp",
+				"path": "./snippets/ue4_includes.json"
+			},
+			{
+				"language": "cpp",
+				"path": "./snippets/ue4_header_boilerplate.json"
+			},
+			{
+				"language": "cpp",
+				"path": "./snippets/ue4_data_handling.json"
+			}
+		]
+	},
+	"scripts": {
+		"vscode:prepublish": "yarn run compile",
+		"compile": "tsc -p ./",
+		"watch": "tsc -watch -p ./",
+		"pretest": "yarn run compile",
+		"test": "node ./out/test/runTest.js"
+	},
+	"devDependencies": {
+		"@types/glob": "^7.1.1",
+		"@types/mocha": "^5.2.7",
+		"@types/node": "^12.11.7",
+		"@types/vscode": "^1.39.0",
+		"glob": "^7.1.5",
+		"mocha": "^6.2.2",
+		"tslint": "^5.20.0",
+		"typescript": "^3.6.4",
+		"vscode-test": "^1.2.2"
+	},
+	"dependencies": {
+		"string": "^3.3.3",
+		"vsce": "^1.71.0",
+		"xregexp": "^4.2.4"
+	}
+}

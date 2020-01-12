@@ -1,0 +1,32 @@
+{
+    "Copy: MeshMaps": {
+        "prefix": "ucopy_meshmap",
+        "body": [
+            
+        ]
+    },
+    "Add Property: ISMC property": {
+        "prefix": "uprop_ismc",
+        "body": [
+            "// ${2:Description not provided } ",
+            "UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=\"Parameters\")",
+            "\tUInstancedStaticMeshComponent *$1;"
+        ]
+    },
+    "Add Property: StaticMesh": {
+        "prefix": "uprop_mesh",
+        "body": [
+            "// ${2:Description not provided } ",
+            "UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=\"Parameters\")",
+            "\tUStaticMesh *$1;"
+        ]
+    },
+    "Add Property: StaticMesh Map": {
+        "prefix": "uprop_meshmap",
+        "body": [
+            "// ${2:Description not provided } ",
+            "UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=\"Parameters\")",
+            "\tTMap<int, UStaticMesh*> $1;"
+        ]
+    }
+}

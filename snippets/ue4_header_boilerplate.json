@@ -1,0 +1,43 @@
+{
+    "Add Property: ISMC property": {
+        "prefix": "uprop_ismc",
+        "body": [
+            "// ${2:Description not provided } ",
+            "UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=\"Parameters\")",
+            "\tUInstancedStaticMeshComponent *$1;"
+        ]
+    },
+    "Add Property: ISMC Map": {
+        "prefix": "uprop_ismc_map",
+        "body": [
+            "// ${2:Description not provided } ",
+            "UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=\"Parameters\")",
+            "\tTMap<int, UInstancedStaticMeshComponent*> $1;"
+        ],
+        "description": ["Adds a public TMap of ISMC. Useful for combining parts procedurally, while building dungeons, castles, walls etc."]
+    },
+    "Add Property: StaticMesh": {
+        "prefix": "uprop_mesh",
+        "body": [
+            "// ${2:Description not provided } ",
+            "UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=\"Parameters\")",
+            "\tUStaticMesh *$1;"
+        ]
+    },
+    "Add Property: StaticMesh Map": {
+        "prefix": "uprop_meshmap",
+        "body": [
+            "// ${2:Description not provided } ",
+            "UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=\"Parameters\")",
+            "\tTMap<int, UStaticMesh*> $1;"
+        ]
+    },
+    "Add Property: Boolean switch": {
+        "prefix": "uprop_trigger",
+        "body": [
+            "// ${2:Toggle back to false(when user presses) in OnConstruction to use as a trigger } ",
+            "UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=\"Triggers\")",
+            "\tbool $1 = false;"
+        ]
+    }
+}
