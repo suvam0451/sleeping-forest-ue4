@@ -49,24 +49,6 @@
         ],
         "description": "Declare a ue4 struct."
     },
-    "UE4 Property": {
-        "prefix": "ue4prop",
-        "body": [
-            "\t// $1",
-            "\tUPROPERTY(EditAnywhere, BlueprintReadWrite, Category = \"Parameter\")",
-            "\t\t$2;"
-        ],
-        "description": "Declare a public property"
-    },
-    "UE4 Property (Readonly)": {
-        "prefix": "ue4prop_readonly",
-        "body": [
-            "\t// $1",
-            "\tUPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = \"Parameter\")",
-            "\t\t$2;"
-        ],
-        "description": "Declare a inspector uneditable property"
-    },
     "UE4 Interface": {
         "prefix": "ue4interface",
         "body": [

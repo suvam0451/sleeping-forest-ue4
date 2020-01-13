@@ -1,4 +1,20 @@
 {
+    "UProperty": {
+        "prefix": "uprop",
+        "body": [
+            "// ${2:Description not provided } ",
+            "UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=\"Parameters\")",
+            "\t$1;"
+        ]
+    },
+    "UProperty(Inspector ReadOnly)": {
+        "prefix": "uprop_ro",
+        "body": [
+            "// ${2:Description not provided } ",
+            "UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category=\"Parameters\")",
+            "\t$1;"
+        ]
+    },
     "Add Property: ISMC property": {
         "prefix": "uprop_ismc",
         "body": [

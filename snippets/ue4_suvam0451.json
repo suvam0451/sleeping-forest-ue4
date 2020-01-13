@@ -32,27 +32,10 @@
         "description": "Prints a warning to console."
     },
     "UFunction": {
-        "prefix": "ufunc",
+        "prefix": "ufunc_cpp",
         "body": [
             "// ${3:Description not provided } ",
-            "UFUNCTION(BlueprintCallable, Category=\"C++\")",
 		    "\tvoid ${1:Foo}();"]
-    },
-    "UProperty": {
-        "prefix": "uprop",
-        "body": [
-            "// ${2:Description not provided } ",
-            "UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=\"Parameters\")",
-            "\t$1;"
-        ]
-    },
-    "UProperty(Inspector ReadOnly)": {
-        "prefix": "uprop_ro",
-        "body": [
-            "// ${2:Description not provided } ",
-            "UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category=\"Parameters\")",
-            "\t$1;"
-        ]
     },
     "Add a SceneComponent property to replace RootComponent": {
         "prefix": "uroot_h",
@@ -72,15 +55,5 @@
             "SceneRoot = CreateDefaultSubobject<USceneComponent>(\"SceneRoot\");",
             "RootComponent = SceneRoot;\n"
         ]
-    },
-    "Add an ObjectFinder": {
-        "prefix": "uobjectfinder",
-        "body": [
-            "static ConstructorHelpers::FObjectFinder<UStaticMesh> ${1:UniqueName}(TEXT(\"\/Game\/$2\"));",
-            "\t${$2:TargetObject} = $1.Object;"
-        ],
-        "description": ["#include \"ConstructorHelpers.h\".",
-                        "Syntax(project) (\"/Game/YourFolder/YourItem\")",
-                        "Syntax(plugin) (\"/PluginName/YourFolder/YourItem\")"]
     }
 }

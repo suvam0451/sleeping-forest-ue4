@@ -1,12 +1,4 @@
 {
-    "Include ISMC": {
-        "prefix": "include_ismc",
-        "body": [ "#include \"Components/StaticMeshComponent.h\"" ]
-    },
-    "Include point light": {
-        "prefix": "include_pointlight",
-        "body": [ "#include \"Components/PointLightComponent.h\"" ]
-    },
     "Include CharacterMovementComponent": {
         "prefix": "include_charmovecomp",
         "body": "#include \"GameFramework/CharacterMovementComponent.h\"",
