@@ -77,6 +77,10 @@
 			{
 				"language": "cpp",
 				"path": "./snippets/ue4_data_handling.json"
+			},
+			{
+				"language": "cpp",
+				"path": "./snippets/ue4_gameplay_systems.json"
 			}
 		]
 	},

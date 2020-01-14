@@ -1,24 +1,39 @@
 {
-    "Include CharacterMovementComponent": {
-        "prefix": "include_charmovecomp",
-        "body": "#include \"GameFramework/CharacterMovementComponent.h\"",
-        "description": [
-            "Includes the CharacterMovementComponent.h",
-            "You need the AIModule for this include."
-        ]
-    },
-    "Include GmaeplayStatics": {
-        "prefix": "include_gameplaystatics",
-        "body": "#include \"Kismet/GameplayStatics.h\"",
-        "description": [ "Includes GameplayStatics.",
-                            "it is used to hard-code assets into your classes.",
-                            "Try not to use it for meshes, blueprints etc.",
-                            "Ideal for static data tables, dialogue trees and such"]
-    },
-    "Include Spline Component(s)": {
-        "prefix": "include_spline",
-        "body": ["#include \"Components/SplineMeshComponent.h\"",
-                    "#include \"Components/SplineComponent.h\""],
-        "descriptiom": ["includes SplineComponent and SplineMeshComponent"]
-    }
+	"Include CharacterMovementComponent": {
+		"prefix": "include_charmovecomp",
+		"body": "#include \"GameFramework/CharacterMovementComponent.h\"",
+		"description": [
+			"Includes the CharacterMovementComponent.h",
+			"You need the AIModule for this include."
+		]
+	},
+	"Include GmaeplayStatics": {
+		"prefix": "include_gameplaystatics",
+		"body": "#include \"Kismet/GameplayStatics.h\"",
+		"description": [
+			"Includes GameplayStatics.",
+			"it is used to hard-code assets into your classes.",
+			"Try not to use it for meshes, blueprints etc.",
+			"Ideal for static data tables, dialogue trees and such"
+		]
+	},
+	"Include: Spline": {
+		"prefix": "include_spline",
+		"body": [
+			"#include \"Components/SplineMeshComponent.h\"",
+			"#include \"Components/SplineComponent.h\""
+		],
+		"descriptiom": [
+			"includes SplineComponent and SplineMeshComponent"
+		]
+	},
+	"Include: ISMC": {
+		"prefix": "include_ismc",
+		"body": [
+			"#include \"Components/InstancedStaticMeshComponent.h\""
+		],
+		"descriptiom": [
+			"includes SplineComponent and SplineMeshComponent"
+		]
+	}
 }

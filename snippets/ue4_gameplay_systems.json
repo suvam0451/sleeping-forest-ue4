@@ -1,0 +1,26 @@
+{
+	"Gameplay Systems: ObjectFinder": {
+		"prefix": "ugs_objectfind",
+		"body": [
+			"static ConstructorHelpers::FObjectFinder<${3:UStaticMesh}> ${1:UniqueName}(TEXT(\"/Game/$2\"));",
+			"\t${$4:TargetObject} = $1.Object;"
+		],
+		"description": [
+			"#include \"ConstructorHelpers.h\".",
+			"Syntax(project) (\"/Game/YourFolder/YourItem\")",
+			"Syntax(plugin) (\"/PluginName/YourFolder/YourItem\")"
+		]
+	},
+	"Gameplay Systems: ClassFinder": {
+		"prefix": "ugs_classfind",
+		"body": [
+			"static ConstructorHelpers::FClassFinder<${3:ParentClass}> ${1:UniqueName}(TEXT(\"/Game/$2\"));",
+			"\t${$4:TargetSubClassof} = ${1:UniqueName}.Class;"
+		],
+		"description": [
+			"#include \"ConstructorHelpers.h\".",
+			"Syntax(project) (\"/Game/YourFolder/YourItem\")",
+			"Syntax(plugin) (\"/PluginName/YourFolder/YourItem\")"
+		]
+	}
+}
