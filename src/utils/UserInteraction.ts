@@ -1,4 +1,5 @@
 import * as vscode from "vscode";
+import { resolve } from "dns";
 
 export interface SelectionStruct {
     data?: any;
@@ -11,16 +12,13 @@ export function cancel() {
     return new Error("CANCEL");
 }
 
-export async function ShowSelectionOptions(items: SelectionStruct[]) : Promise<SelectionStruct>
-{
-    // Use createQuickPick for advanced use cases...
-    let quickPick = await vscode.window.showQuickPick(items);
+export async function ShowSelectionOptions(items: SelectionStruct[]): Promise<SelectionStruct> {
+
     return new Promise<SelectionStruct>((resolve, reject) => {
-        if (quickPick) {
-            return resolve(quickPick);
-        }
-        else{
-            return reject(new Error("CANCEL"));
-        }
+        // Use createQuickPick for advanced use cases...
+        vscode.window.showQuickPick(items).then((value) => {
+            console.log(value?.label);
+            resolve(value);
+        });
     });
 }

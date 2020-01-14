@@ -20,9 +20,10 @@
 		"onCommand:extension.helloWorld",
 		"onCommand:extension.compileShaders",
 		"onCommand:extension.onConstruction",
-		"onCommand:extension.include.procedural",
+		"onCommand:extension.includeManager",
 		"onCommand:extension.include.spline",
-		"onCommand:extension.Daedalus.PopulateSourceFile"
+		"onCommand:extension.Daedalus.PopulateSourceFile",
+		"onCommand:extension.Daedalus.errorLibrary"
 	],
 	"main": "/dist/extension",
 	"contributes": {
@@ -40,16 +41,20 @@
 				"title": "Actor.OnConstruction(Transform)."
 			},
 			{
-				"command": "extension.include.procedural",
-				"title": "Include.Procedural."
+				"command": "extension.includeManager",
+				"title": "Daedalus: Include Headers"
 			},
 			{
 				"command": "extension.include.spline",
-				"title": "Include.Spline"
+				"title": "Include:Spline"
 			},
 			{
 				"command": "extension.Daedalus.PopulateSourceFile",
 				"title": "Daedalus.PopulateSourceFromHeader"
+			},
+			{
+				"command": "extension.Daedalus.errorLibrary",
+				"title": "Daedalus: Search Error Library"
 			}
 		],
 		"snippets": [

@@ -1,0 +1,17 @@
+{
+	"Plug-in": {
+		"alias": ["plugin", "extension", "plug-in"],
+		"Rust": {
+			"alias": "rust",
+			"label": "Plug-in development using rust",
+			"path": "/tutorials/ue4/plugin-development-using-rust/1"
+		}
+	},
+	"Mesh": {
+		"alias": ["mesh"],
+		"ISM": {
+			"alias": ["ism", "ismc", "instanced,mesh"],
+			"path": "/tutorials/ue4/instanced-static-meshes/1"
+		}
+	}
+}

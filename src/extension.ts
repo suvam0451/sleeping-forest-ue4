@@ -9,6 +9,10 @@ import * as edit from "./utils/EditorHelper";
 import * as filesys from "./utils/FilesystemHelper";
 import * as feedback from './utils/ErrorLogger';
 import { AActor, UActorComponent } from "./data/headerFunctions.json";
+import IncludeMap from "./data/IncludeMapping.json";
+import IncludeManager from "./modules/IncludeManager";
+import ErrorSearchModule from "./modules/ErrorSearchModule";
+
 const fs = require("fs");
 
 
@@ -88,24 +92,26 @@ export function activate(context: vscode.ExtensionContext) {
 	//#endregion
 
 	//#region extension.include.procedural
-	let include_Procedural = vscode.commands.registerCommand('extension.include.procedural', () => {
-		let editor = vscode.window.activeTextEditor;
-		edit.InjectHeaders(editor!, [
-			"#include \"Components/InstancedStaticMeshComponent.h\"",
-		]);
+	let IncludeCommandlet = vscode.commands.registerCommand('extension.includeManager', () => {
+		IncludeManager();
 	});
-	context.subscriptions.push(include_Procedural);
+
+	context.subscriptions.push(IncludeCommandlet);
 	//#endregion
 
 	//#region extension.include.splines
 	let include_Splines = vscode.commands.registerCommand('extension.include.spline', () => {
 		let editor = vscode.window.activeTextEditor;
-		edit.InjectHeaders(editor!, [
-			"#include \"Components/SplineComponent.h\"",
-			"#include \"Components/SplineMeshComponent.h\""
-		]);
+		edit.InjectHeaders(editor!, IncludeMap.Spline);
 	});
 	context.subscriptions.push(include_Splines);
+	//#endregion
+
+	//#region Error search module
+	let ErrorWiki = vscode.commands.registerCommand("extension.Daedalus.errorLibrary", () => {
+		ErrorSearchModule();
+	});
+	context.subscriptions.push(ErrorWiki);
 	//#endregion
 
 	// #region extension.Daedalus.PopulateSourceFile

@@ -44,12 +44,29 @@ export function InjectHeaders(editor: vscode.TextEditor, lines: string[]): void 
         let finishingLine = GetLineMatchingRegexInActiveFile(headerFileEndRegex);
 
         Promise.all([startingLine, finishingLine]).then((values) => {
+            // Get updates list of headers
+            let request = RemoveDuplicates(lines, values[0], values[1]);
             var newPosition = position.with(values[1], 0);
             var newSelection = new vscode.Selection(newPosition, newPosition);
             editor!.selection = newSelection;
-            WriteRequest(lines);
+            WriteRequest(request);
         });
     }
+}
+
+export function RemoveDuplicates(data: string[], start: number, end: number): string[] {
+    let editor = vscode.window.activeTextEditor;
+    const position = editor?.selection.active!;
+
+    for (let i = start; i < end; i++) {
+        for (let j = 0; j < data.length; j++) {
+            if (editor!.document.lineAt(i).text === data[j]) {
+                data.splice(j, 1);
+            }
+        }
+    }
+    console.log(data);
+    return data;
 }
 
 /** Writes lines at current cursor position. */
