@@ -6828,9 +6828,9 @@ const edit = __importStar(__webpack_require__(/*! ./utils/EditorHelper */ "./src
 const filesys = __importStar(__webpack_require__(/*! ./utils/FilesystemHelper */ "./src/utils/FilesystemHelper.ts"));
 const feedback = __importStar(__webpack_require__(/*! ./utils/ErrorLogger */ "./src/utils/ErrorLogger.ts"));
 const headerFunctions_json_1 = __webpack_require__(/*! ./data/headerFunctions.json */ "./src/data/headerFunctions.json");
-const IncludeMapping_json_1 = __importDefault(__webpack_require__(/*! ./data/IncludeMapping.json */ "./src/data/IncludeMapping.json"));
 const IncludeManager_1 = __importDefault(__webpack_require__(/*! ./modules/IncludeManager */ "./src/modules/IncludeManager.ts"));
 const ErrorSearchModule_1 = __importDefault(__webpack_require__(/*! ./modules/ErrorSearchModule */ "./src/modules/ErrorSearchModule.ts"));
+const CreateClassModule_1 = __importDefault(__webpack_require__(/*! ./modules/CreateClassModule */ "./src/modules/CreateClassModule.ts"));
 const fs = __webpack_require__(/*! fs */ "fs");
 /** Writes lines at current cursor position. */
 function WriteRequest(editor, position, lines) {
@@ -6903,18 +6903,17 @@ function activate(context) {
     });
     context.subscriptions.push(IncludeCommandlet);
     //#endregion
-    //#region extension.include.splines
-    let include_Splines = vscode.commands.registerCommand('extension.include.spline', () => {
-        let editor = vscode.window.activeTextEditor;
-        edit.InjectHeaders(editor, IncludeMapping_json_1.default.Spline);
-    });
-    context.subscriptions.push(include_Splines);
-    //#endregion
     //#region Error search module
     let ErrorWiki = vscode.commands.registerCommand("extension.Daedalus.errorLibrary", () => {
         ErrorSearchModule_1.default();
     });
     context.subscriptions.push(ErrorWiki);
+    //#endregion
+    //#region Class creation API
+    let Mod_CreateClass = vscode.commands.registerCommand("extension.Daedalus.createClass", () => {
+        CreateClassModule_1.default();
+    });
+    context.subscriptions.push(Mod_CreateClass);
     //#endregion
     // #region extension.Daedalus.PopulateSourceFile
     let Daedalus_Populate_Source = vscode.commands.registerCommand('extension.Daedalus.PopulateSourceFile', () => {
@@ -6949,6 +6948,141 @@ exports.deactivate = deactivate;
 
 /***/ }),
 
+/***/ "./src/modules/CreateClassModule.ts":
+/*!******************************************!*\
+  !*** ./src/modules/CreateClassModule.ts ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+// Copyright (c) 2020 Debashish Patra, MPL-2.0
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+    result["default"] = mod;
+    return result;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+// IncludeManager.ts
+// Isolated module to let users paste their errors and search database for resolution.
+const vscode = __importStar(__webpack_require__(/*! vscode */ "vscode"));
+const FilesystemHelper_1 = __webpack_require__(/*! ../utils/FilesystemHelper */ "./src/utils/FilesystemHelper.ts");
+const fs = __importStar(__webpack_require__(/*! fs */ "fs"));
+var XRegExp = __webpack_require__(/*! xregexp */ "./node_modules/xregexp/lib/index.js");
+const path = __importStar(__webpack_require__(/*! path */ "path"));
+function CreateClassModule() {
+    return __awaiter(this, void 0, void 0, function* () {
+        console.log("Crank it up");
+        let editor = vscode.window.activeTextEditor;
+        let loc = []; // Potential module locations
+        let pluginList = []; // Use for mapping
+        let kit = {
+            modulepath: "",
+            modulename: "",
+            requestedType: "",
+            requestedName: ""
+        };
+        let targetPath = path.join(vscode.workspace.workspaceFolders[0].uri.path.substr(1), "Plugins"); // uri.path had one leading '/' to remove
+        return new Promise((resolve, reject) => {
+            if (editor === undefined) {
+                resolve();
+            }
+            fs.readdir(targetPath, (err, folders) => {
+                folders.forEach((foldername) => {
+                    FilesystemHelper_1.GetPluginDataFromFolder(path.join(targetPath, foldername)).then((ret) => {
+                        ret.forEach((val) => {
+                            if (IsValidModuleName(val.foldername) === true) {
+                                pluginList.push(val);
+                                loc.push(val.foldername);
+                            }
+                        });
+                        console.log(loc);
+                        vscode.window.showQuickPick(loc).then((retval) => {
+                            if (retval) {
+                                pluginList.forEach((val) => {
+                                    if (val.foldername === retval) {
+                                        kit.modulename = val.foldername;
+                                        kit.modulepath = val.folderpath;
+                                        HandleClassSelection(kit);
+                                    }
+                                });
+                            }
+                            else {
+                                // Handle this warning...
+                            }
+                        }).then(() => {
+                            resolve();
+                        });
+                    });
+                });
+            });
+            resolve();
+        });
+    });
+}
+exports.default = CreateClassModule;
+/** Called after module is selected by user to provide class catalogue. */
+function HandleClassSelection(kit) {
+    return __awaiter(this, void 0, void 0, function* () {
+        let marr = []; // Classes offered
+        let className = "";
+        marr.push("Actor", "Character", "Interface", "ActorComponent");
+        vscode.window.showQuickPick(marr).then((retval) => {
+            if (retval !== "") {
+                className = retval;
+            }
+            // console.log("Request to add: " + retval + " in " + modulepath);
+        }).then(() => {
+            return new Promise((resolve, reject) => {
+                const input = vscode.window.showInputBox();
+                input.then((value) => {
+                    if (value !== "") {
+                        kit.requestedName = value;
+                        vscode.window.showWarningMessage("Request: Add "
+                            + value + " of type " + kit.requestedName + " in " + kit.modulename
+                            + ". Press yes to confirm.");
+                    }
+                });
+                resolve(kit);
+            });
+        });
+        return new Promise((resolve, reject) => {
+            resolve(kit);
+        });
+    });
+}
+function IsValidModuleName(name) {
+    if ((name === "Python") ||
+        (name === "Shaders") ||
+        (false)) {
+        return false;
+    }
+    else {
+        return true;
+    }
+}
+/** Final step, checks if file can be created.  */
+// function RequestValidation(modulepath: string, request: string): boolean {
+//     if (fs.existsSync(modulepath) &&
+//         fs.existsSync(path.join(modulepath, "Source")))
+//         return false;
+// }
+
+
+/***/ }),
+
 /***/ "./src/modules/ErrorSearchModule.ts":
 /*!******************************************!*\
   !*** ./src/modules/ErrorSearchModule.ts ***!
@@ -6976,7 +7110,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-// IncludeManager.ts
+// ErrorSearchModule.ts
 // Isolated module to let users paste their errors and search database for resolution.
 const vscode = __importStar(__webpack_require__(/*! vscode */ "vscode"));
 function ErrorSearchModule() {
@@ -7331,7 +7465,7 @@ var path = __webpack_require__(/*! path */ "path");
 const vscode = __importStar(__webpack_require__(/*! vscode */ "vscode"));
 const ExtensionHelper_1 = __webpack_require__(/*! ./ExtensionHelper */ "./src/utils/ExtensionHelper.ts");
 const feedback = __importStar(__webpack_require__(/*! ./ErrorLogger */ "./src/utils/ErrorLogger.ts"));
-const fs = __webpack_require__(/*! fs */ "fs");
+const fs = __importStar(__webpack_require__(/*! fs */ "fs"));
 var ActiveFileExtension;
 (function (ActiveFileExtension) {
     ActiveFileExtension[ActiveFileExtension["None"] = 0] = "None";
@@ -7490,6 +7624,32 @@ function WriteAtLine(filepath, at, lines) {
     });
 }
 exports.WriteAtLine = WriteAtLine;
+/** Scans a folder for a .uplugin file and valid Source folder. Returns list of plugin
+ * paths as would be detected in the engine. */
+function GetPluginDataFromFolder(folder) {
+    return __awaiter(this, void 0, void 0, function* () {
+        let targetpath = path.join(folder, "Source");
+        let retval = [];
+        console.log("Seeking: " + targetpath);
+        return new Promise((resolve, reject) => {
+            fs.readdir(targetpath, (err, folders) => {
+                if (err) {
+                    resolve([]);
+                }
+                folders.forEach((file) => {
+                    if (fs.statSync(path.join(targetpath, file)).isDirectory() === true) {
+                        retval.push({
+                            foldername: file,
+                            folderpath: path.join(targetpath, file)
+                        });
+                    }
+                });
+                resolve(retval);
+            });
+        });
+    });
+}
+exports.GetPluginDataFromFolder = GetPluginDataFromFolder;
 
 
 /***/ }),

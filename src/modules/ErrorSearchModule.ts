@@ -1,6 +1,6 @@
 // Copyright (c) 2020 Debashish Patra, MPL-2.0
 
-// IncludeManager.ts
+// ErrorSearchModule.ts
 // Isolated module to let users paste their errors and search database for resolution.
 
 import * as vscode from "vscode";

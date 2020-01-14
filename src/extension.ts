@@ -12,7 +12,7 @@ import { AActor, UActorComponent } from "./data/headerFunctions.json";
 import IncludeMap from "./data/IncludeMapping.json";
 import IncludeManager from "./modules/IncludeManager";
 import ErrorSearchModule from "./modules/ErrorSearchModule";
-
+import CreateClassModule from "./modules/CreateClassModule";
 const fs = require("fs");
 
 
@@ -99,19 +99,18 @@ export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(IncludeCommandlet);
 	//#endregion
 
-	//#region extension.include.splines
-	let include_Splines = vscode.commands.registerCommand('extension.include.spline', () => {
-		let editor = vscode.window.activeTextEditor;
-		edit.InjectHeaders(editor!, IncludeMap.Spline);
-	});
-	context.subscriptions.push(include_Splines);
-	//#endregion
-
 	//#region Error search module
 	let ErrorWiki = vscode.commands.registerCommand("extension.Daedalus.errorLibrary", () => {
 		ErrorSearchModule();
 	});
 	context.subscriptions.push(ErrorWiki);
+	//#endregion
+
+	//#region Class creation API
+	let Mod_CreateClass = vscode.commands.registerCommand("extension.Daedalus.createClass", () => {
+		CreateClassModule();
+	});
+	context.subscriptions.push(Mod_CreateClass);
 	//#endregion
 
 	// #region extension.Daedalus.PopulateSourceFile

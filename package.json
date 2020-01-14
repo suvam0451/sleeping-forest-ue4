@@ -21,9 +21,9 @@
 		"onCommand:extension.compileShaders",
 		"onCommand:extension.onConstruction",
 		"onCommand:extension.includeManager",
-		"onCommand:extension.include.spline",
 		"onCommand:extension.Daedalus.PopulateSourceFile",
-		"onCommand:extension.Daedalus.errorLibrary"
+		"onCommand:extension.Daedalus.errorLibrary",
+		"onCommand:extension.Daedalus.createClass"
 	],
 	"main": "/dist/extension",
 	"contributes": {
@@ -45,16 +45,16 @@
 				"title": "Daedalus: Include Headers"
 			},
 			{
-				"command": "extension.include.spline",
-				"title": "Include:Spline"
-			},
-			{
 				"command": "extension.Daedalus.PopulateSourceFile",
 				"title": "Daedalus.PopulateSourceFromHeader"
 			},
 			{
 				"command": "extension.Daedalus.errorLibrary",
 				"title": "Daedalus: Search Error Library"
+			},
+			{
+				"command": "extension.Daedalus.createClass",
+				"title": "Daedalus: Generate UE4 Class(.h/.cpp)"
 			}
 		],
 		"snippets": [

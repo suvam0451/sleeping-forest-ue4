@@ -10,11 +10,22 @@ import { IsHeaderFile, IsSourceFile } from "./ExtensionHelper";
 import { resolve, promises } from "dns";
 import { rejects } from "assert";
 import * as feedback from "./ErrorLogger";
-const fs = require("fs");
+import * as fs from "fs";
 
 export interface FunctionAnatomy {
     prototype: string;
     returnType: string;
+}
+
+export interface PluginPathInfo {
+    foldername: string;
+    folderpath: string;
+}
+
+export interface SingleFileData {
+    name: string;
+    extension: string;
+    path: string;
 }
 
 export enum ActiveFileExtension {
@@ -180,5 +191,28 @@ export async function WriteAtLine(filepath: string, at: number, lines: string[])
         });
         stream.end();
         console.log("WriteAtLine finished block execution...");
+    });
+}
+
+/** Scans a folder for a .uplugin file and valid Source folder. Returns list of plugin
+ * paths as would be detected in the engine. */
+export async function GetPluginDataFromFolder(folder: string): Promise<PluginPathInfo[]> {
+
+    let targetpath = path.join(folder, "Source");
+    let retval: PluginPathInfo[] = [];
+    console.log("Seeking: " + targetpath);
+    return new Promise<PluginPathInfo[]>((resolve, reject) => {
+        fs.readdir(targetpath, (err, folders) => {
+            if (err) { resolve([]); }
+            folders.forEach((file) => {
+                if (fs.statSync(path.join(targetpath, file)).isDirectory() === true) {
+                    retval.push({
+                        foldername: file,
+                        folderpath: path.join(targetpath, file)
+                    });
+                }
+            });
+            resolve(retval);
+        });
     });
 }
