@@ -1,0 +1,12 @@
+image: node:latest
+
+4.22.vsix:
+  script:
+    - yarn install
+    - yarn run webpack
+    - yarn vsce package
+  only:
+    - master
+  artifacts:
+    paths:
+      - ./*.vsix
