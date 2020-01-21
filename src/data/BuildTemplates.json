@@ -1,0 +1,74 @@
+[
+    {
+        "buildspace": "Default",
+        "templates": [
+            {
+                "id": "Actor",
+                "classprefix": "A$1",
+                "Headers": [
+                    "CoreMinimal.h",
+                    "GameFramework/Actor.h",
+                    "$1.generated.h"
+                ],
+                "Functions": [
+                    [
+                        {
+                            "description": "// Called when the game starts or when spawned",
+                            "signature": "virtual void BeginPlay() override;",
+                            "field": "public",
+                            "body": [
+                                "Super::BeginPlay();"
+                            ]
+                        },
+                        {
+                            "description": "// Called when the game starts or when spawned",
+                            "signature": "virtual void Tick() override;",
+                            "field": "public",
+                            "body": [
+                                "Super::Tick();"
+                            ]
+                        }
+                    ]
+                ]
+            },
+            {
+                "id": "ActorComponent",
+                "classprefix": "A$1",
+                "Headers": [],
+                "Functions": []
+            },
+            {
+                "id": "Character",
+                "classprefix": "A$1",
+                "Headers": [],
+                "Functions": []
+            },
+            {
+                "id": "Interface",
+                "classprefix": "A$1",
+                "Headers": [],
+                "Functions": []
+            },
+            {
+                "id": "Object",
+                "classprefix": "U$1",
+                "Headers": [],
+                "Functions": []
+            },
+            {
+                "id": "DataAsset",
+                "classprefix": "U$1",
+                "Headers": [],
+                "Functions": []
+            }
+        ]
+    },
+    {
+        "buildspace": "Minimal",
+        "templates": []
+    },
+    {
+        "buildspace": "Debashish",
+        "templates": []
+    }
+]

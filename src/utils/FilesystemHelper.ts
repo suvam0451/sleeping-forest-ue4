@@ -20,6 +20,7 @@ export interface FunctionAnatomy {
 export interface PluginPathInfo {
     foldername: string;
     folderpath: string;
+    isGameModule: boolean;
 }
 
 export interface SingleFileData {
@@ -195,24 +196,32 @@ export async function WriteAtLine(filepath: string, at: number, lines: string[])
 }
 
 /** Scans a folder for a .uplugin file and valid Source folder. Returns list of plugin
- * paths as would be detected in the engine. */
-export async function GetPluginDataFromFolder(folder: string): Promise<PluginPathInfo[]> {
-
+ * paths as would be detected in the engine.
+ * @param folder : Potential plugin folder with .uplugin */
+export function GetPluginDataFromFolder(folder: string): PluginPathInfo[] {
     let targetpath = path.join(folder, "Source");
     let retval: PluginPathInfo[] = [];
-    console.log("Seeking: " + targetpath);
-    return new Promise<PluginPathInfo[]>((resolve, reject) => {
-        fs.readdir(targetpath, (err, folders) => {
-            if (err) { resolve([]); }
-            folders.forEach((file) => {
-                if (fs.statSync(path.join(targetpath, file)).isDirectory() === true) {
+    try {
+        let folders = fs.readdirSync(targetpath);
+        // Every folder in a valid plug-in foler is assumed to be a module...
+        folders.forEach((folder) => {
+            if (fs.statSync(path.join(targetpath, folder)).isDirectory() === true) {
+                // Avoiding special folders...
+                if ((folder !== "Python") &&
+                    (folder !== "Shaders")) {
                     retval.push({
-                        foldername: file,
-                        folderpath: path.join(targetpath, file)
+                        foldername: folder,
+                        folderpath: path.join(targetpath, folder),
+                        isGameModule: false
                     });
                 }
-            });
-            resolve(retval);
+            }
+            return retval;
         });
-    });
+    }
+    catch {
+        return retval;
+    }
+
+    return retval;
 }

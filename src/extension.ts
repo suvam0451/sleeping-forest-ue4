@@ -108,7 +108,9 @@ export function activate(context: vscode.ExtensionContext) {
 
 	//#region Class creation API
 	let Mod_CreateClass = vscode.commands.registerCommand("extension.Daedalus.createClass", () => {
-		CreateClassModule();
+		CreateClassModule().catch((err) => {
+			console.log("failed: " + err);
+		});
 	});
 	context.subscriptions.push(Mod_CreateClass);
 	//#endregion
