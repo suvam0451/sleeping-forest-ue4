@@ -38,7 +38,8 @@
 			},
 			{
 				"command": "extension.onConstruction",
-				"title": "Actor.OnConstruction(Transform)."
+				"title": "Actor.OnConstruction(Transform).",
+				"when": "inputFocus"
 			},
 			{
 				"command": "extension.includeManager",
@@ -57,6 +58,15 @@
 				"title": "Daedalus: Generate UE4 Class(.h/.cpp)"
 			}
 		],
+		"menus": {
+			"editor/context": [
+				{
+					"when": "editorHasSelection && editorLangId == 'cpp'",
+					"command": "extension.Daedalus.createClass",
+					"group": "Hangover"
+				}
+			]
+		},
 		"snippets": [
 			{
 				"language": "cpp",
@@ -81,6 +91,14 @@
 			{
 				"language": "cpp",
 				"path": "./snippets/ue4_gameplay_systems.json"
+			},
+			{
+				"language": "cpp",
+				"path": "./snippets/ufunc.json"
+			},
+			{
+				"language": "cpp",
+				"path": "./snippets/uinit.json"
 			}
 		]
 	},

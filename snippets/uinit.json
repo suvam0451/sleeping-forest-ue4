@@ -1,0 +1,39 @@
+{
+	"UE4 Initialize: Boolean Switch": {
+		"prefix": "uinit_switch",
+		"body": [
+			"// Function(called on demand) will be bypassed while packaging",
+			"if ($1 == true)",
+			"{",
+			"\t${2:// Insert a function here};",
+			"\t$1 = false;",
+			"}\n$0"
+		]
+	},
+	"Initialize InstancedStaticMeshComponent(ISMC)": {
+		"prefix": "uinit_ismc",
+		"body": [
+			"$1 = NewObject<UInstancedStaticMeshComponent>(this);",
+			"$1->RegisterComponent();",
+			"$1->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);",
+			"$1->SetStaticMesh(${2:YourMeshHere});",
+			"$0"
+		],
+		"description": [
+			"Initialises an uninitialized ISMC(NewObject/CDSo never used).",
+			"Use in actors: replace RootComponent with your SceneComponent(if any)",
+			"Use in ActorComps: use uinit_ismc_actorcomp instead",
+			"You may use uinit_ismc_actorcomp if you are uncomfortable."
+		]
+	},
+	"Initialize InstancedStaticMeshComponent(ISMC) for ActorCompoennts": {
+		"prefix": "uinit_ismc_actorcomp",
+		"body": [
+			"$1 = NewObject<UInstancedStaticMeshComponent>(this->GetOwner()));",
+			"$1->RegisterComponent();",
+			"$1->AttachToComponent(GetOwner()->GetRootComponent(), FAttachmentTransformRules::KeepRelativeTransform);",
+			"$1->SetStaticMesh(${2:YourMeshHere});",
+			"$0"
+		]
+	}
+}

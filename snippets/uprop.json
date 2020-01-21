@@ -4,7 +4,8 @@
 		"body": [
 			"// ${2:Description not provided } ",
 			"UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=\"Parameters\")",
-			"\t$1;"
+			"\t$1;",
+			"\n$0"
 		]
 	},
 	"UProperty(Inspector ReadOnly)": {
@@ -13,8 +14,43 @@
 			"// ${2:Description not provided } ",
 			"UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category=\"Parameters\")",
 			"\t$1;",
-			"\n",
-			"\r\t$0"
+			"\n$0"
+		]
+	},
+	"Add Property: Integer": {
+		"prefix": "uprop_int",
+		"body": [
+			"// ${2:Description not provided } ",
+			"UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=\"Parameters\")",
+			"\tint *$1;",
+			"\n$0"
+		]
+	},
+	"Add Property: Floating point": {
+		"prefix": "uprop_float",
+		"body": [
+			"// ${2:Description not provided } ",
+			"UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=\"Parameters\")",
+			"\tfloat *$1;",
+			"\n$0"
+		]
+	},
+	"Add Property: Vector": {
+		"prefix": "uprop_vector",
+		"body": [
+			"// ${2:Description not provided } ",
+			"UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=\"Parameters\")",
+			"\tFVector *$1;",
+			"\n$0"
+		]
+	},
+	"Add Property: FTransform": {
+		"prefix": "uprop_transform",
+		"body": [
+			"// ${2:Description not provided } ",
+			"UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=\"Parameters\")",
+			"\tFTransform *$1;",
+			"\n$0"
 		]
 	},
 	"Add Property: ISMC property": {
@@ -22,7 +58,25 @@
 		"body": [
 			"// ${2:Description not provided } ",
 			"UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=\"Parameters\")",
-			"\tUInstancedStaticMeshComponent *$1;"
+			"\tUInstancedStaticMeshComponent *$1;",
+			"\n$0"
+		],
+		"description": [
+			"Adds an Instanced Static Mesh Component property",
+			"(Editable anywhere) Not recommended. try using maps/arrays.",
+			"Also use _adv to make property editor readonly."
+		]
+	},
+	"Add Property: ISMC Array": {
+		"prefix": "uprop_ismc_arr",
+		"body": [
+			"// ${2:Description not provided } ",
+			"UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=\"Parameters\")",
+			"\tTArray<UInstancedStaticMeshComponent*> $1;",
+			"\n$0"
+		],
+		"description": [
+			"Adds a public TMap of ISMC. Useful for combining parts procedurally, while building dungeons, castles, walls etc."
 		]
 	},
 	"Add Property: ISMC Map": {
@@ -30,10 +84,23 @@
 		"body": [
 			"// ${2:Description not provided } ",
 			"UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=\"Parameters\")",
-			"\tTMap<int, UInstancedStaticMeshComponent*> $1;"
+			"\tTMap<int, UInstancedStaticMeshComponent*> $1;",
+			"\n$0"
 		],
 		"description": [
 			"Adds a public TMap of ISMC. Useful for combining parts procedurally, while building dungeons, castles, walls etc."
+		]
+	},
+	"Add Property: ISMC Map (Advanced Display)": {
+		"prefix": "uprop_ismc_map_adv",
+		"body": [
+			"// ${2:Description not provided } ",
+			"UPROPERTY(EditAnywhere, AdvancedDisplay, BlueprintReadWrite, Category=\"Parameters\")",
+			"\tTMap<int, UInstancedStaticMeshComponent*> $1;",
+			"\n$0"
+		],
+		"description": [
+			"Adds a public TMap of ISMC(In the AdvancedDisplay dropdown). Useful for combining parts procedurally, while building dungeons, castles, walls etc."
 		]
 	},
 	"Add Property: StaticMesh": {
@@ -41,7 +108,8 @@
 		"body": [
 			"// ${2:Description not provided } ",
 			"UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=\"Parameters\")",
-			"\tUStaticMesh *$1;"
+			"\tUStaticMesh *$1;",
+			"\n$0"
 		]
 	},
 	"Add Property: StaticMesh Map": {
@@ -49,15 +117,37 @@
 		"body": [
 			"// ${2:Description not provided } ",
 			"UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=\"Parameters\")",
-			"\tTMap<int, UStaticMesh*> $1;"
+			"\tTMap<int, UStaticMesh*> $1;",
+			"\n$0"
 		]
 	},
-	"Add Property: Boolean switch": {
-		"prefix": "uprop_trigger",
+	"Add Property: StaticMesh Map(In advanced dropdown)": {
+		"prefix": "uprop_meshmap_ro",
 		"body": [
-			"// ${2:Toggle back to false(when user presses) in OnConstruction to use as a trigger } ",
+			"// ${2:Description not provided } ",
+			"UPROPERTY(VisibleAnywhere, AdvancedDisplay, BlueprintReadWrite, Category=\"Parameters\")",
+			"\tTMap<int, UStaticMesh*> $1;",
+			"\n$0"
+		],
+		"description": ["Adds a mesh map to property list.", "Use "]
+	},
+	"Add Property: Boolean switch": {
+		"prefix": "uprop_switch",
+		"body": [
+			"// ${2:Toggle back to false(when user presses) in OnConstruction to use as a switch } ",
 			"UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=\"Triggers\")",
-			"\tbool $1 = false;"
+			"\tbool $1 = false;",
+			"\n$0"
 		]
+	},
+	"Add Property: Boolean switch (In Advanced View)": {
+		"prefix": "uprop_switch_adv",
+		"body": [
+			"// ${2:Toggle back to false(when user presses) in OnConstruction to use as a switch } ",
+			"UPROPERTY(EditAnywhere, AdvancedDisplay, BlueprintReadWrite, Category=\"Triggers\")",
+			"\tbool $1 = false;",
+			"\n$0"
+		],
+		"description": "Adds a boolean switch property(In Advanced dropdown)."
 	}
 }

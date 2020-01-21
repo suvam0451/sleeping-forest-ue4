@@ -1,59 +1,56 @@
 {
-    "Loop": {
-        "prefix": "loop",
-        "body": ["for(int i = 0; i < $1; i++) {\n\t$2\n}"]
-    },
-    "2D Loop": {
-        "prefix": "loop2",
-        "body": ["for(int i = 0; i < $1; i++) {",
-                    "\tfor(int i = 0; i < $2; i++) {", 
-                        "\t\t${3:Loopbody}",
-                    "\t}",
-                "}"]
-    },
-    "CreateDefaultSubobject": {
-        "prefix": "ucdo",
-        "body": [
-            "$1 = CreateDefaultSubobject<$2>(\"$3\");"
-        ]
-    },
-    "NewObject": {
-        "prefix": "unew",
-        "body": ["NewObject<$1>(\"\");"],
-        "description": [
-            "Used to initialize object outside constructor",
-            "Don't forget to register component and attach to SceneComponent to be visible in inspector.",
-            "Naming field and owner field are optional and hence left out.",
-            "Full syntax: XYZ = NewObject<UType>(\"Your object name\", this)"]
-    },
-    "Warning log": {
-        "prefix": "ulog",
-        "body": ["UE_LOG(LogTemp, Warning, TEXT(\"$1\")$2);"],
-        "description": "Prints a warning to console."
-    },
-    "UFunction": {
-        "prefix": "ufunc_cpp",
-        "body": [
-            "// ${3:Description not provided } ",
-		    "\tvoid ${1:Foo}();"]
-    },
-    "Add a SceneComponent property to replace RootComponent": {
-        "prefix": "uroot_h",
-        "body": [
-            	"// SceneComponent to replace RootComponent",
-	            "UPROPERTY(EditAnywhere, Category = \"Parameters\")",
-	            "\tUSceneComponent *SceneRoot;"
-        ],
-        "description": ["Creates dummy SceneComponent intended to replace RootComponent in actors.",
-            "This is because otherwise, the first added component becomes the root and destroying it in gameplay loop makes the object immovable.",
-            "Basically to avoid silly mistakes...",
-            "Don't forget to run uroot_cpp in actor constructor !!!"]
-    },
-    "declare the SceneComponent in source file": {
-        "prefix": "uroot_cpp",
-        "body": [
-            "SceneRoot = CreateDefaultSubobject<USceneComponent>(\"SceneRoot\");",
-            "RootComponent = SceneRoot;\n"
-        ]
-    }
+	"Loop": {
+		"prefix": "loop",
+		"body": ["for(int i = 0; i < $1; i++) {\n\t$2\n}"]
+	},
+	"2D Loop": {
+		"prefix": "loop2",
+		"body": [
+			"for(int i = 0; i < $1; i++) {",
+			"\tfor(int i = 0; i < $2; i++) {",
+			"\t\t${3:Loopbody}",
+			"\t}",
+			"}"
+		]
+	},
+	"CreateDefaultSubobject": {
+		"prefix": "ucdo",
+		"body": ["$1 = CreateDefaultSubobject<$2>(\"$3\");"]
+	},
+	"NewObject": {
+		"prefix": "unew",
+		"body": ["NewObject<$1>(\"\");"],
+		"description": [
+			"Used to initialize object outside constructor",
+			"Don't forget to register component and attach to SceneComponent to be visible in inspector.",
+			"Naming field and owner field are optional and hence left out.",
+			"Full syntax: XYZ = NewObject<UType>(\"Your object name\", this)"
+		]
+	},
+	"Warning log": {
+		"prefix": "ulog",
+		"body": ["UE_LOG(LogTemp, Warning, TEXT(\"$1\")$2);"],
+		"description": "Prints a warning to console."
+	},
+	"Add a SceneComponent property to replace RootComponent": {
+		"prefix": "uroot_h",
+		"body": [
+			"// SceneComponent to replace RootComponent",
+			"UPROPERTY(EditAnywhere, Category = \"Parameters\")",
+			"\tUSceneComponent *SceneRoot;"
+		],
+		"description": [
+			"Creates dummy SceneComponent intended to replace RootComponent in actors.",
+			"This is because otherwise, the first added component becomes the root and destroying it in gameplay loop makes the object immovable.",
+			"Basically to avoid silly mistakes...",
+			"Don't forget to run uroot_cpp in actor constructor !!!"
+		]
+	},
+	"declare the SceneComponent in source file": {
+		"prefix": "uroot_cpp",
+		"body": [
+			"SceneRoot = CreateDefaultSubobject<USceneComponent>(\"SceneRoot\");",
+			"RootComponent = SceneRoot;\n"
+		]
+	}
 }
