@@ -3,32 +3,15 @@
         "buildspace": "Extended",
         "templates": [
             {
-                "id": "ActorExtendedSample",
+                "id": "Actor",
                 "classprefix": "A$1",
                 "Headers": [
                     "CoreMinimal.h",
-                    "GameFramework/Actor.h",
-                    "$1.generated.h"
+                    "GameFramework/Actor.h"
                 ],
                 "Functions": [
-                    [
-                        {
-                            "description": "// Called when the game starts or when spawned",
-                            "signature": "virtual void BeginPlay() override;",
-                            "field": "public",
-                            "body": [
-                                "Super::BeginPlay();"
-                            ]
-                        },
-                        {
-                            "description": "// Called when the game starts or when spawned",
-                            "signature": "virtual void Tick() override;",
-                            "field": "public",
-                            "body": [
-                                "Super::Tick();"
-                            ]
-                        }
-                    ]
+                    "BeginPlay",
+                    "Tick"
                 ]
             },
             {

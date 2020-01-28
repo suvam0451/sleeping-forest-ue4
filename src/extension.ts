@@ -13,7 +13,7 @@ import IncludeMap from "./data/IncludeMapping.json";
 import IncludeManager from "./modules/IncludeManager";
 import ErrorSearchModule from "./modules/ErrorSearchModule";
 import CreateClassModule from "./modules/CreateClassModule";
-const fs = require("fs");
+import * as fs from "fs";
 
 
 interface WriteInEditor {
@@ -99,14 +99,14 @@ export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(IncludeCommandlet);
 	//#endregion
 
-	//#region Error search module
+	//#region module:Error search
 	let ErrorWiki = vscode.commands.registerCommand("extension.Daedalus.errorLibrary", () => {
 		ErrorSearchModule();
 	});
 	context.subscriptions.push(ErrorWiki);
 	//#endregion
 
-	//#region Class creation API
+	//#region moduele:Class creation
 	let Mod_CreateClass = vscode.commands.registerCommand("extension.Daedalus.createClass", () => {
 		CreateClassModule().catch((err) => {
 			console.log("failed: " + err);
@@ -117,7 +117,6 @@ export function activate(context: vscode.ExtensionContext) {
 
 	// #region extension.Daedalus.PopulateSourceFile
 	let Daedalus_Populate_Source = vscode.commands.registerCommand('extension.Daedalus.PopulateSourceFile', () => {
-
 		let data: filesys.FileData = filesys.GetActiveFileData();
 		switch (data.cppvalid) {
 			case filesys.ActiveFileExtension.Header: {

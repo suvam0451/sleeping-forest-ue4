@@ -8,12 +8,12 @@
 		"tsconfig.json": false,
 		"package-lock.json": true,
 		"*.md": true,
-		"node_modules": true,
+		"node_modules": false,
 		"*.vsix": true
 	},
 	"search.exclude": {
 		"out": true // set this to false to include "out" folder in search results
 	},
 	// Turn off tsc task auto detection since we have the necessary tasks as npm scripts
-	"typescript.tsc.autoDetect": "off"
+	"typescript.tsc.autoDetect": "on"
 }

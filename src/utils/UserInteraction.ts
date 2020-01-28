@@ -13,7 +13,6 @@ export function cancel() {
 }
 
 export async function ShowSelectionOptions(items: SelectionStruct[]): Promise<SelectionStruct> {
-
     return new Promise<SelectionStruct>((resolve, reject) => {
         // Use createQuickPick for advanced use cases...
         vscode.window.showQuickPick(items).then((value) => {

@@ -14,9 +14,15 @@ import * as path from "path";
 import classData from "../data/BuildTemplates.json";
 import extendedClassData from "../data/BuildExtension.json";
 // Header/Source file generation data...
-import Actor_h from "../data/generators/Actor_h.json";
+import Default_Actor_h from "../data/generators/Default_Actor_h.json";
 import { rejects } from "assert";
-
+import IncludeManager from "./IncludeManager";
+// import { InjectHeaders } from "../utils/EditorHelper";
+import { InjectHeaders, InjectFunctions } from "../utils/FileHelper";
+import * as _ from "lodash";
+import { QuickPick, InputBox } from "./VSInterface";
+import { WriteAtLine } from "../utils/FilesystemHelper";
+import FileHandler from "../classes/FileHandler";
 
 interface ClassCreationKit {
     modulepath: string;
@@ -24,6 +30,9 @@ interface ClassCreationKit {
     parentclass: string;
     classname: string;
     buildspace: string;
+    isGameModule: boolean;
+    headerpath: string;
+    sourcepath: string;
 }
 
 export interface PluginPathInfo {
@@ -32,32 +41,47 @@ export interface PluginPathInfo {
     isGameModule: boolean;
 }
 
-function Takizawa() {
-    let classList = [];
-
-    let arrr = classData.concat(extendedClassData);
-    arrr.forEach((ret) => {
-        console.log(ret.buildspace);
+/** Generates header(.h)/soure(.cpp) paths based on module type and previous data */
+async function GenerateFileData(data: ClassCreationKit): Promise<ClassCreationKit> {
+    return new Promise<ClassCreationKit>((resolve, reject) => {
+        if (!data.isGameModule) { // UE4 plug-ins follow Private/Public folder structure
+            data.headerpath = path.join(data.modulepath, "Public", data.classname + ".h");
+            data.sourcepath = path.join(data.modulepath, "Private", data.classname + ".cpp");
+            resolve(data);
+        }
+        else { // Gamemodule have files in same path
+            resolve(data);
+        }
     });
 }
-async function ClassSelection(data: ClassCreationKit): Promise<ClassCreationKit> {
-    let classList = [];
 
-    let arrr = [classData];
-    arrr.concat(extendedClassData);
-    arrr.forEach((ret) => {
-        ret.forEach((ret2) => {
-            console.log(ret2.buildspace);
-        });
-    });
-    return new Promise<ClassCreationKit>((resolve, reject) => {
-        // if (!data.isUserExtended) {
-        let spaceindex = classData.findIndex((ele) => { ele.buildspace === data.buildspace; });
-        if (spaceindex === -1) { reject("Internal Error."); }
-        classData[spaceindex].templates.forEach((tmpl) => {
+/** Handls available class selection and prompts for classname
+ * fills: { classname, parentclass }
+*/
+async function ClassSelection(data: ClassCreationKit): Promise<ClassCreationKit> {
+    let classList: string[] = [];
+
+    let json = _.concat(classData, extendedClassData);
+    let bs = _.find(json, { buildspace: data.buildspace });
+    if (typeof bs !== "undefined") {
+        _.each(bs.templates, (tmpl) => {
             classList.push(tmpl.id);
         });
-        // }
+    }
+    return new Promise<ClassCreationKit>((resolve, reject) => {
+        QuickPick(classList, false).then((sel) => {
+            data.parentclass = sel;
+            InputBox().then((ret) => {
+                data.classname = ret;
+                vscode.window.showWarningMessage("Adding "  // user receipt
+                    + ret + " of type " + data.parentclass + " in " + data.modulename
+                    + "... Continue ?");
+            }).then(() => {
+                QuickPick(["Yes", "No"], true, "Yes").then(() => {
+                    resolve(data);
+                });
+            });
+        });
     });
 }
 
@@ -68,115 +92,64 @@ async function ModuleSelection(data: ClassCreationKit): Promise<ClassCreationKit
     let pluginPath = path.join(workspacePath, "Plugins");
 
     return new Promise<ClassCreationKit>((resolve, reject) => {
-        fs.readdir(pluginPath, (err, folders) => {
-            folders.forEach((folder) => {
-                let ret = GetPluginDataFromFolder(path.join(pluginPath, folder))
-                // .then((ret) => {
-                console.log("Return containes: ", ret);
+        let arr: string[] = [];
+        try {
+            let lst = fs.readdirSync(pluginPath);
+            lst.forEach((folder) => {
+                let ret = GetPluginDataFromFolder(path.join(pluginPath, folder));
                 pluginDataArray = pluginDataArray.concat(ret);
-                console.log("Part 2 containes: ", pluginDataArray);
-                // });
             });
-            let lst = [];
-            console.log("Part 3 containes: ", pluginDataArray);
-            pluginDataArray.forEach((ret) => {
-                lst.push(ret.foldername);
+
+            // let arr =_.concat(arr, pluginDataArray);
+            _.each(pluginDataArray, (ret) => {
+                arr.push(ret.foldername);
             });
-            lst.push("Game");
-            vscode.window.showQuickPick(lst).then((sel) => {
-                let index = pluginDataArray.find((i) => { i.foldername === sel; });
-                if (index && index.foldername !== "Game") {
-                    data.modulename = index.foldername;
-                    data.modulepath = index.folderpath;
-                    resolve(data);
+        }
+        catch {
+            reject("Throw not implemented...");
+        }
+        arr.push("Game");
+        QuickPick(arr, false).then((sel) => {
+            let index = pluginDataArray.find(i => i.foldername === sel);
+            if (typeof index !== "undefined") {
+                switch (index.foldername) {
+                    case "Game": {
+                        data.modulename = index.foldername; // Needs update
+                        data.modulepath = index.folderpath; // Needs update
+                        data.isGameModule = true;
+                        break;
+                    }
+                    default: {
+                        data.modulename = index.foldername;
+                        data.modulepath = index.folderpath;
+                        data.isGameModule = false;
+                        break;
+                    }
                 }
-                else if (index?.foldername === "Game") {
-                    reject("Not yet dealt with Game module");
-                } else {
-                    reject("User did not select any moduel...");
-                }
-            });
+                resolve(data);
+            }
         });
     });
-
 }
+
+/** ENTRY POINT of module */
 export default async function CreateClassModule(): Promise<void> {
-    Takizawa();
-    console.log("Crank it up");
-    let editor = vscode.window.activeTextEditor;
-    let loc: string[] = []; // Potential module locations
-    let pluginList: Array<PluginPathInfo> = []; // Use for mapping
-    let kit: ClassCreationKit = {
-        modulepath: "",
-        modulename: "",
-        parentclass: "",
-        classname: "",
-        buildspace: ""
-    };
-
-    let targetPath: string = path.join(
-        vscode.workspace.workspaceFolders![0].uri.path.substr(1),
-        "Plugins"); // uri.path had one leading '/' to remove
-
-
-    NamespaceSelection().then((ret) => { // Gets buildspace and isUserExtended
-        ModuleSelection(ret).then((ret2) => { // Gets modulename, modulepath
-            // ClassSelection(ret2);
+    NamespaceSelection().then((ret) => { // Gets { buildspace }
+        ModuleSelection(ret).then((ret2) => { // Gets { modulename, modulepath }
+            ClassSelection(ret2).then((ret3) => { // Gets { parentclass, classname }
+                GenerateFileData(ret3).then((ret4) => { // Gets { headerpath,  sourcepath }
+                    ValidateRequest(ret4).then((ret5) => {
+                        if (ret5) {
+                            HandleClassGeneration(ret4).then(() => {
+                                // WriteAtLine(ret4.headerpath, 8, ["Onii chan", "Yamete Kudasai"]);
+                            });
+                        }
+                    });
+                });
+            });
         });
     });
-    // let namespace = NamespaceSelection();
-    // let modules = ;
-
-    // Promise.all([namespace, modules]).then((res) => {
-    //     let locco: string[] = [];
-    // 
-    //     res[1].forEach((module) => { locco.push(module.foldername); });
-    //     // selecting module
-    //     vscode.window.showQuickPick(locco).then((sel) => {
-    // 
-    //     });
-    // });
     return new Promise<void>((resolve, reject) => {
-        // if (editor === undefined) {
-        //     resolve();
-        // }
-        // 
-        // fs.readdir(targetPath, (err, folders) => {
-        //     folders.forEach((foldername: string) => {
-        //         GetPluginDataFromFolder(path.join(targetPath, foldername)).then((ret) => {
-        //             ret.forEach((val) => {
-        //                 pluginList.push(val);
-        //                 loc.push(val.foldername);
-        //             });
-        //             // console.log(loc);
-        //             vscode.window.showQuickPick(loc).then((retval) => {
-        //                 if (retval) {
-        //                     pluginList.forEach((val) => {
-        //                         if (val.foldername === retval) {
-        //                             kit.modulename = val.foldername;
-        //                             kit.modulepath = val.folderpath;
-        //                         }
-        //                     });
-        //                     HandleClassSelection(kit).then((retval) => {
-        //                         console.log("Request accepted...");
-        //                         ValidateRequest(retval).then((ret) => {
-        //                             console.log("return for bolean passage block was ", ret);
-        //                             HandleClassGeneration(retval);
-        //                             resolve();
-        //                         });
-        //                     });
-        //                     resolve(); // Nothing happened. Just return...
-        //                 }
-        //                 else {
-        //                     console.log("None of listed modules was selected. Aborting...");
-        //                     resolve();
-        //                 }
-        //             }, (err) => {
-        //                 console.log("No values selected " + err);
-        //             });
-        //         });
-        //     });
-        // });
         resolve();
     });
 }
@@ -187,33 +160,32 @@ interface SymbolData {
     apiname: string;
 }
 
-
-function HandleClassGeneration(kit: ClassCreationKit) {
-    // console.log("HandleClassGeneration called...");
-    let sourcefilepath = path.join(kit.modulepath, "Private", kit.classname + ".cpp");
-    let headerfilepath = path.join(kit.modulepath, "Public", kit.classname + ".h");
-    // let sourcelogger = fs.createWriteStream(sourcefilepath, { flags: "w" });
-    // sourcelogger.write("Kimochii Oniichan <3");
-    // "Actor", "Character", "Interface", "ActorComponent", "Object", "DataAsset"
-    switch (kit.parentclass) {
-        case "Actor": {
-            ParseAndWrite(headerfilepath, Actor_h, GenerateSymbols(kit)); break;
-        }
-        // case "ActorComponent": { ParseAndWrite(headerfilepath, Actor) break; }
-        // case "Character": { ParseAndWrite(headerfilepath, Actor) break; }
-        // case "Interface": { ParseAndWrite(headerfilepath, Actor) break; }
-        // case "Object": { ParseAndWrite(headerfilepath, Actor) break; }
-        // case "DataAsset": { ParseAndWrite(headerfilepath, Actor) break; }
-        default: { break; }
-    }
-    // sourcelogger.close();
-
-    // let headerlogger = fs.createWriteStream(headerfilepath, { flags: "w" });
-    // headerlogger.write("Kimochii Oniichan <3");
-    // headerlogger.close();
+/** Maps JSON data to possible combinations of buildspaces and selected parentclass. */
+async function HandleClassGeneration(kit: ClassCreationKit): Promise<void> {
+    let sym = GenerateSymbols(kit);
+    await ParseAndWrite(kit.headerpath, Default_Actor_h, sym);
+    await ParseAndWrite(kit.sourcepath, Default_Actor_h, sym);
+    return new Promise<void>((resolve, reject) => {
+        classData.forEach((bs) => {
+            if (bs.buildspace === kit.buildspace) {
+                bs.templates.forEach((tmpl) => {
+                    if (tmpl.id === kit.parentclass) {
+                        InjectHeaders(kit.headerpath, tmpl.Headers).then(() => {
+                            InjectFunctions(kit.headerpath, kit.sourcepath, tmpl.Functions, sym.namespace);
+                            resolve();
+                        });
+                        resolve();
+                    }
+                });
+            }
+        });
+        resolve();
+    });
 }
 
-/** Generates the symbols from data file ParentClassDefinitions.json */
+/** Generates the symbol map for given id and buildspace
+ * @1 : namespace {AActor, UObject}
+ */
 function GenerateSymbols(kit: ClassCreationKit): SymbolData {
     let retval: SymbolData = {
         classname: kit.classname,           // $1
@@ -221,40 +193,52 @@ function GenerateSymbols(kit: ClassCreationKit): SymbolData {
         apiname: kit.modulename             // $3
     };
 
-    classData.forEach((val) => {
-        // if (val.id === kit.parentclass) {
-        //     let str = val.classprefix;
-        //     retval.namespace = str.replace("$1", kit.classname);
-        //     console.log(retval.namespace);
-        // }
+    let data = classData.concat(extendedClassData);
+    data.forEach((val) => {
+        if (val.buildspace === kit.buildspace) {
+            val.templates.forEach((each) => {
+                if (each.id === kit.parentclass) {
+                    let str = each.classprefix;
+                    retval.namespace = str.replace("$1", kit.classname);
+                    return retval;
+                }
+            });
+        }
     });
 
     return retval;
 }
+
 /** Parses the data JSON file and inserts strings where-ever applicable... */
-async function ParseAndWrite(filepath: string, data: string[][], symbols: SymbolData) {
-    let logger = fs.createWriteStream(filepath, { flags: "w" });
-    data.forEach((entry, i) => {
-        // If lines are mentioned to be symbol-free...
-        if (i % 2 === 0) {
-            entry.forEach((line) => {
-                logger.write(line + "\n");
-            });
-        }
-        else {
-            entry.forEach((line) => {
-                line = line.replace("$1", symbols.classname);
-                line = line.replace("$2", symbols.namespace);
-                line = line.replace("$3", symbols.apiname);
-                console.log("new line: ", line);
-                logger.write(line + "\n");
-            });
-        }
+async function ParseAndWrite(filepath: string, data: string[][], symbols: SymbolData): Promise<void> {
+    return new Promise<void>((resolve, reject) => {
+        let logger = fs.createWriteStream(filepath, { flags: "w" });
+        data.forEach((entry, i) => {
+            // If lines are mentioned to be symbol-free...
+            if (i % 2 === 0) {
+                entry.forEach((line) => {
+                    logger.write(line + "\n");
+                });
+            }
+            else {
+                entry.forEach((line) => {
+                    line = line.replace("$1", symbols.classname);
+                    line = line.replace("$2", symbols.namespace);
+                    line = line.replace("$3", symbols.apiname);
+                    logger.write(line + "\n");
+                });
+            }
+        });
+        logger.end(() => {
+            resolve();
+        });
     });
-    logger.close();
 }
 
-/** Checks for spaces and if any files are being overwritten... */
+/** Checks for spaces and if any files are being overwritten...
+ * Whitespace check: spaces
+ * Overwrite checks: in module
+ */
 async function ValidateRequest(kit: ClassCreationKit): Promise<boolean> {
     let inValid = /\s/;
     return new Promise<boolean>((resolve, reject) => {
@@ -266,10 +250,10 @@ async function ValidateRequest(kit: ClassCreationKit): Promise<boolean> {
 
             // Will return true if (.cpp/.h) not found. Prompts/Alerts users otherwise...
             try {
-                fs.accessSync(path.join(kit.modulepath, "Public", kit.classname + ".h"));
-                vscode.window.showErrorMessage(path.join(kit.modulename, "Public", kit.classname + ".h ") + "will be overwritten !");
-                fs.accessSync(path.join(kit.modulepath, "Private", kit.classname + ".cpp"));
-                vscode.window.showErrorMessage(path.join(kit.modulename, "Private", kit.classname + ".cpp ") + "will be overwritten !");
+                fs.accessSync(kit.headerpath);
+                vscode.window.showErrorMessage(path.join(kit.modulename, kit.classname + ".h") + "will be overwritten !");
+                fs.accessSync(kit.sourcepath);
+                vscode.window.showErrorMessage(path.join(kit.modulename, kit.classname + ".cpp") + "will be overwritten !");
                 reject(false);
             }
             catch {
@@ -280,7 +264,6 @@ async function ValidateRequest(kit: ClassCreationKit): Promise<boolean> {
             resolve(ret);
         }, (err) => {
             // Let user decide if current request overwrites files...
-            console.log("Reached decision point...");
             let opt: string[] = ["Abort(default)", "I understand that my previous data will be lost."];
             vscode.window.showQuickPick(opt).then((sel) => {
                 if (sel === "I understand that my previous data will be lost.") {
@@ -302,7 +285,10 @@ async function NamespaceSelection(): Promise<ClassCreationKit> {
         modulename: "",
         parentclass: "",
         classname: "",
-        buildspace: "" // set in this function
+        buildspace: "", // set in this function
+        isGameModule: true,
+        headerpath: "",
+        sourcepath: ""
     };
 
     let arr: string[] = [];
@@ -312,6 +298,7 @@ async function NamespaceSelection(): Promise<ClassCreationKit> {
         arr.push(val.buildspace);
     });
     return new Promise<ClassCreationKit>((resolve, reject) => {
+        // QuickPick(arr, "OniiChan");
         vscode.window.showQuickPick(arr).then((ret) => {
             if (ret) {
                 retval.buildspace = ret;
@@ -329,6 +316,7 @@ async function NamespaceSelection(): Promise<ClassCreationKit> {
 /** Called after module is selected by user to provide class catalogue. */
 async function HandleClassSelection(kit: ClassCreationKit): Promise<ClassCreationKit> {
     let marr: string[] = []; // Classes offered
+    _.concat(marr, ["Actor", "Character", "Interface", "ActorComponent", "Object", "DataAsset"]);
     marr.push("Actor", "Character", "Interface", "ActorComponent", "Object", "DataAsset");
 
     return new Promise<ClassCreationKit>((resolve, reject) => {
@@ -353,7 +341,6 @@ async function HandleClassSelection(kit: ClassCreationKit): Promise<ClassCreatio
                 // After providing information, request acceptance...
                 vscode.window.showQuickPick(["Yes", "No"]).then((retval) => {
                     if (retval === "Yes") {
-                        console.log(kit.classname, kit.modulename, kit.modulepath, kit.parentclass);
                         resolve(kit);
                     }
                 });
@@ -362,11 +349,4 @@ async function HandleClassSelection(kit: ClassCreationKit): Promise<ClassCreatio
         });
         // resolve(kit);
     });
-}
-
-function IsValidModuleName(name: string) {
-    if ((name === "Python") ||
-        (name === "Shaders") ||
-        (false)) { return false; }
-    else { return true; }
 }

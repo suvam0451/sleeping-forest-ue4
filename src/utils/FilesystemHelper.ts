@@ -11,6 +11,7 @@ import { resolve, promises } from "dns";
 import { rejects } from "assert";
 import * as feedback from "./ErrorLogger";
 import * as fs from "fs";
+import * as _ from "lodash";
 
 export interface FunctionAnatomy {
     prototype: string;
@@ -170,28 +171,26 @@ export async function WriteFunctionToFile(filepath: string, funcBody: FunctionAn
 }
 
 export async function WriteAtLine(filepath: string, at: number, lines: string[]): Promise<void> {
-    let content = "";
+    let content: string = "";
     lines.forEach((str) => {
         content += str + "\n";
     });
     return new Promise<void>((resolve, reject) => {
         let data: string[] = fs.readFileSync(filepath).toString().split("\n");
-        data.splice(at, 0, content);
-
+        data.splice(at, 0, content); // data.splice(at, 0, content);
+        console.log(data);
         // Using filestream
         let stream = fs.createWriteStream(filepath)
             .on("error", () => {
                 console.log("Some error occured...");
             })
             .on("finish", () => {
-                console.log("Filestream finished execution...");
                 resolve();
             });
         data.forEach((line) => {
             stream.write(line + "\n");
         });
         stream.end();
-        console.log("WriteAtLine finished block execution...");
     });
 }
 
@@ -204,24 +203,20 @@ export function GetPluginDataFromFolder(folder: string): PluginPathInfo[] {
     try {
         let folders = fs.readdirSync(targetpath);
         // Every folder in a valid plug-in foler is assumed to be a module...
-        folders.forEach((folder) => {
+        _.each(folders, (folder) => {
             if (fs.statSync(path.join(targetpath, folder)).isDirectory() === true) {
-                // Avoiding special folders...
-                if ((folder !== "Python") &&
-                    (folder !== "Shaders")) {
-                    retval.push({
-                        foldername: folder,
-                        folderpath: path.join(targetpath, folder),
-                        isGameModule: false
-                    });
-                }
+                retval.push({
+                    foldername: folder,
+                    folderpath: path.join(targetpath, folder),
+                    isGameModule: false
+                });
             }
-            return retval;
         });
+        // Filter out specific folders...
+        _.filter(retval, (o) => { ((o.foldername !== "Python") && (o.foldername !== "Shaders")); });
+        return retval;
     }
     catch {
         return retval;
     }
-
-    return retval;
 }

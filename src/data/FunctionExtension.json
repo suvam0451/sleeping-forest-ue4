@@ -1,0 +1,20 @@
+[
+    {
+        "id": "BeginPlay",
+        "comment": "// Called when the game starts or when spawned",
+        "signature": "virtual void BeginPlay() override;",
+        "field": "public",
+        "body": [
+            "Super::BeginPlay();"
+        ]
+    },
+    {
+        "id": "Tick",
+        "comment": "// Called when the game starts or when spawned",
+        "signature": "virtual void Tick() override;",
+        "field": "public",
+        "body": [
+            "Super::Tick();"
+        ]
+    }
+]
