@@ -220,3 +220,20 @@ export function GetPluginDataFromFolder(folder: string): PluginPathInfo[] {
         return retval;
     }
 }
+
+export function GetFolderList(targetpath: string): string[] {
+    let retval: string[] = [];
+    try {
+        let folders = fs.readdirSync(targetpath);
+        // Every folder in a valid plug-in foler is assumed to be a module...
+        _.each(folders, (folder) => {
+            if (fs.statSync(path.join(targetpath, folder)).isDirectory() === true) {
+                retval.push(folder);
+            }
+        });
+        return retval;
+    }
+    catch {
+        return retval;
+    }
+}

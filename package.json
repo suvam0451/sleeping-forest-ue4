@@ -113,7 +113,6 @@
 		"webpack-dev": "webpack --mode development --watch"
 	},
 	"devDependencies": {
-		"@types/glob": "^7.1.1",
 		"@types/mocha": "^5.2.7",
 		"@types/node": "^12.11.7",
 		"@types/vscode": "^1.39.0",
@@ -128,13 +127,9 @@
 		"webpack-cli": "^3.3.10"
 	},
 	"dependencies": {
-		"@types/line-reader": "^0.0.28",
 		"@types/lodash": "^4.14.149",
-		"@types/n-readlines": "^1.0.0",
 		"fs": "^0.0.1-security",
-		"insert-line": "^1.1.0",
 		"line-reader": "^0.4.0",
-		"n-readlines": "^1.0.0",
 		"path": "^0.12.7",
 		"xregexp": "^4.2.4"
 	}

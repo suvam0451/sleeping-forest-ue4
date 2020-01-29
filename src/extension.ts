@@ -3,7 +3,6 @@
 import * as vscode from 'vscode';
 var path = require("path");
 var XRegExp = require('xregexp');
-import * as UI from "./utils/UserInteraction";
 import * as ext from "./utils/ExtensionHelper";
 import * as edit from "./utils/EditorHelper";
 import * as filesys from "./utils/FilesystemHelper";
@@ -34,17 +33,10 @@ export function WriteRequest(editor: vscode.TextEditor, position: vscode.Positio
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
-
-	// Use the console to output diagnostic information (console.log) and errors (console.error)
-	// This line of code will only be executed once when your extension is activated
 	console.log('Congratulations, your extension "wan-chai" is now active!');
 
 	//#region extension.helloWorld
 	let HelloWorld = vscode.commands.registerCommand('extension.helloWorld', () => {
-		let arr: UI.SelectionStruct[] = [];
-		arr.push({ data: "100", label: "oniichan" });
-		UI.ShowSelectionOptions(arr);
-
 		let data: filesys.FileData = filesys.GetActiveFileData();
 		switch (data.cppvalid) {
 			case filesys.ActiveFileExtension.Header: { break; }
@@ -57,6 +49,7 @@ export function activate(context: vscode.ExtensionContext) {
 
 	//#region extension.compileShaders
 	let ShaderCompileCommand = vscode.commands.registerCommand('extension.compileShaders', () => {
+
 		vscode.window.showInformationMessage('Compiling shaders...');
 	});
 	context.subscriptions.push(ShaderCompileCommand);

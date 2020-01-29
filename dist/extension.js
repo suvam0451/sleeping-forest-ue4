@@ -23965,7 +23965,7 @@ module.exports = JSON.parse("[{\"id\":\"BeginPlay\",\"comment\":\"// Called when
 /*! exports provided: 0, 1, 2, default */
 /***/ (function(module) {
 
-module.exports = JSON.parse("[{\"id\":\"BeginPlay\",\"comment\":\"// Called when the game starts or when spawned\",\"signature\":\"virtual void BeginPlay() override;\",\"field\":\"public\",\"body\":[\"Super::BeginPlay();\"]},{\"id\":\"Tick\",\"comment\":\"// Called when the game starts or when spawned\",\"signature\":\"virtual void Tick() override;\",\"field\":\"public\",\"body\":[\"Super::Tick();\"]},{\"id\":\"OnConstruction\",\"comment\":\"// Called when an instance of this class is placed (in editor) or spawned.\",\"signature\":\"virtual void OnConstruction(const FTransform &Transform) override;\",\"field\":\"private\",\"body\":[]}]");
+module.exports = JSON.parse("[{\"id\":\"BeginPlay\",\"comment\":\"// Called when the game starts or when spawned\",\"signature\":\"virtual void BeginPlay() override;\",\"field\":\"protected\",\"body\":[\"Super::BeginPlay();\"]},{\"id\":\"Tick\",\"comment\":\"// Called every frame\",\"signature\":\"virtual void Tick(float DeltaTime) override;\",\"field\":\"public\",\"body\":[\"Super::Tick(DeltaTime);\"]},{\"id\":\"OnConstruction\",\"comment\":\"// Called when an instance of this class is placed (in editor) or spawned.\",\"signature\":\"virtual void OnConstruction(const FTransform &Transform) override;\",\"field\":\"private\",\"body\":[\"// Function not implemented\"]}]");
 
 /***/ }),
 
@@ -23977,6 +23977,17 @@ module.exports = JSON.parse("[{\"id\":\"BeginPlay\",\"comment\":\"// Called when
 /***/ (function(module) {
 
 module.exports = JSON.parse("{\"Spline\":[\"#include \\\"Components/SplineComponent.h\\\"\",\"#include \\\"Components/SplineMeshComponent.h\\\"\"],\"Procedural\":[\"#include \\\"Components/InstancedStaticMeshComponent.h\\\"\"]}");
+
+/***/ }),
+
+/***/ "./src/data/generators/Default_Actor_cpp.json":
+/*!****************************************************!*\
+  !*** ./src/data/generators/Default_Actor_cpp.json ***!
+  \****************************************************/
+/*! exports provided: 0, 1, default */
+/***/ (function(module) {
+
+module.exports = JSON.parse("[[\"// Fill out your copyright notice in the Description page of Project Settings.\\n\"],[\"#include \\\"$1.h\\\"\\n\"]]");
 
 /***/ }),
 
@@ -24027,7 +24038,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const vscode = __importStar(__webpack_require__(/*! vscode */ "vscode"));
 var path = __webpack_require__(/*! path */ "path");
 var XRegExp = __webpack_require__(/*! xregexp */ "./node_modules/xregexp/lib/index.js");
-const UI = __importStar(__webpack_require__(/*! ./utils/UserInteraction */ "./src/utils/UserInteraction.ts"));
 const edit = __importStar(__webpack_require__(/*! ./utils/EditorHelper */ "./src/utils/EditorHelper.ts"));
 const filesys = __importStar(__webpack_require__(/*! ./utils/FilesystemHelper */ "./src/utils/FilesystemHelper.ts"));
 const feedback = __importStar(__webpack_require__(/*! ./utils/ErrorLogger */ "./src/utils/ErrorLogger.ts"));
@@ -24048,14 +24058,9 @@ exports.WriteRequest = WriteRequest;
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 function activate(context) {
-    // Use the console to output diagnostic information (console.log) and errors (console.error)
-    // This line of code will only be executed once when your extension is activated
     console.log('Congratulations, your extension "wan-chai" is now active!');
     //#region extension.helloWorld
     let HelloWorld = vscode.commands.registerCommand('extension.helloWorld', () => {
-        let arr = [];
-        arr.push({ data: "100", label: "oniichan" });
-        UI.ShowSelectionOptions(arr);
         let data = filesys.GetActiveFileData();
         switch (data.cppvalid) {
             case filesys.ActiveFileExtension.Header: {
@@ -24194,10 +24199,11 @@ const BuildTemplates_json_1 = __importDefault(__webpack_require__(/*! ../data/Bu
 const BuildExtension_json_1 = __importDefault(__webpack_require__(/*! ../data/BuildExtension.json */ "./src/data/BuildExtension.json"));
 // Header/Source file generation data...
 const Default_Actor_h_json_1 = __importDefault(__webpack_require__(/*! ../data/generators/Default_Actor_h.json */ "./src/data/generators/Default_Actor_h.json"));
-// import { InjectHeaders } from "../utils/EditorHelper";
+const Default_Actor_cpp_json_1 = __importDefault(__webpack_require__(/*! ../data/generators/Default_Actor_cpp.json */ "./src/data/generators/Default_Actor_cpp.json"));
 const FileHelper_1 = __webpack_require__(/*! ../utils/FileHelper */ "./src/utils/FileHelper.ts");
 const _ = __importStar(__webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js"));
 const VSInterface_1 = __webpack_require__(/*! ./VSInterface */ "./src/modules/VSInterface.ts");
+const filesys = __importStar(__webpack_require__(/*! ../utils/FilesystemHelper */ "./src/utils/FilesystemHelper.ts"));
 /** Generates header(.h)/soure(.cpp) paths based on module type and previous data */
 function GenerateFileData(data) {
     return __awaiter(this, void 0, void 0, function* () {
@@ -24208,6 +24214,8 @@ function GenerateFileData(data) {
                 resolve(data);
             }
             else { // Gamemodule have files in same path
+                data.headerpath = path.join(data.modulepath, data.classname + ".h");
+                data.sourcepath = path.join(data.modulepath, data.classname + ".cpp");
                 resolve(data);
             }
         });
@@ -24249,13 +24257,24 @@ function ModuleSelection(data) {
         let pluginDataArray = [];
         let workspacePath = vscode.workspace.workspaceFolders[0].uri.path.substr(1);
         let pluginPath = path.join(workspacePath, "Plugins");
+        let gamefoldername = "";
         return new Promise((resolve, reject) => {
             let arr = [];
             try {
-                let lst = fs.readdirSync(pluginPath);
+                // let lst = fs.readdirSync(pluginPath);
+                let lst = filesys.GetFolderList(pluginPath);
                 lst.forEach((folder) => {
                     let ret = FilesystemHelper_1.GetPluginDataFromFolder(path.join(pluginPath, folder));
                     pluginDataArray = pluginDataArray.concat(ret);
+                });
+                let wspath = vscode.workspace.workspaceFolders[0].uri.fsPath;
+                // Just pick the first folder
+                gamefoldername = filesys.GetFolderList(path.join(wspath, "Source"))[0];
+                // Push the "Game" folder data...
+                pluginDataArray.push({
+                    foldername: "Game",
+                    folderpath: path.join(wspath, "Source", gamefoldername),
+                    isGameModule: true
                 });
                 // let arr =_.concat(arr, pluginDataArray);
                 _.each(pluginDataArray, (ret) => {
@@ -24265,13 +24284,14 @@ function ModuleSelection(data) {
             catch (_a) {
                 reject("Throw not implemented...");
             }
-            arr.push("Game");
+            // arr.push("Game");
             VSInterface_1.QuickPick(arr, false).then((sel) => {
+                console.log("User selected, ", sel);
                 let index = pluginDataArray.find(i => i.foldername === sel);
                 if (typeof index !== "undefined") {
                     switch (index.foldername) {
                         case "Game": {
-                            data.modulename = index.foldername; // Needs update
+                            data.modulename = gamefoldername; // Not "Game"
                             data.modulepath = index.folderpath; // Needs update
                             data.isGameModule = true;
                             break;
@@ -24318,7 +24338,7 @@ function HandleClassGeneration(kit) {
     return __awaiter(this, void 0, void 0, function* () {
         let sym = GenerateSymbols(kit);
         yield ParseAndWrite(kit.headerpath, Default_Actor_h_json_1.default, sym);
-        yield ParseAndWrite(kit.sourcepath, Default_Actor_h_json_1.default, sym);
+        yield ParseAndWrite(kit.sourcepath, Default_Actor_cpp_json_1.default, sym);
         return new Promise((resolve, reject) => {
             BuildTemplates_json_1.default.forEach((bs) => {
                 if (bs.buildspace === kit.buildspace) {
@@ -24353,6 +24373,7 @@ function GenerateSymbols(kit) {
                 if (each.id === kit.parentclass) {
                     let str = each.classprefix;
                     retval.namespace = str.replace("$1", kit.classname);
+                    retval.apiname = retval.apiname.toUpperCase();
                     return retval;
                 }
             });
@@ -24450,7 +24471,6 @@ function NamespaceSelection() {
             arr.push(val.buildspace);
         });
         return new Promise((resolve, reject) => {
-            // QuickPick(arr, "OniiChan");
             vscode.window.showQuickPick(arr).then((ret) => {
                 if (ret) {
                     retval.buildspace = ret;
@@ -24461,44 +24481,6 @@ function NamespaceSelection() {
             }).then(() => {
                 resolve(retval);
             });
-        });
-    });
-}
-/** Called after module is selected by user to provide class catalogue. */
-function HandleClassSelection(kit) {
-    return __awaiter(this, void 0, void 0, function* () {
-        let marr = []; // Classes offered
-        _.concat(marr, ["Actor", "Character", "Interface", "ActorComponent", "Object", "DataAsset"]);
-        marr.push("Actor", "Character", "Interface", "ActorComponent", "Object", "DataAsset");
-        return new Promise((resolve, reject) => {
-            vscode.window.showQuickPick(marr).then((retval) => {
-                if (retval !== "") {
-                    kit.parentclass = retval;
-                }
-                else {
-                    resolve(kit);
-                }
-            }).then(() => {
-                // After getting parentclass info...
-                const input = vscode.window.showInputBox(); // request classname...
-                input.then((value) => {
-                    if (value !== "") {
-                        kit.classname = value;
-                        vscode.window.showWarningMessage("Adding "
-                            + value + " of type " + kit.parentclass + " in " + kit.modulename
-                            + "... Continue ?");
-                    }
-                }).then(() => {
-                    // After providing information, request acceptance...
-                    vscode.window.showQuickPick(["Yes", "No"]).then((retval) => {
-                        if (retval === "Yes") {
-                            resolve(kit);
-                        }
-                    });
-                });
-                // resolve(kit);
-            });
-            // resolve(kit);
         });
     });
 }
@@ -24953,7 +24935,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var XRegExp = __webpack_require__(/*! xregexp */ "./node_modules/xregexp/lib/index.js");
 const fs = __importStar(__webpack_require__(/*! fs */ "fs"));
 const readline_1 = __importDefault(__webpack_require__(/*! readline */ "readline"));
-// import * as insertLine from "insert-line";
 const _ = __importStar(__webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js"));
 const FunctionTemplates_json_1 = __importDefault(__webpack_require__(/*! ../data/FunctionTemplates.json */ "./src/data/FunctionTemplates.json"));
 const FunctionExtension_json_1 = __importDefault(__webpack_require__(/*! ../data/FunctionExtension.json */ "./src/data/FunctionExtension.json"));
@@ -24987,26 +24968,29 @@ function InjectFunctions(headerpath, sourcepath, arr, namespace) {
         _.each(arr, (fnid) => {
             var _a;
             let pnt = _.find(data, (o) => { return o.id === fnid; });
-            switch ((_a = pnt) === null || _a === void 0 ? void 0 : _a.field) {
-                case "public": {
-                    pubAdd.push("\t" + pnt.comment);
-                    pubAdd.push("\t" + pnt.signature + "\n");
-                    srcAdd = _.concat(srcAdd, GeneratedSourceBody(pnt.signature, namespace, pnt.body));
-                    break;
+            if (pnt) {
+                switch ((_a = pnt) === null || _a === void 0 ? void 0 : _a.field) {
+                    case "public": {
+                        pubAdd.push("\t" + pnt.comment);
+                        pubAdd.push("\t" + pnt.signature + "\n");
+                        break;
+                    }
+                    case "protected": {
+                        protAdd.push("\t" + pnt.comment);
+                        protAdd.push("\t" + pnt.signature + "\n");
+                        break;
+                    }
+                    case "private": {
+                        privAdd.push("\t" + pnt.comment);
+                        privAdd.push("\t" + pnt.signature + "\n");
+                        break;
+                    }
+                    default: {
+                        break;
+                    }
                 }
-                case "protected": {
-                    protAdd.push("\t" + pnt.comment);
-                    protAdd.push("\t" + pnt.signature + "\n");
-                    break;
-                }
-                case "private": {
-                    privAdd.push("\t" + pnt.comment);
-                    privAdd.push("\t" + pnt.signature + "\n");
-                    break;
-                }
-                default: {
-                    break;
-                }
+                // Add function body to source
+                srcAdd = _.concat(srcAdd, GeneratedSourceBody(pnt.signature, namespace, pnt.body));
             }
         });
         return new Promise((resolve, reject) => {
@@ -25103,7 +25087,7 @@ function StringExtract(str, ex) {
 }
 function GeneratedSourceBody(signature, namespace, fnbody) {
     let retval = [];
-    let cls = StringExtract(signature, /([a-zA-Z<>]*)\(\)/);
+    let cls = StringExtract(signature, /([a-zA-Z<>]*)\((.*?)\)/);
     let rettype = StringExtract(signature, / ([a-zA-Z_]*)<?([a-zA-Z, ]*)>? /);
     retval.push(rettype + " " + namespace + "::" + cls); // AMyActor::BeginPlay() { // body }
     retval.push("{");
@@ -25335,54 +25319,23 @@ function GetPluginDataFromFolder(folder) {
     }
 }
 exports.GetPluginDataFromFolder = GetPluginDataFromFolder;
-
-
-/***/ }),
-
-/***/ "./src/utils/UserInteraction.ts":
-/*!**************************************!*\
-  !*** ./src/utils/UserInteraction.ts ***!
-  \**************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
-    result["default"] = mod;
-    return result;
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-const vscode = __importStar(__webpack_require__(/*! vscode */ "vscode"));
-function cancel() {
-    return new Error("CANCEL");
-}
-exports.cancel = cancel;
-function ShowSelectionOptions(items) {
-    return __awaiter(this, void 0, void 0, function* () {
-        return new Promise((resolve, reject) => {
-            // Use createQuickPick for advanced use cases...
-            vscode.window.showQuickPick(items).then((value) => {
-                var _a;
-                console.log((_a = value) === null || _a === void 0 ? void 0 : _a.label);
-                resolve(value);
-            });
+function GetFolderList(targetpath) {
+    let retval = [];
+    try {
+        let folders = fs.readdirSync(targetpath);
+        // Every folder in a valid plug-in foler is assumed to be a module...
+        _.each(folders, (folder) => {
+            if (fs.statSync(path.join(targetpath, folder)).isDirectory() === true) {
+                retval.push(folder);
+            }
         });
-    });
+        return retval;
+    }
+    catch (_a) {
+        return retval;
+    }
 }
-exports.ShowSelectionOptions = ShowSelectionOptions;
+exports.GetFolderList = GetFolderList;
 
 
 /***/ }),

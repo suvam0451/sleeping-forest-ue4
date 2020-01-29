@@ -15,14 +15,16 @@ import classData from "../data/BuildTemplates.json";
 import extendedClassData from "../data/BuildExtension.json";
 // Header/Source file generation data...
 import Default_Actor_h from "../data/generators/Default_Actor_h.json";
+import Default_Actor_cpp from "../data/generators/Default_Actor_cpp.json";
 import { rejects } from "assert";
 import IncludeManager from "./IncludeManager";
-// import { InjectHeaders } from "../utils/EditorHelper";
 import { InjectHeaders, InjectFunctions } from "../utils/FileHelper";
 import * as _ from "lodash";
 import { QuickPick, InputBox } from "./VSInterface";
 import { WriteAtLine } from "../utils/FilesystemHelper";
 import FileHandler from "../classes/FileHandler";
+import * as filesys from "../utils/FilesystemHelper";
+
 
 interface ClassCreationKit {
     modulepath: string;
@@ -50,6 +52,8 @@ async function GenerateFileData(data: ClassCreationKit): Promise<ClassCreationKi
             resolve(data);
         }
         else { // Gamemodule have files in same path
+            data.headerpath = path.join(data.modulepath, data.classname + ".h");
+            data.sourcepath = path.join(data.modulepath, data.classname + ".cpp");
             resolve(data);
         }
     });
@@ -90,16 +94,27 @@ async function ModuleSelection(data: ClassCreationKit): Promise<ClassCreationKit
     let pluginDataArray: PluginPathInfo[] = [];
     let workspacePath: string = vscode.workspace.workspaceFolders![0].uri.path.substr(1);
     let pluginPath = path.join(workspacePath, "Plugins");
+    let gamefoldername = "";
 
     return new Promise<ClassCreationKit>((resolve, reject) => {
         let arr: string[] = [];
         try {
-            let lst = fs.readdirSync(pluginPath);
+            // let lst = fs.readdirSync(pluginPath);
+            let lst = filesys.GetFolderList(pluginPath);
             lst.forEach((folder) => {
                 let ret = GetPluginDataFromFolder(path.join(pluginPath, folder));
                 pluginDataArray = pluginDataArray.concat(ret);
             });
 
+            let wspath = vscode.workspace.workspaceFolders![0].uri.fsPath;
+            // Just pick the first folder
+            gamefoldername = filesys.GetFolderList(path.join(wspath, "Source"))[0];
+            // Push the "Game" folder data...
+            pluginDataArray.push({
+                foldername: "Game",
+                folderpath: path.join(wspath, "Source", gamefoldername),
+                isGameModule: true
+            });
             // let arr =_.concat(arr, pluginDataArray);
             _.each(pluginDataArray, (ret) => {
                 arr.push(ret.foldername);
@@ -108,13 +123,14 @@ async function ModuleSelection(data: ClassCreationKit): Promise<ClassCreationKit
         catch {
             reject("Throw not implemented...");
         }
-        arr.push("Game");
+        // arr.push("Game");
         QuickPick(arr, false).then((sel) => {
+            console.log("User selected, ", sel);
             let index = pluginDataArray.find(i => i.foldername === sel);
             if (typeof index !== "undefined") {
                 switch (index.foldername) {
                     case "Game": {
-                        data.modulename = index.foldername; // Needs update
+                        data.modulename = gamefoldername; // Not "Game"
                         data.modulepath = index.folderpath; // Needs update
                         data.isGameModule = true;
                         break;
@@ -164,7 +180,7 @@ interface SymbolData {
 async function HandleClassGeneration(kit: ClassCreationKit): Promise<void> {
     let sym = GenerateSymbols(kit);
     await ParseAndWrite(kit.headerpath, Default_Actor_h, sym);
-    await ParseAndWrite(kit.sourcepath, Default_Actor_h, sym);
+    await ParseAndWrite(kit.sourcepath, Default_Actor_cpp, sym);
     return new Promise<void>((resolve, reject) => {
         classData.forEach((bs) => {
             if (bs.buildspace === kit.buildspace) {
@@ -200,6 +216,7 @@ function GenerateSymbols(kit: ClassCreationKit): SymbolData {
                 if (each.id === kit.parentclass) {
                     let str = each.classprefix;
                     retval.namespace = str.replace("$1", kit.classname);
+                    retval.apiname = retval.apiname.toUpperCase();
                     return retval;
                 }
             });
@@ -298,7 +315,6 @@ async function NamespaceSelection(): Promise<ClassCreationKit> {
         arr.push(val.buildspace);
     });
     return new Promise<ClassCreationKit>((resolve, reject) => {
-        // QuickPick(arr, "OniiChan");
         vscode.window.showQuickPick(arr).then((ret) => {
             if (ret) {
                 retval.buildspace = ret;
@@ -309,44 +325,5 @@ async function NamespaceSelection(): Promise<ClassCreationKit> {
         }).then(() => {
             resolve(retval);
         });
-    });
-
-}
-
-/** Called after module is selected by user to provide class catalogue. */
-async function HandleClassSelection(kit: ClassCreationKit): Promise<ClassCreationKit> {
-    let marr: string[] = []; // Classes offered
-    _.concat(marr, ["Actor", "Character", "Interface", "ActorComponent", "Object", "DataAsset"]);
-    marr.push("Actor", "Character", "Interface", "ActorComponent", "Object", "DataAsset");
-
-    return new Promise<ClassCreationKit>((resolve, reject) => {
-        vscode.window.showQuickPick(marr).then((retval) => {
-            if (retval !== "") {
-                kit.parentclass = retval!;
-            }
-            else {
-                resolve(kit);
-            }
-        }).then(() => {
-            // After getting parentclass info...
-            const input = vscode.window.showInputBox(); // request classname...
-            input.then((value) => {
-                if (value !== "") {
-                    kit.classname = value!;
-                    vscode.window.showWarningMessage("Adding "
-                        + value + " of type " + kit.parentclass + " in " + kit.modulename
-                        + "... Continue ?");
-                }
-            }).then(() => {
-                // After providing information, request acceptance...
-                vscode.window.showQuickPick(["Yes", "No"]).then((retval) => {
-                    if (retval === "Yes") {
-                        resolve(kit);
-                    }
-                });
-            });
-            // resolve(kit);
-        });
-        // resolve(kit);
     });
 }

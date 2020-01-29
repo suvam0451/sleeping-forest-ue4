@@ -6,10 +6,7 @@
 var XRegExp = require('xregexp');
 import * as vscode from "vscode";
 import * as fs from "fs";
-import lineReader from "line-reader";
-import nlines from "n-readlines";
 import readline from "readline";
-// import * as insertLine from "insert-line";
 import * as _ from "lodash";
 import FuncDefs from "../data/FunctionTemplates.json";
 import FuncExts from "../data/FunctionExtension.json";
@@ -45,24 +42,27 @@ export async function InjectFunctions(headerpath: string, sourcepath: string, ar
 
     _.each(arr, (fnid) => {
         let pnt = _.find(data, (o) => { return o.id === fnid; });
-        switch (pnt?.field) {
-            case "public": {
-                pubAdd.push("\t" + pnt.comment);
-                pubAdd.push("\t" + pnt.signature + "\n");
-                srcAdd = _.concat(srcAdd, GeneratedSourceBody(pnt.signature, namespace, pnt.body));
-                break;
+        if (pnt) {
+            switch (pnt?.field) {
+                case "public": {
+                    pubAdd.push("\t" + pnt.comment);
+                    pubAdd.push("\t" + pnt.signature + "\n");
+                    break;
+                }
+                case "protected": {
+                    protAdd.push("\t" + pnt.comment);
+                    protAdd.push("\t" + pnt.signature + "\n");
+                    break;
+                }
+                case "private": {
+                    privAdd.push("\t" + pnt.comment);
+                    privAdd.push("\t" + pnt.signature + "\n");
+                    break;
+                }
+                default: { break; }
             }
-            case "protected": {
-                protAdd.push("\t" + pnt.comment);
-                protAdd.push("\t" + pnt.signature + "\n");
-                break;
-            }
-            case "private": {
-                privAdd.push("\t" + pnt.comment);
-                privAdd.push("\t" + pnt.signature + "\n");
-                break;
-            }
-            default: { break; }
+            // Add function body to source
+            srcAdd = _.concat(srcAdd, GeneratedSourceBody(pnt.signature, namespace, pnt.body));
         }
     });
 
@@ -165,7 +165,7 @@ function StringExtract(str: string, ex: RegExp): string {
 
 function GeneratedSourceBody(signature: string, namespace: string, fnbody: string[]): string[] {
     let retval: string[] = [];
-    let cls = StringExtract(signature, /([a-zA-Z<>]*)\(\)/);
+    let cls = StringExtract(signature, /([a-zA-Z<>]*)\((.*?)\)/);
     let rettype = StringExtract(signature, / ([a-zA-Z_]*)<?([a-zA-Z, ]*)>? /);
     retval.push(rettype + " " + namespace + "::" + cls); // AMyActor::BeginPlay() { // body }
     retval.push("{");

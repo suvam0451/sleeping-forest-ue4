@@ -3,18 +3,18 @@
         "id": "BeginPlay",
         "comment": "// Called when the game starts or when spawned",
         "signature": "virtual void BeginPlay() override;",
-        "field": "public",
+        "field": "protected",
         "body": [
             "Super::BeginPlay();"
         ]
     },
     {
         "id": "Tick",
-        "comment": "// Called when the game starts or when spawned",
-        "signature": "virtual void Tick() override;",
+        "comment": "// Called every frame",
+        "signature": "virtual void Tick(float DeltaTime) override;",
         "field": "public",
         "body": [
-            "Super::Tick();"
+            "Super::Tick(DeltaTime);"
         ]
     },
     {
@@ -22,6 +22,8 @@
         "comment": "// Called when an instance of this class is placed (in editor) or spawned.",
         "signature": "virtual void OnConstruction(const FTransform &Transform) override;",
         "field": "private",
-        "body": []
+        "body": [
+            "// Function not implemented"
+        ]
     }
 ]
