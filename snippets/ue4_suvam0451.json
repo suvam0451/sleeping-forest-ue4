@@ -1,7 +1,9 @@
 {
 	"Loop": {
 		"prefix": "loop",
-		"body": ["for(int i = 0; i < $1; i++) {\n\t$2\n}"]
+		"body": [
+			"for(int i = 0; i < $1; i++) {\n\t$2\n}"
+		]
 	},
 	"2D Loop": {
 		"prefix": "loop2",
@@ -15,11 +17,16 @@
 	},
 	"CreateDefaultSubobject": {
 		"prefix": "ucdo",
-		"body": ["$1 = CreateDefaultSubobject<$2>(\"$3\");"]
+		"body": [
+			"CreateDefaultSubobject<$1>(\"$2\");",
+			"$0"
+		]
 	},
 	"NewObject": {
 		"prefix": "unew",
-		"body": ["NewObject<$1>(\"\");"],
+		"body": [
+			"NewObject<$1>(\"\");"
+		],
 		"description": [
 			"Used to initialize object outside constructor",
 			"Don't forget to register component and attach to SceneComponent to be visible in inspector.",
@@ -29,7 +36,9 @@
 	},
 	"Warning log": {
 		"prefix": "ulog",
-		"body": ["UE_LOG(LogTemp, Warning, TEXT(\"$1\")$2);"],
+		"body": [
+			"UE_LOG(LogTemp, Warning, TEXT(\"$1\")$2);"
+		],
 		"description": "Prints a warning to console."
 	},
 	"Add a SceneComponent property to replace RootComponent": {

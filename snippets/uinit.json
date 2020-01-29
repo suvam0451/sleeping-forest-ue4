@@ -35,5 +35,27 @@
 			"$1->SetStaticMesh(${2:YourMeshHere});",
 			"$0"
 		]
+	},
+	"Initialize: AI Sight Configuration": {
+		"prefix": "uinit_sightconfig",
+		"body": [
+			"$1 = CreateDefaultSubobject<UAISenseConfig_Sight>(\"Sight Config\");",
+			"$1->SightRadius = 400.0f;",
+			"$1->LoseSightRadius = 500.0f;",
+			"$1->PeripheralVisionAngleDegrees = 60.0f;",
+			"$1->SetMaxAge(5.0f);",
+			"$1->DetectionByAffiliation.bDetectEnemies = true;",
+			"$1->DetectionByAffiliation.bDetectFriendlies = true;",
+			"$1->DetectionByAffiliation.bDetectNeutrals = true;",
+			"GetPerceptionComponent()->SetDominantSense(*$1->GetSenseImplementation());",
+			"// Bind a function to eb called when new pawns of above affilicationa are detected...",
+			"// GetPerceptionComponent()->OnPerceptionUpdated.AddDynamic(this, AAI_Bot_Controller::OnPawnDetected);",
+			"GetPerceptionComponent()->ConfigureSense(*SightConfig);",
+			"$0"
+		],
+		"description": [
+			"Use to setup a UAISenseConfig_Sight class instance",
+			"You are expected to first declare it, include headers and create the object using \"ucdo\""
+		]
 	}
 }

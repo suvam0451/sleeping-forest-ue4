@@ -25,5 +25,21 @@
         "body": [
             "// Function not implemented"
         ]
+    },
+    {
+        "id": "SetupPlayerInputComponent",
+        "comment": "// Called to bind functionality to input",
+        "signature": "virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;",
+        "field": "public",
+        "body": [
+            "Super::SetupPlayerInputComponent(PlayerInputComponent);"
+        ]
+    },
+    {
+        "id": "OnPossess(APawn *MyPawn)",
+        "comment": "// ",
+        "signature": "virtual void OnPossess(APawn *MyPawn) override;",
+        "field": "protected",
+        "body": []
     }
 ]

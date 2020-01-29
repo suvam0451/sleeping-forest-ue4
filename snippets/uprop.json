@@ -22,7 +22,7 @@
 		"body": [
 			"// ${2:Description not provided } ",
 			"UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=\"Parameters\")",
-			"\tint *$1;",
+			"\tint $1;",
 			"\n$0"
 		]
 	},
@@ -31,7 +31,7 @@
 		"body": [
 			"// ${2:Description not provided } ",
 			"UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=\"Parameters\")",
-			"\tfloat *$1;",
+			"\tfloat $1;",
 			"\n$0"
 		]
 	},
@@ -40,7 +40,7 @@
 		"body": [
 			"// ${2:Description not provided } ",
 			"UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=\"Parameters\")",
-			"\tFVector *$1;",
+			"\tFVector $1;",
 			"\n$0"
 		]
 	},
@@ -49,7 +49,7 @@
 		"body": [
 			"// ${2:Description not provided } ",
 			"UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=\"Parameters\")",
-			"\tFTransform *$1;",
+			"\tFTransform $1;",
 			"\n$0"
 		]
 	},
@@ -129,7 +129,10 @@
 			"\tTMap<int, UStaticMesh*> $1;",
 			"\n$0"
 		],
-		"description": ["Adds a mesh map to property list.", "Use "]
+		"description": [
+			"Adds a mesh map to property list.",
+			"Use "
+		]
 	},
 	"Add Property: Boolean switch": {
 		"prefix": "uprop_switch",
@@ -149,5 +152,15 @@
 			"\n$0"
 		],
 		"description": "Adds a boolean switch property(In Advanced dropdown)."
+	},
+	"Add Property: AI Sight Config Data": {
+		"prefix": "uprop_ai_sightconfig",
+		"body": [
+			"// Stores sight config data for AIController ",
+			"UPROPERTY(EditAnywhere, AdvancedDisplay, BlueprintReadWrite, Category=\"AI\")",
+			"\tclass UAISenseConfig_Sight* SightConfig;",
+			"\n$0"
+		],
+		"description": "Configure this in class body to give sight to bot."
 	}
 }

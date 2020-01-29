@@ -30,8 +30,15 @@
             {
                 "id": "Character",
                 "classprefix": "A$1",
-                "Headers": [],
-                "Functions": []
+                "Headers": [
+                    "CoreMinimal.h",
+                    "GameFramework/Character.h"
+                ],
+                "Functions": [
+                    "BeginPlay",
+                    "Tick",
+                    "SetupPlayerInputComponent"
+                ]
             },
             {
                 "id": "Interface",
@@ -49,6 +56,15 @@
                 "id": "DataAsset",
                 "classprefix": "U$1",
                 "Headers": [],
+                "Functions": []
+            },
+            {
+                "id": "AIController",
+                "classprefix": "A$1",
+                "Headers": [
+                    "CoreMinimal.h",
+                    "AIController.h"
+                ],
                 "Functions": []
             }
         ]
