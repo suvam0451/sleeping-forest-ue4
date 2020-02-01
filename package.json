@@ -1,6 +1,6 @@
 {
-	"name": "daedalus-ue4-plugin",
-	"displayName": "daedalus-globalnode",
+	"name": "daedalus-globalnode",
+	"displayName": "ue4-globalnode",
 	"description": "Command-line tools and snippets for non-replicated procedural/material editor workflow.",
 	"publisher": "suvam0451",
 	"version": "1.0.0",
@@ -23,7 +23,9 @@
 		"onCommand:extension.includeManager",
 		"onCommand:extension.Daedalus.PopulateSourceFile",
 		"onCommand:extension.Daedalus.errorLibrary",
-		"onCommand:extension.Daedalus.createClass"
+		"onCommand:extension.Daedalus.createClass",
+		"onCommand:extension.Daedalus.injectExcludes",
+		"onCommand:extension.Daedalus.initializeAssetFolder"
 	],
 	"main": "/dist/extension",
 	"contributes": {
@@ -56,6 +58,14 @@
 			{
 				"command": "extension.Daedalus.createClass",
 				"title": "Daedalus: Generate UE4 Class(.h/.cpp)"
+			},
+			{
+				"command": "extension.Daedalus.injectExcludes",
+				"title": "UE4 : Inject exclude definitions in Workspace File"
+			},
+			{
+				"command": "extension.Daedalus.initializeAssetFolder",
+				"title": "UE4 : Create new Asset Stream"
 			}
 		],
 		"menus": {
@@ -99,8 +109,31 @@
 			{
 				"language": "cpp",
 				"path": "./snippets/uinit.json"
+			},
+			{
+				"language": "cpp",
+				"path": "./snippets/utrace.json"
+			},
+			{
+				"language": "cpp",
+				"path": "./snippets/udebug.json"
 			}
-		]
+		],
+		"configuration": {
+			"title": "GlobalNode",
+			"properties": {
+				"globalnode.assetFolders": {
+					"type": "array",
+					"default": [],
+					"description": "Fullpaths to list of folders initialized using this plug-in from which to pull assets to UE4."
+				},
+				"globalnode.allowUserExtensions": {
+					"type": "boolean",
+					"default": false,
+					"description": "Read the online docs about extending various templates and set this to true to allow custom functionalities."
+				}
+			}
+		}
 	},
 	"scripts": {
 		"compile": "tsc -p ./",

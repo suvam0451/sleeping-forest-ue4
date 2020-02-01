@@ -57,5 +57,12 @@
 			"Use to setup a UAISenseConfig_Sight class instance",
 			"You are expected to first declare it, include headers and create the object using \"ucdo\""
 		]
+	},
+	"InitializeL: Timer": {
+		"prefix": "uinit_timer",
+		"body": [
+			"${1:Timer}Del.BindUFunction(this, FName(\"${2:MyFunction}\"));",
+			"GetWorld()->GetTimerManager().SetTimer(${1:Timer}Handle, 5.0f, true, 0.0f);"
+		]
 	}
 }

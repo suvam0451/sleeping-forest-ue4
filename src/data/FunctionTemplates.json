@@ -36,10 +36,24 @@
         ]
     },
     {
-        "id": "OnPossess(APawn *MyPawn)",
+        "id": "OnPossess",
         "comment": "// ",
         "signature": "virtual void OnPossess(APawn *MyPawn) override;",
         "field": "protected",
         "body": []
+    },
+    {
+        "id": "GetControlRotation",
+        "comment": "// ",
+        "signature": "virtual FRotator GetControlRotation() const override;",
+        "field": "private",
+        "body": [
+            "if(GetPawn() != nullptr){",
+            "\treturn FRotator(0.0f, GetPawn()->GetActorRotation().Yaw, 0.0f);",
+            "}",
+            "else{",
+            "\treturn FRotator(0.0f);",
+            "}"
+        ]
     }
 ]

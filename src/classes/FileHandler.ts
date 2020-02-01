@@ -6,7 +6,6 @@
 import * as vscode from "vscode";
 import { resolve } from "dns";
 import * as edit from "../utils/EditorHelper";
-import data from "../data/IncludeMapping.json";
 import { GetPluginDataFromFolder } from "../utils/FilesystemHelper";
 import * as fs from "fs";
 var XRegExp = require("xregexp");

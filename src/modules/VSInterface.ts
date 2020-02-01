@@ -7,7 +7,6 @@
 import * as vscode from "vscode";
 import { resolve } from "dns";
 import * as edit from "../utils/EditorHelper";
-import data from "../data/IncludeMapping.json";
 
 export async function QuickPick(arr: string[], doCompare: boolean, compareTo?: string): Promise<string> {
     return new Promise<string>((resolve, reject) => {
@@ -31,4 +30,17 @@ export async function InputBox(): Promise<string> {
             (typeof value !== "undefined") ? resolve(value) : reject("UNDEF");
         }, () => { resolve("ABORT"); });
     });
+}
+
+export async function PickFolder(): Promise<string> {
+    let opt: vscode.OpenDialogOptions = {};
+    opt.canSelectFiles = false;
+    opt.canSelectFolders = true;
+
+    return new Promise<string>((resolve, reject) => {
+        vscode.window.showOpenDialog(opt).then((success) => {
+            console.log(success![0].fsPath)
+            resolve(success![0].fsPath);
+        });
+    })
 }

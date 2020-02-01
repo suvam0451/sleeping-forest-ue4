@@ -110,6 +110,7 @@ async function WriteAtLine(filepath: string, at: number, lines: string[]): Promi
         content += str + "\n";
     });
     content = content.slice(0, content.length - 1); // Remove last newline character
+    console.log(content);
     return new Promise<void>((resolve, reject) => {
         let data: string[] = fs.readFileSync(filepath).toString().split("\n");
         data.splice(at, 0, content); // data.splice(at, 0, content);
@@ -165,7 +166,7 @@ function StringExtract(str: string, ex: RegExp): string {
 
 function GeneratedSourceBody(signature: string, namespace: string, fnbody: string[]): string[] {
     let retval: string[] = [];
-    let cls = StringExtract(signature, /([a-zA-Z<>]*)\((.*?)\)/);
+    let cls = StringExtract(signature, /([a-zA-Z<>]*)\((.*?)\) (const)?/);
     let rettype = StringExtract(signature, / ([a-zA-Z_]*)<?([a-zA-Z, ]*)>? /);
     retval.push(rettype + " " + namespace + "::" + cls); // AMyActor::BeginPlay() { // body }
     retval.push("{");

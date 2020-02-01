@@ -4,7 +4,9 @@
         "templates": [
             {
                 "id": "Actor",
-                "classprefix": "A$1",
+                "classprefix": "A",
+                "parent": "AActor",
+                "interfaces": [],
                 "Headers": [
                     "CoreMinimal.h",
                     "GameFramework/Actor.h"
@@ -17,19 +19,18 @@
             },
             {
                 "id": "ActorComponent",
-                "classprefix": "A$1",
+                "classprefix": "U",
+                "parent": "UActorComponent",
                 "Headers": [
                     "CoreMinimal.h",
-                    "GameFramework/Actor.h",
-                    "OniiChan.h"
+                    "Components/ActorComponent.h"
                 ],
-                "Functions": [
-                    "OnConstruct"
-                ]
+                "Functions": []
             },
             {
                 "id": "Character",
-                "classprefix": "A$1",
+                "classprefix": "A",
+                "parent": "ACharacter",
                 "Headers": [
                     "CoreMinimal.h",
                     "GameFramework/Character.h"
@@ -42,28 +43,61 @@
             },
             {
                 "id": "Interface",
-                "classprefix": "A$1",
-                "Headers": [],
+                "classprefix": "I",
+                "parent": "UInterface",
+                "Headers": [
+                    "CoreMinimal.h",
+                    "UObject/Interface.h"
+                ],
                 "Functions": []
             },
             {
                 "id": "Object",
-                "classprefix": "U$1",
+                "classprefix": "U",
                 "Headers": [],
                 "Functions": []
             },
             {
                 "id": "DataAsset",
-                "classprefix": "U$1",
-                "Headers": [],
+                "classprefix": "U",
+                "parent": "UDataAsset",
+                "Headers": [
+                    "CoreMinimal.h",
+                    "Engine/DataAsset.h"
+                ],
                 "Functions": []
             },
             {
                 "id": "AIController",
-                "classprefix": "A$1",
+                "classprefix": "A",
+                "parent": "AAIController",
                 "Headers": [
                     "CoreMinimal.h",
                     "AIController.h"
+                ],
+                "Functions": [
+                    "BeginPlay",
+                    "Tick",
+                    "GetControlRotation",
+                    "OnPossess"
+                ]
+            },
+            {
+                "id": "BTSerive",
+                "classprefix": "U",
+                "Headers": [
+                    "CoreMinimal.h",
+                    "BehaviorTree/BTService.h"
+                ],
+                "Functions": []
+            },
+            {
+                "id": "AnimInstance",
+                "classprefix": "U",
+                "parent": "UAnimInstance",
+                "Headers": [
+                    "CoreMinimal.h",
+                    "Animation/AnimInstance.h"
                 ],
                 "Functions": []
             }

@@ -4,7 +4,8 @@
         "templates": [
             {
                 "id": "Actor",
-                "classprefix": "A$1",
+                "classprefix": "A",
+                "parent": "AActor",
                 "Headers": [
                     "CoreMinimal.h",
                     "GameFramework/Actor.h"
@@ -16,7 +17,8 @@
             },
             {
                 "id": "ActorComponent",
-                "classprefix": "A$1",
+                "classprefix": "A",
+                "parent": "AActorComponent",
                 "Headers": [],
                 "Functions": []
             }

@@ -1,0 +1,35 @@
+[
+	{
+		"id": "Spline",
+		"headers": [
+			"Components/SplineComponent.h",
+			"Components/SplineMeshComponent.h"
+		]
+	},
+	{
+		"id": "Procedural",
+		"headers": [
+			"Components/InstancedStaticMeshComponent.h"
+		]
+	},
+	{
+		"id": "AIPerception",
+		"headers": [
+			"Perception/AIPerceptionComponent.h",
+			"Perception/AISense_Damage.h",
+			"Perception/AISense_Hearing.h",
+			"Perception/AISense_Sight.h",
+			"Perception/AISense_Team.h",
+			"Perception/AISenseConfig_Damage.h",
+			"Perception/AISenseConfig_Hearing.h",
+			"Perception/AISenseConfig_Sight.h",
+			"Perception/AISenseConfig_Team.h"
+		]
+	},
+	{
+		"id": "Math",
+		"headers": [
+			"Kismet/KismetMathLibrary.h"
+		]
+	}
+]

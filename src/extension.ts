@@ -8,10 +8,11 @@ import * as edit from "./utils/EditorHelper";
 import * as filesys from "./utils/FilesystemHelper";
 import * as feedback from './utils/ErrorLogger';
 import { AActor, UActorComponent } from "./data/headerFunctions.json";
-import IncludeMap from "./data/IncludeMapping.json";
 import IncludeManager from "./modules/IncludeManager";
 import ErrorSearchModule from "./modules/ErrorSearchModule";
 import CreateClassModule from "./modules/CreateClassModule";
+import InjectExcludeDefinition from "./modules/InjectExclusions";
+import { InitializeStream } from "./modules/AssetStreamModule";
 import * as fs from "fs";
 
 
@@ -29,6 +30,7 @@ export function WriteRequest(editor: vscode.TextEditor, position: vscode.Positio
 		});
 	});
 }
+
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -92,6 +94,16 @@ export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(IncludeCommandlet);
 	//#endregion
 
+	//#region 
+	/** Injects exclusion  */
+	let InjectExclusions = vscode.commands.registerCommand("extension.Daedalus.injectExcludes", () => {
+		InjectExcludeDefinition();
+	});
+
+	context.subscriptions.push(InjectExclusions);
+	//#endregion
+
+
 	//#region module:Error search
 	let ErrorWiki = vscode.commands.registerCommand("extension.Daedalus.errorLibrary", () => {
 		ErrorSearchModule();
@@ -107,6 +119,12 @@ export function activate(context: vscode.ExtensionContext) {
 	});
 	context.subscriptions.push(Mod_CreateClass);
 	//#endregion
+
+
+	let Init_AssetFolder = vscode.commands.registerCommand("extension.Daedalus.initializeAssetFolder", () => {
+		InitializeStream();
+	});
+	context.subscriptions.push(Init_AssetFolder);
 
 	// #region extension.Daedalus.PopulateSourceFile
 	let Daedalus_Populate_Source = vscode.commands.registerCommand('extension.Daedalus.PopulateSourceFile', () => {

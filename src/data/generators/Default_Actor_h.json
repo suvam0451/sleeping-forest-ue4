@@ -1,25 +1,13 @@
 [
-    [
-        "// Fill out your copyright notice in the Description page of Project Settings.\n"
-    ],
-    [
-        "#include \"$1.generated.h\"\n"
-    ],
-    [
-        "UCLASS()"
-    ],
-    [
-        "class $3_API $2 : public AActor"
-    ],
-    [
-        "{",
-        "\tGENERATED_BODY()\n",
-        "public:"
-    ],
-    [
-        "\t$2();\n",
-        "protected:\n",
-        "private:\n",
-        "};"
-    ]
+    "// Fill out your copyright notice in the Description page of Project Settings.\n",
+    "#include \"$1.generated.h\"\n",
+    "UCLASS()",
+    "class $2_API $4$1 : public $3",
+    "{",
+    "\tGENERATED_BODY()\n",
+    "public:",
+    "\t$4$1();\n",
+    "protected:",
+    "private:",
+    "};"
 ]

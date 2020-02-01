@@ -1,9 +1,0 @@
-{
-	"Spline": [
-		"#include \"Components/SplineComponent.h\"",
-		"#include \"Components/SplineMeshComponent.h\""
-	],
-	"Procedural": [
-		"#include \"Components/InstancedStaticMeshComponent.h\""
-	]
-}

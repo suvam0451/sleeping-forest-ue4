@@ -26,6 +26,15 @@
 			"\n$0"
 		]
 	},
+	"Add UProperty : Boolean": {
+		"prefix": "uprop_bool",
+		"body": [
+			"// ${2:Description not provided } ",
+			"UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category=\"Parameters\")",
+			"\tbool $1;",
+			"\n$0"
+		]
+	},
 	"Add Property: Floating point": {
 		"prefix": "uprop_float",
 		"body": [
@@ -162,5 +171,12 @@
 			"\n$0"
 		],
 		"description": "Configure this in class body to give sight to bot."
+	},
+	"Add Property: Timer(Handle + Del)": {
+		"prefix": "uprop_timer",
+		"body": [
+			"FTimerDelegate $1Del;",
+			"FTimerHandle $1Handle;"
+		]
 	}
 }

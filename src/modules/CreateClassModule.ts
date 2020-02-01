@@ -6,7 +6,6 @@
 import * as vscode from "vscode";
 import { resolve } from "dns";
 import * as edit from "../utils/EditorHelper";
-import data from "../data/IncludeMapping.json";
 import { GetPluginDataFromFolder } from "../utils/FilesystemHelper";
 import * as fs from "fs";
 var XRegExp = require("xregexp");
@@ -29,6 +28,7 @@ import * as filesys from "../utils/FilesystemHelper";
 interface ClassCreationKit {
     modulepath: string;
     modulename: string;
+    classprefix: string;
     parentclass: string;
     classname: string;
     buildspace: string;
@@ -172,8 +172,9 @@ export default async function CreateClassModule(): Promise<void> {
 
 interface SymbolData {
     classname: string;
-    namespace: string;
     apiname: string;
+    prefix: string;
+    parentclass: string;
 }
 
 /** Maps JSON data to possible combinations of buildspaces and selected parentclass. */
@@ -187,7 +188,7 @@ async function HandleClassGeneration(kit: ClassCreationKit): Promise<void> {
                 bs.templates.forEach((tmpl) => {
                     if (tmpl.id === kit.parentclass) {
                         InjectHeaders(kit.headerpath, tmpl.Headers).then(() => {
-                            InjectFunctions(kit.headerpath, kit.sourcepath, tmpl.Functions, sym.namespace);
+                            InjectFunctions(kit.headerpath, kit.sourcepath, tmpl.Functions, sym.prefix + sym.classname);
                             resolve();
                         });
                         resolve();
@@ -204,9 +205,10 @@ async function HandleClassGeneration(kit: ClassCreationKit): Promise<void> {
  */
 function GenerateSymbols(kit: ClassCreationKit): SymbolData {
     let retval: SymbolData = {
-        classname: kit.classname,           // $1
-        namespace: "",                      // $2
-        apiname: kit.modulename             // $3
+        classname: kit.classname,                   // ${1 : classname}
+        apiname: kit.modulename.toUpperCase(),      // ${2 : apiname}
+        parentclass: "",                            // ${3 : parentclass}
+        prefix: ""                                  // ${4 : classprefix }
     };
 
     let data = classData.concat(extendedClassData);
@@ -214,9 +216,8 @@ function GenerateSymbols(kit: ClassCreationKit): SymbolData {
         if (val.buildspace === kit.buildspace) {
             val.templates.forEach((each) => {
                 if (each.id === kit.parentclass) {
-                    let str = each.classprefix;
-                    retval.namespace = str.replace("$1", kit.classname);
-                    retval.apiname = retval.apiname.toUpperCase();
+                    retval.parentclass = each.parent!;
+                    retval.prefix = each.classprefix;
                     return retval;
                 }
             });
@@ -227,24 +228,17 @@ function GenerateSymbols(kit: ClassCreationKit): SymbolData {
 }
 
 /** Parses the data JSON file and inserts strings where-ever applicable... */
-async function ParseAndWrite(filepath: string, data: string[][], symbols: SymbolData): Promise<void> {
+async function ParseAndWrite(filepath: string, data: string[], symbols: SymbolData): Promise<void> {
     return new Promise<void>((resolve, reject) => {
         let logger = fs.createWriteStream(filepath, { flags: "w" });
-        data.forEach((entry, i) => {
-            // If lines are mentioned to be symbol-free...
-            if (i % 2 === 0) {
-                entry.forEach((line) => {
-                    logger.write(line + "\n");
-                });
-            }
-            else {
-                entry.forEach((line) => {
-                    line = line.replace("$1", symbols.classname);
-                    line = line.replace("$2", symbols.namespace);
-                    line = line.replace("$3", symbols.apiname);
-                    logger.write(line + "\n");
-                });
-            }
+        data.forEach((line) => {
+            line = line.replace("$1", symbols.classname);
+            line = line.replace("$1", symbols.classname); // Some bug causes 2nd symbol to not get replaced
+            line = line.replace("$2", symbols.apiname);
+            line = line.replace("$3", symbols.parentclass);
+            line = line.replace("$4", symbols.prefix);
+            line = line.replace("$4", symbols.prefix); // Some bug causes 2nd symbol to not get replaced
+            logger.write(line + "\n");
         });
         logger.end(() => {
             resolve();
@@ -302,6 +296,7 @@ async function NamespaceSelection(): Promise<ClassCreationKit> {
         modulename: "",
         parentclass: "",
         classname: "",
+        classprefix: "",
         buildspace: "", // set in this function
         isGameModule: true,
         headerpath: "",

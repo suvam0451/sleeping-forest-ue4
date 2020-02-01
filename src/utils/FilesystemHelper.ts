@@ -237,3 +237,21 @@ export function GetFolderList(targetpath: string): string[] {
         return retval;
     }
 }
+
+export function ConfirmFileExists(targetfilepath: string): number {
+    if (fs.existsSync(targetfilepath)) {
+        return 0;
+    }
+    else {
+        fs.writeFileSync(targetfilepath, "");
+        return 0;
+    }
+}
+
+export async function WriteLinesToFile(filepath: string, lines: string[]): Promise<void> {
+    let writer = fs.createWriteStream(filepath);
+    lines.forEach((line) => {
+        writer.write(line);
+    });
+    writer.close();
+}
