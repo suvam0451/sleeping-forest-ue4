@@ -22,5 +22,15 @@
 			"Syntax(project) (\"/Game/YourFolder/YourItem\")",
 			"Syntax(plugin) (\"/PluginName/YourFolder/YourItem\")"
 		]
+	},
+	"Gameplay Systems: GameInstance Subsystem": {
+		"prefix": "ugs_subsys_gameinst",
+		"body": [
+			"UGameInstance* GameInstance = this->GetGameInstance();",
+			"if(GameInstance) {",
+			"\t${1:UMyGameSubsystem}* MySubsystem = GameInstance->GetSubsystem<${1:UMyGameSubsystem}>();",
+			"}",
+			"$0"
+		]
 	}
 }

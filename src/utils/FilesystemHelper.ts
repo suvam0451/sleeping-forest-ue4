@@ -170,14 +170,29 @@ export async function WriteFunctionToFile(filepath: string, funcBody: FunctionAn
     });
 }
 
-export async function WriteAtLine(filepath: string, at: number, lines: string[]): Promise<void> {
+export async function WriteAtLine(filepath: string, at: number, lines: string[], freshFile?: boolean): Promise<void> {
+
+    // Handle request for starting from black
+    if(freshFile && freshFile === true){
+        fs.writeFileSync(filepath, "");
+    }
+
+    // Handle FILE DOES NOT EXIST
+    if (!fs.existsSync(filepath)) {
+        fs.writeFileSync(filepath, "");
+    }
+
     let content: string = "";
-    lines.forEach((str) => {
-        content += str + "\n";
+    lines.forEach((str, i) => {
+        if(i === content.length - 1){
+            content += str;
+        }else{
+            content += str + "\n";
+        }
     });
     return new Promise<void>((resolve, reject) => {
         let data: string[] = fs.readFileSync(filepath).toString().split("\n");
-        data.splice(at, 0, content); // data.splice(at, 0, content);
+        data.splice(at, 0, content);
         console.log(data);
         // Using filestream
         let stream = fs.createWriteStream(filepath)
@@ -187,8 +202,11 @@ export async function WriteAtLine(filepath: string, at: number, lines: string[])
             .on("finish", () => {
                 resolve();
             });
-        data.forEach((line) => {
-            stream.write(line + "\n");
+        data.forEach((line, i) => {
+            if(i === data.length - 1)
+                { stream.write(line); }
+            else
+                { stream.write(line + "\n"); }
         });
         stream.end();
     });

@@ -19,13 +19,16 @@
 		"onLanguage:cpp",
 		"onCommand:extension.helloWorld",
 		"onCommand:extension.compileShaders",
+		"onCommand:extension.compileCode",
 		"onCommand:extension.onConstruction",
 		"onCommand:extension.includeManager",
 		"onCommand:extension.Daedalus.PopulateSourceFile",
 		"onCommand:extension.Daedalus.errorLibrary",
 		"onCommand:extension.Daedalus.createClass",
 		"onCommand:extension.Daedalus.injectExcludes",
-		"onCommand:extension.Daedalus.initializeAssetFolder"
+		"onCommand:extension.Daedalus.initializeAssetFolder",
+		"onCommand:extension.Daedalus.refreshAssetFolders",
+		"onCommand:extension.Daedalus.tryInitialize"
 	],
 	"main": "/dist/extension",
 	"contributes": {
@@ -36,7 +39,11 @@
 			},
 			{
 				"command": "extension.compileShaders",
-				"title": "Compile shaders for this project."
+				"title": "UE4 : (Cook) -> Compile shaders and blueprints."
+			},
+			{
+				"command": "extension.compileCode",
+				"title": "UE4 : (Build) -> Compile all code."
 			},
 			{
 				"command": "extension.onConstruction",
@@ -66,14 +73,27 @@
 			{
 				"command": "extension.Daedalus.initializeAssetFolder",
 				"title": "UE4 : Create new Asset Stream"
+			},
+			{
+				"command": "extension.Daedalus.refreshAssetFolders",
+				"title": "UE4 : Refresh Asset Streams"
+			},
+			{
+				"command": "extension.Daedalus.tryInitialize",
+				"title": "UE4 : Initialize by Context"
 			}
 		],
 		"menus": {
 			"editor/context": [
 				{
-					"when": "editorHasSelection && editorLangId == 'cpp'",
+					"when": "editorTextFocus && editorLangId == 'cpp'",
 					"command": "extension.Daedalus.createClass",
-					"group": "Hangover"
+					"group": "Trailblazer"
+				},
+				{
+					"when": "editorTextFocus && editorLangId == 'cpp'",
+					"command": "extension.Daedalus.tryInitialize",
+					"group": "Trailblazer"
 				}
 			]
 		},
@@ -117,6 +137,10 @@
 			{
 				"language": "cpp",
 				"path": "./snippets/udebug.json"
+			},
+			{
+				"language": "cpp",
+				"path": "./snippets/udel.json"
 			}
 		],
 		"configuration": {
@@ -131,6 +155,24 @@
 					"type": "boolean",
 					"default": false,
 					"description": "Read the online docs about extending various templates and set this to true to allow custom functionalities."
+				},
+				"globalnode.excludedExtensions": {
+					"type": "array",
+					"default": [
+						".exe",
+						".dll"
+					],
+					"description": "These extensions will be excluded from search and the project. Add .uassets if you need only code."
+				},
+				"globalnode.excludeEditorClassesFromWorkspace": {
+					"type": "boolean",
+					"default": false,
+					"description": "If set to true, \"Engine/Source/Editor\" will be excluded from workspace. These are not needed for gameplay programming."
+				},
+				"globalnode.hideEditorClassesFromWorkspace": {
+					"type": "boolean",
+					"default": false,
+					"description": "If set to true, \"Engine/Source/Editor\" will be excluded from search only. They will still be indexed. These are not needed for gameplay programming. Also, consider excludeEditorClassesFromWorkspace"
 				}
 			}
 		}

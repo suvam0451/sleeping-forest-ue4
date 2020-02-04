@@ -23925,17 +23925,6 @@ module.exports = [
 
 /***/ }),
 
-/***/ "./src/data/BuildExtension.json":
-/*!**************************************!*\
-  !*** ./src/data/BuildExtension.json ***!
-  \**************************************/
-/*! exports provided: 0, default */
-/***/ (function(module) {
-
-module.exports = JSON.parse("[{\"buildspace\":\"Extended\",\"templates\":[{\"id\":\"Actor\",\"classprefix\":\"A\",\"parent\":\"AActor\",\"Headers\":[\"CoreMinimal.h\",\"GameFramework/Actor.h\"],\"Functions\":[\"BeginPlay\",\"Tick\"]},{\"id\":\"ActorComponent\",\"classprefix\":\"A\",\"parent\":\"AActorComponent\",\"Headers\":[],\"Functions\":[]}]}]");
-
-/***/ }),
-
 /***/ "./src/data/BuildTemplates.json":
 /*!**************************************!*\
   !*** ./src/data/BuildTemplates.json ***!
@@ -23943,18 +23932,7 @@ module.exports = JSON.parse("[{\"buildspace\":\"Extended\",\"templates\":[{\"id\
 /*! exports provided: 0, 1, 2, default */
 /***/ (function(module) {
 
-module.exports = JSON.parse("[{\"buildspace\":\"Default\",\"templates\":[{\"id\":\"Actor\",\"classprefix\":\"A\",\"parent\":\"AActor\",\"interfaces\":[],\"Headers\":[\"CoreMinimal.h\",\"GameFramework/Actor.h\"],\"Functions\":[\"BeginPlay\",\"Tick\",\"OnConstruction\"]},{\"id\":\"ActorComponent\",\"classprefix\":\"U\",\"parent\":\"UActorComponent\",\"Headers\":[\"CoreMinimal.h\",\"Components/ActorComponent.h\"],\"Functions\":[]},{\"id\":\"Character\",\"classprefix\":\"A\",\"parent\":\"ACharacter\",\"Headers\":[\"CoreMinimal.h\",\"GameFramework/Character.h\"],\"Functions\":[\"BeginPlay\",\"Tick\",\"SetupPlayerInputComponent\"]},{\"id\":\"Interface\",\"classprefix\":\"I\",\"parent\":\"UInterface\",\"Headers\":[\"CoreMinimal.h\",\"UObject/Interface.h\"],\"Functions\":[]},{\"id\":\"Object\",\"classprefix\":\"U\",\"Headers\":[],\"Functions\":[]},{\"id\":\"DataAsset\",\"classprefix\":\"U\",\"parent\":\"UDataAsset\",\"Headers\":[\"CoreMinimal.h\",\"Engine/DataAsset.h\"],\"Functions\":[]},{\"id\":\"AIController\",\"classprefix\":\"A\",\"parent\":\"AAIController\",\"Headers\":[\"CoreMinimal.h\",\"AIController.h\"],\"Functions\":[\"BeginPlay\",\"Tick\",\"GetControlRotation\",\"OnPossess\"]},{\"id\":\"BTSerive\",\"classprefix\":\"U\",\"Headers\":[\"CoreMinimal.h\",\"BehaviorTree/BTService.h\"],\"Functions\":[]},{\"id\":\"AnimInstance\",\"classprefix\":\"U\",\"parent\":\"UAnimInstance\",\"Headers\":[\"CoreMinimal.h\",\"Animation/AnimInstance.h\"],\"Functions\":[]}]},{\"buildspace\":\"Minimal\",\"templates\":[]},{\"buildspace\":\"Debashish\",\"templates\":[]}]");
-
-/***/ }),
-
-/***/ "./src/data/FunctionExtension.json":
-/*!*****************************************!*\
-  !*** ./src/data/FunctionExtension.json ***!
-  \*****************************************/
-/*! exports provided: 0, 1, default */
-/***/ (function(module) {
-
-module.exports = JSON.parse("[{\"id\":\"BeginPlay\",\"comment\":\"// Called when the game starts or when spawned\",\"signature\":\"virtual void BeginPlay() override;\",\"field\":\"public\",\"body\":[\"Super::BeginPlay();\"]},{\"id\":\"Tick\",\"comment\":\"// Called when the game starts or when spawned\",\"signature\":\"virtual void Tick() override;\",\"field\":\"public\",\"body\":[\"Super::Tick();\"]}]");
+module.exports = JSON.parse("[{\"buildspace\":\"Default\",\"templates\":[{\"id\":\"Actor\",\"classprefix\":\"A\",\"parent\":\"AActor\",\"interfaces\":[],\"Headers\":[\"CoreMinimal.h\",\"GameFramework/Actor.h\"],\"Functions\":[\"BeginPlay\",\"Tick\",\"OnConstruction\"]},{\"id\":\"ActorComponent\",\"classprefix\":\"U\",\"parent\":\"UActorComponent\",\"Headers\":[\"CoreMinimal.h\",\"Components/ActorComponent.h\"],\"Functions\":[]},{\"id\":\"Character\",\"classprefix\":\"A\",\"parent\":\"ACharacter\",\"Headers\":[\"CoreMinimal.h\",\"GameFramework/Character.h\"],\"Functions\":[\"BeginPlay\",\"Tick\",\"SetupPlayerInputComponent\"]},{\"id\":\"Interface\",\"classprefix\":\"I\",\"parent\":\"UInterface\",\"Headers\":[\"CoreMinimal.h\",\"UObject/Interface.h\"],\"Functions\":[]},{\"id\":\"Object\",\"classprefix\":\"U\",\"Headers\":[],\"Functions\":[]},{\"id\":\"DataAsset\",\"classprefix\":\"U\",\"parent\":\"UDataAsset\",\"Headers\":[\"CoreMinimal.h\",\"Engine/DataAsset.h\"],\"Functions\":[]},{\"id\":\"AIController\",\"classprefix\":\"A\",\"parent\":\"AAIController\",\"Headers\":[\"CoreMinimal.h\",\"AIController.h\"],\"Functions\":[\"BeginPlay\",\"Tick\",\"GetControlRotation\",\"OnPossess\"]},{\"id\":\"BTSerive\",\"classprefix\":\"U\",\"Headers\":[\"CoreMinimal.h\",\"BehaviorTree/BTService.h\"],\"Functions\":[]},{\"id\":\"AnimInstance\",\"classprefix\":\"U\",\"parent\":\"UAnimInstance\",\"Headers\":[\"CoreMinimal.h\",\"Animation/AnimInstance.h\"],\"Functions\":[\"NativeInitializeAnimation\",\"NativeUpdateAnimation\"]}]},{\"buildspace\":\"Minimal\",\"templates\":[]},{\"buildspace\":\"Debashish\",\"templates\":[]}]");
 
 /***/ }),
 
@@ -23962,21 +23940,10 @@ module.exports = JSON.parse("[{\"id\":\"BeginPlay\",\"comment\":\"// Called when
 /*!*****************************************!*\
   !*** ./src/data/FunctionTemplates.json ***!
   \*****************************************/
-/*! exports provided: 0, 1, 2, 3, 4, 5, default */
+/*! exports provided: 0, 1, 2, 3, 4, 5, 6, 7, default */
 /***/ (function(module) {
 
-module.exports = JSON.parse("[{\"id\":\"BeginPlay\",\"comment\":\"// Called when the game starts or when spawned\",\"signature\":\"virtual void BeginPlay() override;\",\"field\":\"protected\",\"body\":[\"Super::BeginPlay();\"]},{\"id\":\"Tick\",\"comment\":\"// Called every frame\",\"signature\":\"virtual void Tick(float DeltaTime) override;\",\"field\":\"public\",\"body\":[\"Super::Tick(DeltaTime);\"]},{\"id\":\"OnConstruction\",\"comment\":\"// Called when an instance of this class is placed (in editor) or spawned.\",\"signature\":\"virtual void OnConstruction(const FTransform &Transform) override;\",\"field\":\"private\",\"body\":[\"// Function not implemented\"]},{\"id\":\"SetupPlayerInputComponent\",\"comment\":\"// Called to bind functionality to input\",\"signature\":\"virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;\",\"field\":\"public\",\"body\":[\"Super::SetupPlayerInputComponent(PlayerInputComponent);\"]},{\"id\":\"OnPossess\",\"comment\":\"// \",\"signature\":\"virtual void OnPossess(APawn *MyPawn) override;\",\"field\":\"protected\",\"body\":[]},{\"id\":\"GetControlRotation\",\"comment\":\"// \",\"signature\":\"virtual FRotator GetControlRotation() const override;\",\"field\":\"private\",\"body\":[\"if(GetPawn() != nullptr){\",\"\\treturn FRotator(0.0f, GetPawn()->GetActorRotation().Yaw, 0.0f);\",\"}\",\"else{\",\"\\treturn FRotator(0.0f);\",\"}\"]}]");
-
-/***/ }),
-
-/***/ "./src/data/IncludeExtension.json":
-/*!****************************************!*\
-  !*** ./src/data/IncludeExtension.json ***!
-  \****************************************/
-/*! exports provided: default */
-/***/ (function(module) {
-
-module.exports = JSON.parse("[]");
+module.exports = JSON.parse("[{\"id\":\"BeginPlay\",\"comment\":\"// Called when the game starts or when spawned\",\"signature\":\"virtual void BeginPlay() override;\",\"field\":\"protected\",\"body\":[\"Super::BeginPlay();\"]},{\"id\":\"Tick\",\"comment\":\"// Called every frame\",\"signature\":\"virtual void Tick(float DeltaTime) override;\",\"field\":\"public\",\"body\":[\"Super::Tick(DeltaTime);\"]},{\"id\":\"OnConstruction\",\"comment\":\"// Called when an instance of this class is placed (in editor) or spawned.\",\"signature\":\"virtual void OnConstruction(const FTransform &Transform) override;\",\"field\":\"private\",\"body\":[\"// Function not implemented\"]},{\"id\":\"SetupPlayerInputComponent\",\"comment\":\"// Called to bind functionality to input\",\"signature\":\"virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;\",\"field\":\"public\",\"body\":[\"Super::SetupPlayerInputComponent(PlayerInputComponent);\"]},{\"id\":\"OnPossess\",\"comment\":\"// \",\"signature\":\"virtual void OnPossess(APawn *MyPawn) override;\",\"field\":\"protected\",\"body\":[]},{\"id\":\"GetControlRotation\",\"comment\":\"// \",\"signature\":\"virtual FRotator GetControlRotation() const override;\",\"field\":\"private\",\"body\":[\"if(GetPawn() != nullptr){\",\"\\treturn FRotator(0.0f, GetPawn()->GetActorRotation().Yaw, 0.0f);\",\"}\",\"else{\",\"\\treturn FRotator(0.0f);\",\"}\"]},{\"id\":\"NativeUpdateAnimation\",\"comment\":\"// Similar to Tick() for animations\",\"signature\":\"virtual void NativeUpdateAnimation(float DeltaTimeX) override;\",\"field\":\"protected\",\"body\":[\"Super::NativeUpdateAnimation(DeltaTimeX);\"]},{\"id\":\"NativeInitializeAnimation\",\"comment\":\"// Similar to BeginPlay() for animations\",\"signature\":\"virtual void NativeInitializeAnimation() override;\",\"field\":\"protected\",\"body\":[\"Super::NativeInitializeAnimation();\"]}]");
 
 /***/ }),
 
@@ -23984,10 +23951,43 @@ module.exports = JSON.parse("[]");
 /*!****************************************!*\
   !*** ./src/data/IncludeTemplates.json ***!
   \****************************************/
-/*! exports provided: 0, 1, 2, 3, default */
+/*! exports provided: 0, 1, 2, 3, 4, 5, 6, 7, default */
 /***/ (function(module) {
 
-module.exports = JSON.parse("[{\"id\":\"Spline\",\"headers\":[\"Components/SplineComponent.h\",\"Components/SplineMeshComponent.h\"]},{\"id\":\"Procedural\",\"headers\":[\"Components/InstancedStaticMeshComponent.h\"]},{\"id\":\"AIPerception\",\"headers\":[\"Perception/AIPerceptionComponent.h\",\"Perception/AISense_Damage.h\",\"Perception/AISense_Hearing.h\",\"Perception/AISense_Sight.h\",\"Perception/AISense_Team.h\",\"Perception/AISenseConfig_Damage.h\",\"Perception/AISenseConfig_Hearing.h\",\"Perception/AISenseConfig_Sight.h\",\"Perception/AISenseConfig_Team.h\"]},{\"id\":\"Math\",\"headers\":[\"Kismet/KismetMathLibrary.h\"]}]");
+module.exports = JSON.parse("[{\"id\":\"AIPerception\",\"headers\":[\"Perception/AIPerceptionComponent.h\",\"Perception/AISense_Damage.h\",\"Perception/AISense_Hearing.h\",\"Perception/AISense_Sight.h\",\"Perception/AISense_Team.h\",\"Perception/AISenseConfig_Damage.h\",\"Perception/AISenseConfig_Hearing.h\",\"Perception/AISenseConfig_Sight.h\",\"Perception/AISenseConfig_Team.h\"]},{\"id\":\"Math\",\"headers\":[\"Kismet/KismetMathLibrary.h\"]},{\"id\":\"PrimitiveShapes\",\"headers\":[\"Components/SphereComponent.h\",\"Components/BoxComponent.h\",\"Components/CapsuleComponent.h\"]},{\"id\":\"Procedural\",\"headers\":[\"Components/InstancedStaticMeshComponent.h\"]},{\"id\":\"Spline\",\"headers\":[\"Components/SplineComponent.h\",\"Components/SplineMeshComponent.h\"]},{\"id\":\"Subsystems\",\"headers\":[\"Subsystems/GameInstanceSubsystem.h\",\"Subsystems/LocalPlayerSubsystem.h\",\"Subsystems/WorldSubsystem.h\"]},{\"id\":\"Visualization\",\"headers\":[\"Components/BillboardComponent.h\",\"Components/ArrowComponent.h\"]},{\"id\":\"Data\",\"headers\":[\"Engine/DataTable.h\"]}]");
+
+/***/ }),
+
+/***/ "./src/data/extensions/Buildspaces.json":
+/*!**********************************************!*\
+  !*** ./src/data/extensions/Buildspaces.json ***!
+  \**********************************************/
+/*! exports provided: 0, default */
+/***/ (function(module) {
+
+module.exports = JSON.parse("[{\"buildspace\":\"Extended\",\"templates\":[{\"id\":\"Actor\",\"classprefix\":\"A\",\"parent\":\"AActor\",\"Headers\":[\"CoreMinimal.h\",\"GameFramework/Actor.h\"],\"Functions\":[\"BeginPlay\",\"Tick\"]},{\"id\":\"ActorComponent\",\"classprefix\":\"A\",\"parent\":\"AActorComponent\",\"Headers\":[],\"Functions\":[]}]}]");
+
+/***/ }),
+
+/***/ "./src/data/extensions/Functions.json":
+/*!********************************************!*\
+  !*** ./src/data/extensions/Functions.json ***!
+  \********************************************/
+/*! exports provided: 0, 1, default */
+/***/ (function(module) {
+
+module.exports = JSON.parse("[{\"id\":\"BeginPlay\",\"comment\":\"// Called when the game starts or when spawned\",\"signature\":\"virtual void BeginPlay() override;\",\"field\":\"public\",\"body\":[\"Super::BeginPlay();\"]},{\"id\":\"Tick\",\"comment\":\"// Called when the game starts or when spawned\",\"signature\":\"virtual void Tick() override;\",\"field\":\"public\",\"body\":[\"Super::Tick();\"]}]");
+
+/***/ }),
+
+/***/ "./src/data/extensions/IncludeSets.json":
+/*!**********************************************!*\
+  !*** ./src/data/extensions/IncludeSets.json ***!
+  \**********************************************/
+/*! exports provided: default */
+/***/ (function(module) {
+
+module.exports = JSON.parse("[]");
 
 /***/ }),
 
@@ -24024,6 +24024,17 @@ module.exports = JSON.parse("{\"AActor\":{\"OnConstruction\":{\"comment\":\"Call
 
 /***/ }),
 
+/***/ "./src/data/templates/assetBasicDataTmpl.json":
+/*!****************************************************!*\
+  !*** ./src/data/templates/assetBasicDataTmpl.json ***!
+  \****************************************************/
+/*! exports provided: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, default */
+/***/ (function(module) {
+
+module.exports = JSON.parse("[\"{\",\"\\t\\\"StaticMesh\\\": {\",\"\\t\\t\\\"label\\\": \\\"StaticMesh\\\",\",\"\\t\\t\\\"list\\\": []\",\"\\t},\",\"\\t\\\"Texture\\\": {\",\"\\t\\t\\\"label\\\": \\\"Textures\\\",\",\"\\t\\t\\\"list\\\": []\",\"\\t},\",\"\\t\\\"Audio\\\": {\",\"\\t\\t\\\"label\\\": \\\"Audio\\\",\",\"\\t\\t\\\"list\\\": []\",\"\\t}\",\"}\"]");
+
+/***/ }),
+
 /***/ "./src/data/templates/pythonGenerator.json":
 /*!*************************************************!*\
   !*** ./src/data/templates/pythonGenerator.json ***!
@@ -24039,10 +24050,10 @@ module.exports = JSON.parse("[\"#   Copyright (c) 2020 Debashish Patra, MPL-2.0\
 /*!************************************************!*\
   !*** ./src/data/templates/streamSettings.json ***!
   \************************************************/
-/*! exports provided: 0, 1, 2, 3, 4, 5, default */
+/*! exports provided: 0, 1, 2, 3, 4, default */
 /***/ (function(module) {
 
-module.exports = JSON.parse("[\"[\",\"\\t{\",\"\\t\\t\\\"createMaterials\\\": false,\",\"\\t\\t\\\"importTexturesonMesh\\\": false\",\"\\t}\",\"]\"]");
+module.exports = JSON.parse("[\"{\",\"\\t\\\"/Game/StreamExample\\\": \\\"/Game/StreamExample\\\",\",\"\\t\\\"createMaterials\\\": false,\",\"\\t\\\"importTexturesForMesh\\\": false\",\"}\"]");
 
 /***/ }),
 
@@ -24079,7 +24090,9 @@ const IncludeManager_1 = __importDefault(__webpack_require__(/*! ./modules/Inclu
 const ErrorSearchModule_1 = __importDefault(__webpack_require__(/*! ./modules/ErrorSearchModule */ "./src/modules/ErrorSearchModule.ts"));
 const CreateClassModule_1 = __importDefault(__webpack_require__(/*! ./modules/CreateClassModule */ "./src/modules/CreateClassModule.ts"));
 const InjectExclusions_1 = __importDefault(__webpack_require__(/*! ./modules/InjectExclusions */ "./src/modules/InjectExclusions.ts"));
-const AssetStreamModule_1 = __webpack_require__(/*! ./modules/AssetStreamModule */ "./src/modules/AssetStreamModule.ts");
+const AssetStream = __importStar(__webpack_require__(/*! ./modules/AssetStreamModule */ "./src/modules/AssetStreamModule.ts"));
+const uauto = __importStar(__webpack_require__(/*! ./utils/UnrealAutomation */ "./src/utils/UnrealAutomation.ts"));
+const InitializerModule_1 = __importDefault(__webpack_require__(/*! ./modules/InitializerModule */ "./src/modules/InitializerModule.ts"));
 /** Writes lines at current cursor position. */
 function WriteRequest(editor, position, lines) {
     var _a;
@@ -24095,7 +24108,7 @@ exports.WriteRequest = WriteRequest;
 function activate(context) {
     console.log('Congratulations, your extension "wan-chai" is now active!');
     //#region extension.helloWorld
-    let HelloWorld = vscode.commands.registerCommand('extension.helloWorld', () => {
+    let HelloWorld = vscode.commands.registerCommand("extension.helloWorld", () => {
         let data = filesys.GetActiveFileData();
         switch (data.cppvalid) {
             case filesys.ActiveFileExtension.Header: {
@@ -24104,19 +24117,28 @@ function activate(context) {
             case filesys.ActiveFileExtension.Header: {
                 break;
             }
-            default: break;
+            default:
+                break;
         }
     });
     context.subscriptions.push(HelloWorld);
     //#endregion
-    //#region extension.compileShaders
-    let ShaderCompileCommand = vscode.commands.registerCommand('extension.compileShaders', () => {
-        vscode.window.showInformationMessage('Compiling shaders...');
+    //#region Compiles all shaders, Compiles all blueprints
+    let ShaderCompileCommand = vscode.commands.registerCommand("extension.compileShaders", () => {
+        uauto.CompileShaders();
+        vscode.window.showInformationMessage("Compiling shaders...");
     });
     context.subscriptions.push(ShaderCompileCommand);
     //#endregion
+    //#region Compiles all C++ code...
+    let CodeCompileCommand = vscode.commands.registerCommand("extension.compileCode", () => {
+        uauto.CompileCode();
+        vscode.window.showInformationMessage("Compiling Code...");
+    });
+    context.subscriptions.push(CodeCompileCommand);
+    //#endregion
     //#region extension.onConstruction
-    let OnConstruction = vscode.commands.registerCommand('extension.onConstruction', () => {
+    let OnConstruction = vscode.commands.registerCommand("extension.onConstruction", () => {
         var _a;
         let data = filesys.GetActiveFileData();
         // Get the editor
@@ -24124,29 +24146,36 @@ function activate(context) {
         const position = (_a = editor) === null || _a === void 0 ? void 0 : _a.selection.active;
         switch (data.cppvalid) {
             case filesys.ActiveFileExtension.Header: {
-                WriteRequest(editor, position, [headerFunctions_json_1.AActor.OnConstruction.header]);
+                WriteRequest(editor, position, [
+                    headerFunctions_json_1.AActor.OnConstruction.header,
+                ]);
                 break;
             }
             case filesys.ActiveFileExtension.Source: {
-                WriteRequest(editor, position, ["void A" + data.stripped_classname + headerFunctions_json_1.AActor.OnConstruction.source,
-                    "{\n\t\n}"]);
+                WriteRequest(editor, position, [
+                    "void A" +
+                        data.stripped_classname +
+                        headerFunctions_json_1.AActor.OnConstruction.source,
+                    "{\n\t\n}",
+                ]);
                 var newPosition = position.with(position.line + 1, 1);
                 var newSelection = new vscode.Selection(newPosition, newPosition);
                 editor.selection = newSelection;
                 break;
             }
-            default: break;
+            default:
+                break;
         }
     });
     context.subscriptions.push(OnConstruction);
     //#endregion
     //#region extension.include.procedural
-    let IncludeCommandlet = vscode.commands.registerCommand('extension.includeManager', () => {
+    let IncludeCommandlet = vscode.commands.registerCommand("extension.includeManager", () => {
         IncludeManager_1.default();
     });
     context.subscriptions.push(IncludeCommandlet);
     //#endregion
-    //#region 
+    //#region
     /** Injects exclusion  */
     let InjectExclusions = vscode.commands.registerCommand("extension.Daedalus.injectExcludes", () => {
         InjectExclusions_1.default();
@@ -24161,22 +24190,26 @@ function activate(context) {
     //#endregion
     //#region moduele:Class creation
     let Mod_CreateClass = vscode.commands.registerCommand("extension.Daedalus.createClass", () => {
-        CreateClassModule_1.default().catch((err) => {
+        CreateClassModule_1.default().catch(err => {
             console.log("failed: " + err);
         });
     });
     context.subscriptions.push(Mod_CreateClass);
     //#endregion
     let Init_AssetFolder = vscode.commands.registerCommand("extension.Daedalus.initializeAssetFolder", () => {
-        AssetStreamModule_1.InitializeStream();
+        AssetStream.InitializeStream();
     });
     context.subscriptions.push(Init_AssetFolder);
+    let refresh_AssetFolder = vscode.commands.registerCommand("extension.Daedalus.refreshAssetFolders", () => {
+        AssetStream.RefreshListedStreams();
+    });
+    context.subscriptions.push(refresh_AssetFolder);
     // #region extension.Daedalus.PopulateSourceFile
-    let Daedalus_Populate_Source = vscode.commands.registerCommand('extension.Daedalus.PopulateSourceFile', () => {
+    let Daedalus_Populate_Source = vscode.commands.registerCommand("extension.Daedalus.PopulateSourceFile", () => {
         let data = filesys.GetActiveFileData();
         switch (data.cppvalid) {
             case filesys.ActiveFileExtension.Header: {
-                filesys.GetMatchingSource(data).then((path) => {
+                filesys.GetMatchingSource(data).then(path => {
                     edit.AddFunction(data, headerFunctions_json_1.AActor.OnConstruction, true);
                 }, (err) => {
                     feedback.ThrowError(err);
@@ -24184,17 +24217,21 @@ function activate(context) {
                 break;
             }
             case filesys.ActiveFileExtension.Source: {
-                filesys.GetMatchingHeader(data).then(() => {
-                }, (err) => {
+                filesys.GetMatchingHeader(data).then(() => { }, (err) => {
                     feedback.ThrowError(err);
                 });
                 break;
             }
-            default: break;
+            default:
+                break;
         }
     });
     context.subscriptions.push(Daedalus_Populate_Source);
     //#endregion
+    let Try_Initialize = vscode.commands.registerCommand("extension.Daedalus.tryInitialize", () => {
+        InitializerModule_1.default();
+    });
+    context.subscriptions.push(Try_Initialize);
 }
 exports.activate = activate;
 // this method is called when your extension is deactivated
@@ -24225,42 +24262,96 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+// IncludeManager.ts
+// Isolated module to let users paste their errors and search database for resolution.
+const vscode = __importStar(__webpack_require__(/*! vscode */ "vscode"));
 const fs = __importStar(__webpack_require__(/*! fs */ "fs"));
 var XRegExp = __webpack_require__(/*! xregexp */ "./node_modules/xregexp/lib/index.js");
 const path = __importStar(__webpack_require__(/*! path */ "path"));
+const _ = __importStar(__webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js"));
 const VSInterface_1 = __webpack_require__(/*! ./VSInterface */ "./src/modules/VSInterface.ts");
+const FilesystemHelper_1 = __webpack_require__(/*! ../utils/FilesystemHelper */ "./src/utils/FilesystemHelper.ts");
 const streamSettings_json_1 = __importDefault(__webpack_require__(/*! ../data/templates/streamSettings.json */ "./src/data/templates/streamSettings.json"));
 const pythonGenerator_json_1 = __importDefault(__webpack_require__(/*! ../data/templates/pythonGenerator.json */ "./src/data/templates/pythonGenerator.json"));
+const assetBasicDataTmpl_json_1 = __importDefault(__webpack_require__(/*! ../data/templates/assetBasicDataTmpl.json */ "./src/data/templates/assetBasicDataTmpl.json"));
 function InitializeStream() {
-    VSInterface_1.PickFolder().then((ret) => {
-        // console.log(ret);
+    let data = [];
+    VSInterface_1.PickFolder().then(ret => {
         if (!fs.existsSync(path.join(ret, "Assets"))) {
             fs.mkdirSync(path.join(ret, "Assets"));
         }
-        fs.writeFileSync(path.join(ret, "settings.json"), "");
-        fs.writeFileSync(path.join(ret, "ExportScript.py"), "");
         try {
-            let writer = fs.createWriteStream(path.join(ret, "settings.json"));
-            streamSettings_json_1.default.forEach((line) => {
+            // Write the settings file
+            data = _.map(streamSettings_json_1.default, line => {
                 line = line.replace("$1", ret);
-                line = line.replace(/\\/g, "/");
-                writer.write(line + "\n");
+                return line.replace(/\\/g, "/"); // Path format normalized
             });
-            writer.close();
-            writer = fs.createWriteStream(path.join(ret, "ExportScript.py"));
-            pythonGenerator_json_1.default.forEach((line) => {
+            FilesystemHelper_1.WriteAtLine(path.join(ret, "settings.json"), 0, data, true);
+            // Write the asset export file
+            data = _.map(pythonGenerator_json_1.default, line => {
                 line = line.replace("$1", ret);
-                line = line.replace(/\\/g, "/");
-                writer.write(line + "\n");
+                return line.replace(/\\/g, "/"); // Path format normalized
             });
-            writer.close();
+            FilesystemHelper_1.WriteAtLine(path.join(ret, "ExportScript.py"), 0, data, true);
+            // Write the data file(s)
+            data = _.map(assetBasicDataTmpl_json_1.default, line => {
+                line = line.replace("$1", ret);
+                return line.replace(/\\/g, "/"); // Path format normalized
+            });
+            FilesystemHelper_1.WriteAtLine(path.join(ret, "assetdata.json"), 0, data, true);
         }
         catch (_a) {
-            console.log("failed to create file");
+            console.log("failed to create file(s)");
         }
     });
 }
 exports.InitializeStream = InitializeStream;
+function RefreshListedStreams() {
+    let config = vscode.workspace.getConfiguration("globalnode");
+    let retval = config.get("assetFolders");
+    // let retval: any = config.get("exclude")!;
+    retval.forEach(entry => {
+        let fill = JSON.parse(fs.readFileSync(path.join(entry, "assetdata.json")).toString());
+        let settings = JSON.parse(fs.readFileSync(path.join(entry, "settings.json")).toString());
+        // reset
+        fill["StaticMesh"].list.length = 0;
+        fill["Texture"].list.length = 0;
+        fill["Audio"].list.length = 0;
+        console.log(settings);
+        console.log(settings["targetPath"]);
+        let files = fs.readdirSync(path.join(entry, "Assets"));
+        files.forEach(file => {
+            if (RegExp(/(.*?).fbx/).test(file)) {
+                fill["StaticMesh"].list.push({
+                    name: file.substr(0, file.length - 4),
+                    path: path.join(entry, "Assets", file),
+                    targetpath: settings["targetPath"],
+                });
+            }
+            else if (RegExp(/(.*?).(png|jpg)/).test(file)) {
+                // fill.Texture.list.push(file);
+                fill["Texture"].list.push({
+                    name: file.substr(0, file.length - 4),
+                    path: path.join(entry, "Assets", file),
+                    targetpath: settings["targetPath"],
+                });
+            }
+            else if (RegExp(/(.*?).(wav|mp3)/).test(file)) {
+                fill.Texture.list.push(file);
+                fill["Audio"].list.push({
+                    name: file.substr(0, file.length - 4),
+                    path: path.join(entry, "Assets", file),
+                    targetpath: settings["targetPath"],
+                });
+            }
+        });
+        console.log(fill);
+        const jsonString = JSON.stringify(fill, null, 2);
+        fs.writeFileSync(path.join(entry, "assetdata.json"), jsonString);
+    });
+    // console.log(retval);
+}
+exports.RefreshListedStreams = RefreshListedStreams;
 
 
 /***/ }),
@@ -24303,7 +24394,7 @@ const fs = __importStar(__webpack_require__(/*! fs */ "fs"));
 var XRegExp = __webpack_require__(/*! xregexp */ "./node_modules/xregexp/lib/index.js");
 const path = __importStar(__webpack_require__(/*! path */ "path"));
 const BuildTemplates_json_1 = __importDefault(__webpack_require__(/*! ../data/BuildTemplates.json */ "./src/data/BuildTemplates.json"));
-const BuildExtension_json_1 = __importDefault(__webpack_require__(/*! ../data/BuildExtension.json */ "./src/data/BuildExtension.json"));
+const Buildspaces_json_1 = __importDefault(__webpack_require__(/*! ../data/extensions/Buildspaces.json */ "./src/data/extensions/Buildspaces.json"));
 // Header/Source file generation data...
 const Default_Actor_h_json_1 = __importDefault(__webpack_require__(/*! ../data/generators/Default_Actor_h.json */ "./src/data/generators/Default_Actor_h.json"));
 const Default_Actor_cpp_json_1 = __importDefault(__webpack_require__(/*! ../data/generators/Default_Actor_cpp.json */ "./src/data/generators/Default_Actor_cpp.json"));
@@ -24315,12 +24406,14 @@ const filesys = __importStar(__webpack_require__(/*! ../utils/FilesystemHelper *
 function GenerateFileData(data) {
     return __awaiter(this, void 0, void 0, function* () {
         return new Promise((resolve, reject) => {
-            if (!data.isGameModule) { // UE4 plug-ins follow Private/Public folder structure
+            if (!data.isGameModule) {
+                // UE4 plug-ins follow Private/Public folder structure
                 data.headerpath = path.join(data.modulepath, "Public", data.classname + ".h");
                 data.sourcepath = path.join(data.modulepath, "Private", data.classname + ".cpp");
                 resolve(data);
             }
-            else { // Gamemodule have files in same path
+            else {
+                // Gamemodule have files in same path
                 data.headerpath = path.join(data.modulepath, data.classname + ".h");
                 data.sourcepath = path.join(data.modulepath, data.classname + ".cpp");
                 resolve(data);
@@ -24330,26 +24423,32 @@ function GenerateFileData(data) {
 }
 /** Handls available class selection and prompts for classname
  * fills: { classname, parentclass }
-*/
+ */
 function ClassSelection(data) {
     return __awaiter(this, void 0, void 0, function* () {
         let classList = [];
-        let json = _.concat(BuildTemplates_json_1.default, BuildExtension_json_1.default);
+        let json = _.concat(BuildTemplates_json_1.default, Buildspaces_json_1.default);
         let bs = _.find(json, { buildspace: data.buildspace });
         if (typeof bs !== "undefined") {
-            _.each(bs.templates, (tmpl) => {
+            _.each(bs.templates, tmpl => {
                 classList.push(tmpl.id);
             });
         }
         return new Promise((resolve, reject) => {
-            VSInterface_1.QuickPick(classList, false).then((sel) => {
+            VSInterface_1.QuickPick(classList, false).then(sel => {
                 data.parentclass = sel;
-                VSInterface_1.InputBox().then((ret) => {
+                VSInterface_1.InputBox()
+                    .then(ret => {
                     data.classname = ret;
-                    vscode.window.showWarningMessage("Adding " // user receipt
-                        + ret + " of type " + data.parentclass + " in " + data.modulename
-                        + "... Continue ?");
-                }).then(() => {
+                    vscode.window.showWarningMessage("Adding " + // user receipt
+                        ret +
+                        " of type " +
+                        data.parentclass +
+                        " in " +
+                        data.modulename +
+                        "... Continue ?");
+                })
+                    .then(() => {
                     VSInterface_1.QuickPick(["Yes", "No"], true, "Yes").then(() => {
                         resolve(data);
                     });
@@ -24370,7 +24469,7 @@ function ModuleSelection(data) {
             try {
                 // let lst = fs.readdirSync(pluginPath);
                 let lst = filesys.GetFolderList(pluginPath);
-                lst.forEach((folder) => {
+                lst.forEach(folder => {
                     let ret = FilesystemHelper_1.GetPluginDataFromFolder(path.join(pluginPath, folder));
                     pluginDataArray = pluginDataArray.concat(ret);
                 });
@@ -24381,10 +24480,10 @@ function ModuleSelection(data) {
                 pluginDataArray.push({
                     foldername: "Game",
                     folderpath: path.join(wspath, "Source", gamefoldername),
-                    isGameModule: true
+                    isGameModule: true,
                 });
                 // let arr =_.concat(arr, pluginDataArray);
-                _.each(pluginDataArray, (ret) => {
+                _.each(pluginDataArray, ret => {
                     arr.push(ret.foldername);
                 });
             }
@@ -24392,7 +24491,7 @@ function ModuleSelection(data) {
                 reject("Throw not implemented...");
             }
             // arr.push("Game");
-            VSInterface_1.QuickPick(arr, false).then((sel) => {
+            VSInterface_1.QuickPick(arr, false).then(sel => {
                 console.log("User selected, ", sel);
                 let index = pluginDataArray.find(i => i.foldername === sel);
                 if (typeof index !== "undefined") {
@@ -24419,11 +24518,15 @@ function ModuleSelection(data) {
 /** ENTRY POINT of module */
 function CreateClassModule() {
     return __awaiter(this, void 0, void 0, function* () {
-        NamespaceSelection().then((ret) => {
-            ModuleSelection(ret).then((ret2) => {
-                ClassSelection(ret2).then((ret3) => {
-                    GenerateFileData(ret3).then((ret4) => {
-                        ValidateRequest(ret4).then((ret5) => {
+        NamespaceSelection().then(ret => {
+            // Gets { buildspace }
+            ModuleSelection(ret).then(ret2 => {
+                // Gets { modulename, modulepath }
+                ClassSelection(ret2).then(ret3 => {
+                    // Gets { parentclass, classname }
+                    GenerateFileData(ret3).then(ret4 => {
+                        // Gets { headerpath,  sourcepath }
+                        ValidateRequest(ret4).then(ret5 => {
                             if (ret5) {
                                 HandleClassGeneration(ret4).then(() => {
                                     // WriteAtLine(ret4.headerpath, 8, ["Onii chan", "Yamete Kudasai"]);
@@ -24447,9 +24550,9 @@ function HandleClassGeneration(kit) {
         yield ParseAndWrite(kit.headerpath, Default_Actor_h_json_1.default, sym);
         yield ParseAndWrite(kit.sourcepath, Default_Actor_cpp_json_1.default, sym);
         return new Promise((resolve, reject) => {
-            BuildTemplates_json_1.default.forEach((bs) => {
+            BuildTemplates_json_1.default.forEach(bs => {
                 if (bs.buildspace === kit.buildspace) {
-                    bs.templates.forEach((tmpl) => {
+                    bs.templates.forEach(tmpl => {
                         if (tmpl.id === kit.parentclass) {
                             FileHelper_1.InjectHeaders(kit.headerpath, tmpl.Headers).then(() => {
                                 FileHelper_1.InjectFunctions(kit.headerpath, kit.sourcepath, tmpl.Functions, sym.prefix + sym.classname);
@@ -24472,12 +24575,12 @@ function GenerateSymbols(kit) {
         classname: kit.classname,
         apiname: kit.modulename.toUpperCase(),
         parentclass: "",
-        prefix: "" // ${4 : classprefix }
+        prefix: "",
     };
-    let data = BuildTemplates_json_1.default.concat(BuildExtension_json_1.default);
-    data.forEach((val) => {
+    let data = BuildTemplates_json_1.default.concat(Buildspaces_json_1.default);
+    data.forEach(val => {
         if (val.buildspace === kit.buildspace) {
-            val.templates.forEach((each) => {
+            val.templates.forEach(each => {
                 if (each.id === kit.parentclass) {
                     retval.parentclass = each.parent;
                     retval.prefix = each.classprefix;
@@ -24493,7 +24596,7 @@ function ParseAndWrite(filepath, data, symbols) {
     return __awaiter(this, void 0, void 0, function* () {
         return new Promise((resolve, reject) => {
             let logger = fs.createWriteStream(filepath, { flags: "w" });
-            data.forEach((line) => {
+            data.forEach(line => {
                 line = line.replace("$1", symbols.classname);
                 line = line.replace("$1", symbols.classname); // Some bug causes 2nd symbol to not get replaced
                 line = line.replace("$2", symbols.apiname);
@@ -24524,21 +24627,26 @@ function ValidateRequest(kit) {
                 // Will return true if (.cpp/.h) not found. Prompts/Alerts users otherwise...
                 try {
                     fs.accessSync(kit.headerpath);
-                    vscode.window.showErrorMessage(path.join(kit.modulename, kit.classname + ".h") + "will be overwritten !");
+                    vscode.window.showErrorMessage(path.join(kit.modulename, kit.classname + ".h") +
+                        "will be overwritten !");
                     fs.accessSync(kit.sourcepath);
-                    vscode.window.showErrorMessage(path.join(kit.modulename, kit.classname + ".cpp") + "will be overwritten !");
+                    vscode.window.showErrorMessage(path.join(kit.modulename, kit.classname + ".cpp") +
+                        "will be overwritten !");
                     reject(false);
                 }
                 catch (_a) {
                     resolve(true);
                 }
-            }).then((ret) => {
+            }).then(ret => {
                 // IF no syntax errors, resolves to true...
                 resolve(ret);
-            }, (err) => {
+            }, err => {
                 // Let user decide if current request overwrites files...
-                let opt = ["Abort(default)", "I understand that my previous data will be lost."];
-                vscode.window.showQuickPick(opt).then((sel) => {
+                let opt = [
+                    "Abort(default)",
+                    "I understand that my previous data will be lost.",
+                ];
+                vscode.window.showQuickPick(opt).then(sel => {
                     if (sel === "I understand that my previous data will be lost.") {
                         resolve(true);
                     }
@@ -24552,7 +24660,7 @@ function ValidateRequest(kit) {
 }
 /** Let user select between buildspaces...
  * This helps us categorize between built-in and user defined builspaces
-*/
+ */
 function NamespaceSelection() {
     return __awaiter(this, void 0, void 0, function* () {
         let retval = {
@@ -24564,22 +24672,25 @@ function NamespaceSelection() {
             buildspace: "",
             isGameModule: true,
             headerpath: "",
-            sourcepath: ""
+            sourcepath: "",
         };
         let arr = [];
-        let data = BuildTemplates_json_1.default.concat(BuildExtension_json_1.default);
-        data.forEach((val) => {
+        let data = BuildTemplates_json_1.default.concat(Buildspaces_json_1.default);
+        data.forEach(val => {
             arr.push(val.buildspace);
         });
         return new Promise((resolve, reject) => {
-            vscode.window.showQuickPick(arr).then((ret) => {
+            vscode.window
+                .showQuickPick(arr)
+                .then(ret => {
                 if (ret) {
                     retval.buildspace = ret;
                 }
                 else {
                     reject("User did not select any namespace");
                 }
-            }).then(() => {
+            })
+                .then(() => {
                 resolve(retval);
             });
         });
@@ -24665,11 +24776,11 @@ const vscode = __importStar(__webpack_require__(/*! vscode */ "vscode"));
 const edit = __importStar(__webpack_require__(/*! ../utils/EditorHelper */ "./src/utils/EditorHelper.ts"));
 const VSInterface_1 = __webpack_require__(/*! ../modules/VSInterface */ "./src/modules/VSInterface.ts");
 const IncludeTemplates_json_1 = __importDefault(__webpack_require__(/*! ../data/IncludeTemplates.json */ "./src/data/IncludeTemplates.json"));
-const IncludeExtension_json_1 = __importDefault(__webpack_require__(/*! ../data//IncludeExtension.json */ "./src/data/IncludeExtension.json"));
+const IncludeSets_json_1 = __importDefault(__webpack_require__(/*! ../data/extensions/IncludeSets.json */ "./src/data/extensions/IncludeSets.json"));
 const _ = __importStar(__webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js"));
 function IncludeManager() {
     return __awaiter(this, void 0, void 0, function* () {
-        let arr = _.concat(IncludeTemplates_json_1.default, IncludeExtension_json_1.default);
+        let arr = _.concat(IncludeTemplates_json_1.default, IncludeSets_json_1.default);
         let editor = vscode.window.activeTextEditor;
         let marr = [];
         arr.forEach(element => {
@@ -24680,11 +24791,13 @@ function IncludeManager() {
                 resolve();
             }
             // Use createQuickPick for advanced use cases...
-            VSInterface_1.QuickPick(marr, false).then((val) => {
+            VSInterface_1.QuickPick(marr, false).then(val => {
                 arr.forEach(element => {
                     if (val === element.id) {
                         let myarr = element.headers;
-                        myarr = myarr.map((o) => { return "#include \"" + o + "\""; });
+                        myarr = myarr.map(o => {
+                            return '#include "' + o + '"';
+                        });
                         edit.InjectHeaders(editor, myarr);
                         resolve();
                     }
@@ -24694,6 +24807,108 @@ function IncludeManager() {
     });
 }
 exports.default = IncludeManager;
+
+
+/***/ }),
+
+/***/ "./src/modules/InitializerModule.ts":
+/*!******************************************!*\
+  !*** ./src/modules/InitializerModule.ts ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+// Copyright (c) 2020 Debashish Patra, MPL-2.0
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+    result["default"] = mod;
+    return result;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+// IncludeManager.ts
+// Isolated module to handle header inclusion. Refer database at IncludeMapping.json
+const vscode = __importStar(__webpack_require__(/*! vscode */ "vscode"));
+function InitializerModule() {
+    var _a, _b, _c, _d;
+    return __awaiter(this, void 0, void 0, function* () {
+        let editor = vscode.window.activeTextEditor;
+        let data = {
+            line: -1,
+        };
+        if (editor) {
+            data.cursorpos = editor.selection.active;
+            data.line = editor.selection.active.line;
+        }
+        // vscode.window.activeTextEditor?.selections.toString();
+        data.text = (_a = editor) === null || _a === void 0 ? void 0 : _a.document.lineAt(data.line).text;
+        // console.log(data.text);
+        // console.log(RegExp(/(.*?)Component /).test(myline!));
+        // USceneComponent *SceneRoot;
+        if (/(.*?)U([a-zA-Z_]*?)Component(\*| ){2}(.*?);/.test(data.text)) {
+            console.log("match found...");
+            // test for Components (for ucdo)
+            let match = (_b = data.text) === null || _b === void 0 ? void 0 : _b.match(/([a-zA-Z_]*)(\*| ){2}(.*?);/);
+            // console.log(match);
+            if (((_c = match) === null || _c === void 0 ? void 0 : _c.length) === 4) {
+                data.symboltype = match[1];
+                data.symbol = match[3];
+                // console.log(data);
+                let retval = data.symbol +
+                    " = " +
+                    "CreateDefaultSubobject<" +
+                    data.symboltype +
+                    '>("' +
+                    data.symbol +
+                    '")';
+                vscode.env.clipboard.writeText(retval);
+                vscode.window.showInformationMessage("Initializer copied to clipboard.");
+            }
+        }
+        else if (/.*?bool ([a-zA-Z_0-9]*)[ =]{3}.*?(Sweep)?(Multi|Single)/.test(data.text)) {
+            let res = data.text.match(/.*?bool ([a-zA-Z_0-9]*)[ =]{3}.*?(Sweep)?(Multi|Single)/);
+            if (res && res[3] === "Multi") {
+                let retval = `
+    if (${res[1]}) {
+        for (auto it : HitRes) {
+            UE_LOG(LogTemp, Warning, TEXT("Impact at: %s caused by %s"), *it.GetActor()->GetActorLocation().ToString(), *it.GetActor()->GetFName().ToString());
+            // DrawDebugLine(this->GetWorld(), FVector(), it.GetActor()->GetActorLocation(), FColor::Green, false, 4.0f, 0, 0.5f);
+            // DrawDebugPoint(this->GetWorld(), it.Location, 10.0f, FColor::Red, false, 4.0f, 0);
+        }
+    }`;
+                let num = GetEOL(editor, data.line);
+                (_d = editor) === null || _d === void 0 ? void 0 : _d.edit(editBuilder => {
+                    editBuilder.insert(num, retval + "\n");
+                });
+                // vscode.window.activeTextEditor?.edit();
+                vscode.env.clipboard.writeText(retval);
+                vscode.window.showInformationMessage("Initializer copied to clipboard.");
+            }
+        }
+        return new Promise((resolve, reject) => {
+            resolve();
+        });
+    });
+}
+exports.default = InitializerModule;
+function GetEOL(editor, line) {
+    var _a;
+    // let editor = vscode.window.activeTextEditor;
+    let text = (_a = editor) === null || _a === void 0 ? void 0 : _a.document.lineAt(line).range.end;
+    return text;
+}
 
 
 /***/ }),
@@ -24736,23 +24951,23 @@ function InjectExcludeDefinition() {
             let initDir = vscode.workspace.workspaceFolders[0].uri.fsPath;
             // console.log();
             let files = fs.readdirSync(initDir);
-            _.forEach(files, (file) => {
+            _.forEach(files, file => {
                 let ex = /^(.*?).code-workspace/;
                 if (ex.test(file)) {
                     // console.log(file);
                 }
             });
+            // Get this extension's settings
+            let myconfig = vscode.workspace.getConfiguration("globalnode");
+            let myretval;
             let config = vscode.workspace.getConfiguration("files");
             let retval = config.get("exclude");
-            // let retval2 = retval.get("**/node_modules");
-            console.log(retval);
-            retval.hasOwnProperty("");
-            let boole = retval["**/.git"];
             // List of modifications
             // .gitignore copy
-            retval["Intermediate"] = true;
+            retval["**/Intermediate"] = true;
             retval["**/Saved"] = true;
             retval["**/Binaries"] = true;
+            retval["**/Build"] = true;
             // extensions
             retval["**.dll"] = true;
             retval["**.exe"] = true;
@@ -24763,12 +24978,34 @@ function InjectExcludeDefinition() {
             retval["**/Shaders"] = true; // Shaders are linked via plugin Build.cs files.
             retval["**/FeaturePacks"] = true; // Map packages
             retval["**/Samples"] = true; // Starter Content
-            retval["Templates"] = true; // Template maps
+            retval["**/Templates"] = true; // Template maps
             retval[".egstore"] = true; // Template maps
             retval["**/Engine/Build"] = true; // Contains binaries
             retval["**/Engine/Extras"] = true; // External app scripts
             retval["**/Engine/Content"] = true; // binary (.uasset, .umap) files
+            // Apply config : Whether to exclude editor classes from workspace
+            myretval = myconfig.get("excludeEditorClassesFromWorkspace");
+            retval["**/Engine/Source/Editor"] = myretval;
             config.update("exclude", retval, false);
+            //#endregion
+            config = vscode.workspace.getConfiguration("files");
+            retval = config.get("watcherExclude");
+            retval["**/Engine/**"] = true;
+            config.update("watcherExclude", retval, undefined);
+            //#region search.exclude
+            config = vscode.workspace.getConfiguration("search");
+            retval = config.get("exclude");
+            // Added list
+            retval["**.py"] = true;
+            retval["**.generated.h"] = true;
+            retval["**/CoreRedirects.cpp"] = true;
+            retval["**/CoreRedirects.h"] = true;
+            // Apply config : Whether to exclude editor classes from search
+            myretval = myconfig.get("hideEditorClassesFromWorkspace");
+            retval["**/Engine/Source/Editor"] = myretval;
+            retval["**.code-workspace"] = true;
+            config.update("exclude", retval, undefined);
+            //#endregion
             resolve();
         });
     });
@@ -25130,12 +25367,14 @@ const fs = __importStar(__webpack_require__(/*! fs */ "fs"));
 const readline_1 = __importDefault(__webpack_require__(/*! readline */ "readline"));
 const _ = __importStar(__webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js"));
 const FunctionTemplates_json_1 = __importDefault(__webpack_require__(/*! ../data/FunctionTemplates.json */ "./src/data/FunctionTemplates.json"));
-const FunctionExtension_json_1 = __importDefault(__webpack_require__(/*! ../data/FunctionExtension.json */ "./src/data/FunctionExtension.json"));
+const Functions_json_1 = __importDefault(__webpack_require__(/*! ../data/extensions/Functions.json */ "./src/data/extensions/Functions.json"));
 function InjectHeaders(filepath, defs) {
     return __awaiter(this, void 0, void 0, function* () {
         let num = yield RegexMatchLine(filepath, /^#include (.*?).h/);
         let num2 = yield RegexMatchLine(filepath, /^#include (.*?).generated.h/);
-        defs = _.map(defs, (o) => { return ("#include \"" + o + "\""); });
+        defs = _.map(defs, o => {
+            return '#include "' + o + '"';
+        });
         return new Promise((resolve, reject) => {
             WriteAtLine(filepath, num, defs).then(() => {
                 resolve(0);
@@ -25148,7 +25387,7 @@ function InjectHeaders(filepath, defs) {
 exports.InjectHeaders = InjectHeaders;
 function InjectFunctions(headerpath, sourcepath, arr, namespace) {
     return __awaiter(this, void 0, void 0, function* () {
-        let data = _.concat(FunctionTemplates_json_1.default, FunctionExtension_json_1.default);
+        let data = _.concat(FunctionTemplates_json_1.default, Functions_json_1.default);
         // Get header fields
         let pub = yield RegexMatchLine(headerpath, /^public:$/);
         let prot = yield RegexMatchLine(headerpath, /^protected:$/);
@@ -25158,9 +25397,11 @@ function InjectFunctions(headerpath, sourcepath, arr, namespace) {
         let protAdd = [];
         let privAdd = [];
         let srcAdd = [];
-        _.each(arr, (fnid) => {
+        _.each(arr, fnid => {
             var _a;
-            let pnt = _.find(data, (o) => { return o.id === fnid; });
+            let pnt = _.find(data, o => {
+                return o.id === fnid;
+            });
             if (pnt) {
                 switch ((_a = pnt) === null || _a === void 0 ? void 0 : _a.field) {
                     case "public": {
@@ -25208,10 +25449,10 @@ function RegexMatchLine(filepath, ex) {
     let regex = new XRegExp(ex);
     const readInterface = readline_1.default.createInterface({
         input: fs.createReadStream(filepath),
-        output: process.stdout
+        output: process.stdout,
     });
     return new Promise((resolve, reject) => {
-        readInterface.on("line", (line) => {
+        readInterface.on("line", line => {
             if (regex.test(line)) {
                 readInterface.close();
                 resolve(index);
@@ -25224,23 +25465,27 @@ function RegexMatchLine(filepath, ex) {
 function WriteAtLine(filepath, at, lines) {
     return __awaiter(this, void 0, void 0, function* () {
         let content = "";
-        lines.forEach((str) => {
+        lines.forEach(str => {
             content += str + "\n";
         });
         content = content.slice(0, content.length - 1); // Remove last newline character
         console.log(content);
         return new Promise((resolve, reject) => {
-            let data = fs.readFileSync(filepath).toString().split("\n");
+            let data = fs
+                .readFileSync(filepath)
+                .toString()
+                .split("\n");
             data.splice(at, 0, content); // data.splice(at, 0, content);
             // Using filestream
-            let stream = fs.createWriteStream(filepath)
+            let stream = fs
+                .createWriteStream(filepath)
                 .on("error", () => {
                 console.log("Some error occured...");
             })
                 .on("finish", () => {
                 resolve();
             });
-            data.forEach((line) => {
+            data.forEach(line => {
                 stream.write(line + "\n");
             });
             stream.end();
@@ -25250,21 +25495,25 @@ function WriteAtLine(filepath, at, lines) {
 /** Writes a list of lines to the file. */
 function WriteAtLineSync(filepath, at, lines) {
     let content = "";
-    lines.forEach((str) => {
+    lines.forEach(str => {
         content += str + "\n";
     });
     content = content.slice(0, content.length - 1); // Remove last newline character
-    let data = fs.readFileSync(filepath).toString().split("\n");
+    let data = fs
+        .readFileSync(filepath)
+        .toString()
+        .split("\n");
     data.splice(at, 0, content); // data.splice(at, 0, content);
     // Using filestream
-    let stream = fs.createWriteStream(filepath)
+    let stream = fs
+        .createWriteStream(filepath)
         .on("error", () => {
         console.log("Some error occured...");
     })
         .on("finish", () => {
         return;
     });
-    data.forEach((line) => {
+    data.forEach(line => {
         stream.write(line + "\n");
     });
     stream.end();
@@ -25285,7 +25534,9 @@ function GeneratedSourceBody(signature, namespace, fnbody) {
     let rettype = StringExtract(signature, / ([a-zA-Z_]*)<?([a-zA-Z, ]*)>? /);
     retval.push(rettype + " " + namespace + "::" + cls); // AMyActor::BeginPlay() { // body }
     retval.push("{");
-    retval = _.concat(retval, _.map(fnbody, (o) => { return "\t" + o; }));
+    retval = _.concat(retval, _.map(fnbody, o => {
+        return "\t" + o;
+    }));
     retval.push("}\n");
     return retval;
 }
@@ -25460,15 +25711,28 @@ function WriteFunctionToFile(filepath, funcBody, classname) {
     });
 }
 exports.WriteFunctionToFile = WriteFunctionToFile;
-function WriteAtLine(filepath, at, lines) {
+function WriteAtLine(filepath, at, lines, freshFile) {
     return __awaiter(this, void 0, void 0, function* () {
+        // Handle request for starting from black
+        if (freshFile && freshFile === true) {
+            fs.writeFileSync(filepath, "");
+        }
+        // Handle FILE DOES NOT EXIST
+        if (!fs.existsSync(filepath)) {
+            fs.writeFileSync(filepath, "");
+        }
         let content = "";
-        lines.forEach((str) => {
-            content += str + "\n";
+        lines.forEach((str, i) => {
+            if (i === content.length - 1) {
+                content += str;
+            }
+            else {
+                content += str + "\n";
+            }
         });
         return new Promise((resolve, reject) => {
             let data = fs.readFileSync(filepath).toString().split("\n");
-            data.splice(at, 0, content); // data.splice(at, 0, content);
+            data.splice(at, 0, content);
             console.log(data);
             // Using filestream
             let stream = fs.createWriteStream(filepath)
@@ -25478,8 +25742,13 @@ function WriteAtLine(filepath, at, lines) {
                 .on("finish", () => {
                 resolve();
             });
-            data.forEach((line) => {
-                stream.write(line + "\n");
+            data.forEach((line, i) => {
+                if (i === data.length - 1) {
+                    stream.write(line);
+                }
+                else {
+                    stream.write(line + "\n");
+                }
             });
             stream.end();
         });
@@ -25530,6 +25799,88 @@ function GetFolderList(targetpath) {
     }
 }
 exports.GetFolderList = GetFolderList;
+function ConfirmFileExists(targetfilepath) {
+    if (fs.existsSync(targetfilepath)) {
+        return 0;
+    }
+    else {
+        fs.writeFileSync(targetfilepath, "");
+        return 0;
+    }
+}
+exports.ConfirmFileExists = ConfirmFileExists;
+function WriteLinesToFile(filepath, lines) {
+    return __awaiter(this, void 0, void 0, function* () {
+        let writer = fs.createWriteStream(filepath);
+        lines.forEach((line) => {
+            writer.write(line);
+        });
+        writer.close();
+    });
+}
+exports.WriteLinesToFile = WriteLinesToFile;
+
+
+/***/ }),
+
+/***/ "./src/utils/UnrealAutomation.ts":
+/*!***************************************!*\
+  !*** ./src/utils/UnrealAutomation.ts ***!
+  \***************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+// Copyright (c) 2020 Debashish Patra, MPL-2.0
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+    result["default"] = mod;
+    return result;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+// FileSystemHelaper.ts
+// Used to get filepaths, searching and indexing.
+var XRegExp = __webpack_require__(/*! xregexp */ "./node_modules/xregexp/lib/index.js");
+var path = __webpack_require__(/*! path */ "path");
+const vscode = __importStar(__webpack_require__(/*! vscode */ "vscode"));
+function CompileShaders() {
+    return __awaiter(this, void 0, void 0, function* () {
+        let projectpath = vscode.workspace.workspaceFolders[0].uri.fsPath + "/" + vscode.workspace.workspaceFolders[0].name + ".uproject";
+        let enginePath = vscode.workspace.workspaceFolders[1].uri.fsPath;
+        let terminal = vscode.window.createTerminal("Compiling Shaders");
+        let UATPath = path.join(enginePath, "./Engine/Build/BatchFiles/RunUAT.bat");
+        // const terminal = vscode.window.createTerminal(`Ext Terminal #${NEXT_TERM_ID++}`);
+        let args = " \'" + "\"/k \"" + UATPath + "\"" + " BuildCookRun -project=" + projectpath + " -platform=" + "Win64" + " -cook" + "\'";
+        let cmd = "start-process cmd.exe" + args;
+        terminal.sendText(cmd);
+    });
+}
+exports.CompileShaders = CompileShaders;
+function CompileCode() {
+    return __awaiter(this, void 0, void 0, function* () {
+        let projectpath = vscode.workspace.workspaceFolders[0].uri.fsPath + "/" + vscode.workspace.workspaceFolders[0].name + ".uproject";
+        let enginePath = vscode.workspace.workspaceFolders[1].uri.fsPath;
+        let terminal = vscode.window.createTerminal("Compiling Shaders");
+        let UATPath = path.join(enginePath, "./Engine/Build/BatchFiles/RunUAT.bat");
+        // Send to terminal
+        let args = " \'" + "\"/k \"" + UATPath + "\"" + " BuildCookRun -project=" + projectpath + " -platform=" + "Win64" + " -build" + "\'";
+        let cmd = "start-process cmd.exe" + args;
+        terminal.sendText(cmd);
+    });
+}
+exports.CompileCode = CompileCode;
 
 
 /***/ }),

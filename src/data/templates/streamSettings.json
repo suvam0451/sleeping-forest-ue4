@@ -1,8 +1,7 @@
 [
-    "[",
-    "\t{",
-    "\t\t\"createMaterials\": false,",
-    "\t\t\"importTexturesonMesh\": false",
-    "\t}",
-    "]"
+    "{",
+    "\t\"/Game/StreamExample\": \"/Game/StreamExample\",",
+    "\t\"createMaterials\": false,",
+    "\t\"importTexturesForMesh\": false",
+    "}"
 ]

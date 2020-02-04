@@ -1,0 +1,13 @@
+{
+	"UDelegate: OnColisionEnter": {
+		"prefix": "udel_componentbeginoverlap",
+		"body": [
+			"void $1(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);"
+		],
+		"description": [
+			"Template function that can be bound to a PrimitiveComponent",
+			"Use syntax below or xyz to bind",
+			"Use YourComponent->OnComponentBeginOverlap.AddDynamic(this, &YourComponent::OnOverlapBegin);"
+		]
+	}
+}

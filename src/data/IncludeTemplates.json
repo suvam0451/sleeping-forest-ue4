@@ -1,18 +1,5 @@
 [
 	{
-		"id": "Spline",
-		"headers": [
-			"Components/SplineComponent.h",
-			"Components/SplineMeshComponent.h"
-		]
-	},
-	{
-		"id": "Procedural",
-		"headers": [
-			"Components/InstancedStaticMeshComponent.h"
-		]
-	},
-	{
 		"id": "AIPerception",
 		"headers": [
 			"Perception/AIPerceptionComponent.h",
@@ -28,8 +15,44 @@
 	},
 	{
 		"id": "Math",
+		"headers": ["Kismet/KismetMathLibrary.h"]
+	},
+	{
+		"id": "PrimitiveShapes",
 		"headers": [
-			"Kismet/KismetMathLibrary.h"
+			"Components/SphereComponent.h",
+			"Components/BoxComponent.h",
+			"Components/CapsuleComponent.h"
 		]
+	},
+	{
+		"id": "Procedural",
+		"headers": ["Components/InstancedStaticMeshComponent.h"]
+	},
+	{
+		"id": "Spline",
+		"headers": [
+			"Components/SplineComponent.h",
+			"Components/SplineMeshComponent.h"
+		]
+	},
+	{
+		"id": "Subsystems",
+		"headers": [
+			"Subsystems/GameInstanceSubsystem.h",
+			"Subsystems/LocalPlayerSubsystem.h",
+			"Subsystems/WorldSubsystem.h"
+		]
+	},
+	{
+		"id": "Visualization",
+		"headers": [
+			"Components/BillboardComponent.h",
+			"Components/ArrowComponent.h"
+		]
+	},
+	{
+		"id": "Data",
+		"headers": ["Engine/DataTable.h"]
 	}
 ]

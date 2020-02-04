@@ -138,10 +138,7 @@
 			"\tTMap<int, UStaticMesh*> $1;",
 			"\n$0"
 		],
-		"description": [
-			"Adds a mesh map to property list.",
-			"Use "
-		]
+		"description": ["Adds a mesh map to property list.", "Use "]
 	},
 	"Add Property: Boolean switch": {
 		"prefix": "uprop_switch",
@@ -174,9 +171,33 @@
 	},
 	"Add Property: Timer(Handle + Del)": {
 		"prefix": "uprop_timer",
+		"body": ["FTimerDelegate Del$1;", "FTimerHandle Handle$1;"]
+	},
+	"Prop : Sphere Component": {
+		"prefix": "uprop_sphere",
 		"body": [
-			"FTimerDelegate $1Del;",
-			"FTimerHandle $1Handle;"
+			"// ${2:Description not provided } ",
+			"UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=\"Parameters\")",
+			"\tUSphereComponent* $1;",
+			"\n$0"
+		]
+	},
+	"Prop : Box Component": {
+		"prefix": "uprop_box",
+		"body": [
+			"// ${2:Description not provided } ",
+			"UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=\"Parameters\")",
+			"\tUBoxComponent* $1;",
+			"\n$0"
+		]
+	},
+	"Prop : AbilitySystemComponent": {
+		"prefix": "uprop_abilitysyscomp",
+		"body": [
+			"// ${2:Description not provided } ",
+			"UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=\"Abilities\")",
+			"\tUAbilitySystemComponent* $1;",
+			"\n$0"
 		]
 	}
 }
