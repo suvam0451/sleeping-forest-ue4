@@ -1,9 +1,9 @@
 {
-	"name": "daedalus-globalnode",
-	"displayName": "ue4-globalnode",
+	"name": "trailblazer-ue4",
+	"displayName": "TrailBlazer - UE4 multitool",
 	"description": "Command-line tools and snippets for non-replicated procedural/material editor workflow.",
 	"publisher": "suvam0451",
-	"version": "1.0.0",
+	"version": "0.8.0",
 	"license": "MPL-2.0",
 	"repository": {
 		"type": "git",
@@ -145,6 +145,10 @@
 			{
 				"language": "cpp",
 				"path": "./snippets/umat.json"
+			},
+			{
+				"language": "cpp",
+				"path": "./snippets/ufunclib.json"
 			}
 		],
 		"configuration": {
@@ -200,7 +204,7 @@
 		"ts-loader": "^6.2.1",
 		"tslint": "^5.20.0",
 		"typescript": "^3.6.4",
-		"vsce": "^1.71.0",
+		"vsce": "^1.73.0",
 		"vscode-test": "^1.2.2",
 		"webpack": "^4.41.5",
 		"webpack-cli": "^3.3.10"

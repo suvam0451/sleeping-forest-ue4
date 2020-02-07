@@ -145,7 +145,7 @@
 		"body": [
 			"// ${2:Toggle back to false(when user presses) in OnConstruction to use as a switch } ",
 			"UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=\"Triggers\")",
-			"\tbool $1 = false;",
+			"\tbool $1 = false; // context",
 			"\n$0"
 		]
 	},
@@ -154,7 +154,7 @@
 		"body": [
 			"// ${2:Toggle back to false(when user presses) in OnConstruction to use as a switch } ",
 			"UPROPERTY(EditAnywhere, AdvancedDisplay, BlueprintReadWrite, Category=\"Triggers\")",
-			"\tbool $1 = false;",
+			"\tbool $1 = false; // context",
 			"\n$0"
 		],
 		"description": "Adds a boolean switch property(In Advanced dropdown)."
@@ -199,5 +199,34 @@
 			"\tUAbilitySystemComponent* $1;",
 			"\n$0"
 		]
+	},
+	"Prop : Single Spline": {
+		"prefix": "uprop_spline",
+		"body": [
+			"// ${2:Description not provided} ",
+			"UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = \"Parameters\")",
+			"USplineComponent *MySpline;"
+		],
+		"description": ["a single spline"]
+	},
+	"Prop : A map of SplineComponents": {
+		"prefix": "uprop_splinemap",
+		"body": [
+			"// ${2:Description not provided } ",
+			"UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=\"Parameters\")",
+			"\tTMap<int, USplineComponent*> $1;",
+			"\n$0"
+		],
+		"description": ["A map of Spline components."]
+	},
+	"Prop : An array of splines": {
+		"prefix": "uprop_splinearray",
+		"body": [
+			"// ${2:Description not provided } ",
+			"UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=\"Parameters\")",
+			"\tTArray<USplineComponent*> $1;",
+			"\n$0"
+		],
+		"description": ["An array of spline components"]
 	}
 }

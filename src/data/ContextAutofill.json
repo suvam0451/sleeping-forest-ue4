@@ -64,5 +64,35 @@
 			"$2->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);"
 		],
 		"action": "copy"
+	},
+	{
+		"id": "headerassembly",
+		"desc": "fires up the header include manager",
+		"pattern": "^#include ",
+		"parsemap": [],
+		"body": [],
+		"action": "headermodule"
+	},
+	{
+		"id": "functionbodygen",
+		"desc": "Generates function body for a target line.",
+		"pattern": "(FORCEINLINE )?(virtual )?([a-zA-Z, <>]*) (.*?\\))( override)?",
+		"parsemap": [3, 4],
+		"body": ["$1 $x::$2 {", "\t// Function not implemented", "}"],
+		"action": "fnbodygen"
+	},
+	{
+		"id": "booleanswitch",
+		"desc": "Copies initialization code for a boolean switch",
+		"pattern": "bool ([a-zA-Z_]*) [=| ]* false;",
+		"parsemap": [1],
+		"body": [
+			"// Function(called on demand) will be bypassed while packaging",
+			"if ($1 == true) {",
+			"// Insert a function here;",
+			"$1 = false;",
+			"}"
+		],
+		"action": "copy"
 	}
 ]

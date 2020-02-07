@@ -1,6 +1,6 @@
 [
     "{",
-    "\t\"/Game/StreamExample\": \"/Game/StreamExample\",",
+    "\t\"targetPath\": \"/Game/StreamExample\",",
     "\t\"createMaterials\": false,",
     "\t\"importTexturesForMesh\": false",
     "}"

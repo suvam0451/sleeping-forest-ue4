@@ -11,6 +11,7 @@ import ExtensionData from "../data/extensions/IncludeSets.json";
 import * as _ from "lodash";
 import * as fs from "fs";
 import context from "../data/ContextAutofill.json";
+import IncludeManager from "../modules/IncludeManager";
 
 interface InitContextData {
 	line: number;
@@ -38,55 +39,68 @@ export default async function InitializerModule(): Promise<void> {
 	// console.log(data.text);
 	// console.log(RegExp(/(.*?)Component /).test(myline!));
 	// USceneComponent *SceneRoot;
-	if (/(.*?)U([a-zA-Z_]*?)Component(\*| ){2}(.*?);/.test(data.text!)) {
-		// test for Components (for ucdo)
-		let match = data.text?.match(/([a-zA-Z_]*)(\*| ){2}(.*?);/);
-		// console.log(match);
-		if (match?.length === 4) {
-			data.symboltype = match[1];
-			data.symbol = match[3];
-			// console.log(data);
-			let retval =
-				data.symbol +
-				" = " +
-				"CreateDefaultSubobject<" +
-				data.symboltype +
-				'>("' +
-				data.symbol +
-				'")';
-			vscode.env.clipboard.writeText(retval);
-			vscode.window.showInformationMessage("Initializer copied to clipboard.");
-		}
-	} else {
-		let symbolarray: string[] = [];
+	// if (/(.*?)U([a-zA-Z_]*?)Component(\*| ){2}(.*?);/.test(data.text!)) {
+	// 	// test for Components (for ucdo)
+	// 	let match = data.text?.match(/([a-zA-Z_]*)(\*| ){2}(.*?);/);
+	// 	// console.log(match);
+	// 	if (match?.length === 4) {
+	// 		data.symboltype = match[1];
+	// 		data.symbol = match[3];
+	// 		// console.log(data);
+	// 		let retval =
+	// 			data.symbol +
+	// 			" = " +
+	// 			"CreateDefaultSubobject<" +
+	// 			data.symboltype +
+	// 			'>("' +
+	// 			data.symbol +
+	// 			'")';
+	// 		vscode.env.clipboard.writeText(retval);
+	// 		vscode.window.showInformationMessage("Initializer copied to clipboard.");
+	// 	}
+	// } else {
+	let symbolarray: string[] = [];
 
-		context.forEach(rule => {
-			if (RegExp(rule.pattern).test(data.text!)) {
-				let exres = data.text!.match(RegExp(rule.pattern));
+	// ---------- JSON data is matched here ------------------------------
+	context.forEach(rule => {
+		if (RegExp(rule.pattern).test(data.text!)) {
+			let exres = data.text!.match(RegExp(rule.pattern));
+			if (exres) {
+				rule.parsemap.forEach(mapping => {
+					symbolarray.push(exres![mapping]);
+				});
 
-				if (exres) {
-					rule.parsemap.forEach(mapping => {
-						symbolarray.push(exres![mapping]);
-					});
-
-					switch (rule.action) {
-						case "copy": {
-							// vscode.env.clipboard.writeText(retval);
-							vscode.window.showInformationMessage("Initializer copied to clipboard.");
-							break;
-						}
-						case "edit": {
-							edit.InsertLineAsParsedData(rule.body, data.line, symbolarray);
-							break;
-						}
-						default: {
-							break;
-						}
+				switch (rule.action) {
+					case "copy": {
+						let lineToWrite = edit.ResolveLines(rule.body, symbolarray, data.line);
+						vscode.env.clipboard.writeText(lineToWrite);
+						vscode.window.showInformationMessage("Initializer copied to clipboard.");
+						break;
+					}
+					case "edit": {
+						edit.InsertLineAsParsedData(rule.body, data.line, symbolarray);
+						break;
+					}
+					case "headermodule": {
+						IncludeManager();
+						break;
+					}
+					case "fnbodygen": {
+						let lineToWrite = edit.ResolveLines(rule.body, symbolarray, data.line, false);
+						let classname = edit.GetClassSymbol(data.line);
+						lineToWrite = lineToWrite.replace("$x", classname);
+						vscode.env.clipboard.writeText(lineToWrite);
+						vscode.window.showInformationMessage("Function body copied to clipboard.");
+						// console.log(lineToWrite);
+					}
+					default: {
+						break;
 					}
 				}
 			}
-		});
-	}
+		}
+	});
+	// }
 
 	return new Promise<void>((resolve, reject) => {
 		resolve();

@@ -61,6 +61,49 @@ export function InitializeStream() {
 	});
 }
 
+// Data structure to be passed between folders...
+interface AssetStreamKit {
+	dataJSON: RootObject;
+	settingJSON: SettingsStruct;
+	folderpath: string;
+	targetBasePath: string;
+}
+
+export function RefreshStreamForFolder(data: AssetStreamKit) {
+	let files = fs.readdirSync(data.folderpath);
+	files.forEach(file => {
+		let stats = fs.lstatSync(path.join(data.folderpath, file));
+		// Handle if directory
+		if (stats.isDirectory()) {
+			let funcdata: AssetStreamKit = {
+				dataJSON: data.dataJSON,
+				settingJSON: data.settingJSON,
+				folderpath: path.join(data.folderpath, file),
+				targetBasePath: data.targetBasePath + "/" + file,
+			};
+			RefreshStreamForFolder(funcdata);
+		} else if (RegExp(/(.*?).fbx/).test(file)) {
+			data.dataJSON["StaticMesh"].list.push({
+				name: file.match(/^(.*?)\..*?/)![1],
+				path: path.join(data.folderpath, file),
+				targetpath: data.targetBasePath,
+			});
+		} else if (RegExp(/(.*?).(png|jpg)/).test(file)) {
+			data.dataJSON["Texture"].list.push({
+				name: file.match(/^(.*?)\..*?/)![1],
+				path: path.join(data.folderpath, file),
+				targetpath: data.targetBasePath,
+			});
+		} else if (RegExp(/(.*?).(wav|mp3)/).test(file)) {
+			data.dataJSON["Audio"].list.push({
+				name: file.match(/^(.*?)\..*?/)![1],
+				path: path.join(data.folderpath, file),
+				targetpath: data.targetBasePath,
+			});
+		}
+	});
+	return;
+}
 export function RefreshListedStreams() {
 	let config = vscode.workspace.getConfiguration("globalnode");
 	let retval = config.get<string[]>("assetFolders")!;
@@ -77,37 +120,42 @@ export function RefreshListedStreams() {
 		fill["Texture"].list.length = 0;
 		fill["Audio"].list.length = 0;
 
-		console.log(settings);
-		console.log(settings["targetPath"]);
 		let files = fs.readdirSync(path.join(entry, "Assets"));
 		files.forEach(file => {
-			if (RegExp(/(.*?).fbx/).test(file)) {
+			let stats = fs.lstatSync(path.join(entry, "Assets", file));
+			// Handle if directory
+			if (stats.isDirectory()) {
+				let funcdata: AssetStreamKit = {
+					dataJSON: fill,
+					settingJSON: settings,
+					folderpath: path.join(entry, "Assets", file),
+					targetBasePath: settings["targetPath"] + "/" + file,
+				};
+				RefreshStreamForFolder(funcdata);
+			} else if (RegExp(/(.*?).fbx/).test(file)) {
 				fill["StaticMesh"].list.push({
-					name: file.substr(0, file.length - 4),
+					name: file.match(/^(.*?)\..*?/)![1],
 					path: path.join(entry, "Assets", file),
 					targetpath: settings["targetPath"],
 				});
 			} else if (RegExp(/(.*?).(png|jpg)/).test(file)) {
-				// fill.Texture.list.push(file);
 				fill["Texture"].list.push({
-					name: file.substr(0, file.length - 4),
+					name: file.match(/^(.*?)\..*?/)![1],
 					path: path.join(entry, "Assets", file),
 					targetpath: settings["targetPath"],
 				});
 			} else if (RegExp(/(.*?).(wav|mp3)/).test(file)) {
-				fill.Texture.list.push(file);
 				fill["Audio"].list.push({
-					name: file.substr(0, file.length - 4),
+					name: file.match(/^(.*?)\..*?/)![1],
 					path: path.join(entry, "Assets", file),
 					targetpath: settings["targetPath"],
 				});
 			}
 		});
-		console.log(fill);
+		// console.log(fill);
 		const jsonString = JSON.stringify(fill, null, 2);
 		fs.writeFileSync(path.join(entry, "assetdata.json"), jsonString);
 	});
-	// console.log(retval);
 }
 
 // Interafce declaration

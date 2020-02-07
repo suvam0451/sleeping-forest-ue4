@@ -59,6 +59,68 @@ export function InsertSnippetAt(snip: vscode.SnippetString, at: number) {
 	editor?.insertSnippet(snip, lineEnd);
 }
 
+/**  */
+export function GetClassSymbol(at: number): string {
+	let editor = vscode.window.activeTextEditor;
+	let lineEnd = editor?.document.lineAt(at).range.end;
+
+	while (at-- > 0) {
+		let lineEnd = editor?.document.lineAt(at).text;
+		// class TEST_API UProceduralMultiSpline : public UActorComponent
+		if (/^class .*?_API/.test(lineEnd!)) {
+			let exres = lineEnd?.match(/^class .*?_API (.*?) /);
+			if (exres) {
+				return exres[1];
+			} else {
+				return "";
+			}
+		}
+	}
+	return "";
+}
+
+/**  */
+export function ResolveLines(
+	lines: string[],
+	symbols: string[],
+	at?: number,
+	useTabs?: boolean,
+): string {
+	at = at ? at : 0;
+	useTabs = useTabs === undefined ? true : useTabs;
+	let editor = vscode.window.activeTextEditor;
+	let startln = editor?.document.lineAt(at).text;
+	let retline = "\n";
+
+	// Get number of tabs
+	let tabcount = 0;
+	while (startln!.charAt(tabcount) === "\t") {
+		tabcount++;
+	}
+
+	lines.forEach(line => {
+		symbols.forEach((symbol, i) => {
+			let str = "\\$" + (i + 1);
+			// console.log(str);
+			line = line.replace(RegExp(str, "g"), symbol);
+		});
+		// caliberate tab offset (scope end)
+		if (/.*?}$/.test(line)) {
+			tabcount--;
+		}
+		if (useTabs) {
+			retline = retline.concat("\t".repeat(tabcount) + line + "\n");
+		} else {
+			retline = retline.concat(line + "\n");
+		}
+
+		// caliberate tab offset (scope begin)
+		if (/.*?{$/.test(line)) {
+			tabcount++;
+		}
+	});
+	return retline;
+}
 export function InsertLineAsParsedData(lines: string[], at: number, symbols: string[]) {
 	let editor = vscode.window.activeTextEditor;
 	let startln = editor?.document.lineAt(at).text;
@@ -73,7 +135,7 @@ export function InsertLineAsParsedData(lines: string[], at: number, symbols: str
 	lines.forEach(line => {
 		symbols.forEach((symbol, i) => {
 			let str = "\\$" + (i + 1);
-			console.log(str);
+			// console.log(str);
 			line = line.replace(RegExp(str, "g"), symbol);
 		});
 		// caliberate tab offset (scope end)
