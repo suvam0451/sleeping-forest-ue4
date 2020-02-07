@@ -1,0 +1,10 @@
+{
+	"Add material instance": {
+		"prefix": "umat_instance",
+		"body": [
+			"UMaterialInterface* mat${1:_0} = MyMesh->GetMaterial(${2:0});",
+			"UMaterialInstanceDynamic* Inst_mat${1:_0} = UMaterialInstanceDynamic::Create(mat, MyMesh); // context",
+			"$0"
+		]
+	}
+}

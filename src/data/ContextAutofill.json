@@ -1,0 +1,68 @@
+[
+	{
+		"id": "MaterialParameter",
+		"desc": "Used to debug print material parameter list",
+		"pattern": "UMaterialInstanceDynamic(\\*| ){2}(.*?)= UMaterialInstanceDynamic::Create",
+		"parsemap": [2],
+		"body": [
+			"",
+			"// Use this to list paramaters(vectors here)",
+			"TArray<FMaterialParameterInfo> OutParameterInfo;",
+			"TArray<FGuid> OutParameterIds;",
+			"$1->GetAllVectorParameterInfo(OutParameterInfo, OutParameterIds);",
+			"for(auto it: OutParameterInfo) {",
+			"UE_LOG(LogTemp, Warning, TEXT(\"Param at %i : name: %s\"), it.Index, *it.ToString());",
+			"}"
+		],
+		"action": "edit"
+	},
+	{
+		"id": "Example",
+		"desc": "Simple template for example",
+		"pattern": "Your regex here",
+		"parsemap": [2, 4],
+		"body": [],
+		"action": "edit"
+	},
+	{
+		"id": "MultiResult RayCast",
+		"desc": "Helpers to draw debug spheres and lines for collisions(Multi result)",
+		"pattern": ".*?bool ([a-zA-Z_0-9]*)[ =]{3}.*?(Sweep)?Multi",
+		"parsemap": [1],
+		"body": [
+			"if ($1) {",
+			"for (auto it : HitRes) {",
+			"UE_LOG(LogTemp, Warning, TEXT(\"Impact at: %s caused by %s\"), *it.GetActor()->GetActorLocation().ToString(), *it.GetActor()->GetFName().ToString());",
+			"// DrawDebugLine(this->GetWorld(), FVector(), it.GetActor()->GetActorLocation(), FColor::Green, false, 4.0f, 0, 0.5f);",
+			"// DrawDebugPoint(this->GetWorld(), it.Location, 10.0f, FColor::Red, false, 4.0f, 0);",
+			"}",
+			"}"
+		],
+		"action": "edit"
+	},
+	{
+		"id": "SingleResult RayCast",
+		"desc": "Helpers to draw debug spheres and lines for collisions(Single result)",
+		"pattern": ".*?bool ([a-zA-Z_0-9]*)[ =]{3}.*?Line.*?Single.*?\\(([a-zA-Z]*)\\,",
+		"parsemap": [1, 2],
+		"body": [
+			"if ($1) {",
+			"UE_LOG(LogTemp, Warning, TEXT(\"Impact at: %s caused by %s\"), *$2.GetActor()->GetActorLocation().ToString(), *$2.GetActor()->GetFName().ToString());",
+			"// DrawDebugLine(this->GetWorld(), FVector(), $2.GetActor()->GetActorLocation(), FColor::Green, false, 4.0f, 0, 0.5f);",
+			"// DrawDebugPoint(this->GetWorld(), it.Location, 10.0f, FColor::Red, false, 4.0f, 0);",
+			"}"
+		],
+		"action": "edit"
+	},
+	{
+		"id": "init_components",
+		"desc": "Initialization Scene/Sphere/StaticMesh etc",
+		"pattern": ".*?U([a-zA-Z_]*)?Component[\\*| ]{2}([a-zA-Z_]*);",
+		"parsemap": [1, 2],
+		"body": [
+			"$2 = CreateDefaultSubobject<U$1Component>(\"My$1\");",
+			"$2->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);"
+		],
+		"action": "copy"
+	}
+]

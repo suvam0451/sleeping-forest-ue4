@@ -23936,6 +23936,17 @@ module.exports = JSON.parse("[{\"buildspace\":\"Default\",\"templates\":[{\"id\"
 
 /***/ }),
 
+/***/ "./src/data/ContextAutofill.json":
+/*!***************************************!*\
+  !*** ./src/data/ContextAutofill.json ***!
+  \***************************************/
+/*! exports provided: 0, 1, 2, 3, 4, default */
+/***/ (function(module) {
+
+module.exports = JSON.parse("[{\"id\":\"MaterialParameter\",\"desc\":\"Used to debug print material parameter list\",\"pattern\":\"UMaterialInstanceDynamic(\\\\*| ){2}(.*?)= UMaterialInstanceDynamic::Create\",\"parsemap\":[2],\"body\":[\"\",\"// Use this to list paramaters(vectors here)\",\"TArray<FMaterialParameterInfo> OutParameterInfo;\",\"TArray<FGuid> OutParameterIds;\",\"$1->GetAllVectorParameterInfo(OutParameterInfo, OutParameterIds);\",\"for(auto it: OutParameterInfo) {\",\"UE_LOG(LogTemp, Warning, TEXT(\\\"Param at %i : name: %s\\\"), it.Index, *it.ToString());\",\"}\"],\"action\":\"edit\"},{\"id\":\"Example\",\"desc\":\"Simple template for example\",\"pattern\":\"Your regex here\",\"parsemap\":[2,4],\"body\":[],\"action\":\"edit\"},{\"id\":\"MultiResult RayCast\",\"desc\":\"Helpers to draw debug spheres and lines for collisions(Multi result)\",\"pattern\":\".*?bool ([a-zA-Z_0-9]*)[ =]{3}.*?(Sweep)?Multi\",\"parsemap\":[1],\"body\":[\"if ($1) {\",\"for (auto it : HitRes) {\",\"UE_LOG(LogTemp, Warning, TEXT(\\\"Impact at: %s caused by %s\\\"), *it.GetActor()->GetActorLocation().ToString(), *it.GetActor()->GetFName().ToString());\",\"// DrawDebugLine(this->GetWorld(), FVector(), it.GetActor()->GetActorLocation(), FColor::Green, false, 4.0f, 0, 0.5f);\",\"// DrawDebugPoint(this->GetWorld(), it.Location, 10.0f, FColor::Red, false, 4.0f, 0);\",\"}\",\"}\"],\"action\":\"edit\"},{\"id\":\"SingleResult RayCast\",\"desc\":\"Helpers to draw debug spheres and lines for collisions(Single result)\",\"pattern\":\".*?bool ([a-zA-Z_0-9]*)[ =]{3}.*?Line.*?Single.*?\\\\(([a-zA-Z]*)\\\\,\",\"parsemap\":[1,2],\"body\":[\"if ($1) {\",\"UE_LOG(LogTemp, Warning, TEXT(\\\"Impact at: %s caused by %s\\\"), *$2.GetActor()->GetActorLocation().ToString(), *$2.GetActor()->GetFName().ToString());\",\"// DrawDebugLine(this->GetWorld(), FVector(), $2.GetActor()->GetActorLocation(), FColor::Green, false, 4.0f, 0, 0.5f);\",\"// DrawDebugPoint(this->GetWorld(), it.Location, 10.0f, FColor::Red, false, 4.0f, 0);\",\"}\"],\"action\":\"edit\"},{\"id\":\"init_components\",\"desc\":\"Initialization Scene/Sphere/StaticMesh etc\",\"pattern\":\".*?U([a-zA-Z_]*)?Component[\\\\*| ]{2}([a-zA-Z_]*);\",\"parsemap\":[1,2],\"body\":[\"$2 = CreateDefaultSubobject<U$1Component>(\\\"My$1\\\");\",\"$2->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);\"],\"action\":\"copy\"}]");
+
+/***/ }),
+
 /***/ "./src/data/FunctionTemplates.json":
 /*!*****************************************!*\
   !*** ./src/data/FunctionTemplates.json ***!
@@ -24837,12 +24848,17 @@ var __importStar = (this && this.__importStar) || function (mod) {
     result["default"] = mod;
     return result;
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 // IncludeManager.ts
 // Isolated module to handle header inclusion. Refer database at IncludeMapping.json
 const vscode = __importStar(__webpack_require__(/*! vscode */ "vscode"));
+const edit = __importStar(__webpack_require__(/*! ../utils/EditorHelper */ "./src/utils/EditorHelper.ts"));
+const ContextAutofill_json_1 = __importDefault(__webpack_require__(/*! ../data/ContextAutofill.json */ "./src/data/ContextAutofill.json"));
 function InitializerModule() {
-    var _a, _b, _c, _d;
+    var _a, _b, _c;
     return __awaiter(this, void 0, void 0, function* () {
         let editor = vscode.window.activeTextEditor;
         let data = {
@@ -24877,25 +24893,32 @@ function InitializerModule() {
                 vscode.window.showInformationMessage("Initializer copied to clipboard.");
             }
         }
-        else if (/.*?bool ([a-zA-Z_0-9]*)[ =]{3}.*?(Sweep)?(Multi|Single)/.test(data.text)) {
-            let res = data.text.match(/.*?bool ([a-zA-Z_0-9]*)[ =]{3}.*?(Sweep)?(Multi|Single)/);
-            if (res && res[3] === "Multi") {
-                let retval = `
-    if (${res[1]}) {
-        for (auto it : HitRes) {
-            UE_LOG(LogTemp, Warning, TEXT("Impact at: %s caused by %s"), *it.GetActor()->GetActorLocation().ToString(), *it.GetActor()->GetFName().ToString());
-            // DrawDebugLine(this->GetWorld(), FVector(), it.GetActor()->GetActorLocation(), FColor::Green, false, 4.0f, 0, 0.5f);
-            // DrawDebugPoint(this->GetWorld(), it.Location, 10.0f, FColor::Red, false, 4.0f, 0);
-        }
-    }`;
-                let num = GetEOL(editor, data.line);
-                (_d = editor) === null || _d === void 0 ? void 0 : _d.edit(editBuilder => {
-                    editBuilder.insert(num, retval + "\n");
-                });
-                // vscode.window.activeTextEditor?.edit();
-                vscode.env.clipboard.writeText(retval);
-                vscode.window.showInformationMessage("Initializer copied to clipboard.");
-            }
+        else {
+            let symbolarray = [];
+            ContextAutofill_json_1.default.forEach(rule => {
+                if (RegExp(rule.pattern).test(data.text)) {
+                    let exres = data.text.match(RegExp(rule.pattern));
+                    if (exres) {
+                        rule.parsemap.forEach(mapping => {
+                            symbolarray.push(exres[mapping]);
+                        });
+                        switch (rule.action) {
+                            case "copy": {
+                                // vscode.env.clipboard.writeText(retval);
+                                vscode.window.showInformationMessage("Initializer copied to clipboard.");
+                                break;
+                            }
+                            case "edit": {
+                                edit.InsertLineAsParsedData(rule.body, data.line, symbolarray);
+                                break;
+                            }
+                            default: {
+                                break;
+                            }
+                        }
+                    }
+                }
+            });
         }
         return new Promise((resolve, reject) => {
             resolve();
@@ -25153,7 +25176,7 @@ function InjectHeaders(editor, lines) {
     if (isHeader) {
         let startingLine = GetLineMatchingRegexInActiveFile(headerDefaultRegex);
         let finishingLine = GetLineMatchingRegexInActiveFile(headerFileEndRegex);
-        Promise.all([startingLine, finishingLine]).then((values) => {
+        Promise.all([startingLine, finishingLine]).then(values => {
             // Get updates list of headers
             let request = RemoveDuplicates(lines, values[0], values[1]);
             var newPosition = position.with(values[1], 0);
@@ -25164,6 +25187,101 @@ function InjectHeaders(editor, lines) {
     }
 }
 exports.InjectHeaders = InjectHeaders;
+/** Adds and evaluats a snippet at given line positio */
+function InsertSnippetAt(snip, at) {
+    var _a, _b;
+    let editor = vscode.window.activeTextEditor;
+    let lineEnd = (_a = editor) === null || _a === void 0 ? void 0 : _a.document.lineAt(at).range.end;
+    (_b = editor) === null || _b === void 0 ? void 0 : _b.insertSnippet(snip, lineEnd);
+}
+exports.InsertSnippetAt = InsertSnippetAt;
+function InsertLineAsParsedData(lines, at, symbols) {
+    var _a;
+    let editor = vscode.window.activeTextEditor;
+    let startln = (_a = editor) === null || _a === void 0 ? void 0 : _a.document.lineAt(at).text;
+    // Get number of tabs
+    let tabcount = 0;
+    while (startln.charAt(tabcount) === "\t") {
+        tabcount++;
+    }
+    let retline = "\n";
+    lines.forEach(line => {
+        symbols.forEach((symbol, i) => {
+            let str = "\\$" + (i + 1);
+            console.log(str);
+            line = line.replace(RegExp(str, "g"), symbol);
+        });
+        // caliberate tab offset (scope end)
+        if (/.*?}$/.test(line)) {
+            tabcount--;
+        }
+        retline = retline.concat("\t".repeat(tabcount) + line + "\n");
+        // caliberate tab offset (scope begin)
+        if (/.*?{$/.test(line)) {
+            tabcount++;
+        }
+    });
+    InsertLineAt(retline, at);
+}
+exports.InsertLineAsParsedData = InsertLineAsParsedData;
+/** Insert multiple lines at given line
+ * @param lines Array of strings to insert (Brackets auto-evaluated)
+ * @param at Position at which string is inserted. { Default: 0 }
+ */
+function InsertLinesAt(lines, at, debug) {
+    var _a, _b, _c;
+    at = at ? at : 0;
+    let editor = vscode.window.activeTextEditor;
+    let lineEnd = (_a = editor) === null || _a === void 0 ? void 0 : _a.document.lineAt(at).range.end;
+    let startline = (_b = editor) === null || _b === void 0 ? void 0 : _b.document.lineAt(at).text;
+    // Get number of tabs
+    let tabcount = 0;
+    while (startline.charAt(tabcount) === "\t") {
+        console.log((_c = startline) === null || _c === void 0 ? void 0 : _c.charAt(tabcount));
+        tabcount++;
+    }
+    // console.log(tabcount);
+    let retline = "\n";
+    lines.forEach(line => {
+        // caliberate tab offset (scope end)
+        if (/.*?}$/.test(line)) {
+            tabcount--;
+        }
+        retline = retline.concat("\t".repeat(tabcount) + line + "\n");
+        // caliberate tab offset (scope begin)
+        if (/.*?{$/.test(line)) {
+            tabcount++;
+        }
+    });
+    // console.log(retline);
+    InsertLineAt(retline, at);
+}
+exports.InsertLinesAt = InsertLinesAt;
+/** Insert a single string at given line(optionally specify tabstops)
+ * @param line the line to be inserted
+ * @param at The position at which the string has to be inserted. Default = 0;
+ * @param tabs Number of tabs to append. Default: Considers number of tabs in second parameter
+ * @param debug Whether to show info message. Defaut: false
+ */
+function InsertLineAt(line, at, tabs, debug) {
+    var _a, _b;
+    at = at ? at : 0;
+    debug = debug ? debug : false;
+    let editor = vscode.window.activeTextEditor;
+    let lineEnd = (_a = editor) === null || _a === void 0 ? void 0 : _a.document.lineAt(at).range.end;
+    (_b = editor) === null || _b === void 0 ? void 0 : _b.edit(editBuilder => {
+        editBuilder.insert(lineEnd, line + "\n");
+    }).then(() => {
+        if (debug === true) {
+            vscode.window.showInformationMessage("copied to clipboard.");
+        }
+    }, err => {
+        if (debug === true) {
+            vscode.window.showInformationMessage("failed to write to editor : ", err);
+        }
+    });
+}
+exports.InsertLineAt = InsertLineAt;
 function RemoveDuplicates(data, start, end) {
     var _a;
     let editor = vscode.window.activeTextEditor;
@@ -25193,7 +25311,7 @@ function WriteRequest(lines) {
 exports.WriteRequest = WriteRequest;
 /** Writes lines at current cursor position. */
 // export function WriteRequestSimple() {
-// 
+//
 // }
 var UE4_ClassTypes;
 (function (UE4_ClassTypes) {
@@ -25207,7 +25325,7 @@ var UE4_ClassTypes;
 function AppendFunctionInFile(filepath, body) {
     fs.appendFile(filepath, body, (err) => {
         // if (err) { throw err };
-        console.log('Saved!');
+        console.log("Saved!");
     });
 }
 exports.AppendFunctionInFile = AppendFunctionInFile;

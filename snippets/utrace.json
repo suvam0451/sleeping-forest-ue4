@@ -1,188 +1,188 @@
 {
-    "Line Trace: Single By Channel": {
-        "prefix": "utrace_singlechannel",
-        "body": [
-            "FHitResult HitRes$1;",
-            "bool IsHit$1 = GetWorld()->LineTraceSingleByChannel(HitRes$1, FVector(0), FVector(0), ECollisionChannel::ECC_Visibility);",
-            "",
-            "$0"
-        ],
-        "description": [
-            "Returns data for first object when scanned through a single specified channel",
-            "To avoid shadowing, append \"_1\" after calling macros second time onwards."
-        ]
-    },
-    "Line Trace: Single By Channel (All params)": {
-        "prefix": "utrace_singlechannel_full",
-        "body": [
-            "FCollisionQueryParams ColQueryParams$1;",
-            "FCollisionResponseParams ColResParams$1;",
-            "FHitResult HitRes$1;",
-            "bool IsHit$1 = GetWorld()->LineTraceSingleByChannel(HitRes$1, FVector(0), FVector(0), ECollisionChannel::ECC_Visibility,",
-            "\t\t\t\tColQueryParams$1, ColResParams$1);",
-            "",
-            "$0"
-        ],
-        "description": [
-            "Returns data for first object when scanned through a single specified channel",
-            "To avoid shadowing, append \"_1\" after calling macros second time onwards.",
-            "Also exposes all the parameters."
-        ]
-    },
-    "Line Trace: Single By Object": {
-        "prefix": "utrace_singleobject",
-        "body": [
-            "FCollisionObjectQueryParams ColObjQueryParams$1;",
-            "FHitResult HitRes$1;",
-            "bool IsHit$1 = GetWorld()->LineTraceSingleByObjectType(HitRes$1, FVector(), FVector(), ColObjQueryParams$1);",
-            "",
-            "$0"
-        ],
-        "description": [
-            "Returns data for first collided object (Using ObjectParams from inspector)",
-            "To avoid shadowing, append \"_1\" after calling macros second time onwards."
-        ]
-    },
-    "Line Trace: Single By Object (All params)": {
-        "prefix": "utrace_singleobject_full",
-        "body": [
-            "FCollisionQueryParams ColQueryParams$1;",
-            "FCollisionResponseParams ColResParams$1;",
-            "FCollisionObjectQueryParams ColObjQueryParams$1;",
-            "FHitResult HitRes$1;",
-            "bool IsHit$1 = GetWorld()->LineTraceSingleByObjectType(HitRes$1, FVector(), FVector(), ColObjQueryParams$1, ColQueryParams$1);",
-            "",
-            "$0"
-        ],
-        "description": [
-            "Returns data for first collided object (Using ObjectParams from inspector)",
-            "To avoid shadowing, append \"_1\" after calling macros second time onwards."
-        ]
-    },
-    "Line Trace: Single by Profile": {
-        "prefix": "utrace_singleprofile",
-        "body": [
-            "FHitResult HitRes$1;",
-            "bool IsHit$1 = GetWorld()->LineTraceSingleByProfile(HitRes$1, FVector(), FVector(), FName(\"${2:ProfileName}\"));",
-            "",
-            "$0"
-        ],
-        "description": [
-            "Returns data for first collided object (Using Collision Profile Name from inspector)",
-            "To avoid shadowing, append \"_1\" after calling macros second time onwards."
-        ]
-    },
-    "Line Trace: Single by Profile (All params)": {
-        "prefix": "utrace_singleprofile_full",
-        "body": [
-            "FCollisionQueryParams ColQueryParams$1;",
-            "FHitResult HitRes$1;",
-            "bool IsHit$1 = GetWorld()->LineTraceSingleByProfile(HitRes$1, FVector(), FVector(), FName(\"${2:ProfileName}\"), ColQueryParams$1);",
-            "",
-            "$0"
-        ],
-        "description": [
-            "Returns data for first collided object (Using Collision Profile Name from inspector)",
-            "To avoid shadowing, append \"_1\" after calling macros second time onwards."
-        ]
-    },
-    "Line Trace: Multi By Channel": {
-        "prefix": "utrace_multichannel",
-        "body": [
-            "TArray<FHitResult> HitRes$1;",
-            "bool IsHit$1 = GetWorld()->LineTraceMultiByChannel(HitRes$1, FVector(0), FVector(0), ECollisionChannel::ECC_Visibility);",
-            "",
-            "$0"
-        ],
-        "description": [
-            "Returns data for all object when scanned through a single specified channel",
-            "To avoid shadowing, append \"_1\" after calling macros second time onwards."
-        ]
-    },
-    "Line Trace: Multi By Channel (All params)": {
-        "prefix": "utrace_multichannel_full",
-        "body": [
-            "FCollisionQueryParams ColQueryParams$1;",
-            "FCollisionResponseParams ColResParams$1;",
-            "TArray<FHitResult> HitRes$1;",
-            "bool IsHit$1 = GetWorld()->LineTraceMultiByChannel(HitRes$1, FVector(0), FVector(0), ECollisionChannel::ECC_Visibility,",
-            "\t\t\t\tColQueryParams$1, ColResParams$1);",
-            "",
-            "$0"
-        ],
-        "description": [
-            "Returns data for all objects when scanned through a single specified channel",
-            "To avoid shadowing, append \"_1\" after calling macros second time onwards.",
-            "Also exposes all the parameters."
-        ]
-    },
-    "Line Trace: Multi By Object": {
-        "prefix": "utrace_multiobject",
-        "body": [
-            "FCollisionObjectQueryParams ColObjQueryParams$1;",
-            "TArray<FHitResult> HitRes$1;",
-            "bool IsHit$1 = GetWorld()->LineTraceMultiByObjectType(HitRes$1, FVector(), FVector(), ColObjQueryParams$1);",
-            "",
-            "$0"
-        ],
-        "description": [
-            "Returns data for first collided object (Using ObjectParams from inspector)",
-            "To avoid shadowing, append \"_1\" after calling macros second time onwards."
-        ]
-    },
-    "Line Trace: Multi By Object (All params)": {
-        "prefix": "utrace_multiobject_full",
-        "body": [
-            "FCollisionQueryParams ColQueryParams$1;",
-            "FCollisionObjectQueryParams ColObjQueryParams$1;",
-            "TArray<FHitResult> HitRes$1;",
-            "bool IsHit$1 = GetWorld()->LineTraceMultiByObjectType(HitRes$1, FVector(), FVector(), ColObjQueryParams$1, ColQueryParams$1);",
-            "",
-            "$0"
-        ],
-        "description": [
-            "Returns data for first collided object (Using ObjectParams from inspector)",
-            "To avoid shadowing, append \"_1\" after calling macros second time onwards."
-        ]
-    },
-    "Line Trace: Multi by Profile": {
-        "prefix": "utrace_multiprofile",
-        "body": [
-            "TArray<FHitResult> HitRes$1;",
-            "bool IsHit$1 = GetWorld()->LineTraceMultiByProfile(HitRes$1, FVector(), FVector(), FName(\"${2:ProfileName}\"));",
-            "",
-            "$0"
-        ],
-        "description": [
-            "Returns data for first collided object (Using Collision Profile Name from inspector)",
-            "To avoid shadowing, append \"_1\" after calling macros second time onwards."
-        ]
-    },
-    "Line Trace: Multi by Profile (All params)": {
-        "prefix": "utrace_multiprofile_full",
-        "body": [
-            "FCollisionQueryParams ColQueryParams$1;",
-            "TArray<FHitResult> HitRes$1;",
-            "bool IsHit$1 = GetWorld()->LineTraceMultiByProfile(HitRes$1, FVector(), FVector(), FName(\"${2:ProfileName}\"), ColQueryParams$1);",
-            "",
-            "$0"
-        ],
-        "description": [
-            "Returns data for first collided object (Using Collision Profile Name from inspector)",
-            "To avoid shadowing, append \"_1\" after calling macros second time onwards."
-        ]
-    },
-    "Line Trace: Multi Sphere Sweep": {
-        "prefix": "utrace_sweep_sphere",
-        "body": [
-            "FCollisionQueryParams ColQueryParams$1;",
-            "FCollisionResponseParams ColResParams$1;",
-            "TArray<FHitResult> HitRes$1;",
-            "bool IsHit$1 = GetWorld()->SweepMultiByChannel(HitRes$1,${3:FVector()},${4:FVector()},FQuat(),",
-            "\t\tECollisionChannel::ECC_Visibility, FCollisionShape::MakeSphere(${2:10.0f}),",
-            "\t\tColQueryParams$1, ColResParams$1);",
-            "",
-            "$0"
-        ]
-    }
+	"Line Trace: Single By Channel": {
+		"prefix": "utrace_singlechannel",
+		"body": [
+			"FHitResult HitRes$1;",
+			"bool IsHit$1 = GetWorld()->LineTraceSingleByChannel(HitRes$1, FVector(0), FVector(0), ECollisionChannel::ECC_Visibility); // context",
+			"",
+			"$0"
+		],
+		"description": [
+			"Returns data for first object when scanned through a single specified channel",
+			"To avoid shadowing, append \"_1\" after calling macros second time onwards."
+		]
+	},
+	"Line Trace: Single By Channel (All params)": {
+		"prefix": "utrace_singlechannel_full",
+		"body": [
+			"FCollisionQueryParams ColQueryParams$1;",
+			"FCollisionResponseParams ColResParams$1;",
+			"FHitResult HitRes$1;",
+			"bool IsHit$1 = GetWorld()->LineTraceSingleByChannel(HitRes$1, FVector(0), FVector(0), ECollisionChannel::ECC_Visibility, // context",
+			"\t\t\t\tColQueryParams$1, ColResParams$1);",
+			"",
+			"$0"
+		],
+		"description": [
+			"Returns data for first object when scanned through a single specified channel",
+			"To avoid shadowing, append \"_1\" after calling macros second time onwards.",
+			"Also exposes all the parameters."
+		]
+	},
+	"Line Trace: Single By Object": {
+		"prefix": "utrace_singleobject",
+		"body": [
+			"FCollisionObjectQueryParams ColObjQueryParams$1;",
+			"FHitResult HitRes$1;",
+			"bool IsHit$1 = GetWorld()->LineTraceSingleByObjectType(HitRes$1, FVector(), FVector(), ColObjQueryParams$1); // context",
+			"",
+			"$0"
+		],
+		"description": [
+			"Returns data for first collided object (Using ObjectParams from inspector)",
+			"To avoid shadowing, append \"_1\" after calling macros second time onwards."
+		]
+	},
+	"Line Trace: Single By Object (All params)": {
+		"prefix": "utrace_singleobject_full",
+		"body": [
+			"FCollisionQueryParams ColQueryParams$1;",
+			"FCollisionResponseParams ColResParams$1;",
+			"FCollisionObjectQueryParams ColObjQueryParams$1;",
+			"FHitResult HitRes$1;",
+			"bool IsHit$1 = GetWorld()->LineTraceSingleByObjectType(HitRes$1, FVector(), FVector(), ColObjQueryParams$1, ColQueryParams$1); // context",
+			"",
+			"$0"
+		],
+		"description": [
+			"Returns data for first collided object (Using ObjectParams from inspector)",
+			"To avoid shadowing, append \"_1\" after calling macros second time onwards."
+		]
+	},
+	"Line Trace: Single by Profile": {
+		"prefix": "utrace_singleprofile",
+		"body": [
+			"FHitResult HitRes$1;",
+			"bool IsHit$1 = GetWorld()->LineTraceSingleByProfile(HitRes$1, FVector(), FVector(), FName(\"${2:ProfileName}\")); // context",
+			"",
+			"$0"
+		],
+		"description": [
+			"Returns data for first collided object (Using Collision Profile Name from inspector)",
+			"To avoid shadowing, append \"_1\" after calling macros second time onwards."
+		]
+	},
+	"Line Trace: Single by Profile (All params)": {
+		"prefix": "utrace_singleprofile_full",
+		"body": [
+			"FCollisionQueryParams ColQueryParams$1;",
+			"FHitResult HitRes$1;",
+			"bool IsHit$1 = GetWorld()->LineTraceSingleByProfile(HitRes$1, FVector(), FVector(), FName(\"${2:ProfileName}\"), ColQueryParams$1); // context",
+			"",
+			"$0"
+		],
+		"description": [
+			"Returns data for first collided object (Using Collision Profile Name from inspector)",
+			"To avoid shadowing, append \"_1\" after calling macros second time onwards."
+		]
+	},
+	"Line Trace: Multi By Channel": {
+		"prefix": "utrace_multichannel",
+		"body": [
+			"TArray<FHitResult> HitRes$1;",
+			"bool IsHit$1 = GetWorld()->LineTraceMultiByChannel(HitRes$1, FVector(0), FVector(0), ECollisionChannel::ECC_Visibility); // context",
+			"",
+			"$0"
+		],
+		"description": [
+			"Returns data for all object when scanned through a single specified channel",
+			"To avoid shadowing, append \"_1\" after calling macros second time onwards."
+		]
+	},
+	"Line Trace: Multi By Channel (All params)": {
+		"prefix": "utrace_multichannel_full",
+		"body": [
+			"FCollisionQueryParams ColQueryParams$1;",
+			"FCollisionResponseParams ColResParams$1;",
+			"TArray<FHitResult> HitRes$1;",
+			"bool IsHit$1 = GetWorld()->LineTraceMultiByChannel(HitRes$1, FVector(0), FVector(0), ECollisionChannel::ECC_Visibility, // context",
+			"\t\t\t\tColQueryParams$1, ColResParams$1);",
+			"",
+			"$0"
+		],
+		"description": [
+			"Returns data for all objects when scanned through a single specified channel",
+			"To avoid shadowing, append \"_1\" after calling macros second time onwards.",
+			"Also exposes all the parameters."
+		]
+	},
+	"Line Trace: Multi By Object": {
+		"prefix": "utrace_multiobject",
+		"body": [
+			"FCollisionObjectQueryParams ColObjQueryParams$1;",
+			"TArray<FHitResult> HitRes$1;",
+			"bool IsHit$1 = GetWorld()->LineTraceMultiByObjectType(HitRes$1, FVector(), FVector(), ColObjQueryParams$1); // context",
+			"",
+			"$0"
+		],
+		"description": [
+			"Returns data for first collided object (Using ObjectParams from inspector)",
+			"To avoid shadowing, append \"_1\" after calling macros second time onwards."
+		]
+	},
+	"Line Trace: Multi By Object (All params)": {
+		"prefix": "utrace_multiobject_full",
+		"body": [
+			"FCollisionQueryParams ColQueryParams$1;",
+			"FCollisionObjectQueryParams ColObjQueryParams$1;",
+			"TArray<FHitResult> HitRes$1;",
+			"bool IsHit$1 = GetWorld()->LineTraceMultiByObjectType(HitRes$1, FVector(), FVector(), ColObjQueryParams$1, ColQueryParams$1); // context",
+			"",
+			"$0"
+		],
+		"description": [
+			"Returns data for first collided object (Using ObjectParams from inspector)",
+			"To avoid shadowing, append \"_1\" after calling macros second time onwards."
+		]
+	},
+	"Line Trace: Multi by Profile": {
+		"prefix": "utrace_multiprofile",
+		"body": [
+			"TArray<FHitResult> HitRes$1;",
+			"bool IsHit$1 = GetWorld()->LineTraceMultiByProfile(HitRes$1, FVector(), FVector(), FName(\"${2:ProfileName}\")); // context",
+			"",
+			"$0"
+		],
+		"description": [
+			"Returns data for first collided object (Using Collision Profile Name from inspector)",
+			"To avoid shadowing, append \"_1\" after calling macros second time onwards."
+		]
+	},
+	"Line Trace: Multi by Profile (All params)": {
+		"prefix": "utrace_multiprofile_full",
+		"body": [
+			"FCollisionQueryParams ColQueryParams$1;",
+			"TArray<FHitResult> HitRes$1;",
+			"bool IsHit$1 = GetWorld()->LineTraceMultiByProfile(HitRes$1, FVector(), FVector(), FName(\"${2:ProfileName}\"), ColQueryParams$1); // context",
+			"",
+			"$0"
+		],
+		"description": [
+			"Returns data for first collided object (Using Collision Profile Name from inspector)",
+			"To avoid shadowing, append \"_1\" after calling macros second time onwards."
+		]
+	},
+	"Line Trace: Multi Sphere Sweep": {
+		"prefix": "utrace_sweep_sphere",
+		"body": [
+			"FCollisionQueryParams ColQueryParams$1;",
+			"FCollisionResponseParams ColResParams$1;",
+			"TArray<FHitResult> HitRes$1;",
+			"bool IsHit$1 = GetWorld()->SweepMultiByChannel(HitRes$1,${3:FVector()},${4:FVector()},FQuat(), // context",
+			"\t\tECollisionChannel::ECC_Visibility, FCollisionShape::MakeSphere(${2:10.0f}),",
+			"\t\tColQueryParams$1, ColResParams$1);",
+			"",
+			"$0"
+		]
+	}
 }

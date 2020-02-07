@@ -141,6 +141,10 @@
 			{
 				"language": "cpp",
 				"path": "./snippets/udel.json"
+			},
+			{
+				"language": "cpp",
+				"path": "./snippets/umat.json"
 			}
 		],
 		"configuration": {
