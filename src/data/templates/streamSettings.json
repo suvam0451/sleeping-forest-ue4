@@ -3,5 +3,6 @@
     "\t\"targetPath\": \"/Game/StreamExample\",",
     "\t\"createMaterials\": false,",
     "\t\"importTexturesForMesh\": false",
+    "\t\"auto_generate_lods\": true",
     "}"
 ]

@@ -193,13 +193,14 @@
 		"vscode:prepublish": "webpack --mode production",
 		"watch": "tsc -watch -p ./",
 		"webpack": "webpack --mode development",
-		"webpack-dev": "webpack --mode development --watch"
+		"webpack-dev": "webpack --mode development --watch",
+		"ship": "yarn run webpack && yarn vsce package"
 	},
 	"devDependencies": {
 		"@types/mocha": "^5.2.7",
 		"@types/node": "^12.11.7",
 		"@types/vscode": "^1.39.0",
-		"glob": "^7.1.5",
+		"@types/lodash": "^4.14.149",
 		"mocha": "^6.2.2",
 		"ts-loader": "^6.2.1",
 		"tslint": "^5.20.0",
@@ -210,9 +211,13 @@
 		"webpack-cli": "^3.3.10"
 	},
 	"dependencies": {
-		"@types/lodash": "^4.14.149",
+		"@babel/core": "^7.8.4",
+		"@babel/node": "^7.8.4",
+		"babel-preset-es2015": "^6.24.1",
 		"fs": "^0.0.1-security",
+		"glob": "^7.1.5",
 		"line-reader": "^0.4.0",
+		"lodash": "^4.17.15",
 		"path": "^0.12.7",
 		"xregexp": "^4.2.4"
 	}

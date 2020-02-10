@@ -121,6 +121,22 @@ export function ResolveLines(
 	});
 	return retline;
 }
+
+/** Replaces symbols numerically for an array of strings
+ * @param lines array of lines
+ * @param symbols organized array of symbols to replace
+ */
+export function ReplaceSymbols(lines: string[], symbols: string[]): string[] {
+	// console.log("awol", lines);
+	lines.forEach(line => {
+		symbols.forEach((symbol, i) => {
+			let str = "$" + (i + 1);
+			line = line.replace(RegExp(str, "g"), symbol);
+		});
+	});
+	// console.log("after patch", lines);
+	return lines;
+}
 export function InsertLineAsParsedData(lines: string[], at: number, symbols: string[]) {
 	let editor = vscode.window.activeTextEditor;
 	let startln = editor?.document.lineAt(at).text;

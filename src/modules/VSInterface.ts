@@ -54,3 +54,9 @@ export async function PickFolder(): Promise<string> {
 		});
 	});
 }
+
+export function GetVSConfig<T>(namespace: string, key: string): T {
+	let config = vscode.workspace.getConfiguration(namespace);
+	let retval = config.get<T>(key)!;
+	return retval;
+}

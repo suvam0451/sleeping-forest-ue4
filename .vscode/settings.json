@@ -8,7 +8,7 @@
 		"tsconfig.json": false,
 		"package-lock.json": true,
 		"*.md": true,
-		"node_modules": true,
+		"node_modules": false,
 		"*.vsix": true
 	},
 	"search.exclude": {

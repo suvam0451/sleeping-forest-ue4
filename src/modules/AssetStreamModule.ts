@@ -4,59 +4,35 @@
 // Isolated module to let users paste their errors and search database for resolution.
 
 import * as vscode from "vscode";
-import { resolve } from "dns";
-import * as edit from "../utils/EditorHelper";
-import { GetPluginDataFromFolder } from "../utils/FilesystemHelper";
 import * as fs from "fs";
 var XRegExp = require("xregexp");
 import * as path from "path";
-import classData from "../data/BuildTemplates.json";
-import extendedClassData from "../data/extensions/Buildspaces.json";
-// Header/Source file generation data...
-import Default_Actor_h from "../data/generators/Default_Actor_h.json";
-import Default_Actor_cpp from "../data/generators/Default_Actor_cpp.json";
-import { rejects } from "assert";
-import IncludeManager from "./IncludeManager";
-import { InjectHeaders, InjectFunctions } from "../utils/FileHelper";
-import * as _ from "lodash";
-import { QuickPick, InputBox, PickFolder } from "./VSInterface";
-import { WriteAtLine } from "../utils/FilesystemHelper";
-import FileHandler from "../classes/FileHandler";
-import * as filesys from "../utils/FilesystemHelper";
+import _ from "lodash";
+import { PickFolder, GetVSConfig } from "./VSInterface";
+import {
+	CreateAndWrite,
+	WriteFileAsync,
+	WriteJSONToFile,
+	ReadJSON,
+} from "../utils/FilesystemHelper";
 import settings from "../data/templates/streamSettings.json";
 import generator from "../data/templates/pythonGenerator.json";
 import assetexportdata from "../data/templates/assetBasicDataTmpl.json";
 
-export function InitializeStream() {
-	let data: string[] = [];
+/** Generates module scaffold files for selected folder */
+export async function InitializeStream(): Promise<void> {
 	PickFolder().then(ret => {
-		if (!fs.existsSync(path.join(ret, "Assets"))) {
-			fs.mkdirSync(path.join(ret, "Assets"));
-		}
-
+		const _normalizedpath = ret.replace(/\\/g, "/");
 		try {
-			// Write the settings file
-			data = _.map(settings, line => {
-				line = line.replace("$1", ret);
-				return line.replace(/\\/g, "/"); // Path format normalized
-			});
-			WriteAtLine(path.join(ret, "settings.json"), 0, data, true);
-
-			// Write the asset export file
-			data = _.map(generator, line => {
-				line = line.replace("$1", ret);
-				return line.replace(/\\/g, "/"); // Path format normalized
-			});
-			WriteAtLine(path.join(ret, "ExportScript.py"), 0, data, true);
-
-			// Write the data file(s)
-			data = _.map(assetexportdata, line => {
-				line = line.replace("$1", ret);
-				return line.replace(/\\/g, "/"); // Path format normalized
-			});
-			WriteAtLine(path.join(ret, "assetdata.json"), 0, data, true);
+			// folders
+			CreateAndWrite(path.join(ret, "Assets"), true);
+			CreateAndWrite(path.join(ret, "Assets", "AnimSequences"), true);
+			// files
+			WriteFileAsync(path.join(ret, "settings.json"), settings, [_normalizedpath]);
+			WriteFileAsync(path.join(ret, "ExportScript.py"), generator, [_normalizedpath]);
+			WriteFileAsync(path.join(ret, "assetdata.json"), assetexportdata, [_normalizedpath]);
 		} catch {
-			console.log("failed to create file(s)");
+			console.log("failed to create file(s)/folder(s)");
 		}
 	});
 }
@@ -67,95 +43,182 @@ interface AssetStreamKit {
 	settingJSON: SettingsStruct;
 	folderpath: string;
 	targetBasePath: string;
+	isAnimationFolder?: boolean;
 }
 
+enum AssetType {
+	StaticMesh,
+	SoundWave,
+	Textures,
+}
+
+// export function InjectInDataTable<T extends [{ Name: string }]>(
+export function InjectInDataTable(obj: any, type: AssetType, path: string): any {
+	let retval: any = {
+		Name: "Row_" + obj.length.toString(),
+		StaticMesh_Soft: path,
+	};
+	switch (type) {
+		case AssetType.StaticMesh: {
+			retval["StaticMesh"] = ("StaticMesh'" + path + "'").replace(" ", "_");
+			obj.push(retval);
+			break;
+		}
+		case AssetType.SoundWave: {
+			retval["SoundWave"] = ("SoundWave'" + path + "'").replace(" ", "_");
+			obj.push(retval);
+			break;
+		}
+		case AssetType.Textures: {
+			retval["Texture"] = ("Texture2D'" + path + "'").replace(" ", "_");
+			obj.push(retval);
+			break;
+		}
+		default:
+			break;
+	}
+	return obj;
+}
 export function RefreshStreamForFolder(data: AssetStreamKit) {
-	let files = fs.readdirSync(data.folderpath);
-	files.forEach(file => {
+	const obj1: Array<SM_JSONInterface> = []; // Used for DataTable imports (StaticMesh)
+	const obj2: Array<Music_JSONInterface> = []; // Used for DataTable imports (SoundWave)
+	const obj3: Array<T_JSONInterface> = []; // Used for DataTable imports (Textures)
+	fs.readdirSync(data.folderpath).forEach(file => {
+		let _name = file.match(/^(.*?)\..*?/)![1]; // Gets name without extension
+		let _path = path.join(data.folderpath, file); // Fullpath to file/folder
+		let _enginePath = data.targetBasePath + "/" + _name + "." + _name; // Path in engine
+
 		let stats = fs.lstatSync(path.join(data.folderpath, file));
 		// Handle if directory
 		if (stats.isDirectory()) {
-			let funcdata: AssetStreamKit = {
-				dataJSON: data.dataJSON,
-				settingJSON: data.settingJSON,
-				folderpath: path.join(data.folderpath, file),
-				targetBasePath: data.targetBasePath + "/" + file,
-			};
+			let funcdata = data;
+			funcdata.folderpath = _path;
 			RefreshStreamForFolder(funcdata);
 		} else if (RegExp(/(.*?).fbx/).test(file)) {
-			data.dataJSON["StaticMesh"].list.push({
-				name: file.match(/^(.*?)\..*?/)![1],
-				path: path.join(data.folderpath, file),
+			data.dataJSON.StaticMesh.list.push({
+				name: _name,
+				path: _path,
 				targetpath: data.targetBasePath,
 			});
+			// Push to per-folder database
+			InjectInDataTable(obj1, AssetType.StaticMesh, _enginePath);
 		} else if (RegExp(/(.*?).(png|jpg)/).test(file)) {
-			data.dataJSON["Texture"].list.push({
-				name: file.match(/^(.*?)\..*?/)![1],
-				path: path.join(data.folderpath, file),
+			data.dataJSON.Texture.list.push({
+				name: _name,
+				path: _path,
 				targetpath: data.targetBasePath,
 			});
+			// Push to per-folder database
+			InjectInDataTable(obj2, AssetType.Textures, _enginePath);
 		} else if (RegExp(/(.*?).(wav|mp3)/).test(file)) {
-			data.dataJSON["Audio"].list.push({
-				name: file.match(/^(.*?)\..*?/)![1],
-				path: path.join(data.folderpath, file),
+			data.dataJSON.Audio.list.push({
+				name: _name,
+				path: _path,
 				targetpath: data.targetBasePath,
 			});
+			// Push to per-folder database
+			InjectInDataTable(obj2, AssetType.SoundWave, _enginePath);
 		}
 	});
+	// Async write per folder data to JSON files
+	WriteJSONToFile(path.join(data.folderpath, "SM.json"), obj1);
+	WriteJSONToFile(path.join(data.folderpath, "Music.json"), obj2);
+	WriteJSONToFile(path.join(data.folderpath, "Tex.json"), obj3);
 	return;
 }
+
 export function RefreshListedStreams() {
-	let config = vscode.workspace.getConfiguration("globalnode");
-	let retval = config.get<string[]>("assetFolders")!;
+	// let config = vscode.workspace.getConfiguration("globalnode");
+	// let retval = config.get<string[]>("assetFolders")!;
+	let retval = GetVSConfig<string[]>("globalnode", "assetFolders");
 	// let retval: any = config.get("exclude")!;
 	retval.forEach(entry => {
-		let fill: RootObject = JSON.parse(
-			fs.readFileSync(path.join(entry, "assetdata.json")).toString(),
-		);
-		let settings: SettingsStruct = JSON.parse(
-			fs.readFileSync(path.join(entry, "settings.json")).toString(),
-		);
-		// reset
-		fill["StaticMesh"].list.length = 0;
-		fill["Texture"].list.length = 0;
-		fill["Audio"].list.length = 0;
+		let _entry = path.join(entry, "Assets");
 
-		let files = fs.readdirSync(path.join(entry, "Assets"));
-		files.forEach(file => {
-			let stats = fs.lstatSync(path.join(entry, "Assets", file));
+		const fill = ReadJSON<RootObject>(path.join(entry, "assetdata.json"));
+		const settings = ReadJSON<SettingsStruct>(path.join(entry, "settings.json"));
+
+		// reset
+		fill.StaticMesh.list.length = 0;
+		fill.Texture.list.length = 0;
+		fill.Audio.list.length = 0;
+
+		fs.readdirSync(_entry).forEach(file => {
+			let stats = fs.lstatSync(path.join(_entry, file));
 			// Handle if directory
 			if (stats.isDirectory()) {
+				if (file == "Animations") {
+				}
 				let funcdata: AssetStreamKit = {
 					dataJSON: fill,
 					settingJSON: settings,
-					folderpath: path.join(entry, "Assets", file),
-					targetBasePath: settings["targetPath"] + "/" + file,
+					folderpath: path.join(_entry, file),
+					targetBasePath: settings.targetPath + "/" + file,
 				};
 				RefreshStreamForFolder(funcdata);
 			} else if (RegExp(/(.*?).fbx/).test(file)) {
 				fill["StaticMesh"].list.push({
 					name: file.match(/^(.*?)\..*?/)![1],
 					path: path.join(entry, "Assets", file),
-					targetpath: settings["targetPath"],
+					targetpath: settings.targetPath,
 				});
 			} else if (RegExp(/(.*?).(png|jpg)/).test(file)) {
 				fill["Texture"].list.push({
 					name: file.match(/^(.*?)\..*?/)![1],
 					path: path.join(entry, "Assets", file),
-					targetpath: settings["targetPath"],
+					targetpath: settings.targetPath,
 				});
 			} else if (RegExp(/(.*?).(wav|mp3)/).test(file)) {
 				fill["Audio"].list.push({
 					name: file.match(/^(.*?)\..*?/)![1],
 					path: path.join(entry, "Assets", file),
-					targetpath: settings["targetPath"],
+					targetpath: settings.targetPath,
 				});
 			}
 		});
-		// console.log(fill);
-		const jsonString = JSON.stringify(fill, null, 2);
-		fs.writeFileSync(path.join(entry, "assetdata.json"), jsonString);
+		WriteJSONToFile(path.join(entry, "assetdata.json"), fill);
+
+		// Populate JSON data for root...
+		const obj1: Array<SM_JSONInterface> = [];
+		const obj2: Array<Music_JSONInterface> = [];
+		const obj3: Array<T_JSONInterface> = [];
+		// .fbx
+		fill.StaticMesh.list.forEach(el => {
+			let enginePath = el.targetpath + "/" + el.name + "." + el.name;
+			InjectInDataTable(obj1, AssetType.StaticMesh, enginePath);
+		});
+		WriteJSONToFile(path.join(entry, "SM.json"), obj1);
+		// .wav
+		fill.Audio.list.forEach(el => {
+			let enginePath = el.targetpath + "/" + el.name + "." + el.name;
+			InjectInDataTable(obj2, AssetType.SoundWave, enginePath);
+		});
+		WriteJSONToFile(path.join(entry, "Music.json"), obj2);
+		// .png
+		fill.Audio.list.forEach(el => {
+			let enginePath = el.targetpath + "/" + el.name + "." + el.name;
+			InjectInDataTable(obj3, AssetType.Textures, enginePath);
+		});
+		WriteJSONToFile(path.join(entry, "Tex.json"), obj3);
 	});
+}
+
+export interface Music_JSONInterface {
+	Name: string;
+	SoundWave: string;
+	SoundWave_Soft: string;
+}
+
+export interface SM_JSONInterface {
+	Name: string;
+	StaticMesh: string;
+	StaticMesh_Soft: string;
+}
+
+export interface T_JSONInterface {
+	Name: string;
+	Texture: string;
+	Texture_Soft: string;
 }
 
 // Interafce declaration
