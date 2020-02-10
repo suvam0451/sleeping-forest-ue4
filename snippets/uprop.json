@@ -121,6 +121,15 @@
 			"\n$0"
 		]
 	},
+	"Add Property: StaticMeshComp": {
+		"prefix": "uprop_meshcomp",
+		"body": [
+			"// ${2:Description not provided } ",
+			"UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=\"Parameters\")",
+			"\tUStaticMeshComponent *$1;",
+			"\n$0"
+		]
+	},
 	"Add Property: StaticMesh Map": {
 		"prefix": "uprop_meshmap",
 		"body": [
@@ -138,7 +147,10 @@
 			"\tTMap<int, UStaticMesh*> $1;",
 			"\n$0"
 		],
-		"description": ["Adds a mesh map to property list.", "Use "]
+		"description": [
+			"Adds a mesh map to property list.",
+			"Use "
+		]
 	},
 	"Add Property: Boolean switch": {
 		"prefix": "uprop_switch",
@@ -171,7 +183,10 @@
 	},
 	"Add Property: Timer(Handle + Del)": {
 		"prefix": "uprop_timer",
-		"body": ["FTimerDelegate Del$1;", "FTimerHandle Handle$1;"]
+		"body": [
+			"FTimerDelegate Del$1;",
+			"FTimerHandle Handle$1;"
+		]
 	},
 	"Prop : Sphere Component": {
 		"prefix": "uprop_sphere",
@@ -207,7 +222,9 @@
 			"UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = \"Parameters\")",
 			"USplineComponent *MySpline;"
 		],
-		"description": ["a single spline"]
+		"description": [
+			"a single spline"
+		]
 	},
 	"Prop : A map of SplineComponents": {
 		"prefix": "uprop_splinemap",
@@ -217,7 +234,9 @@
 			"\tTMap<int, USplineComponent*> $1;",
 			"\n$0"
 		],
-		"description": ["A map of Spline components."]
+		"description": [
+			"A map of Spline components."
+		]
 	},
 	"Prop : An array of splines": {
 		"prefix": "uprop_splinearray",
@@ -227,6 +246,8 @@
 			"\tTArray<USplineComponent*> $1;",
 			"\n$0"
 		],
-		"description": ["An array of spline components"]
+		"description": [
+			"An array of spline components"
+		]
 	}
 }
