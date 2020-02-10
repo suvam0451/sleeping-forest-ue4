@@ -4,21 +4,27 @@
 		"comment": "// Called when the game starts or when spawned",
 		"signature": "virtual void BeginPlay() override;",
 		"field": "protected",
-		"body": ["Super::BeginPlay();"]
+		"body": [
+			"Super::BeginPlay();"
+		]
 	},
 	{
 		"id": "Tick",
 		"comment": "// Called every frame",
 		"signature": "virtual void Tick(float DeltaTime) override;",
 		"field": "public",
-		"body": ["Super::Tick(DeltaTime);"]
+		"body": [
+			"Super::Tick(DeltaTime);"
+		]
 	},
 	{
 		"id": "OnConstruction",
 		"comment": "// Called when an instance of this class is placed (in editor) or spawned.",
 		"signature": "virtual void OnConstruction(const FTransform &Transform) override;",
 		"field": "private",
-		"body": ["// Function not implemented"]
+		"body": [
+			"// Function not implemented"
+		]
 	},
 	{
 		"id": "SetupPlayerInputComponent",
@@ -55,13 +61,17 @@
 		"comment": "// Similar to Tick() for animations",
 		"signature": "virtual void NativeUpdateAnimation(float DeltaTimeX) override;",
 		"field": "protected",
-		"body": ["Super::NativeUpdateAnimation(DeltaTimeX);"]
+		"body": [
+			"Super::NativeUpdateAnimation(DeltaTimeX);"
+		]
 	},
 	{
 		"id": "NativeInitializeAnimation",
 		"comment": "// Similar to BeginPlay() for animations",
 		"signature": "virtual void NativeInitializeAnimation() override;",
 		"field": "protected",
-		"body": ["Super::NativeInitializeAnimation();"]
+		"body": [
+			"Super::NativeInitializeAnimation();"
+		]
 	}
 ]
