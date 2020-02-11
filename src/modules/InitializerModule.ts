@@ -89,6 +89,14 @@ export default async function InitializerModule(): Promise<void> {
 						let lineToWrite = edit.ResolveLines(rule.body, symbolarray, data.line, false);
 						let classname = edit.GetClassSymbol(data.line);
 						lineToWrite = lineToWrite.replace("$x", classname);
+						while (/( ?=.*?)[,)]/.test(lineToWrite)) {
+							let match = lineToWrite.match(/( ?=.*?)[,)]/);
+							if (match) {
+								lineToWrite = lineToWrite.replace(match[1], "");
+							}
+						}
+
+
 						vscode.env.clipboard.writeText(lineToWrite);
 						vscode.window.showInformationMessage("Function body copied to clipboard.");
 						// console.log(lineToWrite);
