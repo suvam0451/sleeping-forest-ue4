@@ -3,7 +3,9 @@
 		"id": "MaterialParameter",
 		"desc": "Used to debug print material parameter list",
 		"pattern": "UMaterialInstanceDynamic(\\*| ){2}(.*?)= UMaterialInstanceDynamic::Create",
-		"parsemap": [2],
+		"parsemap": [
+			2
+		],
 		"body": [
 			"",
 			"// Use this to list paramaters(vectors here)",
@@ -20,7 +22,10 @@
 		"id": "Example",
 		"desc": "Simple template for example",
 		"pattern": "Your regex here",
-		"parsemap": [2, 4],
+		"parsemap": [
+			2,
+			4
+		],
 		"body": [],
 		"action": "edit"
 	},
@@ -28,7 +33,9 @@
 		"id": "MultiResult RayCast",
 		"desc": "Helpers to draw debug spheres and lines for collisions(Multi result)",
 		"pattern": ".*?bool ([a-zA-Z_0-9]*)[ =]{3}.*?(Sweep)?Multi",
-		"parsemap": [1],
+		"parsemap": [
+			1
+		],
 		"body": [
 			"if ($1) {",
 			"for (auto it : HitRes) {",
@@ -44,7 +51,10 @@
 		"id": "SingleResult RayCast",
 		"desc": "Helpers to draw debug spheres and lines for collisions(Single result)",
 		"pattern": ".*?bool ([a-zA-Z_0-9]*)[ =]{3}.*?Line.*?Single.*?\\(([a-zA-Z]*)\\,",
-		"parsemap": [1, 2],
+		"parsemap": [
+			1,
+			2
+		],
 		"body": [
 			"if ($1) {",
 			"UE_LOG(LogTemp, Warning, TEXT(\"Impact at: %s caused by %s\"), *$2.GetActor()->GetActorLocation().ToString(), *$2.GetActor()->GetFName().ToString());",
@@ -58,7 +68,10 @@
 		"id": "init_components",
 		"desc": "Initialization Scene/Sphere/StaticMesh etc",
 		"pattern": ".*?U([a-zA-Z_]*)?Component[\\*| ]{2}([a-zA-Z_]*);",
-		"parsemap": [1, 2],
+		"parsemap": [
+			1,
+			2
+		],
 		"body": [
 			"$2 = CreateDefaultSubobject<U$1Component>(\"My$1\");",
 			"$2->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);"
@@ -76,16 +89,27 @@
 	{
 		"id": "functionbodygen",
 		"desc": "Generates function body for a target line.",
-		"pattern": "(FORCEINLINE )?(virtual )?([a-zA-Z, <>]*) (.*?\\))( override)?",
-		"parsemap": [3, 4],
-		"body": ["$1 $x::$2 {", "\t// Function not implemented", "}"],
+		"pattern": "(FORCEINLINE )?(virtual )?([a-z_A-Z<>,]*) ?([a-zA-Z_, <>(=0-9\" ]*\\))( const)?( override)?;",
+		"parsemap": [
+			2,
+			3,
+			4,
+			5
+		],
+		"body": [
+			"$1$2 $x::$3$4 {",
+			"\t// Function not implemented",
+			"}"
+		],
 		"action": "fnbodygen"
 	},
 	{
 		"id": "booleanswitch",
 		"desc": "Copies initialization code for a boolean switch",
 		"pattern": "bool ([a-zA-Z_]*) [=| ]* false;",
-		"parsemap": [1],
+		"parsemap": [
+			1
+		],
 		"body": [
 			"// Function(called on demand) will be bypassed while packaging",
 			"if ($1 == true) {",

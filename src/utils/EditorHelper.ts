@@ -79,7 +79,9 @@ export function GetClassSymbol(at: number): string {
 	return "";
 }
 
-/**  */
+/** Accepts an array of strings(lines) and uses another array of string(symbols) to 
+ * 	- Resolve the string
+ * 	- Optionally resolve tabs */
 export function ResolveLines(
 	lines: string[],
 	symbols: string[],
@@ -101,8 +103,15 @@ export function ResolveLines(
 	lines.forEach(line => {
 		symbols.forEach((symbol, i) => {
 			let str = "\\$" + (i + 1);
-			// console.log(str);
-			line = line.replace(RegExp(str, "g"), symbol);
+			if (symbol != undefined) {
+
+				// console.log(str);
+
+				line = line.replace(RegExp(str, "g"), symbol);
+			}
+			else {
+				line = line.replace(RegExp(str, "g"), "");
+			}
 		});
 		// caliberate tab offset (scope end)
 		if (/.*?}$/.test(line)) {

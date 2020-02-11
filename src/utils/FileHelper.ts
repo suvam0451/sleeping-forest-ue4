@@ -9,7 +9,7 @@ import * as fs from "fs";
 import readline from "readline";
 import * as _ from "lodash";
 import FuncDefs from "../data/FunctionTemplates.json";
-import FuncExts from "../data/extensions/Functions.json";
+import FuncExts from "../data/extensions/Functions_Ext.json";
 import { EOF } from "dns";
 
 export async function InjectHeaders(

@@ -26318,7 +26318,7 @@ module.exports = JSON.parse("[{\"buildspace\":\"Default\",\"templates\":[{\"id\"
 /*! exports provided: 0, 1, 2, 3, 4, 5, 6, 7, default */
 /***/ (function(module) {
 
-module.exports = JSON.parse("[{\"id\":\"MaterialParameter\",\"desc\":\"Used to debug print material parameter list\",\"pattern\":\"UMaterialInstanceDynamic(\\\\*| ){2}(.*?)= UMaterialInstanceDynamic::Create\",\"parsemap\":[2],\"body\":[\"\",\"// Use this to list paramaters(vectors here)\",\"TArray<FMaterialParameterInfo> OutParameterInfo;\",\"TArray<FGuid> OutParameterIds;\",\"$1->GetAllVectorParameterInfo(OutParameterInfo, OutParameterIds);\",\"for(auto it: OutParameterInfo) {\",\"UE_LOG(LogTemp, Warning, TEXT(\\\"Param at %i : name: %s\\\"), it.Index, *it.ToString());\",\"}\"],\"action\":\"edit\"},{\"id\":\"Example\",\"desc\":\"Simple template for example\",\"pattern\":\"Your regex here\",\"parsemap\":[2,4],\"body\":[],\"action\":\"edit\"},{\"id\":\"MultiResult RayCast\",\"desc\":\"Helpers to draw debug spheres and lines for collisions(Multi result)\",\"pattern\":\".*?bool ([a-zA-Z_0-9]*)[ =]{3}.*?(Sweep)?Multi\",\"parsemap\":[1],\"body\":[\"if ($1) {\",\"for (auto it : HitRes) {\",\"UE_LOG(LogTemp, Warning, TEXT(\\\"Impact at: %s caused by %s\\\"), *it.GetActor()->GetActorLocation().ToString(), *it.GetActor()->GetFName().ToString());\",\"// DrawDebugLine(this->GetWorld(), FVector(), it.GetActor()->GetActorLocation(), FColor::Green, false, 4.0f, 0, 0.5f);\",\"// DrawDebugPoint(this->GetWorld(), it.Location, 10.0f, FColor::Red, false, 4.0f, 0);\",\"}\",\"}\"],\"action\":\"edit\"},{\"id\":\"SingleResult RayCast\",\"desc\":\"Helpers to draw debug spheres and lines for collisions(Single result)\",\"pattern\":\".*?bool ([a-zA-Z_0-9]*)[ =]{3}.*?Line.*?Single.*?\\\\(([a-zA-Z]*)\\\\,\",\"parsemap\":[1,2],\"body\":[\"if ($1) {\",\"UE_LOG(LogTemp, Warning, TEXT(\\\"Impact at: %s caused by %s\\\"), *$2.GetActor()->GetActorLocation().ToString(), *$2.GetActor()->GetFName().ToString());\",\"// DrawDebugLine(this->GetWorld(), FVector(), $2.GetActor()->GetActorLocation(), FColor::Green, false, 4.0f, 0, 0.5f);\",\"// DrawDebugPoint(this->GetWorld(), it.Location, 10.0f, FColor::Red, false, 4.0f, 0);\",\"}\"],\"action\":\"edit\"},{\"id\":\"init_components\",\"desc\":\"Initialization Scene/Sphere/StaticMesh etc\",\"pattern\":\".*?U([a-zA-Z_]*)?Component[\\\\*| ]{2}([a-zA-Z_]*);\",\"parsemap\":[1,2],\"body\":[\"$2 = CreateDefaultSubobject<U$1Component>(\\\"My$1\\\");\",\"$2->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);\"],\"action\":\"copy\"},{\"id\":\"headerassembly\",\"desc\":\"fires up the header include manager\",\"pattern\":\"^#include \",\"parsemap\":[],\"body\":[],\"action\":\"headermodule\"},{\"id\":\"functionbodygen\",\"desc\":\"Generates function body for a target line.\",\"pattern\":\"(FORCEINLINE )?(virtual )?([a-zA-Z, <>]*) (.*?\\\\))( override)?\",\"parsemap\":[3,4],\"body\":[\"$1 $x::$2 {\",\"\\t// Function not implemented\",\"}\"],\"action\":\"fnbodygen\"},{\"id\":\"booleanswitch\",\"desc\":\"Copies initialization code for a boolean switch\",\"pattern\":\"bool ([a-zA-Z_]*) [=| ]* false;\",\"parsemap\":[1],\"body\":[\"// Function(called on demand) will be bypassed while packaging\",\"if ($1 == true) {\",\"// Insert a function here;\",\"$1 = false;\",\"}\"],\"action\":\"copy\"}]");
+module.exports = JSON.parse("[{\"id\":\"MaterialParameter\",\"desc\":\"Used to debug print material parameter list\",\"pattern\":\"UMaterialInstanceDynamic(\\\\*| ){2}(.*?)= UMaterialInstanceDynamic::Create\",\"parsemap\":[2],\"body\":[\"\",\"// Use this to list paramaters(vectors here)\",\"TArray<FMaterialParameterInfo> OutParameterInfo;\",\"TArray<FGuid> OutParameterIds;\",\"$1->GetAllVectorParameterInfo(OutParameterInfo, OutParameterIds);\",\"for(auto it: OutParameterInfo) {\",\"UE_LOG(LogTemp, Warning, TEXT(\\\"Param at %i : name: %s\\\"), it.Index, *it.ToString());\",\"}\"],\"action\":\"edit\"},{\"id\":\"Example\",\"desc\":\"Simple template for example\",\"pattern\":\"Your regex here\",\"parsemap\":[2,4],\"body\":[],\"action\":\"edit\"},{\"id\":\"MultiResult RayCast\",\"desc\":\"Helpers to draw debug spheres and lines for collisions(Multi result)\",\"pattern\":\".*?bool ([a-zA-Z_0-9]*)[ =]{3}.*?(Sweep)?Multi\",\"parsemap\":[1],\"body\":[\"if ($1) {\",\"for (auto it : HitRes) {\",\"UE_LOG(LogTemp, Warning, TEXT(\\\"Impact at: %s caused by %s\\\"), *it.GetActor()->GetActorLocation().ToString(), *it.GetActor()->GetFName().ToString());\",\"// DrawDebugLine(this->GetWorld(), FVector(), it.GetActor()->GetActorLocation(), FColor::Green, false, 4.0f, 0, 0.5f);\",\"// DrawDebugPoint(this->GetWorld(), it.Location, 10.0f, FColor::Red, false, 4.0f, 0);\",\"}\",\"}\"],\"action\":\"edit\"},{\"id\":\"SingleResult RayCast\",\"desc\":\"Helpers to draw debug spheres and lines for collisions(Single result)\",\"pattern\":\".*?bool ([a-zA-Z_0-9]*)[ =]{3}.*?Line.*?Single.*?\\\\(([a-zA-Z]*)\\\\,\",\"parsemap\":[1,2],\"body\":[\"if ($1) {\",\"UE_LOG(LogTemp, Warning, TEXT(\\\"Impact at: %s caused by %s\\\"), *$2.GetActor()->GetActorLocation().ToString(), *$2.GetActor()->GetFName().ToString());\",\"// DrawDebugLine(this->GetWorld(), FVector(), $2.GetActor()->GetActorLocation(), FColor::Green, false, 4.0f, 0, 0.5f);\",\"// DrawDebugPoint(this->GetWorld(), it.Location, 10.0f, FColor::Red, false, 4.0f, 0);\",\"}\"],\"action\":\"edit\"},{\"id\":\"init_components\",\"desc\":\"Initialization Scene/Sphere/StaticMesh etc\",\"pattern\":\".*?U([a-zA-Z_]*)?Component[\\\\*| ]{2}([a-zA-Z_]*);\",\"parsemap\":[1,2],\"body\":[\"$2 = CreateDefaultSubobject<U$1Component>(\\\"My$1\\\");\",\"$2->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);\"],\"action\":\"copy\"},{\"id\":\"headerassembly\",\"desc\":\"fires up the header include manager\",\"pattern\":\"^#include \",\"parsemap\":[],\"body\":[],\"action\":\"headermodule\"},{\"id\":\"functionbodygen\",\"desc\":\"Generates function body for a target line.\",\"pattern\":\"(FORCEINLINE )?(virtual )?([a-z_A-Z<>,]*) ?([a-zA-Z_, <>(=0-9\\\" ]*\\\\))( const)?( override)?;\",\"parsemap\":[2,3,4,5],\"body\":[\"$1$2 $x::$3$4 {\",\"\\t// Function not implemented\",\"}\"],\"action\":\"fnbodygen\"},{\"id\":\"booleanswitch\",\"desc\":\"Copies initialization code for a boolean switch\",\"pattern\":\"bool ([a-zA-Z_]*) [=| ]* false;\",\"parsemap\":[1],\"body\":[\"// Function(called on demand) will be bypassed while packaging\",\"if ($1 == true) {\",\"// Insert a function here;\",\"$1 = false;\",\"}\"],\"action\":\"copy\"}]");
 
 /***/ }),
 
@@ -26355,10 +26355,10 @@ module.exports = JSON.parse("[{\"buildspace\":\"Extended\",\"templates\":[{\"id\
 
 /***/ }),
 
-/***/ "./src/data/extensions/Functions.json":
-/*!********************************************!*\
-  !*** ./src/data/extensions/Functions.json ***!
-  \********************************************/
+/***/ "./src/data/extensions/Functions_Ext.json":
+/*!************************************************!*\
+  !*** ./src/data/extensions/Functions_Ext.json ***!
+  \************************************************/
 /*! exports provided: 0, 1, default */
 /***/ (function(module) {
 
@@ -26366,10 +26366,10 @@ module.exports = JSON.parse("[{\"id\":\"BeginPlay\",\"comment\":\"// Called when
 
 /***/ }),
 
-/***/ "./src/data/extensions/IncludeSets.json":
-/*!**********************************************!*\
-  !*** ./src/data/extensions/IncludeSets.json ***!
-  \**********************************************/
+/***/ "./src/data/extensions/Includes_Ext.json":
+/*!***********************************************!*\
+  !*** ./src/data/extensions/Includes_Ext.json ***!
+  \***********************************************/
 /*! exports provided: default */
 /***/ (function(module) {
 
@@ -27261,11 +27261,11 @@ const vscode = __importStar(__webpack_require__(/*! vscode */ "vscode"));
 const edit = __importStar(__webpack_require__(/*! ../utils/EditorHelper */ "./src/utils/EditorHelper.ts"));
 const VSInterface_1 = __webpack_require__(/*! ../modules/VSInterface */ "./src/modules/VSInterface.ts");
 const IncludeTemplates_json_1 = __importDefault(__webpack_require__(/*! ../data/IncludeTemplates.json */ "./src/data/IncludeTemplates.json"));
-const IncludeSets_json_1 = __importDefault(__webpack_require__(/*! ../data/extensions/IncludeSets.json */ "./src/data/extensions/IncludeSets.json"));
+const Includes_Ext_json_1 = __importDefault(__webpack_require__(/*! ../data/extensions/Includes_Ext.json */ "./src/data/extensions/Includes_Ext.json"));
 const _ = __importStar(__webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js"));
 function IncludeManager() {
     return __awaiter(this, void 0, void 0, function* () {
-        let arr = _.concat(IncludeTemplates_json_1.default, IncludeSets_json_1.default);
+        let arr = _.concat(IncludeTemplates_json_1.default, Includes_Ext_json_1.default);
         let editor = vscode.window.activeTextEditor;
         let marr = [];
         arr.forEach(element => {
@@ -27708,7 +27708,9 @@ function GetClassSymbol(at) {
     return "";
 }
 exports.GetClassSymbol = GetClassSymbol;
-/**  */
+/** Accepts an array of strings(lines) and uses another array of string(symbols) to
+ * 	- Resolve the string
+ * 	- Optionally resolve tabs */
 function ResolveLines(lines, symbols, at, useTabs) {
     var _a;
     at = at ? at : 0;
@@ -27724,8 +27726,13 @@ function ResolveLines(lines, symbols, at, useTabs) {
     lines.forEach(line => {
         symbols.forEach((symbol, i) => {
             let str = "\\$" + (i + 1);
-            // console.log(str);
-            line = line.replace(RegExp(str, "g"), symbol);
+            if (symbol != undefined) {
+                // console.log(str);
+                line = line.replace(RegExp(str, "g"), symbol);
+            }
+            else {
+                line = line.replace(RegExp(str, "g"), "");
+            }
         });
         // caliberate tab offset (scope end)
         if (/.*?}$/.test(line)) {
@@ -28043,7 +28050,7 @@ const fs = __importStar(__webpack_require__(/*! fs */ "fs"));
 const readline_1 = __importDefault(__webpack_require__(/*! readline */ "readline"));
 const _ = __importStar(__webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js"));
 const FunctionTemplates_json_1 = __importDefault(__webpack_require__(/*! ../data/FunctionTemplates.json */ "./src/data/FunctionTemplates.json"));
-const Functions_json_1 = __importDefault(__webpack_require__(/*! ../data/extensions/Functions.json */ "./src/data/extensions/Functions.json"));
+const Functions_Ext_json_1 = __importDefault(__webpack_require__(/*! ../data/extensions/Functions_Ext.json */ "./src/data/extensions/Functions_Ext.json"));
 function InjectHeaders(filepath, defs) {
     return __awaiter(this, void 0, void 0, function* () {
         let num = yield RegexMatchLine(filepath, /^#include (.*?).h/);
@@ -28063,7 +28070,7 @@ function InjectHeaders(filepath, defs) {
 exports.InjectHeaders = InjectHeaders;
 function InjectFunctions(headerpath, sourcepath, arr, namespace) {
     return __awaiter(this, void 0, void 0, function* () {
-        let data = _.concat(FunctionTemplates_json_1.default, Functions_json_1.default);
+        let data = _.concat(FunctionTemplates_json_1.default, Functions_Ext_json_1.default);
         // Get header fields
         let pub = yield RegexMatchLine(headerpath, /^public:$/);
         let prot = yield RegexMatchLine(headerpath, /^protected:$/);
