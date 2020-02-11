@@ -270,13 +270,7 @@ export enum UE4_ClassTypes {
 	Interface,
 	FStruct,
 }
-/** Appends a function at the end of a source file. */
-export function AppendFunctionInFile(filepath: string, body: string[]) {
-	fs.appendFile(filepath, body, (err: any) => {
-		// if (err) { throw err };
-		console.log("Saved!");
-	});
-}
+
 
 export function GetLineMatchingRegexInActiveFile(ex: RegExp): Promise<number> {
 	let editor = vscode.window.activeTextEditor!;

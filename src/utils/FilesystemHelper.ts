@@ -103,14 +103,53 @@ export async function GetMatchingHeader(data: FileData): Promise<void> {
 	});
 }
 
-/** Gets the .cpp counterpart if standard convention was respected. */
-export async function GetMatchingSource(data: FileData): Promise<string> {
-	const regex = new XRegExp("^" + data.stripped_classname + ".cpp$");
+// export function GetMatchingSourceSync(headerpath: )
+
+/** Get the source file for given header file
+ * @param path fullpath to header file
+ */
+export async function GetMatchingSourceSync(path: string): Promise<string> {
+	let _name = path.match(/([a-zA-Z._-]*)$/)![1];
+	let _folder = path.substr(0, path.length - _name.length - 1);
+	let _stripped = path.match(/([a-zA-Z._-]*)$/)![1];
+	let data: FileData = {
+		filename: _name,
+		folderpath: _folder,
+		stripped_classname: _stripped,
+		cppvalid: ActiveFileExtension.Header,
+		fullpath: path,
+		headerpath: path,
+		sourcepath: ""
+	}
 	return new Promise<string>((resolve, reject) => {
+		GetMatchingSource(data, _name).then((ret) => {
+			resolve(ret);
+		}, (err) => {
+			console.log("Could not find source file: ", err);
+		})
+	});
+}
+
+/** Gets the .cpp counterpart if standard convention was respected. */
+export async function GetMatchingSource(data: FileData, filename?: string): Promise<string> {
+	let regex: RegExp = /^&/;
+	if (filename == undefined) {
+		regex = new XRegExp("^" + data.stripped_classname + ".cpp$");
+	}
+	else {
+		let _name = filename.replace(".h", ".cpp");
+		console.log(_name);
+		regex = new XRegExp("^" + _name);
+	}
+
+	return new Promise<string>((resolve, reject) => {
+		console.log("Searching in: ", data.folderpath);
+		console.log("Searching in: ", path.join(data.folderpath, "../", "Private"));
 		const a = ScanFolderWithRegex(data.folderpath, regex);
 		const b = ScanFolderWithRegex(path.join(data.folderpath, "../", "Private"), regex);
 
 		Promise.all([a, b]).then(values => {
+			console.log("Regex results: ", a, b);
 			if (values[0] !== "") {
 				console.log("found in same folder.");
 				data.sourcepath = path.join(data.folderpath, values[0]);
@@ -134,7 +173,9 @@ export async function ScanFolderWithRegex(dir: string, ex: RegExp): Promise<stri
 				resolve("");
 			}
 			files.forEach((file: string) => {
+
 				if (ex.test(file)) {
+					// console.log("yeet", file);
 					resolve(file);
 				}
 			});
@@ -275,7 +316,7 @@ export function ConfirmFileExists(targetfilepath: string): number {
 	}
 }
 
-/** Uses a WriteStream to write an array of strings to a file */
+/** Uses a WriteStream to write an array of strings to a file. OVERWRITES content. */
 export function WriteLinesToFile(filepath: string, lines: string[]) {
 	let writer = fs.createWriteStream(filepath);
 	lines.forEach(line => {
@@ -352,7 +393,7 @@ export async function WriteFileAsync(
 /** Ouch */
 export async function WriteJSONToFile(filepath: string, data: any) {
 	const str = JSON.stringify(data, null, 2);
-	fs.writeFile(filepath, str, () => {});
+	fs.writeFile(filepath, str, () => { });
 }
 
 export function ReadJSON<T>(filepath: string): T {

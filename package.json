@@ -181,6 +181,11 @@
 					"type": "boolean",
 					"default": false,
 					"description": "If set to true, \"Engine/Source/Editor\" will be excluded from search only. They will still be indexed. These are not needed for gameplay programming. Also, consider excludeEditorClassesFromWorkspace"
+				},
+				"globalnode.autoAddFunctionsInSource": {
+					"type": "boolean",
+					"default": true,
+					"description": "If set to true, generated code for UE4 functions is directly written to source files."
 				}
 			}
 		}

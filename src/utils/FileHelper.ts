@@ -230,3 +230,14 @@ function GeneratedSourceBody(
 	retval.push("}\n");
 	return retval;
 }
+
+/** Appends a function at the end of a file.
+ * 	@param filepath path to the file to be written
+ * 	@param body list of strings to write 
+ */
+export function AddLinesToFile(filepath: string, body: string[]) {
+	fs.appendFile(filepath, body, (err: any) => {
+		// if (err) { throw err };
+		console.log("Saved!");
+	});
+}

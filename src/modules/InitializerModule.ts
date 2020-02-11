@@ -5,13 +5,15 @@
 
 import * as vscode from "vscode";
 import * as edit from "../utils/EditorHelper";
-import { QuickPick } from "../modules/VSInterface";
+import { QuickPick, GetVSConfig } from "../modules/VSInterface";
 import DefaultData from "../data/IncludeTemplates.json";
 import ExtensionData from "../data/extensions/IncludeSets.json";
 import * as _ from "lodash";
 import * as fs from "fs";
 import context from "../data/ContextAutofill.json";
 import IncludeManager from "../modules/IncludeManager";
+import { WriteLinesToFile, GetMatchingSource, GetMatchingSourceSync } from "../utils/FilesystemHelper";
+import { AddLinesToFile } from "../utils/FileHelper"
 
 interface InitContextData {
 	line: number;
@@ -23,6 +25,10 @@ interface InitContextData {
 }
 export default async function InitializerModule(): Promise<void> {
 	let editor = vscode.window.activeTextEditor;
+	let _file = editor?.document.uri.path;
+	_file = _file?.substring(1, _file.length);
+	console.log(_file);
+
 	let data: InitContextData = {
 		line: -1,
 	};
@@ -36,29 +42,6 @@ export default async function InitializerModule(): Promise<void> {
 
 	data.text = editor?.document.lineAt(data.line).text;
 
-	// console.log(data.text);
-	// console.log(RegExp(/(.*?)Component /).test(myline!));
-	// USceneComponent *SceneRoot;
-	// if (/(.*?)U([a-zA-Z_]*?)Component(\*| ){2}(.*?);/.test(data.text!)) {
-	// 	// test for Components (for ucdo)
-	// 	let match = data.text?.match(/([a-zA-Z_]*)(\*| ){2}(.*?);/);
-	// 	// console.log(match);
-	// 	if (match?.length === 4) {
-	// 		data.symboltype = match[1];
-	// 		data.symbol = match[3];
-	// 		// console.log(data);
-	// 		let retval =
-	// 			data.symbol +
-	// 			" = " +
-	// 			"CreateDefaultSubobject<" +
-	// 			data.symboltype +
-	// 			'>("' +
-	// 			data.symbol +
-	// 			'")';
-	// 		vscode.env.clipboard.writeText(retval);
-	// 		vscode.window.showInformationMessage("Initializer copied to clipboard.");
-	// 	}
-	// } else {
 	let symbolarray: string[] = [];
 
 	// ---------- JSON data is matched here ------------------------------
@@ -95,11 +78,19 @@ export default async function InitializerModule(): Promise<void> {
 								lineToWrite = lineToWrite.replace(match[1], "");
 							}
 						}
+						let choice = GetVSConfig<boolean>("globalnode", "autoAddFunctionsInSource");
+						if (choice) {
+							GetMatchingSourceSync(_file!).then((ret) => {
+								// console.log(ret);
+								// WriteLinesToFile(ret, [lineToWrite]);
+								AddLinesToFile(ret, [lineToWrite])
+							});
 
-
-						vscode.env.clipboard.writeText(lineToWrite);
-						vscode.window.showInformationMessage("Function body copied to clipboard.");
-						// console.log(lineToWrite);
+						}
+						else {
+							vscode.env.clipboard.writeText(lineToWrite);
+							vscode.window.showInformationMessage("Function body copied to clipboard.");
+						}
 					}
 					default: {
 						break;
