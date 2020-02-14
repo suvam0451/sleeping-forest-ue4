@@ -1,7 +1,5 @@
 # Trailblazer
 
----
-
 ![](https://gitlab.com/winterwildfire/ue4/trailblazer/badges/master/pipeline.svg)
 ![](https://img.shields.io/badge/4.24-fully%20supported-green)
 ![](https://img.shields.io/discord/573495259926102017)
@@ -10,7 +8,17 @@ Trailblazer is a VSCode extension for Unreal Engine 4 devs that provides powerfu
 
 This extension shows how to leverage the extension terminal API proposed in v1.37 that enables an extension to handle a terminal's input and emit output.
 
-## VS Code API
+## Features
+
+- Snippets
+- Context aware auto-completion
+- Asset streaming
+- Command Line Utilities
+
+## Documentation
+
+- [Getting Started](https://suvam0451.netlify.com/docs/trailblazer/getting-started/)
+- [Modding/Customizing guide](https://suvam0451.netlify.com/docs/trailblazer/extension-files)
 
 ### `vscode` module
 
