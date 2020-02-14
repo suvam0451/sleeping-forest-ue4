@@ -1,10 +1,10 @@
+# Trailblazer
+
+---
+
 ![](https://gitlab.com/winterwildfire/ue4/trailblazer/badges/master/pipeline.svg)
 ![](https://img.shields.io/badge/4.24-fully%20supported-green)
 ![](https://img.shields.io/discord/573495259926102017)
-
-### Trailblazer
-
----
 
 Trailblazer is a VSCode extension for Unreal Engine 4 devs that provides powerful code-completion and command line features for programmers and asset management/optimization tools for designers.
 
