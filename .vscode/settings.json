@@ -7,7 +7,7 @@
 		"tslint.json": true,
 		"tsconfig.json": false,
 		"package-lock.json": true,
-		"*.md": true,
+		"*.md": false,
 		"node_modules": false,
 		"*.vsix": true
 	},
