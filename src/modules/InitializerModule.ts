@@ -78,6 +78,7 @@ export default async function InitializerModule(): Promise<void> {
 								lineToWrite = lineToWrite.replace(match[1], "");
 							}
 						}
+						lineToWrite = lineToWrite.replace(/class /g, "");
 						let choice = GetVSConfig<boolean>("globalnode", "autoAddFunctionsInSource");
 						if (choice) {
 							GetMatchingSourceSync(_file!).then((ret) => {

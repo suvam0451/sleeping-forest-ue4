@@ -53,12 +53,30 @@
 			"\n$0"
 		]
 	},
-	"Add Property: FTransform": {
+	"uprop: FTransform": {
 		"prefix": "uprop_transform",
 		"body": [
 			"// ${2:Description not provided } ",
 			"UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=\"Parameters\")",
 			"\tFTransform $1;",
+			"\n$0"
+		]
+	},
+	"uprop: FTransform map": {
+		"prefix": "uprop_transform_map",
+		"body": [
+			"// ${2:Description not provided } ",
+			"UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=\"Parameters\")",
+			"\tTMap<int, FTransform*> $1;",
+			"\n$0"
+		]
+	},
+	"uprop: FTransform Array": {
+		"prefix": "uprop_transform_array",
+		"body": [
+			"// ${2:Description not provided } ",
+			"UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=\"Parameters\")",
+			"\tTArray<FTransform> $1",
 			"\n$0"
 		]
 	},
@@ -139,6 +157,15 @@
 			"\n$0"
 		]
 	},
+	"Add Property: StaticMesh Array": {
+		"prefix": "uprop_mesh_array",
+		"body": [
+			"// ${2:Description not provided } ",
+			"UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=\"Parameters\")",
+			"\tTArray<UStaticMesh*> $1;",
+			"\n$0"
+		]
+	},
 	"Add Property: StaticMesh Map(In advanced dropdown)": {
 		"prefix": "uprop_meshmap_ro",
 		"body": [
@@ -147,10 +174,7 @@
 			"\tTMap<int, UStaticMesh*> $1;",
 			"\n$0"
 		],
-		"description": [
-			"Adds a mesh map to property list.",
-			"Use "
-		]
+		"description": ["Adds a mesh map to property list.", "Use "]
 	},
 	"Add Property: Boolean switch": {
 		"prefix": "uprop_switch",
@@ -183,10 +207,7 @@
 	},
 	"Add Property: Timer(Handle + Del)": {
 		"prefix": "uprop_timer",
-		"body": [
-			"FTimerDelegate Del$1;",
-			"FTimerHandle Handle$1;"
-		]
+		"body": ["FTimerDelegate Del$1;", "FTimerHandle Handle$1;"]
 	},
 	"Prop : Sphere Component": {
 		"prefix": "uprop_sphere",
@@ -222,9 +243,7 @@
 			"UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = \"Parameters\")",
 			"USplineComponent *MySpline;"
 		],
-		"description": [
-			"a single spline"
-		]
+		"description": ["a single spline"]
 	},
 	"Prop : A map of SplineComponents": {
 		"prefix": "uprop_splinemap",
@@ -234,9 +253,7 @@
 			"\tTMap<int, USplineComponent*> $1;",
 			"\n$0"
 		],
-		"description": [
-			"A map of Spline components."
-		]
+		"description": ["A map of Spline components."]
 	},
 	"Prop : An array of splines": {
 		"prefix": "uprop_splinearray",
@@ -246,8 +263,6 @@
 			"\tTArray<USplineComponent*> $1;",
 			"\n$0"
 		],
-		"description": [
-			"An array of spline components"
-		]
+		"description": ["An array of spline components"]
 	}
 }
