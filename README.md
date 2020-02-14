@@ -1,3 +1,7 @@
+![](https://gitlab.com/winterwildfire/ue4/trailblazer/badges/master/pipeline.svg)
+![](https://img.shields.io/badge/4.24-fully%20supported-green)
+![](https://img.shields.io/discord/573495259926102017)
+
 # extension-terminal-sample
 
 This extension shows how to leverage the extension terminal API proposed in v1.37 that enables an extension to handle a terminal's input and emit output.
