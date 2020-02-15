@@ -2,9 +2,11 @@
 
 ![](https://gitlab.com/winterwildfire/ue4/trailblazer/badges/master/pipeline.svg)
 ![](https://img.shields.io/badge/4.24%20--%204.24-supported-green)
-![](https://img.shields.io/discord/573495259926102017)
+[![](https://img.shields.io/discord/573495259926102017)](https://discord.gg/8Qd8a66)
 ![](https://img.shields.io/badge/platform-windows-lightgrey)
 ![](https://img.shields.io/badge/replication-not%20supported-red)
+
+[![Website](https://api.netlify.com/api/v1/badges/e3c2b5de-423f-417f-b57b-73d48f9e9c3f/deploy-status)](https://suvam0451.netlify.com/docs/trailblazer/getting-started)
 
 **Sleeping Forest** is a VSCode extension for _Unreal Engine 4_ that provides powerful **code-completion and command-line features** for programmers and **asset management/optimization tools** for designers.
 
@@ -63,12 +65,11 @@ Constantly updated support towards smart auto-completion at generic/repetitive b
 Commands to add templated class files, headers from inside (.h/.cpp) files and automatically adding common functions liek BeginPlay in (.h/.cpp).
 These features can be customizing by your own JSON definitions. [See more...](https://suvam0451.netlify.com/docs/trailblazer/extension-files)
 
-|                 Header manager                       |         Adding/Defining Function          |
-|------------------------------------------------------|-------------------------------------------|
-|  ![header module](https://i.imgur.com/6758foW.png)   |    ![function defs](https://i.imgur.com/XZPWFCg.gif)   |
+![header module](https://i.imgur.com/6758foW.png)
+![function defs](https://i.imgur.com/XZPWFCg.gif)
 
 Also, support for
-- Class generation for Actors, ActorComponents. [More...]()
+- **Class generation** for Actors, ActorComponents. [More...]()
 - Contextual constructors for Component properties
 
 # Micro services(currently only for windows)
@@ -77,7 +78,8 @@ The following service tools are currently available for **windows only**. Conven
 
 ### Batch export tool
 
-Assembles information about raw assets in tagged **asset-stream folders** and produces python file which can be used in UE4 to automatically import all assets into respective folder structure and settings.
+Assembles information about raw assets in tagged **asset-stream folders** and produces a python file which can be used in UE4 to automatically
+import all assets into respective folder structure and settings using python API.
 
 ### Texture Packing tool
 
