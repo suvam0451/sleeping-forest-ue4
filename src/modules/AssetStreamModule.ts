@@ -5,7 +5,6 @@
 
 import * as vscode from "vscode";
 import * as fs from "fs";
-var XRegExp = require("xregexp");
 import * as path from "path";
 import _ from "lodash";
 import { PickFolder, GetVSConfig } from "./VSInterface";
@@ -14,26 +13,43 @@ import {
 	WriteFileAsync,
 	WriteJSONToFile,
 	ReadJSON,
+	CreateDirIfMissing,
 } from "../utils/FilesystemHelper";
 import settings from "../data/templates/streamSettings.json";
 import generator from "../data/templates/pythonGenerator.json";
 import assetexportdata from "../data/templates/assetBasicDataTmpl.json";
+import * as filesys from "../utils/FilesystemHelper";
+import * as vs from "../modules/VSInterface";
 
 /** Generates module scaffold files for selected folder */
-export async function InitializeStream(): Promise<void> {
-	PickFolder().then(ret => {
-		const _normalizedpath = ret.replace(/\\/g, "/");
-		try {
-			// folders
-			CreateAndWrite(path.join(ret, "Assets"), true);
-			CreateAndWrite(path.join(ret, "Assets", "AnimSequences"), true);
-			// files
-			WriteFileAsync(path.join(ret, "settings.json"), settings, [_normalizedpath]);
-			WriteFileAsync(path.join(ret, "ExportScript.py"), generator, [_normalizedpath]);
-			WriteFileAsync(path.join(ret, "assetdata.json"), assetexportdata, [_normalizedpath]);
-		} catch {
-			console.log("failed to create file(s)/folder(s)");
-		}
+export async function InitializeStream(): Promise<string> {
+	return new Promise<string>((resolve, reject) => {
+		PickFolder().then(ret => {
+			const _normalizedpath = ret.replace(/\\/g, "/");
+			try {
+				// folders
+				CreateDirIfMissing(path.join(ret, "Assets"));
+				CreateDirIfMissing(path.join(ret, "Audit"));
+				CreateDirIfMissing(path.join(ret, "Binaries"));
+				CreateDirIfMissing(path.join(ret, "Source"));
+				CreateDirIfMissing(path.join(ret, "Assets", "AnimSequences"));
+				CreateDirIfMissing(path.join(ret, "Assets", "TexPacker"));
+				CreateDirIfMissing(path.join(ret, "Source", "TextureSets"));
+
+				// files
+				let a = WriteFileAsync(path.join(ret, "settings.json"), settings, [_normalizedpath]);
+				let b = WriteFileAsync(path.join(ret, "ExportScript.py"), generator, [_normalizedpath]);
+				let c = WriteFileAsync(path.join(ret, "assetdata.json"), assetexportdata, [
+					_normalizedpath,
+				]);
+
+				Promise.all([a, b, c]).then(retvals => {
+					resolve(ret);
+				});
+			} catch {
+				console.log("failed to create file(s)/folder(s)");
+			}
+		});
 	});
 }
 
@@ -83,41 +99,48 @@ export function RefreshStreamForFolder(data: AssetStreamKit) {
 	const obj1: Array<SM_JSONInterface> = []; // Used for DataTable imports (StaticMesh)
 	const obj2: Array<Music_JSONInterface> = []; // Used for DataTable imports (SoundWave)
 	const obj3: Array<T_JSONInterface> = []; // Used for DataTable imports (Textures)
-	fs.readdirSync(data.folderpath).forEach(file => {
-		let _name = file.match(/^(.*?)\..*?/)![1]; // Gets name without extension
-		let _path = path.join(data.folderpath, file); // Fullpath to file/folder
-		let _enginePath = data.targetBasePath + "/" + _name + "." + _name; // Path in engine
 
-		let stats = fs.lstatSync(path.join(data.folderpath, file));
+	if (/TexPacker/.test(data.folderpath)) {
+		return;
+	}
+	fs.readdirSync(data.folderpath).forEach(file => {
+		let _path = path.join(data.folderpath, file); // Fullpath to file/folder
+		let stats = fs.lstatSync(_path);
+
 		// Handle if directory
 		if (stats.isDirectory()) {
 			let funcdata = data;
 			funcdata.folderpath = _path;
-			RefreshStreamForFolder(funcdata);
-		} else if (RegExp(/(.*?).fbx/).test(file)) {
-			data.dataJSON.StaticMesh.list.push({
-				name: _name,
-				path: _path,
-				targetpath: data.targetBasePath,
-			});
-			// Push to per-folder database
-			InjectInDataTable(obj1, AssetType.StaticMesh, _enginePath);
-		} else if (RegExp(/(.*?).(png|jpg)/).test(file)) {
-			data.dataJSON.Texture.list.push({
-				name: _name,
-				path: _path,
-				targetpath: data.targetBasePath,
-			});
-			// Push to per-folder database
-			InjectInDataTable(obj2, AssetType.Textures, _enginePath);
-		} else if (RegExp(/(.*?).(wav|mp3)/).test(file)) {
-			data.dataJSON.Audio.list.push({
-				name: _name,
-				path: _path,
-				targetpath: data.targetBasePath,
-			});
-			// Push to per-folder database
-			InjectInDataTable(obj2, AssetType.SoundWave, _enginePath);
+			// RefreshStreamForFolder(funcdata);
+		} else {
+			let _name = file.match(/^(.*?)\..*?/)![1]; // Gets name without extension
+			let _enginePath = data.targetBasePath + "/" + _name + "." + _name; // Path in engine
+
+			if (RegExp(/(.*?).fbx/).test(file)) {
+				data.dataJSON.StaticMesh.list.push({
+					name: _name,
+					path: _path,
+					targetpath: data.targetBasePath,
+				});
+				// Push to per-folder database
+				InjectInDataTable(obj1, AssetType.StaticMesh, _enginePath);
+			} else if (RegExp(/(.*?).(png|jpg)/).test(file)) {
+				data.dataJSON.Texture.list.push({
+					name: _name,
+					path: _path,
+					targetpath: data.targetBasePath,
+				});
+				// Push to per-folder database
+				InjectInDataTable(obj2, AssetType.Textures, _enginePath);
+			} else if (RegExp(/(.*?).(wav|mp3)/).test(file)) {
+				data.dataJSON.Audio.list.push({
+					name: _name,
+					path: _path,
+					targetpath: data.targetBasePath,
+				});
+				// Push to per-folder database
+				InjectInDataTable(obj2, AssetType.SoundWave, _enginePath);
+			}
 		}
 	});
 	// Async write per folder data to JSON files
@@ -127,9 +150,8 @@ export function RefreshStreamForFolder(data: AssetStreamKit) {
 	return;
 }
 
+/** Exported module */
 export function RefreshListedStreams() {
-	// let config = vscode.workspace.getConfiguration("globalnode");
-	// let retval = config.get<string[]>("assetFolders")!;
 	let retval = GetVSConfig<string[]>("globalnode", "assetFolders");
 	// let retval: any = config.get("exclude")!;
 	retval.forEach(entry => {
@@ -144,9 +166,11 @@ export function RefreshListedStreams() {
 		fill.Audio.list.length = 0;
 
 		fs.readdirSync(_entry).forEach(file => {
+			console.log(file);
 			let stats = fs.lstatSync(path.join(_entry, file));
 			// Handle if directory
 			if (stats.isDirectory()) {
+				console.log("Folder detected");
 				if (file == "Animations") {
 				}
 				let funcdata: AssetStreamKit = {
@@ -176,7 +200,11 @@ export function RefreshListedStreams() {
 				});
 			}
 		});
-		WriteJSONToFile(path.join(entry, "assetdata.json"), fill);
+		try {
+			WriteJSONToFile(path.join(entry, "assetdata.json"), fill);
+		} catch {
+			console.log("Writing to assetdata.json is failing...");
+		}
 
 		// Populate JSON data for root...
 		const obj1: Array<SM_JSONInterface> = [];
@@ -200,7 +228,75 @@ export function RefreshListedStreams() {
 			InjectInDataTable(obj3, AssetType.Textures, enginePath);
 		});
 		WriteJSONToFile(path.join(entry, "Tex.json"), obj3);
+
+		// -----------------------
+		// Run binary toolchains
+		// -----------------------
+
+		let args =
+			'"' +
+			path.join(entry, "Binaries", "texpack.exe") +
+			'" "' +
+			path.join(entry, "settings2.json") +
+			'" "' +
+			path.join(entry, "Source", "TextureSets") +
+			'" "' +
+			path.join(entry, "Assets", "TexPacker") +
+			'"';
+		RunCmd(args);
 	});
+}
+
+export function CopyBinaries(os: string, folderpath: string) {
+	let _binpath = "";
+	let _extdir = "";
+	switch (os) {
+		case "Linux": {
+			vs.showInfo(
+				"Hey! Linux support is off due to insufficient feedback. You can lend help fo this at discord.",
+			);
+			_binpath = "bin/linux";
+			break;
+		}
+		case "Darwin": {
+			vs.showInfo(
+				"Hey! MacOS support is off due to insufficient feedback. You can lend help fo this at discord.",
+			);
+			_binpath = "bin/macos";
+			break;
+		}
+		case "Windows_NT": {
+			_binpath = "bin/win64";
+			_extdir = path.join(process.env["USERPROFILE"]!, ".vscode-insiders\\extensions");
+			break;
+		}
+		default:
+			break;
+	}
+
+	if (_extdir !== "") {
+		filesys.ScanFolderWithRegex(_extdir, /suvam0451/).then(folder => {
+			_extdir = path.join(_extdir, folder, _binpath);
+			fs.copyFileSync(
+				path.join(_extdir, "texpack.exe"),
+				path.join(folderpath, "Binaries", "texpack.exe"),
+			);
+			// filesys.ScanFolderWithRegex(_extdir, /suvam0451/);
+		});
+
+		// fs.copyFileSync()
+	}
+}
+
+/** Runs cmd in windows with given args */
+export function RunCmd(args: string, terminal?: vscode.Terminal) {
+	let cmd = "start-process cmd.exe" + " '" + '"/k "' + args + "'";
+	if (terminal == undefined) {
+		let terminal = vscode.window.createTerminal("suvam0451");
+		terminal.sendText(cmd);
+	} else {
+		terminal.sendText(cmd);
+	}
 }
 
 export interface Music_JSONInterface {

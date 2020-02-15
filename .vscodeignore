@@ -11,4 +11,4 @@ vsc-extension-quickstart.md
 images/**
 
 node_modules
-!node_modules/sharp
+!bin

@@ -60,3 +60,7 @@ export function GetVSConfig<T>(namespace: string, key: string): T {
 	let retval = config.get<T>(key)!;
 	return retval;
 }
+
+export function showInfo(message: string) {
+	vscode.window.showInformationMessage(message);
+}

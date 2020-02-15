@@ -119,14 +119,17 @@ export async function GetMatchingSourceSync(path: string): Promise<string> {
 		cppvalid: ActiveFileExtension.Header,
 		fullpath: path,
 		headerpath: path,
-		sourcepath: ""
-	}
+		sourcepath: "",
+	};
 	return new Promise<string>((resolve, reject) => {
-		GetMatchingSource(data, _name).then((ret) => {
-			resolve(ret);
-		}, (err) => {
-			console.log("Could not find source file: ", err);
-		})
+		GetMatchingSource(data, _name).then(
+			ret => {
+				resolve(ret);
+			},
+			err => {
+				console.log("Could not find source file: ", err);
+			},
+		);
 	});
 }
 
@@ -135,8 +138,7 @@ export async function GetMatchingSource(data: FileData, filename?: string): Prom
 	let regex: RegExp = /^&/;
 	if (filename == undefined) {
 		regex = new XRegExp("^" + data.stripped_classname + ".cpp$");
-	}
-	else {
+	} else {
 		let _name = filename.replace(".h", ".cpp");
 		console.log(_name);
 		regex = new XRegExp("^" + _name);
@@ -173,7 +175,6 @@ export async function ScanFolderWithRegex(dir: string, ex: RegExp): Promise<stri
 				resolve("");
 			}
 			files.forEach((file: string) => {
-
 				if (ex.test(file)) {
 					// console.log("yeet", file);
 					resolve(file);
@@ -359,6 +360,12 @@ export function CreateAndWrite(
 	}
 }
 
+/** Creates a directory if it does not exist */
+export function CreateDirIfMissing(pathIn: string) {
+	if (!fs.existsSync(pathIn)) {
+		fs.mkdirSync(pathIn);
+	}
+}
 /** Creates dir/file if missing
  * @param mainpath path to file/folder
  * @param isDir whether given path is dir or file
@@ -393,7 +400,7 @@ export async function WriteFileAsync(
 /** Ouch */
 export async function WriteJSONToFile(filepath: string, data: any) {
 	const str = JSON.stringify(data, null, 2);
-	fs.writeFile(filepath, str, () => { });
+	fs.writeFile(filepath, str, () => {});
 }
 
 export function ReadJSON<T>(filepath: string): T {

@@ -1,8 +1,11 @@
 [
-    "{",
-    "\t\"targetPath\": \"/Game/StreamExample\",",
-    "\t\"createMaterials\": false,",
-    "\t\"importTexturesForMesh\": false",
-    "\t\"auto_generate_lods\": true",
-    "}"
+	"{",
+	"\t\"targetPath\": \"/Game/StreamExample\",",
+	"\t\"createMaterials\": false,",
+	"\t\"importTexturesForMesh\": false,",
+	"\t\"auto_generate_lods\": true,",
+	"   \"texPacker\": {",
+	"       \"alias\": {}",
+	"   }",
+	"}"
 ]

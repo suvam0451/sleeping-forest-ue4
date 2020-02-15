@@ -14,6 +14,7 @@ import * as AssetStream from "./modules/AssetStreamModule";
 import * as fs from "fs";
 import * as uauto from "./utils/UnrealAutomation";
 import InitializerModule from "./modules/InitializerModule";
+import os from "os";
 // import sharp from "sharp";
 
 interface WriteInEditor {
@@ -142,7 +143,9 @@ export function activate(context: vscode.ExtensionContext) {
 	let Init_AssetFolder = vscode.commands.registerCommand(
 		"extension.Daedalus.initializeAssetFolder",
 		() => {
-			AssetStream.InitializeStream();
+			AssetStream.InitializeStream().then((ret)=>{
+				AssetStream.CopyBinaries(os.type(), ret);
+			});
 		},
 	);
 	context.subscriptions.push(Init_AssetFolder);
