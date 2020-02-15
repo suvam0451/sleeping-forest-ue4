@@ -1,7 +1,5 @@
 # Trailblazer
 
----
-
 ![](https://gitlab.com/winterwildfire/ue4/trailblazer/badges/master/pipeline.svg)
 ![](https://img.shields.io/badge/4.24-fully%20supported-green)
 ![](https://img.shields.io/discord/573495259926102017)
@@ -10,24 +8,21 @@ Trailblazer is a VSCode extension for Unreal Engine 4 devs that provides powerfu
 
 This extension shows how to leverage the extension terminal API proposed in v1.37 that enables an extension to handle a terminal's input and emit output.
 
-## VS Code API
+## Key Features
 
-### `vscode` module
+- Improved Intellisense 
+- 200+ snippets
+- Context aware custom auto-completion
+- file/function/header generation/management
+- Asset management via asset streams
+- Command line shader/game/code compilation support
+- Modding support for most modules
+- Various micro-service integrations
+- Support for writing UE4 HLSL shaders [Planned]
 
-- [window.createTerminal](https://code.visualstudio.com/api/references/vscode-api#window.createTerminal)
+## Documentation
 
-### Proposed API
-
-- `window.Pseudoterminal`
-- `window.ExtensionTerminalOptions`
-
-### Contribution Points
-
-- [`contributes.commands`](https://code.visualstudio.com/api/references/contribution-points#contributes.commands)
-
-## Running the Sample
-
-- Run `npm install` in terminal to install dependencies
-- Run the `Run Extension` target in the Debug View. This will: - Start a task `npm: watch` to compile the code - Run the extension in a new VS Code window
-
-check check
+- [Getting Started](https://suvam0451.netlify.com/docs/trailblazer/getting-started/)
+- [Context binding overview](https://suvam0451.netlify.com/docs/trailblazer/context-keys/)
+- [Asset streams overview](https://suvam0451.netlify.com/docs/daedalus/hello-asset-streams)
+- [Modding/Customizing guide](https://suvam0451.netlify.com/docs/trailblazer/extension-files)
