@@ -101,6 +101,25 @@ Supported import extensions are { jpg, tiff, png }, supported output extensions 
 
 Every folder is inside an asset stream is scanned and indexed in JSON files. These can be imported into UE4 directly for data driven gameplay elements.
 
+## Building from source
+
+**The golang executables** can be built by
+
+```go
+go build texture_packer.go
+```
+
+Don't forget to set GOOS/GOARCH environment variables.
+The executables should be copied to the appropriate bin folder after being built from the microservices folder.
+
+**The VSCode package** can be obtained by
+
+```npm
+yarn install
+yarn run webpack
+yarn vsce package
+```
+
 # Disclaimer
 
 I work on this extension in my free time. Community collaboration is very important to me. Please consider joining my discord and suggesting improvements.
