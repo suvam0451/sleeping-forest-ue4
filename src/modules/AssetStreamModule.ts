@@ -144,9 +144,9 @@ export function RefreshStreamForFolder(data: AssetStreamKit) {
 		}
 	});
 	// Async write per folder data to JSON files
-	WriteJSONToFile(path.join(data.folderpath, "SM.json"), obj1);
-	WriteJSONToFile(path.join(data.folderpath, "Music.json"), obj2);
-	WriteJSONToFile(path.join(data.folderpath, "Tex.json"), obj3);
+	WriteJSONToFile(path.join(data.folderpath,  "SM.json"), obj1);
+	WriteJSONToFile(path.join(data.folderpath,  "Music.json"), obj2);
+	WriteJSONToFile(path.join(data.folderpath,  "Tex.json"), obj3);
 	return;
 }
 
@@ -180,19 +180,19 @@ export function RefreshListedStreams() {
 					targetBasePath: settings.targetPath + "/" + file,
 				};
 				RefreshStreamForFolder(funcdata);
-			} else if (RegExp(/(.*?).fbx/).test(file)) {
+			} else if (RegExp(/(.*?).fbx/i).test(file)) {
 				fill["StaticMesh"].list.push({
 					name: file.match(/^(.*?)\..*?/)![1],
 					path: path.join(entry, "Assets", file),
 					targetpath: settings.targetPath,
 				});
-			} else if (RegExp(/(.*?).(png|jpg)/).test(file)) {
+			} else if (RegExp(/(.*?).(png|jpg)/i).test(file)) {
 				fill["Texture"].list.push({
 					name: file.match(/^(.*?)\..*?/)![1],
 					path: path.join(entry, "Assets", file),
 					targetpath: settings.targetPath,
 				});
-			} else if (RegExp(/(.*?).(wav|mp3)/).test(file)) {
+			} else if (RegExp(/(.*?).(wav|mp3)/i).test(file)) {
 				fill["Audio"].list.push({
 					name: file.match(/^(.*?)\..*?/)![1],
 					path: path.join(entry, "Assets", file),
@@ -215,19 +215,19 @@ export function RefreshListedStreams() {
 			let enginePath = el.targetpath + "/" + el.name + "." + el.name;
 			InjectInDataTable(obj1, AssetType.StaticMesh, enginePath);
 		});
-		WriteJSONToFile(path.join(entry, "SM.json"), obj1);
+		WriteJSONToFile(path.join(entry, "Audit", "SM.json"), obj1);
 		// .wav
 		fill.Audio.list.forEach(el => {
 			let enginePath = el.targetpath + "/" + el.name + "." + el.name;
 			InjectInDataTable(obj2, AssetType.SoundWave, enginePath);
 		});
-		WriteJSONToFile(path.join(entry, "Music.json"), obj2);
+		WriteJSONToFile(path.join(entry, "Audit","Music.json"), obj2);
 		// .png
 		fill.Audio.list.forEach(el => {
 			let enginePath = el.targetpath + "/" + el.name + "." + el.name;
 			InjectInDataTable(obj3, AssetType.Textures, enginePath);
 		});
-		WriteJSONToFile(path.join(entry, "Tex.json"), obj3);
+		WriteJSONToFile(path.join(entry, "Audit","Tex.json"), obj3);
 
 		// -----------------------
 		// Run binary toolchains
