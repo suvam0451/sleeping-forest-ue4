@@ -1,13 +1,13 @@
 {
 	"name": "sleeping-forest-ue4",
 	"displayName": "Sleeping Forest - UE4 multitool",
-	"description": "Command-line tools and snippets for non-replicated procedural/material editor workflow.",
+	"description": "Code-completion, CLI tools and asset management/optimization for Unreal Engine 4 in VSCode. (This plug-in is in beta until v1.0.0. Feedback and suggestions are welcome at my Discord)",
 	"publisher": "suvam0451",
-	"version": "0.6.3",
+	"version": "0.6.4",
 	"license": "MPL-2.0",
 	"repository": {
 		"type": "git",
-		"url": "https://gitlab.com/suvam0451/sleeping-forest-ue4"
+		"url": "https://github.com/suvam0451/sleeping-forest-ue4"
 	},
 	"engines": {
 		"vscode": "^1.39.0"
@@ -31,6 +31,12 @@
 		"onCommand:extension.Daedalus.tryInitialize"
 	],
 	"main": "/dist/extension",
+	"keywords": [
+		"ue4",
+		"gamedev",
+		"shaders"
+	],
+	"preview": true,
 	"contributes": {
 		"commands": [
 			{

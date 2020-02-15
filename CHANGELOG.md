@@ -1,5 +1,13 @@
 # Change Log
 
+## [0.6.5]
+
+- Allowed adding header packs in source file (fwd declaration)
+
+## [0.6.4]
+
+- Stable release for beta participation
+
 ## [0.6.3]
 
 - **Beta release**

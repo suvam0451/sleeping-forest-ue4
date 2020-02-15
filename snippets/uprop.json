@@ -17,13 +17,17 @@
 			"\n$0"
 		]
 	},
+	"uprop: GUID": {
+		"prefix": "uprop_guid",
+		"body": ["UPROPERTY(BlueprintReadWrite, VisibleAnywhere)", "\tFGuid guid;", "$0"]
+	},
 	"Add Property: Integer": {
 		"prefix": "uprop_int",
 		"body": [
 			"// ${2:Description not provided } ",
 			"UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=\"Parameters\")",
 			"\tint $1;",
-			"\n$0"
+			"$0"
 		]
 	},
 	"Add UProperty : Boolean": {
@@ -194,6 +198,16 @@
 			"\n$0"
 		],
 		"description": "Adds a boolean switch property(In Advanced dropdown)."
+	},
+	"upro: String": {
+		"prefix": "uprop_string",
+		"body": [
+			"// No comment ",
+			"UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=\"Triggers\")",
+			"\tFString $1;",
+			"\n$0"
+		],
+		"description": "Adds a FString property."
 	},
 	"Add Property: AI Sight Config Data": {
 		"prefix": "uprop_ai_sightconfig",

@@ -34,10 +34,10 @@ export function InjectHeaders(editor: vscode.TextEditor, lines: string[]): void 
 	const headerDefaultRegex = new XRegExp("^#include (.*?).h");
 	const headerFileEndRegex = new XRegExp("^#include (.*?).generated.h");
 
-	const isHeader = ext.IsHeaderFile(path.basename(editor.document.fileName));
+	// const isHeader = ext.IsHeaderFile(path.basename(editor.document.fileName));
 
 	// Handling a header file...
-	if (isHeader) {
+	// if (isHeader) {
 		let startingLine = GetLineMatchingRegexInActiveFile(headerDefaultRegex);
 		let finishingLine = GetLineMatchingRegexInActiveFile(headerFileEndRegex);
 
@@ -48,8 +48,18 @@ export function InjectHeaders(editor: vscode.TextEditor, lines: string[]): void 
 			var newSelection = new vscode.Selection(newPosition, newPosition);
 			editor!.selection = newSelection;
 			WriteRequest(request);
+		}, ()=>{ // Handle if not header
+			GetLineMatchingRegexInActiveFile(headerDefaultRegex).then((startline)=>{
+				console.log(startline);
+				// Get updates list of headers
+				let request = RemoveDuplicates(lines,startline,startline);
+				var newPosition = position.with(startline, 0);
+				var newSelection = new vscode.Selection(newPosition, newPosition);
+				editor!.selection = newSelection;
+				WriteRequest(request);
+			});
 		});
-	}
+	// }
 }
 
 /** Adds and evaluats a snippet at given line positio */

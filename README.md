@@ -6,7 +6,7 @@
 ![](https://img.shields.io/badge/platform-windows-lightgrey)
 ![](https://img.shields.io/badge/replication-not%20supported-red)
 
-[![Website](https://api.netlify.com/api/v1/badges/e3c2b5de-423f-417f-b57b-73d48f9e9c3f/deploy-status)](https://suvam0451.netlify.com/docs/trailblazer/getting-started)
+[![Website](https://api.netlify.com/api/v1/badges/e3c2b5de-423f-417f-b57b-73d48f9e9c3f/deploy-status)](https://suvam0451.netlify.com/docs/sleeping-forest/getting-started)
 
 **Sleeping Forest** is a VSCode extension for _Unreal Engine 4_ that provides powerful **code-completion** and **command-line features** for programmers and **asset management**, **optimization tools** for designers.
 
@@ -20,7 +20,7 @@ As of now, only Windows support is available for micro-services.
 
 To install through VS Code extensions, Search for `Sleeping Forest - UE4 Multitool`
 
-To get the beta releases/requested patches, visit the [website](https://suvam0451.netlify.com/docs/trailblazer/getting-started/)
+To get the beta releases/requested patches, visit the [website](https://suvam0451.netlify.com/docs/sleeping-forest/getting-started/)
 
 ## Key Features
 
@@ -36,16 +36,16 @@ To get the beta releases/requested patches, visit the [website](https://suvam045
 
 ## Documentation
 
-- [Getting Started](https://suvam0451.netlify.com/docs/trailblazer/getting-started/)
-- [Context binding overview](https://suvam0451.netlify.com/docs/trailblazer/context-keys/)
-- [Asset streams overview](https://suvam0451.netlify.com/docs/daedalus/hello-asset-streams)
-- [Modding/Customizing guide](https://suvam0451.netlify.com/docs/trailblazer/extension-files)
+- [Getting Started](https://suvam0451.netlify.com/docs/sleeping-forest/getting-started/)
+- [Context binding overview](https://suvam0451.netlify.com/docs/sleeping-forest/context-keys/)
+- [Asset streams overview](https://suvam0451.netlify.com/docs/sleeping-forest/hello-asset-streams)
+- [Modding/Customizing guide](https://suvam0451.netlify.com/docs/sleeping-forest/extension-files)
 
 ## Feature Overview
 
 ### Better intellisense
 
-Configurable setting to override configuration in the .code-workspace file for better search results and faster overall performance. *(Your experience may vary)*
+Configurable setting to override configuration in the .code-workspace file for better search results and faster overall performance. _(Your experience may vary)_
 
 ![workspace file](https://i.imgur.com/N6ImaLr.gif)
 
@@ -53,28 +53,29 @@ Configurable setting to override configuration in the .code-workspace file for b
 
 150+ snippets and counting.
 Constantly updated support towards smart auto-completion at generic/repetitive blocks of code as shown below.
-(**// context keyword** after macro usage). Learn more abotu [context key](https://suvam0451.netlify.com/docs/trailblazer/context-keys/)
+(**// context keyword** after macro usage). Learn more abotu [context key](https://suvam0451.netlify.com/docs/sleeping-forest/context-keys/)
 
 ![Fast hit trace](https://i.imgur.com/6003uFY.gif)
 
-![More in docs](https://suvam0451.netlify.com/docs/trailblazer/context-keys/)
+![More in docs](https://suvam0451.netlify.com/docs/sleeping-forestcontext-keys/)
 
 ### Class/Header/Function generation
 
 Commands to add templated class files, headers from inside (.h/.cpp) files and automatically adding common functions liek BeginPlay in (.h/.cpp).
-These features can be customizing by your own JSON definitions. [See more...](https://suvam0451.netlify.com/docs/trailblazer/extension-files)
+These features can be customizing by your own JSON definitions. [See more...](https://suvam0451.netlify.com/docs/sleeping-forest/extension-files)
 
 ![header module](https://i.imgur.com/6758foW.png)
 ![function defs](https://i.imgur.com/XZPWFCg.gif)
 
 Also, support for
+
 - **Class generation** for Actors, ActorComponents. [More...]()
 - Contextual constructors for Component properties
 
 ### Command line tools
 
 Detects engine and project folders and runs generated commands from cmd using tools provided by Epic.
-No concrete benchmarks yet but from tests, 50k shaders could be compiled within an hour. 
+No concrete benchmarks yet but from tests, 50k shaders could be compiled within an hour.
 
 The code compilation features are also solid when you do not want to wait for the engine to load while fixing bugs.
 
@@ -95,7 +96,6 @@ Able to pack different types of textures into RGBA channels of a single mega tex
 Supported import extensions are { jpg, tiff, png }, supported output extensions are png and jpg with quality settings
 
 ![Texture packing](https://i.imgur.com/i8L4djk.gif)
-
 
 ### Asset Audit tool
 

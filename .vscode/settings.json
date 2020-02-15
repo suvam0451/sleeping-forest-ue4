@@ -1,7 +1,12 @@
 // Place your settings in this file to overwrite default and user settings.
 {
 	"files.exclude": {
-		"out": true, // set this to true to hide the "out" folder with the compiled JS files
+		"**/.git": true,
+		"**/.svn": true,
+		"**/.hg": true,
+		"**/CVS": true,
+		"**/.DS_Store": true,
+		"out": true,
 		"yarn.lock": true,
 		"yarn-error.log": true,
 		"tslint.json": true,
@@ -9,11 +14,44 @@
 		"package-lock.json": true,
 		"*.md": false,
 		"node_modules": false,
-		"*.vsix": true
+		"*.vsix": true,
+		"**/Intermediate": true,
+		"**/Saved": true,
+		"**/Binaries": true,
+		"**/Build": true,
+		"**.dll": true,
+		"**.exe": true,
+		"**/DerivedDataCache": true,
+		"**/Documentation": true,
+		"**/Programs": true,
+		"**/Shaders": true,
+		"**/FeaturePacks": true,
+		"**/Samples": true,
+		"**/Templates": true,
+		".egstore": true,
+		"**/Engine/Build": true,
+		"**/Engine/Extras": true,
+		"**/Engine/Content": true,
+		"**/Engine/Source/Editor": true
 	},
 	"search.exclude": {
-		"out": true // set this to false to include "out" folder in search results
+		"**/node_modules": true,
+		"**/bower_components": true,
+		"**/*.code-search": true,
+		"out": true,
+		"**.py": true,
+		"**.generated.h": true,
+		"**/CoreRedirects.cpp": true,
+		"**/CoreRedirects.h": true,
+		"**/Engine/Source/Editor": true,
+		"**.code-workspace": true
 	},
 	// Turn off tsc task auto detection since we have the necessary tasks as npm scripts
-	"typescript.tsc.autoDetect": "on"
+	"typescript.tsc.autoDetect": "on",
+	"files.watcherExclude": {
+		"**/.git/objects/**": true,
+		"**/.git/subtree-cache/**": true,
+		"**/node_modules/*/**": true,
+		"**/Engine/**": true
+	}
 }
