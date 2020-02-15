@@ -38,23 +38,48 @@ To get the beta releases/requested patches, visit the [website](https://suvam045
 - [Asset streams overview](https://suvam0451.netlify.com/docs/daedalus/hello-asset-streams)
 - [Modding/Customizing guide](https://suvam0451.netlify.com/docs/trailblazer/extension-files)
 
-## Micro services
 
----
+## Features
+
+### Better intellisense
+
+Configurable setting to override configuration in the .code-workspace file for better search results and faster overall performance. *(Your experience may vary)*
+
+
+### Contextual auto-completion
+
+150+ snippets and counting.
+Constantly updated support towards smart auto-completion at generic/repetitive blocks of code as shown below.
+(**// context keyword** after macro usage). Learn more abotu [context key](https://suvam0451.netlify.com/docs/trailblazer/context-keys/)
+
+![Fast hit trace](https://i.imgur.com/6003uFY.gif)
+
+### Class/Header/Function generation
+
+Commands to add templated class files, headers from inside (.h/.cpp) files and automatically adding common functions liek BeginPlay in (.h/.cpp).
+These features can be customizing by your own JSON definitions. [See more...](https://suvam0451.netlify.com/docs/trailblazer/extension-files)
+
+|Header manager|Generating Classes|
+|--|--|
+|||
+|Adding Functions||
+
+## Micro services(currently only for windows)
 
 The following service tools are currently available for **windows only**. Convenient way to optimize, update and manage assets through concept of asset streams.
 
-#### Batch export tool
+### Batch export tool
 
 Assembles information about raw assets in tagged **asset-stream folders** and produces python file which can be used in UE4 to automatically import all assets into respective folder structure and settings.
 
-#### Texture Packing tool
+### Texture Packing tool
 
 Able to pack different types of textures into RGBA channels of a single mega texture. This is the feature being currently worked on. Fully supports asset stream workflow.
 Supported import extensions are { jpg, tiff, png }, supported output extensions are png and jpg with quality settings
 
 ![](https://i.imgur.com/i8L4djk.gif)
 
-#### Asset Audit tool
+
+### Asset Audit tool
 
 Every folder is inside an asset stream is scanned and indexed in JSON files. These can be imported into UE4 directly for data driven gameplay elements.
