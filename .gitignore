@@ -12,3 +12,4 @@ test/**/public
 yarn.lock
 package-lock.json
 dist/*
+*.exe
