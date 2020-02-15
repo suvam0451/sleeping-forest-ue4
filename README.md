@@ -1,7 +1,7 @@
 # Sleeping Forest
 
 ![](https://gitlab.com/winterwildfire/ue4/trailblazer/badges/master/pipeline.svg)
-![](https://img.shields.io/badge/4.24-fully%20supported-green)
+![](https://img.shields.io/badge/4.24%20--%204.24-supported-green)
 ![](https://img.shields.io/discord/573495259926102017)
 
 **Sleeping Forest** is a VSCode extension for _Unreal Engine 4_ that provides powerful **code-completion and command-line features** for programmers and **asset management/optimization tools** for designers.
