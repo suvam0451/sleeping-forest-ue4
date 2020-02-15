@@ -8,11 +8,12 @@
 
 [![Website](https://api.netlify.com/api/v1/badges/e3c2b5de-423f-417f-b57b-73d48f9e9c3f/deploy-status)](https://suvam0451.netlify.com/docs/trailblazer/getting-started)
 
-**Sleeping Forest** is a VSCode extension for _Unreal Engine 4_ that provides powerful **code-completion and command-line features** for programmers and **asset management/optimization tools** for designers.
+**Sleeping Forest** is a VSCode extension for _Unreal Engine 4_ that provides powerful **code-completion** and **command-line features** for programmers and **asset management**, **optimization tools** for designers.
 
-This extension is primarily for. **Multiplayer is not supported yet.**
+The primary goal is to help in creating data-driven gameplay, optimized level design, shader authoring and faster development iteration through DevOps tools and smart code-completion. **Note that multiplayer is not supported as of yet.**
 
-Note that this teh plug-in is **currently in beta** and undergoing improvements. If you want to tag along and suggest features, join [my discord](https://discord.gg/8Qd8a66) to help build the best gamedev plug-in for vscode !!!
+Note that this the plug-in is **currently in beta** and undergoing improvements. If you want to tag along and suggest features, join [my discord](https://discord.gg/8Qd8a66) to help build the best gamedev extension for vscode !!!
+
 As of now, only Windows support is available for micro-services.
 
 ## Installation
@@ -40,8 +41,7 @@ To get the beta releases/requested patches, visit the [website](https://suvam045
 - [Asset streams overview](https://suvam0451.netlify.com/docs/daedalus/hello-asset-streams)
 - [Modding/Customizing guide](https://suvam0451.netlify.com/docs/trailblazer/extension-files)
 
-
-## Features
+## Feature Overview
 
 ### Better intellisense
 
@@ -59,7 +59,6 @@ Constantly updated support towards smart auto-completion at generic/repetitive b
 
 ![More in docs](https://suvam0451.netlify.com/docs/trailblazer/context-keys/)
 
-
 ### Class/Header/Function generation
 
 Commands to add templated class files, headers from inside (.h/.cpp) files and automatically adding common functions liek BeginPlay in (.h/.cpp).
@@ -72,6 +71,13 @@ Also, support for
 - **Class generation** for Actors, ActorComponents. [More...]()
 - Contextual constructors for Component properties
 
+### Command line tools
+
+Detects engine and project folders and runs generated commands from cmd using tools provided by Epic.
+No concrete benchmarks yet but from tests, 50k shaders could be compiled within an hour. 
+
+The code compilation features are also solid when you do not want to wait for the engine to load while fixing bugs.
+
 # Micro services(currently only for windows)
 
 The following service tools are currently available for **windows only**. Convenient way to optimize, update and manage assets through concept of asset streams.
@@ -81,12 +87,14 @@ The following service tools are currently available for **windows only**. Conven
 Assembles information about raw assets in tagged **asset-stream folders** and produces a python file which can be used in UE4 to automatically
 import all assets into respective folder structure and settings using python API.
 
+![Batch export]
+
 ### Texture Packing tool
 
 Able to pack different types of textures into RGBA channels of a single mega texture. This is the feature being currently worked on. Fully supports asset stream workflow.
 Supported import extensions are { jpg, tiff, png }, supported output extensions are png and jpg with quality settings
 
-![](https://i.imgur.com/i8L4djk.gif)
+![Texture packing](https://i.imgur.com/i8L4djk.gif)
 
 
 ### Asset Audit tool
