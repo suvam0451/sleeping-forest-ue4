@@ -3,8 +3,12 @@
 ![](https://gitlab.com/winterwildfire/ue4/trailblazer/badges/master/pipeline.svg)
 ![](https://img.shields.io/badge/4.24%20--%204.24-supported-green)
 ![](https://img.shields.io/discord/573495259926102017)
+![](https://img.shields.io/badge/platform-windows-lightgrey)
+![](https://img.shields.io/badge/replication-not%20supported-red)
 
 **Sleeping Forest** is a VSCode extension for _Unreal Engine 4_ that provides powerful **code-completion and command-line features** for programmers and **asset management/optimization tools** for designers.
+
+This extension is primarily for. **Multiplayer is not supported yet.**
 
 Note that this teh plug-in is **currently in beta** and undergoing improvements. If you want to tag along and suggest features, join [my discord](https://discord.gg/8Qd8a66) to help build the best gamedev plug-in for vscode !!!
 As of now, only Windows support is available for micro-services.
