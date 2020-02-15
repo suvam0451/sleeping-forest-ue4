@@ -45,6 +45,7 @@ To get the beta releases/requested patches, visit the [website](https://suvam045
 
 Configurable setting to override configuration in the .code-workspace file for better search results and faster overall performance. *(Your experience may vary)*
 
+![workspace file](https://i.imgur.com/N6ImaLr.gif)
 
 ### Contextual auto-completion
 
@@ -54,17 +55,23 @@ Constantly updated support towards smart auto-completion at generic/repetitive b
 
 ![Fast hit trace](https://i.imgur.com/6003uFY.gif)
 
+![More in docs](https://suvam0451.netlify.com/docs/trailblazer/context-keys/)
+
+
 ### Class/Header/Function generation
 
 Commands to add templated class files, headers from inside (.h/.cpp) files and automatically adding common functions liek BeginPlay in (.h/.cpp).
 These features can be customizing by your own JSON definitions. [See more...](https://suvam0451.netlify.com/docs/trailblazer/extension-files)
 
-|Header manager|Generating Classes|
-|--|--|
-|||
-|Adding Functions||
+|                 Header manager                       |         Adding/Defining Function          |
+|------------------------------------------------------|-------------------------------------------|
+|  ![header module](https://i.imgur.com/6758foW.png)   |    ![function defs](https://i.imgur.com/XZPWFCg.gif)   |
 
-## Micro services(currently only for windows)
+Also, support for
+- Class generation for Actors, ActorComponents. [More...]()
+- Contextual constructors for Component properties
+
+# Micro services(currently only for windows)
 
 The following service tools are currently available for **windows only**. Convenient way to optimize, update and manage assets through concept of asset streams.
 
@@ -83,3 +90,11 @@ Supported import extensions are { jpg, tiff, png }, supported output extensions 
 ### Asset Audit tool
 
 Every folder is inside an asset stream is scanned and indexed in JSON files. These can be imported into UE4 directly for data driven gameplay elements.
+
+# Disclaimer
+
+I work on this extension in my free time. Community collaboration is very important to me. Please consider joining my discord and suggesting improvements.
+It is recommended you use it on casual projects. The project is undergoing rapid progress and we don't want remnant bugs to break anything.
+**Stability will be guaranteed post 1.0.0 launch.**
+
+You are free to tag along. I would love to hear what you improvements you have in mind.
