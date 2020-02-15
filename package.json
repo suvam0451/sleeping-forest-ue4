@@ -1,13 +1,13 @@
 {
-	"name": "trailblazer-ue4",
-	"displayName": "TrailBlazer - UE4 multitool",
+	"name": "sleeping-forest-ue4",
+	"displayName": "Sleeping Forest - UE4 multitool",
 	"description": "Command-line tools and snippets for non-replicated procedural/material editor workflow.",
 	"publisher": "suvam0451",
-	"version": "0.8.0",
+	"version": "0.6.3",
 	"license": "MPL-2.0",
 	"repository": {
 		"type": "git",
-		"url": "https://gitlab.com/suvam0451/vscode-extension"
+		"url": "https://gitlab.com/suvam0451/sleeping-forest-ue4"
 	},
 	"engines": {
 		"vscode": "^1.39.0"
