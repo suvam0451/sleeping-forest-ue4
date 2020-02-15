@@ -53,6 +53,8 @@ Assembles information about raw assets in tagged **asset-stream folders** and pr
 Able to pack different types of textures into RGBA channels of a single mega texture. This is the feature being currently worked on. Fully supports asset stream workflow.
 Supported import extensions are { jpg, tiff, png }, supported output extensions are png and jpg with quality settings
 
+![](https://i.imgur.com/i8L4djk.gif)
+
 #### Asset Audit tool
 
 Every folder is inside an asset stream is scanned and indexed in JSON files. These can be imported into UE4 directly for data driven gameplay elements.
