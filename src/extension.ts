@@ -40,25 +40,9 @@ export function WriteRequest(
 // your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
 	console.log('Congratulations, your extension "wan-chai" is now active!');
-	//#region extension.helloWorld
-	let HelloWorld = vscode.commands.registerCommand("extension.helloWorld", () => {
-		let data: filesys.FileData = filesys.GetActiveFileData();
-		switch (data.cppvalid) {
-			case filesys.ActiveFileExtension.Header: {
-				break;
-			}
-			case filesys.ActiveFileExtension.Header: {
-				break;
-			}
-			default:
-				break;
-		}
-	});
-	context.subscriptions.push(HelloWorld);
-	//#endregion
 
 	//#region Compiles all shaders, Compiles all blueprints
-	let ShaderCompileCommand = vscode.commands.registerCommand("extension.compileShaders", () => {
+	let ShaderCompileCommand = vscode.commands.registerCommand("extension.sf.compileShaders", () => {
 		uauto.CompileShaders();
 		vscode.window.showInformationMessage("Compiling shaders...");
 	});
@@ -66,7 +50,7 @@ export function activate(context: vscode.ExtensionContext) {
 	//#endregion
 
 	//#region Compiles all C++ code...
-	let CodeCompileCommand = vscode.commands.registerCommand("extension.compileCode", () => {
+	let CodeCompileCommand = vscode.commands.registerCommand("extension.sf.compileCode", () => {
 		uauto.CompileCode();
 		vscode.window.showInformationMessage("Compiling Code...");
 	});
@@ -74,7 +58,7 @@ export function activate(context: vscode.ExtensionContext) {
 	//#endregion
 
 	//#region extension.onConstruction
-	let OnConstruction = vscode.commands.registerCommand("extension.onConstruction", () => {
+	let OnConstruction = vscode.commands.registerCommand("extension.sf.onConstruction", () => {
 		let data: filesys.FileData = filesys.GetActiveFileData();
 		// Get the editor
 		let editor = vscode.window.activeTextEditor;
@@ -105,7 +89,7 @@ export function activate(context: vscode.ExtensionContext) {
 	//#endregion
 
 	//#region extension.include.procedural
-	let IncludeCommandlet = vscode.commands.registerCommand("extension.includeManager", () => {
+	let IncludeCommandlet = vscode.commands.registerCommand("extension.sf.includeManager", () => {
 		IncludeManager();
 	});
 
@@ -114,25 +98,22 @@ export function activate(context: vscode.ExtensionContext) {
 
 	//#region
 	/** Injects exclusion  */
-	let InjectExclusions = vscode.commands.registerCommand(
-		"extension.Daedalus.injectExcludes",
-		() => {
-			InjectExcludeDefinition();
-		},
-	);
+	let InjectExclusions = vscode.commands.registerCommand("extension.sf.injectExcludes", () => {
+		InjectExcludeDefinition();
+	});
 
 	context.subscriptions.push(InjectExclusions);
 	//#endregion
 
 	//#region module:Error search
-	let ErrorWiki = vscode.commands.registerCommand("extension.Daedalus.errorLibrary", () => {
+	let ErrorWiki = vscode.commands.registerCommand("extension.sf.errorLibrary", () => {
 		ErrorSearchModule();
 	});
 	context.subscriptions.push(ErrorWiki);
 	//#endregion
 
 	//#region moduele:Class creation
-	let Mod_CreateClass = vscode.commands.registerCommand("extension.Daedalus.createClass", () => {
+	let Mod_CreateClass = vscode.commands.registerCommand("extension.sf.createClass", () => {
 		CreateClassModule().catch(err => {
 			console.log("failed: " + err);
 		});
@@ -141,9 +122,9 @@ export function activate(context: vscode.ExtensionContext) {
 	//#endregion
 
 	let Init_AssetFolder = vscode.commands.registerCommand(
-		"extension.Daedalus.initializeAssetFolder",
+		"extension.sf.initializeAssetFolder",
 		() => {
-			AssetStream.InitializeStream().then((ret)=>{
+			AssetStream.InitializeStream().then(ret => {
 				AssetStream.CopyBinaries(os.type(), ret);
 			});
 		},
@@ -151,7 +132,7 @@ export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(Init_AssetFolder);
 
 	let refresh_AssetFolder = vscode.commands.registerCommand(
-		"extension.Daedalus.refreshAssetFolders",
+		"extension.sf.refreshAssetFolders",
 		() => {
 			AssetStream.RefreshListedStreams();
 		},
@@ -159,8 +140,8 @@ export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(refresh_AssetFolder);
 
 	// #region extension.Daedalus.PopulateSourceFile
-	let Daedalus_Populate_Source = vscode.commands.registerCommand(
-		"extension.Daedalus.PopulateSourceFile",
+	let Populate_Source_File = vscode.commands.registerCommand(
+		"extension.sf.PopulateSourceFile",
 		() => {
 			let data: filesys.FileData = filesys.GetActiveFileData();
 			switch (data.cppvalid) {
@@ -189,10 +170,10 @@ export function activate(context: vscode.ExtensionContext) {
 			}
 		},
 	);
-	context.subscriptions.push(Daedalus_Populate_Source);
+	context.subscriptions.push(Populate_Source_File);
 	//#endregion
 
-	let Try_Initialize = vscode.commands.registerCommand("extension.Daedalus.tryInitialize", () => {
+	let Try_Initialize = vscode.commands.registerCommand("extension.sf.tryInitialize", () => {
 		InitializerModule();
 	});
 	context.subscriptions.push(Try_Initialize);

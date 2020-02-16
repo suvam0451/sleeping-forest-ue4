@@ -4,6 +4,7 @@
 	"\t\"createMaterials\": false,",
 	"\t\"importTexturesForMesh\": false,",
 	"\t\"auto_generate_lods\": true,",
+	"\t\"run_texturepacker\": false,",
 	"   \"texPacker\": {",
 	"       \"alias\": {}",
 	"   }",

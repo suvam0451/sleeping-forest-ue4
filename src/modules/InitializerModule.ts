@@ -12,8 +12,12 @@ import * as _ from "lodash";
 import * as fs from "fs";
 import context from "../data/ContextAutofill.json";
 import IncludeManager from "../modules/IncludeManager";
-import { WriteLinesToFile, GetMatchingSource, GetMatchingSourceSync } from "../utils/FilesystemHelper";
-import { AddLinesToFile } from "../utils/FileHelper"
+import {
+	WriteLinesToFile,
+	GetMatchingSource,
+	GetMatchingSourceSync,
+} from "../utils/FilesystemHelper";
+import { AddLinesToFile } from "../utils/FileHelper";
 
 interface InitContextData {
 	line: number;
@@ -79,16 +83,14 @@ export default async function InitializerModule(): Promise<void> {
 							}
 						}
 						lineToWrite = lineToWrite.replace(/class /g, "");
-						let choice = GetVSConfig<boolean>("globalnode", "autoAddFunctionsInSource");
+						let choice = GetVSConfig<boolean>("SF", "autoAddFunctionsInSource");
 						if (choice) {
-							GetMatchingSourceSync(_file!).then((ret) => {
+							GetMatchingSourceSync(_file!).then(ret => {
 								// console.log(ret);
 								// WriteLinesToFile(ret, [lineToWrite]);
-								AddLinesToFile(ret, [lineToWrite])
+								AddLinesToFile(ret, [lineToWrite]);
 							});
-
-						}
-						else {
+						} else {
 							vscode.env.clipboard.writeText(lineToWrite);
 							vscode.window.showInformationMessage("Function body copied to clipboard.");
 						}

@@ -144,15 +144,15 @@ export function RefreshStreamForFolder(data: AssetStreamKit) {
 		}
 	});
 	// Async write per folder data to JSON files
-	WriteJSONToFile(path.join(data.folderpath,  "SM.json"), obj1);
-	WriteJSONToFile(path.join(data.folderpath,  "Music.json"), obj2);
-	WriteJSONToFile(path.join(data.folderpath,  "Tex.json"), obj3);
+	WriteJSONToFile(path.join(data.folderpath, "SM.json"), obj1);
+	WriteJSONToFile(path.join(data.folderpath, "Music.json"), obj2);
+	WriteJSONToFile(path.join(data.folderpath, "Tex.json"), obj3);
 	return;
 }
 
 /** Exported module */
 export function RefreshListedStreams() {
-	let retval = GetVSConfig<string[]>("globalnode", "assetFolders");
+	let retval = GetVSConfig<string[]>("sleeping-forest", "assetFolders");
 	// let retval: any = config.get("exclude")!;
 	retval.forEach(entry => {
 		let _entry = path.join(entry, "Assets");
@@ -166,11 +166,9 @@ export function RefreshListedStreams() {
 		fill.Audio.list.length = 0;
 
 		fs.readdirSync(_entry).forEach(file => {
-			console.log(file);
 			let stats = fs.lstatSync(path.join(_entry, file));
 			// Handle if directory
 			if (stats.isDirectory()) {
-				console.log("Folder detected");
 				if (file == "Animations") {
 				}
 				let funcdata: AssetStreamKit = {
@@ -221,29 +219,32 @@ export function RefreshListedStreams() {
 			let enginePath = el.targetpath + "/" + el.name + "." + el.name;
 			InjectInDataTable(obj2, AssetType.SoundWave, enginePath);
 		});
-		WriteJSONToFile(path.join(entry, "Audit","Music.json"), obj2);
+		WriteJSONToFile(path.join(entry, "Audit", "Music.json"), obj2);
 		// .png
 		fill.Audio.list.forEach(el => {
 			let enginePath = el.targetpath + "/" + el.name + "." + el.name;
 			InjectInDataTable(obj3, AssetType.Textures, enginePath);
 		});
-		WriteJSONToFile(path.join(entry, "Audit","Tex.json"), obj3);
+		WriteJSONToFile(path.join(entry, "Audit", "Tex.json"), obj3);
 
 		// -----------------------
 		// Run binary toolchains
 		// -----------------------
 
-		let args =
-			'"' +
-			path.join(entry, "Binaries", "texpack.exe") +
-			'" "' +
-			path.join(entry, "settings2.json") +
-			'" "' +
-			path.join(entry, "Source", "TextureSets") +
-			'" "' +
-			path.join(entry, "Assets", "TexPacker") +
-			'"';
-		RunCmd(args);
+		console.log(settings.run_texturepacker);
+		if (settings.run_texturepacker) {
+			let args =
+				'"' +
+				path.join(entry, "Binaries", "texpack.exe") +
+				'" "' +
+				path.join(entry, "settings2.json") +
+				'" "' +
+				path.join(entry, "Source", "TextureSets") +
+				'" "' +
+				path.join(entry, "Assets", "TexPacker") +
+				'"';
+			RunCmd(args);
+		}
 	});
 }
 
@@ -349,4 +350,11 @@ export interface SettingsStruct {
 	targetPath: string;
 	createMaterials: boolean;
 	importTexturesForMesh: boolean;
+	auto_generate_lods: boolean;
+	run_texturepacker: boolean;
+	texPacker: {
+		alias: {
+			normal: ["normal"];
+		};
+	};
 }

@@ -11,9 +11,7 @@ import ExtensionData from "../data/extensions/Includes_Ext.json";
 import * as _ from "lodash";
 import * as fs from "fs";
 
-export default async function InjectExcludeDefinition(): Promise<
-	void
-> {
+export default async function InjectExcludeDefinition(): Promise<void> {
 	return new Promise<void>((resolve, reject) => {
 		let initDir = vscode.workspace.workspaceFolders![0].uri.fsPath;
 		// console.log();
@@ -25,7 +23,7 @@ export default async function InjectExcludeDefinition(): Promise<
 			}
 		});
 		// Get this extension's settings
-		let myconfig = vscode.workspace.getConfiguration("globalnode");
+		let myconfig = vscode.workspace.getConfiguration("SF");
 		let myretval;
 		let config = vscode.workspace.getConfiguration("files");
 		let retval: any = config.get("exclude")!;
@@ -52,9 +50,7 @@ export default async function InjectExcludeDefinition(): Promise<
 		retval["**/Engine/Extras"] = true; // External app scripts
 		retval["**/Engine/Content"] = true; // binary (.uasset, .umap) files
 		// Apply config : Whether to exclude editor classes from workspace
-		myretval = myconfig.get<boolean>(
-			"excludeEditorClassesFromWorkspace",
-		)!;
+		myretval = myconfig.get<boolean>("excludeEditorClassesFromWorkspace")!;
 		retval["**/Engine/Source/Editor"] = myretval;
 
 		config.update("exclude", retval, false);
@@ -76,9 +72,7 @@ export default async function InjectExcludeDefinition(): Promise<
 		retval["**/CoreRedirects.h"] = true;
 
 		// Apply config : Whether to exclude editor classes from search
-		myretval = myconfig.get<boolean>(
-			"hideEditorClassesFromWorkspace",
-		)!;
+		myretval = myconfig.get<boolean>("hideEditorClassesFromWorkspace")!;
 		retval["**/Engine/Source/Editor"] = myretval;
 		retval["**.code-workspace"] = true;
 		config.update("exclude", retval, undefined);

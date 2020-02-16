@@ -3,7 +3,7 @@
 	"displayName": "Sleeping Forest - UE4 multitool",
 	"description": "Code-completion, CLI tools and asset management/optimization for Unreal Engine 4 in VSCode. (This plug-in is in beta until v1.0.0. Feedback and suggestions are welcome at my Discord)",
 	"publisher": "suvam0451",
-	"version": "0.6.4",
+	"version": "0.6.5",
 	"license": "MPL-2.0",
 	"repository": {
 		"type": "git",
@@ -17,18 +17,17 @@
 	],
 	"activationEvents": [
 		"onLanguage:cpp",
-		"onCommand:extension.helloWorld",
-		"onCommand:extension.compileShaders",
-		"onCommand:extension.compileCode",
-		"onCommand:extension.onConstruction",
-		"onCommand:extension.includeManager",
-		"onCommand:extension.Daedalus.PopulateSourceFile",
-		"onCommand:extension.Daedalus.errorLibrary",
-		"onCommand:extension.Daedalus.createClass",
-		"onCommand:extension.Daedalus.injectExcludes",
-		"onCommand:extension.Daedalus.initializeAssetFolder",
-		"onCommand:extension.Daedalus.refreshAssetFolders",
-		"onCommand:extension.Daedalus.tryInitialize"
+		"onCommand:extension.sf.compileShaders",
+		"onCommand:extension.sf.compileCode",
+		"onCommand:extension.sf.onConstruction",
+		"onCommand:extension.sf.includeManager",
+		"onCommand:extension.sf.PopulateSourceFile",
+		"onCommand:extension.sf.errorLibrary",
+		"onCommand:extension.sf.createClass",
+		"onCommand:extension.sf.injectExcludes",
+		"onCommand:extension.sf.initializeAssetFolder",
+		"onCommand:extension.sf.refreshAssetFolders",
+		"onCommand:extension.sf.tryInitialize"
 	],
 	"main": "/dist/extension",
 	"keywords": [
@@ -40,66 +39,62 @@
 	"contributes": {
 		"commands": [
 			{
-				"command": "extension.helloWorld",
-				"title": "Hello World"
-			},
-			{
-				"command": "extension.compileShaders",
+				"command": "extension.sf.compileShaders",
 				"title": "UE4 : (Cook) -> Compile shaders and blueprints."
 			},
 			{
-				"command": "extension.compileCode",
+				"command": "extension.sf.compileCode",
 				"title": "UE4 : (Build) -> Compile all code."
 			},
 			{
-				"command": "extension.onConstruction",
-				"title": "Actor.OnConstruction(Transform).",
+				"command": "extension.sf.onConstruction",
+				"title": "UE4 : Actor.OnConstruction(Transform).",
 				"when": "inputFocus"
 			},
 			{
-				"command": "extension.includeManager",
-				"title": "Daedalus: Include Headers"
+				"command": "extension.sf.includeManager",
+				"title": "UE4 : Include Headers"
 			},
 			{
-				"command": "extension.Daedalus.PopulateSourceFile",
-				"title": "Daedalus.PopulateSourceFromHeader"
+				"command": "extension.sf.PopulateSourceFile",
+				"title": "UE4 : PopulateSourceFromHeader"
 			},
 			{
-				"command": "extension.Daedalus.errorLibrary",
-				"title": "Daedalus: Search Error Library"
+				"command": "extension.sf.errorLibrary",
+				"title": "UE4 : Search Error Library"
 			},
 			{
-				"command": "extension.Daedalus.createClass",
-				"title": "Daedalus: Generate UE4 Class(.h/.cpp)"
+				"command": "extension.sf.createClass",
+				"title": "UE4 : Generate UE4 Class(.h/.cpp)"
 			},
 			{
-				"command": "extension.Daedalus.injectExcludes",
+				"command": "extension.sf.injectExcludes",
 				"title": "UE4 : Inject exclude definitions in Workspace File"
 			},
 			{
-				"command": "extension.Daedalus.initializeAssetFolder",
+				"command": "extension.sf.initializeAssetFolder",
 				"title": "UE4 : Create new Asset Stream"
 			},
 			{
-				"command": "extension.Daedalus.refreshAssetFolders",
+				"command": "extension.sf.refreshAssetFolders",
 				"title": "UE4 : Refresh Asset Streams"
 			},
 			{
-				"command": "extension.Daedalus.tryInitialize",
-				"title": "UE4 : Initialize by Context"
+				"command": "extension.sf.tryInitialize",
+				"title": "UE4 : Action by context"
 			}
 		],
 		"menus": {
 			"editor/context": [
 				{
 					"when": "editorTextFocus && editorLangId == 'cpp'",
-					"command": "extension.Daedalus.createClass",
-					"group": "Trailblazer"
+					"command": "extension.sf.createClass",
+					"group": "Sleeping Forest"
 				},
 				{
 					"when": "editorTextFocus && editorLangId == 'cpp'",
-					"command": "extension.Daedalus.tryInitialize",
-					"group": "Trailblazer"
+					"command": "extension.sf.tryInitialize",
+					"group": "Sleeping Forest"
 				}
 			]
 		},
@@ -158,19 +153,19 @@
 			}
 		],
 		"configuration": {
-			"title": "GlobalNode",
+			"title": "Sleeping Forest (UE4)",
 			"properties": {
-				"globalnode.assetFolders": {
+				"SF.assetFolders": {
 					"type": "array",
 					"default": [],
 					"description": "Fullpaths to list of folders initialized using this plug-in from which to pull assets to UE4."
 				},
-				"globalnode.allowUserExtensions": {
+				"SF.allowUserExtensions": {
 					"type": "boolean",
 					"default": false,
 					"description": "Read the online docs about extending various templates and set this to true to allow custom functionalities."
 				},
-				"globalnode.excludedExtensions": {
+				"SF.excludedExtensions": {
 					"type": "array",
 					"default": [
 						".exe",
@@ -178,17 +173,17 @@
 					],
 					"description": "These extensions will be excluded from search and the project. Add .uassets if you need only code."
 				},
-				"globalnode.excludeEditorClassesFromWorkspace": {
+				"SF.excludeEditorClassesFromWorkspace": {
 					"type": "boolean",
 					"default": false,
 					"description": "If set to true, \"Engine/Source/Editor\" will be excluded from workspace. These are not needed for gameplay programming."
 				},
-				"globalnode.hideEditorClassesFromWorkspace": {
+				"SF.hideEditorClassesFromWorkspace": {
 					"type": "boolean",
 					"default": false,
 					"description": "If set to true, \"Engine/Source/Editor\" will be excluded from search only. They will still be indexed. These are not needed for gameplay programming. Also, consider excludeEditorClassesFromWorkspace"
 				},
-				"globalnode.autoAddFunctionsInSource": {
+				"SF.autoAddFunctionsInSource": {
 					"type": "boolean",
 					"default": true,
 					"description": "If set to true, generated code for UE4 functions is directly written to source files."
@@ -209,7 +204,6 @@
 	},
 	"devDependencies": {
 		"@types/lodash": "^4.14.149",
-		"@types/mocha": "^5.2.7",
 		"@types/node": "^12.11.7",
 		"@types/vscode": "^1.39.0",
 		"mocha": "^6.2.2",
@@ -224,13 +218,10 @@
 	"dependencies": {
 		"@babel/core": "^7.8.4",
 		"@babel/node": "^7.8.4",
-		"@suvam0451/oniichan": "^0.0.2",
 		"babel-preset-es2015": "^6.24.1",
 		"fs": "^0.0.1-security",
-		"glob": "^7.1.5",
 		"line-reader": "^0.4.0",
 		"lodash": "^4.17.15",
-		"node-cmd": "^3.0.0",
 		"path": "^0.12.7",
 		"xregexp": "^4.2.4"
 	}

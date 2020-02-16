@@ -3,6 +3,13 @@
 ## [0.6.5]
 
 - Allowed adding header packs in source file (fwd declaration)
+- Documentation for asset streams available [here](https://suvam0451.netlify.com/docs/sleeping-forest/hello-asset-streams)
+- Settings are now permanenetly moved to **Sleeping Forest** category
+- The settings now use the syntax **"sf-ue4:settings"** and can be searched by `SF:settings`
+- Modified uenum and ustruct snippet for better access.
+- Removed redundant command `UE4 : Hello World`
+- Update the context keybindings : `extension.Daedalus.tryInitialize` --> `extension.sf.tryInitialize` (**UE4 : Action by context**)
+- Components with nullptr default value are now detected.
 
 ## [0.6.4]
 
