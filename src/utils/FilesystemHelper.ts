@@ -12,6 +12,7 @@ import { rejects } from "assert";
 import * as feedback from "./ErrorLogger";
 import * as fs from "fs";
 import * as _ from "lodash";
+import { relative } from "path";
 
 export interface FunctionAnatomy {
 	prototype: string;
@@ -405,4 +406,30 @@ export async function WriteJSONToFile(filepath: string, data: any) {
 
 export function ReadJSON<T>(filepath: string): T {
 	return JSON.parse(fs.readFileSync(filepath).toString());
+}
+
+/** Returns the absolute path for a given relative path during development
+ * APPLIES ONLY IF USING WEBPACK !!!
+ * dev builds use "src", published builds use "out"
+ */
+export function RelativeToAbsolute(
+	extensionName: string,
+	relativepath?: string,
+): string | undefined {
+	let mine = vscode.extensions.getExtension(extensionName);
+	let extpath = mine?.extensionPath;
+
+	if (extpath !== undefined) {
+		let modpath = "";
+
+		// Typescript is output to out folder in published extension
+		if (/.vscode/.test(extpath)) {
+			modpath = path.join(extpath!, "out", relativepath);
+		} else {
+			modpath = path.join(extpath!, "src", relativepath);
+		}
+		return modpath;
+	} else {
+		return undefined;
+	}
 }

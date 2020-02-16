@@ -1,1 +1,10 @@
-[]
+[
+	{
+		"id": "SampleExtension",
+		"headers": ["Perception/AIPerceptionComponent.h", "Perception/AISense_Damage.h"]
+	},
+	{
+		"id": "ItJustWorks",
+		"headers": ["Bombshell.h"]
+	}
+]

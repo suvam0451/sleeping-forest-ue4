@@ -17,6 +17,7 @@ export interface FunctionDefinition {
 }
 
 export async function ActiveFileName(editor: vscode.TextEditor): Promise<string> {
+	// vscode.extensions.all
 	return new Promise<string>((resolve, reject) => {
 		if (editor) {
 			// non-null assertion operator
@@ -38,27 +39,31 @@ export function InjectHeaders(editor: vscode.TextEditor, lines: string[]): void 
 
 	// Handling a header file...
 	// if (isHeader) {
-		let startingLine = GetLineMatchingRegexInActiveFile(headerDefaultRegex);
-		let finishingLine = GetLineMatchingRegexInActiveFile(headerFileEndRegex);
+	let startingLine = GetLineMatchingRegexInActiveFile(headerDefaultRegex);
+	let finishingLine = GetLineMatchingRegexInActiveFile(headerFileEndRegex);
 
-		Promise.all([startingLine, finishingLine]).then(values => {
+	Promise.all([startingLine, finishingLine]).then(
+		values => {
 			// Get updates list of headers
 			let request = RemoveDuplicates(lines, values[0], values[1]);
 			var newPosition = position.with(values[1], 0);
 			var newSelection = new vscode.Selection(newPosition, newPosition);
 			editor!.selection = newSelection;
 			WriteRequest(request);
-		}, ()=>{ // Handle if not header
-			GetLineMatchingRegexInActiveFile(headerDefaultRegex).then((startline)=>{
+		},
+		() => {
+			// Handle if not header
+			GetLineMatchingRegexInActiveFile(headerDefaultRegex).then(startline => {
 				console.log(startline);
 				// Get updates list of headers
-				let request = RemoveDuplicates(lines,startline,startline);
+				let request = RemoveDuplicates(lines, startline, startline);
 				var newPosition = position.with(startline, 0);
 				var newSelection = new vscode.Selection(newPosition, newPosition);
 				editor!.selection = newSelection;
 				WriteRequest(request);
 			});
-		});
+		},
+	);
 	// }
 }
 
@@ -89,7 +94,7 @@ export function GetClassSymbol(at: number): string {
 	return "";
 }
 
-/** Accepts an array of strings(lines) and uses another array of string(symbols) to 
+/** Accepts an array of strings(lines) and uses another array of string(symbols) to
  * 	- Resolve the string
  * 	- Optionally resolve tabs */
 export function ResolveLines(
@@ -114,12 +119,10 @@ export function ResolveLines(
 		symbols.forEach((symbol, i) => {
 			let str = "\\$" + (i + 1);
 			if (symbol != undefined) {
-
 				// console.log(str);
 
 				line = line.replace(RegExp(str, "g"), symbol);
-			}
-			else {
+			} else {
 				line = line.replace(RegExp(str, "g"), "");
 			}
 		});
@@ -289,7 +292,6 @@ export enum UE4_ClassTypes {
 	Interface,
 	FStruct,
 }
-
 
 export function GetLineMatchingRegexInActiveFile(ex: RegExp): Promise<number> {
 	let editor = vscode.window.activeTextEditor!;

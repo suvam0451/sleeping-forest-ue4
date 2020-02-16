@@ -37,13 +37,17 @@ export async function InitializeStream(): Promise<string> {
 				CreateDirIfMissing(path.join(ret, "Source", "TextureSets"));
 
 				// files
-				let a = WriteFileAsync(path.join(ret, "settings.json"), settings, [_normalizedpath]);
+
+				let a = WriteFileAsync(path.join(ret, "Audit", "settings.json"), settings, [
+					_normalizedpath,
+				]);
 				let b = WriteFileAsync(path.join(ret, "ExportScript.py"), generator, [_normalizedpath]);
 				let c = WriteFileAsync(path.join(ret, "assetdata.json"), assetexportdata, [
 					_normalizedpath,
 				]);
+				let d = WriteFileAsync(path.join(ret, "Audit", "report.txt"), [""], []);
 
-				Promise.all([a, b, c]).then(retvals => {
+				Promise.all([a, b, c, d]).then(retvals => {
 					resolve(ret);
 				});
 			} catch {
@@ -158,7 +162,7 @@ export function RefreshListedStreams() {
 		let _entry = path.join(entry, "Assets");
 
 		const fill = ReadJSON<RootObject>(path.join(entry, "assetdata.json"));
-		const settings = ReadJSON<SettingsStruct>(path.join(entry, "settings.json"));
+		const settings = ReadJSON<SettingsStruct>(path.join(entry, "Audit", "settings.json"));
 
 		// reset
 		fill.StaticMesh.list.length = 0;

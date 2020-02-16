@@ -1,5 +1,10 @@
 # Change Log
 
+## [0.6.6]
+
+- Modders can now add extensions right from the editor sidebar
+- Audit folders for AssetStreams are automatically added to sidebar under UE4
+
 ## [0.6.5]
 
 - Allowed adding header packs in source file (fwd declaration)
