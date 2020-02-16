@@ -82,22 +82,6 @@ export default async function InjectExcludeDefinition(): Promise<void> {
 		config.update("exclude", retval, undefined);
 		//#endregion
 
-		// vscode
-		// config = vscode.workspace.getConfiguration(folderpath);
-
-		// vscode.workspace.workspaceFolders?.concat([
-		// 	{
-		// 		uri: vscode.Uri.file(folderpath!),
-		// 		name: "Extensions",
-		// 		index: 1,
-		// 	},
-		// ]);
-		// vscode.workspace.updateWorkspaceFolders(2, 0, {
-		// 	uri: vscode.Uri.file(folderpath!),
-		// 	name: "Extensions",
-		// });
-		// vscode.workspace.updateWorkspaceFolders(2, 0, { uri: new vscode.Uri("") });
-
 		// Adds Extensions tab to workspace
 		let folderpath = filesys.RelativeToAbsolute(
 			"suvam0451.sleeping-forest-ue4",
@@ -113,13 +97,12 @@ export default async function InjectExcludeDefinition(): Promise<void> {
 
 		choice.forEach((folder, i) => {
 			if (fs.existsSync(folder)) {
-				vscode.workspace.updateWorkspaceFolders(vscode.workspace.workspaceFolders!.length, 0, {
+				vscode.workspace.updateWorkspaceFolders(3 + i, 0, {
 					uri: vscode.Uri.file(folder),
 					name: "Stream #" + i,
 				});
 			}
 		});
-
 		resolve();
 	});
 }

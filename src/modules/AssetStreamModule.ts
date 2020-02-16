@@ -20,6 +20,8 @@ import generator from "../data/templates/pythonGenerator.json";
 import assetexportdata from "../data/templates/assetBasicDataTmpl.json";
 import * as filesys from "../utils/FilesystemHelper";
 import * as vs from "../modules/VSInterface";
+import InitializerModule from "./InitializerModule";
+import InjectExcludeDefinition from "./InjectExclusions";
 
 /** Generates module scaffold files for selected folder */
 export async function InitializeStream(): Promise<string> {
@@ -48,6 +50,16 @@ export async function InitializeStream(): Promise<string> {
 				let d = WriteFileAsync(path.join(ret, "Audit", "report.txt"), [""], []);
 
 				Promise.all([a, b, c, d]).then(retvals => {
+					let duplicate = vs.AppendToVSConfig("SF", "assetFolders", ret);
+					if (duplicate) {
+						vscode.window.showInformationMessage(
+							"Duplicate detected. Folder reinitialized. Skipping other steps.",
+						);
+					} else {
+						vscode.window.showInformationMessage(
+							"A new asset stream is being tracked. Please update workspace file (Inject Excludes).",
+						);
+					}
 					resolve(ret);
 				});
 			} catch {
@@ -156,7 +168,7 @@ export function RefreshStreamForFolder(data: AssetStreamKit) {
 
 /** Exported module */
 export function RefreshListedStreams() {
-	let retval = GetVSConfig<string[]>("sleeping-forest", "assetFolders");
+	let retval = GetVSConfig<string[]>("SF", "assetFolders");
 	// let retval: any = config.get("exclude")!;
 	retval.forEach(entry => {
 		let _entry = path.join(entry, "Assets");

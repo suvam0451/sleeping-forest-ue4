@@ -86,8 +86,6 @@ export default async function InitializerModule(): Promise<void> {
 						let choice = GetVSConfig<boolean>("SF", "autoAddFunctionsInSource");
 						if (choice) {
 							GetMatchingSourceSync(_file!).then(ret => {
-								// console.log(ret);
-								// WriteLinesToFile(ret, [lineToWrite]);
 								AddLinesToFile(ret, [lineToWrite]);
 							});
 						} else {

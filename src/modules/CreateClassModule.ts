@@ -4,25 +4,20 @@
 // Isolated module to let users paste their errors and search database for resolution.
 
 import * as vscode from "vscode";
-import { resolve } from "dns";
-import * as edit from "../utils/EditorHelper";
 import { GetPluginDataFromFolder } from "../utils/FilesystemHelper";
 import * as fs from "fs";
-var XRegExp = require("xregexp");
 import * as path from "path";
 import classData from "../data/BuildTemplates.json";
 import extendedClassData from "../data/extensions/Buildspaces.json";
 // Header/Source file generation data...
 import Default_Actor_h from "../data/generators/Default_Actor_h.json";
 import Default_Actor_cpp from "../data/generators/Default_Actor_cpp.json";
-import { rejects } from "assert";
-import IncludeManager from "./IncludeManager";
 import { InjectHeaders, InjectFunctions } from "../utils/FileHelper";
 import * as _ from "lodash";
 import { QuickPick, InputBox } from "./VSInterface";
-import { WriteAtLine } from "../utils/FilesystemHelper";
-import FileHandler from "../classes/FileHandler";
 import * as filesys from "../utils/FilesystemHelper";
+
+const _buildspaceModPath = "data/extensions/Buildspaces.json";
 
 interface ClassCreationKit {
 	modulepath: string;
@@ -42,34 +37,44 @@ export interface PluginPathInfo {
 	isGameModule: boolean;
 }
 
+/** ENTRY POINT of module */
+export default async function CreateClassModule(): Promise<void> {
+	NamespaceSelection().then(ret => {
+		// Gets { buildspace }
+		ModuleSelection(ret).then(ret2 => {
+			// Gets { modulename, modulepath }
+			ClassSelection(ret2).then(ret3 => {
+				// Gets { parentclass, classname }
+				GenerateFileData(ret3).then(ret4 => {
+					// Gets { headerpath,  sourcepath }
+					ValidateRequest(ret4).then(ret5 => {
+						if (ret5) {
+							HandleClassGeneration(ret4).then(() => {
+								// WriteAtLine(ret4.headerpath, 8, ["Onii chan", "Yamete Kudasai"]);
+							});
+						}
+					});
+				});
+			});
+		});
+	});
+	return new Promise<void>((resolve, reject) => {
+		resolve();
+	});
+}
+
 /** Generates header(.h)/soure(.cpp) paths based on module type and previous data */
-async function GenerateFileData(
-	data: ClassCreationKit,
-): Promise<ClassCreationKit> {
+async function GenerateFileData(data: ClassCreationKit): Promise<ClassCreationKit> {
 	return new Promise<ClassCreationKit>((resolve, reject) => {
 		if (!data.isGameModule) {
 			// UE4 plug-ins follow Private/Public folder structure
-			data.headerpath = path.join(
-				data.modulepath,
-				"Public",
-				data.classname + ".h",
-			);
-			data.sourcepath = path.join(
-				data.modulepath,
-				"Private",
-				data.classname + ".cpp",
-			);
+			data.headerpath = path.join(data.modulepath, "Public", data.classname + ".h");
+			data.sourcepath = path.join(data.modulepath, "Private", data.classname + ".cpp");
 			resolve(data);
 		} else {
 			// Gamemodule have files in same path
-			data.headerpath = path.join(
-				data.modulepath,
-				data.classname + ".h",
-			);
-			data.sourcepath = path.join(
-				data.modulepath,
-				data.classname + ".cpp",
-			);
+			data.headerpath = path.join(data.modulepath, data.classname + ".h");
+			data.sourcepath = path.join(data.modulepath, data.classname + ".cpp");
 			resolve(data);
 		}
 	});
@@ -78,13 +83,16 @@ async function GenerateFileData(
 /** Handls available class selection and prompts for classname
  * fills: { classname, parentclass }
  */
-async function ClassSelection(
-	data: ClassCreationKit,
-): Promise<ClassCreationKit> {
+async function ClassSelection(data: ClassCreationKit): Promise<ClassCreationKit> {
 	let classList: string[] = [];
 
-	let json = _.concat(classData, extendedClassData);
+	let modpath = filesys.RelativeToAbsolute("suvam0451.sleeping-forest-ue4", _buildspaceModPath);
+	let extradata = filesys.ReadJSON<Buildspace[]>(modpath!);
+
+	let json: Buildspace[] = _.concat(classData, extradata);
+	console.log(json);
 	let bs = _.find(json, { buildspace: data.buildspace });
+	console.log(bs);
 	if (typeof bs !== "undefined") {
 		_.each(bs.templates, tmpl => {
 			classList.push(tmpl.id);
@@ -116,13 +124,9 @@ async function ClassSelection(
 }
 
 /** Returns a list of valid modules including main game module... */
-async function ModuleSelection(
-	data: ClassCreationKit,
-): Promise<ClassCreationKit> {
+async function ModuleSelection(data: ClassCreationKit): Promise<ClassCreationKit> {
 	let pluginDataArray: PluginPathInfo[] = [];
-	let workspacePath: string = vscode.workspace.workspaceFolders![0].uri.path.substr(
-		1,
-	);
+	let workspacePath: string = vscode.workspace.workspaceFolders![0].uri.path.substr(1);
 	let pluginPath = path.join(workspacePath, "Plugins");
 	let gamefoldername = "";
 
@@ -132,17 +136,13 @@ async function ModuleSelection(
 			// let lst = fs.readdirSync(pluginPath);
 			let lst = filesys.GetFolderList(pluginPath);
 			lst.forEach(folder => {
-				let ret = GetPluginDataFromFolder(
-					path.join(pluginPath, folder),
-				);
+				let ret = GetPluginDataFromFolder(path.join(pluginPath, folder));
 				pluginDataArray = pluginDataArray.concat(ret);
 			});
 
 			let wspath = vscode.workspace.workspaceFolders![0].uri.fsPath;
 			// Just pick the first folder
-			gamefoldername = filesys.GetFolderList(
-				path.join(wspath, "Source"),
-			)[0];
+			gamefoldername = filesys.GetFolderList(path.join(wspath, "Source"))[0];
 			// Push the "Game" folder data...
 			pluginDataArray.push({
 				foldername: "Game",
@@ -158,7 +158,6 @@ async function ModuleSelection(
 		}
 		// arr.push("Game");
 		QuickPick(arr, false).then(sel => {
-			console.log("User selected, ", sel);
 			let index = pluginDataArray.find(i => i.foldername === sel);
 			if (typeof index !== "undefined") {
 				switch (index.foldername) {
@@ -181,32 +180,6 @@ async function ModuleSelection(
 	});
 }
 
-/** ENTRY POINT of module */
-export default async function CreateClassModule(): Promise<void> {
-	NamespaceSelection().then(ret => {
-		// Gets { buildspace }
-		ModuleSelection(ret).then(ret2 => {
-			// Gets { modulename, modulepath }
-			ClassSelection(ret2).then(ret3 => {
-				// Gets { parentclass, classname }
-				GenerateFileData(ret3).then(ret4 => {
-					// Gets { headerpath,  sourcepath }
-					ValidateRequest(ret4).then(ret5 => {
-						if (ret5) {
-							HandleClassGeneration(ret4).then(() => {
-								// WriteAtLine(ret4.headerpath, 8, ["Onii chan", "Yamete Kudasai"]);
-							});
-						}
-					});
-				});
-			});
-		});
-	});
-	return new Promise<void>((resolve, reject) => {
-		resolve();
-	});
-}
-
 interface SymbolData {
 	classname: string;
 	apiname: string;
@@ -215,14 +188,18 @@ interface SymbolData {
 }
 
 /** Maps JSON data to possible combinations of buildspaces and selected parentclass. */
-async function HandleClassGeneration(
-	kit: ClassCreationKit,
-): Promise<void> {
+async function HandleClassGeneration(kit: ClassCreationKit): Promise<void> {
 	let sym = GenerateSymbols(kit);
 	await ParseAndWrite(kit.headerpath, Default_Actor_h, sym);
 	await ParseAndWrite(kit.sourcepath, Default_Actor_cpp, sym);
+
+	// Append the xyz with
+	let modpath = filesys.RelativeToAbsolute("suvam0451.sleeping-forest-ue4", _buildspaceModPath);
+	let extradata = filesys.ReadJSON<Buildspace[]>(modpath!);
+	let data = classData.concat(extradata);
+
 	return new Promise<void>((resolve, reject) => {
-		classData.forEach(bs => {
+		data.forEach(bs => {
 			if (bs.buildspace === kit.buildspace) {
 				bs.templates.forEach(tmpl => {
 					if (tmpl.id === kit.parentclass) {
@@ -255,7 +232,10 @@ function GenerateSymbols(kit: ClassCreationKit): SymbolData {
 		prefix: "", // ${4 : classprefix }
 	};
 
-	let data = classData.concat(extendedClassData);
+	let modpath = filesys.RelativeToAbsolute("suvam0451.sleeping-forest-ue4", _buildspaceModPath);
+	let extradata = filesys.ReadJSON<Buildspace[]>(modpath!);
+
+	let data = classData.concat(extradata);
 	data.forEach(val => {
 		if (val.buildspace === kit.buildspace) {
 			val.templates.forEach(each => {
@@ -272,11 +252,7 @@ function GenerateSymbols(kit: ClassCreationKit): SymbolData {
 }
 
 /** Parses the data JSON file and inserts strings where-ever applicable... */
-async function ParseAndWrite(
-	filepath: string,
-	data: string[],
-	symbols: SymbolData,
-): Promise<void> {
+async function ParseAndWrite(filepath: string, data: string[], symbols: SymbolData): Promise<void> {
 	return new Promise<void>((resolve, reject) => {
 		let logger = fs.createWriteStream(filepath, { flags: "w" });
 		data.forEach(line => {
@@ -298,16 +274,12 @@ async function ParseAndWrite(
  * Whitespace check: spaces
  * Overwrite checks: in module
  */
-async function ValidateRequest(
-	kit: ClassCreationKit,
-): Promise<boolean> {
+async function ValidateRequest(kit: ClassCreationKit): Promise<boolean> {
 	let inValid = /\s/;
 	return new Promise<boolean>((resolve, reject) => {
 		new Promise<boolean>((resolve, reject) => {
 			if (inValid.test(kit.classname) === true) {
-				vscode.window.showErrorMessage(
-					"Whitespaces not allowed in classnames !",
-				);
+				vscode.window.showErrorMessage("Whitespaces not allowed in classnames !");
 				resolve(false);
 			}
 
@@ -315,13 +287,11 @@ async function ValidateRequest(
 			try {
 				fs.accessSync(kit.headerpath);
 				vscode.window.showErrorMessage(
-					path.join(kit.modulename, kit.classname + ".h") +
-						"will be overwritten !",
+					path.join(kit.modulename, kit.classname + ".h") + "will be overwritten !",
 				);
 				fs.accessSync(kit.sourcepath);
 				vscode.window.showErrorMessage(
-					path.join(kit.modulename, kit.classname + ".cpp") +
-						"will be overwritten !",
+					path.join(kit.modulename, kit.classname + ".cpp") + "will be overwritten !",
 				);
 				reject(false);
 			} catch {
@@ -334,14 +304,9 @@ async function ValidateRequest(
 			},
 			err => {
 				// Let user decide if current request overwrites files...
-				let opt: string[] = [
-					"Abort(default)",
-					"I understand that my previous data will be lost.",
-				];
+				let opt: string[] = ["Abort(default)", "I understand that my previous data will be lost."];
 				vscode.window.showQuickPick(opt).then(sel => {
-					if (
-						sel === "I understand that my previous data will be lost."
-					) {
+					if (sel === "I understand that my previous data will be lost.") {
 						resolve(true);
 					} else {
 						resolve(false);
@@ -368,8 +333,11 @@ async function NamespaceSelection(): Promise<ClassCreationKit> {
 		sourcepath: "",
 	};
 
+	let modpath = filesys.RelativeToAbsolute("suvam0451.sleeping-forest-ue4", _buildspaceModPath);
+	let extradata = filesys.ReadJSON<Buildspace[]>(modpath!);
+
 	let arr: string[] = [];
-	let data = classData.concat(extendedClassData);
+	let data = classData.concat(extradata);
 
 	data.forEach(val => {
 		arr.push(val.buildspace);
@@ -380,6 +348,7 @@ async function NamespaceSelection(): Promise<ClassCreationKit> {
 			.then(ret => {
 				if (ret) {
 					retval.buildspace = ret;
+					console.log("buildspace registred :", retval.buildspace);
 				} else {
 					reject("User did not select any namespace");
 				}
@@ -388,4 +357,15 @@ async function NamespaceSelection(): Promise<ClassCreationKit> {
 				resolve(retval);
 			});
 	});
+}
+
+interface Buildspace {
+	buildspace: string;
+	templates: {
+		id: string;
+		classprefix: string;
+		parent: string;
+		Headers: string[];
+		Functions: string[];
+	}[];
 }

@@ -1,27 +1,28 @@
 [
-    {
-        "buildspace": "Extended",
-        "templates": [
-            {
-                "id": "Actor",
-                "classprefix": "A",
-                "parent": "AActor",
-                "Headers": [
-                    "CoreMinimal.h",
-                    "GameFramework/Actor.h"
-                ],
-                "Functions": [
-                    "BeginPlay",
-                    "Tick"
-                ]
-            },
-            {
-                "id": "ActorComponent",
-                "classprefix": "A",
-                "parent": "AActorComponent",
-                "Headers": [],
-                "Functions": []
-            }
-        ]
-    }
+	{
+		"buildspace": "Extended",
+		"templates": [
+			{
+				"id": "Actor",
+				"classprefix": "A",
+				"parent": "AActor",
+				"Headers": ["CoreMinimal.h", "GameFramework/Actor.h"],
+				"Functions": ["BeginPlay", "Tick"]
+			},
+			{
+				"id": "ActorComponent",
+				"classprefix": "A",
+				"parent": "AActorComponent",
+				"Headers": [],
+				"Functions": []
+			},
+			{
+				"id": "BombShellBlonde",
+				"classprefix": "A",
+				"parent": "AActor",
+				"Headers": ["SourceCode.h"],
+				"Functions": ["Tick"]
+			}
+		]
+	}
 ]

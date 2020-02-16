@@ -6,7 +6,6 @@
 				"id": "Actor",
 				"classprefix": "A",
 				"parent": "AActor",
-				"interfaces": [],
 				"Headers": ["CoreMinimal.h", "GameFramework/Actor.h"],
 				"Functions": ["BeginPlay", "Tick", "OnConstruction"]
 			},
@@ -34,6 +33,7 @@
 			{
 				"id": "Object",
 				"classprefix": "U",
+				"parent": "UObject",
 				"Headers": [],
 				"Functions": []
 			},
@@ -54,6 +54,7 @@
 			{
 				"id": "BTSerive",
 				"classprefix": "U",
+				"parent": "UBT",
 				"Headers": ["CoreMinimal.h", "BehaviorTree/BTService.h"],
 				"Functions": []
 			},
@@ -73,7 +74,6 @@
 				"id": "Actor",
 				"classprefix": "A",
 				"parent": "AActor",
-				"interfaces": [],
 				"Headers": ["CoreMinimal.h", "GameFramework/Actor.h"],
 				"Functions": ["BeginPlay", "Tick", "OnConstruction"]
 			}

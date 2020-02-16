@@ -59,9 +59,31 @@ export async function PickFolder(): Promise<string> {
 export function GetVSConfig<T>(namespace: string, key: string): T {
 	let config = vscode.workspace.getConfiguration(namespace);
 	let retval = config.get<T>(key)!;
+	console.log(retval);
 	return retval;
 }
 
 export function showInfo(message: string) {
 	vscode.window.showInformationMessage(message);
+}
+
+/** Gets vs config and updates it. Must be a list of strings */
+export function AppendToVSConfig(namespace: string, key: string, vals: string): boolean {
+	let config = vscode.workspace.getConfiguration(namespace);
+	let retval = config.get<string[]>(key)!;
+	if (retval == undefined) {
+		console.log("Shotto Mattee");
+	}
+
+	// If already included, get out
+	retval.forEach(val => {
+		if (val == vals) {
+			return true;
+		}
+	});
+
+	// Otherwise add and update
+	retval.push(vals);
+	config.update(key, retval, undefined);
+	return false;
 }
