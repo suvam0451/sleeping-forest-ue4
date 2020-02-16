@@ -2,8 +2,11 @@
 
 ## [0.6.6]
 
-- Modders can now add extensions right from the editor sidebar
-- Audit folders for AssetStreams are automatically added to sidebar under UE4
+- Modders can now add extensions right from the editor sidebar.
+- Folders for AssetStreams are automatically added to sidebar under UE4.
+- Examples for modding added. Just see the entries in the JSON files in the sidebar for reference.
+- Updated tutorials for asset streams will be available by next week.
+- Return by reference is supported for functions.
 
 ## [0.6.5]
 

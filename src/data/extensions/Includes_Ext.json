@@ -4,7 +4,7 @@
 		"headers": ["Perception/AIPerceptionComponent.h", "Perception/AISense_Damage.h"]
 	},
 	{
-		"id": "ItJustWorks",
-		"headers": ["Bombshell.h"]
+		"id": "AnotherExample",
+		"headers": ["Perception/AIPerceptionComponent.h"]
 	}
 ]

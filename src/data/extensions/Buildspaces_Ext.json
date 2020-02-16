@@ -17,10 +17,10 @@
 				"Functions": []
 			},
 			{
-				"id": "BombShellBlonde",
+				"id": "AnotherSample",
 				"classprefix": "A",
 				"parent": "AActor",
-				"Headers": ["SourceCode.h"],
+				"Headers": ["CoreMinimal.h"],
 				"Functions": ["Tick"]
 			}
 		]

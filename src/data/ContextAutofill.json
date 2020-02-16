@@ -76,7 +76,7 @@
 	{
 		"id": "functionbodygen",
 		"desc": "Generates function body for a target line.",
-		"pattern": "(FORCEINLINE )?(virtual )?([a-z_A-Z<>,*]*) ?([a-zA-Z_, <>(=0-9\"* ]*\\))( const)?( override)?;",
+		"pattern": "(FORCEINLINE )?(virtual )?([a-z_A-Z<>,&*]*) ?([a-zA-Z_, <>(=0-9\"*& ]*\\))( const)?( override)?;",
 		"parsemap": [3, 4, 5],
 		"body": ["$1 $x::$2$3 {", "\t// Function not implemented", "}"],
 		"action": "fnbodygen"

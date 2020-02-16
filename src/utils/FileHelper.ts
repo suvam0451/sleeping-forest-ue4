@@ -8,19 +8,14 @@ import * as vscode from "vscode";
 import * as fs from "fs";
 import readline from "readline";
 import * as _ from "lodash";
-import FuncDefs from "../data/FunctionTemplates.json";
-import FuncExts from "../data/extensions/Functions_Ext.json";
-import { EOF } from "dns";
+import FuncDefs from "../data/extensions/Functions_Core.json";
+import * as filesys from "../utils/FilesystemHelper";
 
-export async function InjectHeaders(
-	filepath: string,
-	defs: string[],
-): Promise<number> {
+const _functionModPath = "data/extensions/Functions_Ext.json";
+
+export async function InjectHeaders(filepath: string, defs: string[]): Promise<number> {
 	let num = await RegexMatchLine(filepath, /^#include (.*?).h/);
-	let num2 = await RegexMatchLine(
-		filepath,
-		/^#include (.*?).generated.h/,
-	);
+	let num2 = await RegexMatchLine(filepath, /^#include (.*?).generated.h/);
 
 	defs = _.map(defs, o => {
 		return '#include "' + o + '"';
@@ -38,13 +33,25 @@ export async function InjectHeaders(
 	});
 }
 
+interface FunctionTemplate {
+	id: string;
+	comment: string;
+	signature: string;
+	field: string;
+	body: string[];
+}
 export async function InjectFunctions(
 	headerpath: string,
 	sourcepath: string,
 	arr: string[],
 	namespace: string,
 ): Promise<void> {
-	let data = _.concat(FuncDefs, FuncExts);
+	// Append the xyz with
+	let modpath = filesys.RelativeToAbsolute("suvam0451.sleeping-forest-ue4", _functionModPath);
+	let extradata = filesys.ReadJSON<FunctionTemplate[]>(modpath!);
+	let data: FunctionTemplate[] = FuncDefs.concat(extradata);
+
+	// let data = FuncDefs.concat(FuncDefs, FuncExts);
 
 	// Get header fields
 	let pub = await RegexMatchLine(headerpath, /^public:$/);
@@ -82,10 +89,7 @@ export async function InjectFunctions(
 				}
 			}
 			// Add function body to source
-			srcAdd = _.concat(
-				srcAdd,
-				GeneratedSourceBody(pnt.signature, namespace, pnt.body),
-			);
+			srcAdd = _.concat(srcAdd, GeneratedSourceBody(pnt.signature, namespace, pnt.body));
 		}
 	});
 
@@ -106,10 +110,7 @@ export async function InjectFunctions(
 // ---------------------------------------------------------------------
 
 /** Use a regex pattern and look match for the first line  */
-function RegexMatchLine(
-	filepath: string,
-	ex: RegExp,
-): Promise<number> {
+function RegexMatchLine(filepath: string, ex: RegExp): Promise<number> {
 	let retval = -1,
 		index = 0;
 	let regex = new XRegExp(ex);
@@ -130,11 +131,7 @@ function RegexMatchLine(
 }
 
 /** Writes a list of lines to the file. */
-async function WriteAtLine(
-	filepath: string,
-	at: number,
-	lines: string[],
-): Promise<void> {
+async function WriteAtLine(filepath: string, at: number, lines: string[]): Promise<void> {
 	let content: string = "";
 	lines.forEach(str => {
 		content += str + "\n";
@@ -165,11 +162,7 @@ async function WriteAtLine(
 }
 
 /** Writes a list of lines to the file. */
-function WriteAtLineSync(
-	filepath: string,
-	at: number,
-	lines: string[],
-) {
+function WriteAtLineSync(filepath: string, at: number, lines: string[]) {
 	let content: string = "";
 	lines.forEach(str => {
 		content += str + "\n";
@@ -205,20 +198,10 @@ function StringExtract(str: string, ex: RegExp): string {
 	}
 }
 
-function GeneratedSourceBody(
-	signature: string,
-	namespace: string,
-	fnbody: string[],
-): string[] {
+function GeneratedSourceBody(signature: string, namespace: string, fnbody: string[]): string[] {
 	let retval: string[] = [];
-	let cls = StringExtract(
-		signature,
-		/([a-zA-Z<>]*)\((.*?)\) (const)?/,
-	);
-	let rettype = StringExtract(
-		signature,
-		/ ([a-zA-Z_]*)<?([a-zA-Z, ]*)>? /,
-	);
+	let cls = StringExtract(signature, /([a-zA-Z<>]*)\((.*?)\) (const)?/);
+	let rettype = StringExtract(signature, / ([a-zA-Z_]*)<?([a-zA-Z, ]*)>? /);
 	retval.push(rettype + " " + namespace + "::" + cls); // AMyActor::BeginPlay() { // body }
 	retval.push("{");
 	retval = _.concat(
@@ -233,7 +216,7 @@ function GeneratedSourceBody(
 
 /** Appends a function at the end of a file.
  * 	@param filepath path to the file to be written
- * 	@param body list of strings to write 
+ * 	@param body list of strings to write
  */
 export function AddLinesToFile(filepath: string, body: string[]) {
 	fs.appendFile(filepath, body, (err: any) => {

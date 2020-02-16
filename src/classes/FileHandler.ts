@@ -10,8 +10,6 @@ import { GetPluginDataFromFolder } from "../utils/FilesystemHelper";
 import * as fs from "fs";
 var XRegExp = require("xregexp");
 import * as path from "path";
-import classData from "../data/BuildTemplates.json";
-import extendedClassData from "../data/extensions/Buildspaces.json";
 // Header/Source file generation data...
 import Default_Actor_h from "../data/generators/Default_Actor_h.json";
 import { rejects } from "assert";

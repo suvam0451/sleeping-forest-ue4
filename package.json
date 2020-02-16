@@ -3,7 +3,7 @@
 	"displayName": "Sleeping Forest - UE4 multitool",
 	"description": "Code-completion, CLI tools and asset management/optimization for Unreal Engine 4 in VSCode. (This plug-in is in beta until v1.0.0. Feedback and suggestions are welcome at my Discord)",
 	"publisher": "suvam0451",
-	"version": "0.6.5",
+	"version": "0.6.6",
 	"license": "MPL-2.0",
 	"repository": {
 		"type": "git",

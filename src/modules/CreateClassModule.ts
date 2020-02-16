@@ -8,7 +8,6 @@ import { GetPluginDataFromFolder } from "../utils/FilesystemHelper";
 import * as fs from "fs";
 import * as path from "path";
 import classData from "../data/BuildTemplates.json";
-import extendedClassData from "../data/extensions/Buildspaces.json";
 // Header/Source file generation data...
 import Default_Actor_h from "../data/generators/Default_Actor_h.json";
 import Default_Actor_cpp from "../data/generators/Default_Actor_cpp.json";
@@ -17,7 +16,7 @@ import * as _ from "lodash";
 import { QuickPick, InputBox } from "./VSInterface";
 import * as filesys from "../utils/FilesystemHelper";
 
-const _buildspaceModPath = "data/extensions/Buildspaces.json";
+const _buildspaceModPath = "data/extensions/Buildspaces_Ext.json";
 
 interface ClassCreationKit {
 	modulepath: string;
