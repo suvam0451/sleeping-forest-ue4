@@ -57,7 +57,7 @@
 	{
 		"id": "init_components",
 		"desc": "Initialization Scene/Sphere/StaticMesh etc",
-		"pattern": ".*?U([a-zA-Z_]*)?Component[\\*| ]{2}([a-zA-Z_]*) = .*?;",
+		"pattern": ".*?U([a-zA-Z_]*)?Component[\\*| ]{2}([a-zA-Z_]*)( = .*?)?;",
 		"parsemap": [1, 2],
 		"body": [
 			"$2 = CreateDefaultSubobject<U$1Component>(\"My$1\");",
@@ -94,5 +94,13 @@
 			"}"
 		],
 		"action": "copy"
+	},
+	{
+		"id": "overrides",
+		"desc": "Generates header code for override functions.",
+		"pattern": "^(public|private|protected):$",
+		"parsemap": [],
+		"body": [],
+		"action": "overridelib"
 	}
 ]

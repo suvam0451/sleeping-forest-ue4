@@ -18,6 +18,7 @@ import {
 	GetMatchingSourceSync,
 } from "../utils/FilesystemHelper";
 import { AddLinesToFile } from "../utils/FileHelper";
+import { AddOverrideFunction } from "../modules/AddOverrideFunction";
 
 interface InitContextData {
 	line: number;
@@ -92,6 +93,11 @@ export default async function InitializerModule(): Promise<void> {
 							vscode.env.clipboard.writeText(lineToWrite);
 							vscode.window.showInformationMessage("Function body copied to clipboard.");
 						}
+						break;
+					}
+					case "overridelib": {
+						AddOverrideFunction();
+						break;
 					}
 					default: {
 						break;
@@ -100,7 +106,6 @@ export default async function InitializerModule(): Promise<void> {
 			}
 		}
 	});
-	// }
 
 	return new Promise<void>((resolve, reject) => {
 		resolve();

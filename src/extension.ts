@@ -14,6 +14,9 @@ import * as AssetStream from "./modules/AssetStreamModule";
 import * as fs from "fs";
 import * as uauto from "./utils/UnrealAutomation";
 import InitializerModule from "./modules/InitializerModule";
+import { AddOverrideFunction } from "./modules/AddOverrideFunction";
+
+// import FunctionModule from "../utils/"
 import os from "os";
 // import sharp from "sharp";
 
@@ -177,6 +180,11 @@ export function activate(context: vscode.ExtensionContext) {
 		InitializerModule();
 	});
 	context.subscriptions.push(Try_Initialize);
+
+	let AddFunction = vscode.commands.registerCommand("extension.sf.addOverride", () => {
+		AddOverrideFunction();
+	});
+	context.subscriptions.push(AddFunction);
 }
 
 // this method is called when your extension is deactivated

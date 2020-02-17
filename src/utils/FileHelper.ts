@@ -110,34 +110,38 @@ export async function InjectFunctions(
 // ---------------------------------------------------------------------
 
 /** Use a regex pattern and look match for the first line  */
-function RegexMatchLine(filepath: string, ex: RegExp): Promise<number> {
+export async function RegexMatchLine(filepath: string, ex: RegExp): Promise<number> {
 	let retval = -1,
 		index = 0;
-	let regex = new XRegExp(ex);
 
 	const readInterface = readline.createInterface({
 		input: fs.createReadStream(filepath),
 		output: process.stdout,
 	});
 	return new Promise<number>((resolve, reject) => {
-		readInterface.on("line", line => {
-			if (regex.test(line)) {
-				readInterface.close();
-				resolve(index);
-			}
-			index++;
-		});
+		readInterface
+			.on("line", line => {
+				// console.log("test for", line, "is", ex.test(line));
+				if (ex.test(line) === true) {
+					resolve(index);
+					readInterface.close();
+				}
+				index++;
+			})
+			.on("close", () => {
+				resolve(-1);
+			});
+		// resolve(-1);
 	});
 }
 
 /** Writes a list of lines to the file. */
-async function WriteAtLine(filepath: string, at: number, lines: string[]): Promise<void> {
+export async function WriteAtLine(filepath: string, at: number, lines: string[]): Promise<void> {
 	let content: string = "";
 	lines.forEach(str => {
 		content += str + "\n";
 	});
 	content = content.slice(0, content.length - 1); // Remove last newline character
-	console.log(content);
 	return new Promise<void>((resolve, reject) => {
 		let data: string[] = fs
 			.readFileSync(filepath)

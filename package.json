@@ -1,9 +1,9 @@
 {
 	"name": "sleeping-forest-ue4",
 	"displayName": "Sleeping Forest - UE4 multitool",
-	"description": "Code-completion, CLI tools and asset management/optimization for Unreal Engine 4 in VSCode. (This plug-in is in beta until v1.0.0. Feedback and suggestions are welcome at my Discord)",
+	"description": "Code-completion, CLI tools and asset management/optimization for Unreal Engine 4 in VSCode. (In beta until v1.0.0. Read changelogs. Feedback at discord.)",
 	"publisher": "suvam0451",
-	"version": "0.6.6",
+	"version": "0.6.8",
 	"license": "MPL-2.0",
 	"repository": {
 		"type": "git",
@@ -27,7 +27,8 @@
 		"onCommand:extension.sf.injectExcludes",
 		"onCommand:extension.sf.initializeAssetFolder",
 		"onCommand:extension.sf.refreshAssetFolders",
-		"onCommand:extension.sf.tryInitialize"
+		"onCommand:extension.sf.tryInitialize",
+		"onCommand:extension.sf.addOverride"
 	],
 	"main": "/dist/extension",
 	"keywords": [
@@ -45,6 +46,10 @@
 			{
 				"command": "extension.sf.compileCode",
 				"title": "UE4 : (Build) -> Compile all code."
+			},
+			{
+				"command": "extension.sf.addOverride",
+				"title": "UE4 : Add override function."
 			},
 			{
 				"command": "extension.sf.onConstruction",
@@ -160,28 +165,48 @@
 					"default": [],
 					"description": "Fullpaths to list of folders initialized using this plug-in from which to pull assets to UE4."
 				},
-				"SF.allowUserExtensions": {
-					"type": "boolean",
-					"default": false,
-					"description": "Read the online docs about extending various templates and set this to true to allow custom functionalities."
+				"SF.excludeFolders": {
+					"type": "array",
+					"default": [
+						"Intermediate",
+						"Saved",
+						"Binaries",
+						"Build",
+						"DerivedDataCache",
+						"Documentation",
+						"Programs",
+						"Shaders",
+						"FeaturePacks",
+						"Samples",
+						"Templates",
+						"Engine/Build",
+						"Engine/Extras",
+						"Engine/Content",
+						"Engine/Source/Editor",
+						"Content",
+						"Resources"
+					],
+					"description": "These folders are completely removed from workspace. For file extesnions, use SF.excludedExtensions."
+				},
+				"SF.searchExclude": {
+					"type": "array",
+					"default": [
+						"Engine/Source/Editor"
+					],
+					"description": "Folders to ignore while searching. For example, editor classes are not needed for gameplay scripting."
 				},
 				"SF.excludedExtensions": {
 					"type": "array",
 					"default": [
-						".exe",
-						".dll"
+						"exe",
+						"dll",
+						"egstore",
+						"generated.h",
+						"uasset",
+						"gitignore",
+						"gitattributes"
 					],
 					"description": "These extensions will be excluded from search and the project. Add .uassets if you need only code."
-				},
-				"SF.excludeEditorClassesFromWorkspace": {
-					"type": "boolean",
-					"default": false,
-					"description": "If set to true, \"Engine/Source/Editor\" will be excluded from workspace. These are not needed for gameplay programming."
-				},
-				"SF.hideEditorClassesFromWorkspace": {
-					"type": "boolean",
-					"default": false,
-					"description": "If set to true, \"Engine/Source/Editor\" will be excluded from search only. They will still be indexed. These are not needed for gameplay programming. Also, consider excludeEditorClassesFromWorkspace"
 				},
 				"SF.autoAddFunctionsInSource": {
 					"type": "boolean",

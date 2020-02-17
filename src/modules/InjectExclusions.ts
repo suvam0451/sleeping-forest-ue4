@@ -27,60 +27,35 @@ export default async function InjectExcludeDefinition(): Promise<void> {
 		});
 
 		// Get this extension's settings
-		let myconfig = vscode.workspace.getConfiguration("SF");
 		let myretval;
+
+		// files.exclude
 		let config = vscode.workspace.getConfiguration("files");
 		let retval: any = config.get("exclude")!;
-
-		// List of modifications
-		// .gitignore copy
-		retval["**/Intermediate"] = true;
-		retval["**/Saved"] = true;
-		retval["**/Binaries"] = true;
-		retval["**/Build"] = true;
-		// extensions
-		retval["**.dll"] = true;
-		retval["**.exe"] = true;
-		// Engine folders
-		retval["**/DerivedDataCache"] = true;
-		retval["**/Documentation"] = true;
-		retval["**/Programs"] = true; // UHT, UBT, Shader compiler etc. (keep false)
-		retval["**/Shaders"] = true; // Shaders are linked via plugin Build.cs files.
-		retval["**/FeaturePacks"] = true; // Map packages
-		retval["**/Samples"] = true; // Starter Content
-		retval["**/Templates"] = true; // Template maps
-		retval[".egstore"] = true; // Template maps
-		retval["**/Engine/Build"] = true; // Contains binaries
-		retval["**/Engine/Extras"] = true; // External app scripts
-		retval["**/Engine/Content"] = true; // binary (.uasset, .umap) files
-		// Apply config : Whether to exclude editor classes from workspace
-		myretval = myconfig.get<boolean>("excludeEditorClassesFromWorkspace")!;
-		retval["**/Engine/Source/Editor"] = myretval;
-
+		myretval = vs.GetVSConfig<string[]>("SF", "excludedExtensions");
+		myretval.forEach(val => {
+			retval["**." + val] = true;
+		});
+		myretval = vs.GetVSConfig<string[]>("SF", "excludeFolders");
+		myretval.forEach(val => {
+			retval["**/" + val] = true;
+		});
 		config.update("exclude", retval, false);
-		//#endregion
 
+		// files.watcherExclude
 		config = vscode.workspace.getConfiguration("files");
 		retval = config.get("watcherExclude");
-
 		retval["**/Engine/**"] = true;
 		config.update("watcherExclude", retval, undefined);
 
-		//#region search.exclude
+		// search.exclude
 		config = vscode.workspace.getConfiguration("search");
 		retval = config.get("exclude");
-		// Added list
-		retval["**.py"] = true;
-		retval["**.generated.h"] = true;
-		retval["**/CoreRedirects.cpp"] = true;
-		retval["**/CoreRedirects.h"] = true;
-
-		// Apply config : Whether to exclude editor classes from search
-		myretval = myconfig.get<boolean>("hideEditorClassesFromWorkspace")!;
-		retval["**/Engine/Source/Editor"] = myretval;
-		retval["**.code-workspace"] = true;
+		myretval = vs.GetVSConfig<string[]>("SF", "searchExclude");
+		myretval.forEach(val => {
+			retval["**/" + val] = true;
+		});
 		config.update("exclude", retval, undefined);
-		//#endregion
 
 		// Adds Extensions tab to workspace
 		let folderpath = filesys.RelativeToAbsolute(
