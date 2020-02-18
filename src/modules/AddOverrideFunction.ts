@@ -4,27 +4,12 @@
 // Isolated module to let users paste their errors and search database for resolution.
 
 import * as vscode from "vscode";
-import * as fs from "fs";
-import * as path from "path";
 import _ from "lodash";
-import { PickFolder, GetVSConfig } from "./VSInterface";
-import {
-	CreateAndWrite,
-	WriteFileAsync,
-	WriteJSONToFile,
-	ReadJSON,
-	CreateDirIfMissing,
-} from "../utils/FilesystemHelper";
-import settings from "../data/templates/streamSettings.json";
-import generator from "../data/templates/pythonGenerator.json";
-import assetexportdata from "../data/templates/assetBasicDataTmpl.json";
 import * as filesys from "../utils/FilesystemHelper";
-import * as vsui from "../modules/VSInterface";
-import InitializerModule from "./InitializerModule";
-import InjectExcludeDefinition from "./InjectExclusions";
+import * as vsuii from "../modules/VSInterface";
 import FuncDefs from "../data/extensions/Functions_Core.json";
 import * as vs from "../utils/FileHelper";
-import { resolve } from "dns";
+import { vsui } from "@suvam0451/vscode-geass";
 
 const _functionModPath = "data/extensions/Functions_Ext.json";
 
@@ -43,7 +28,7 @@ export async function AddOverrideFunction(): Promise<void> {
 
 	// If not header, quit
 	if (/.h$/.test(filepath!) === false) {
-		vsui.showInfo(
+		vsui.Info(
 			"Not a header file. Please use .h files OR contextually call from private:/public:/protected:",
 		);
 		return new Promise<void>((resolve, reject) => {
@@ -69,7 +54,7 @@ export async function AddOverrideFunction(): Promise<void> {
 		return new Promise<void>((resolve, reject) => {
 			console.log(vals[0], vals[1], vals[2], vals[3]);
 
-			vsui.QuickPick(options, false).then(sel => {
+			vsuii.QuickPick(options, false).then(sel => {
 				let choice = data.find(o => {
 					return sel == o.id;
 				});
@@ -105,32 +90,4 @@ export async function AddOverrideFunction(): Promise<void> {
 			resolve();
 		});
 	});
-
-	// let options: string[] = [];
-	// data.forEach(val => {
-	// 	options.push(val.id);
-	// });
-	// console.log(options);
-	// vsui.QuickPick(options, false).then(sel => {
-	// 	let choice = data.find(o => {
-	// 		return sel == o.id;
-	// 	});
-	// 	if (choice !== undefined) {
-	// 		vscode.workspace.saveAll();
-	// 		switch (choice.field) {
-	// 			case "public": {
-	// 				vs.WriteAtLine(filepath!, pub, choice.body);
-	// 				break;
-	// 			}
-	// 			case "protected": {
-	// 				vs.WriteAtLine(filepath!, prot, choice.body);
-	// 				break;
-	// 			}
-	// 			case "private": {
-	// 				vs.WriteAtLine(filepath!, priv, choice.body);
-	// 				break;
-	// 			}
-	// 		}
-	// 	}
-	// });
 }

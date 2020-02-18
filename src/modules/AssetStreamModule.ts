@@ -7,7 +7,7 @@ import * as vscode from "vscode";
 import * as fs from "fs";
 import * as path from "path";
 import _ from "lodash";
-import { PickFolder, GetVSConfig } from "./VSInterface";
+import { GetVSConfig } from "./VSInterface";
 import {
 	CreateAndWrite,
 	WriteFileAsync,
@@ -20,13 +20,12 @@ import generator from "../data/templates/pythonGenerator.json";
 import assetexportdata from "../data/templates/assetBasicDataTmpl.json";
 import * as filesys from "../utils/FilesystemHelper";
 import * as vs from "../modules/VSInterface";
-import InitializerModule from "./InitializerModule";
-import InjectExcludeDefinition from "./InjectExclusions";
+import { vsui, vsed } from "@suvam0451/vscode-geass";
 
 /** Generates module scaffold files for selected folder */
 export async function InitializeStream(): Promise<string> {
 	return new Promise<string>((resolve, reject) => {
-		PickFolder().then(ret => {
+		vsui.GetAFolder().then(ret => {
 			const _normalizedpath = ret.replace(/\\/g, "/");
 			try {
 				// folders
@@ -269,14 +268,14 @@ export function CopyBinaries(os: string, folderpath: string) {
 	let _extdir = "";
 	switch (os) {
 		case "Linux": {
-			vs.showInfo(
+			vsui.Info(
 				"Hey! Linux support is off due to insufficient feedback. You can lend help fo this at discord.",
 			);
 			_binpath = "bin/linux";
 			break;
 		}
 		case "Darwin": {
-			vs.showInfo(
+			vsui.Info(
 				"Hey! MacOS support is off due to insufficient feedback. You can lend help fo this at discord.",
 			);
 			_binpath = "bin/macos";

@@ -6,6 +6,8 @@ import { DErrorCode } from "./ErrorLogger";
 const fs = require("fs");
 import * as filesys from "./FilesystemHelper";
 import { AActor, UActorComponent } from "../data/headerFunctions.json";
+import { vsui, vsed } from "@suvam0451/vscode-geass";
+import { start } from "repl";
 
 export interface FunctionDefinition {
 	comment: string;
@@ -30,37 +32,24 @@ export async function ActiveFileName(editor: vscode.TextEditor): Promise<string>
 	});
 }
 
-export function InjectHeaders(editor: vscode.TextEditor, lines: string[]): void {
-	const position = editor?.selection.active!;
-	const headerDefaultRegex = new XRegExp("^#include (.*?).h");
-	const headerFileEndRegex = new XRegExp("^#include (.*?).generated.h");
-
-	// const isHeader = ext.IsHeaderFile(path.basename(editor.document.fileName));
-
-	// Handling a header file...
-	// if (isHeader) {
-	let startingLine = GetLineMatchingRegexInActiveFile(headerDefaultRegex);
-	let finishingLine = GetLineMatchingRegexInActiveFile(headerFileEndRegex);
+export function InjectHeaders(lines: string[]) {
+	let startingLine = vsed.MatchRegexInFile(/^#include (.*?).h/);
+	let finishingLine = vsed.MatchRegexInFile(/^#include (.*?).generated.h/);
 
 	Promise.all([startingLine, finishingLine]).then(
 		values => {
 			// Get updates list of headers
 			let request = RemoveDuplicates(lines, values[0], values[1]);
-			var newPosition = position.with(values[1], 0);
-			var newSelection = new vscode.Selection(newPosition, newPosition);
-			editor!.selection = newSelection;
-			WriteRequest(request);
+			vsed.MoveCursorTo(values[1], 0);
+			vsed.WriteAtCursor(request);
 		},
 		() => {
 			// Handle if not header
-			GetLineMatchingRegexInActiveFile(headerDefaultRegex).then(startline => {
-				console.log(startline);
+			vsed.MatchRegexInFile(/^#include (.*?).h/).then(startline => {
 				// Get updates list of headers
 				let request = RemoveDuplicates(lines, startline, startline);
-				var newPosition = position.with(startline, 0);
-				var newSelection = new vscode.Selection(newPosition, newPosition);
-				editor!.selection = newSelection;
-				WriteRequest(request);
+				vsed.MoveCursorTo(startline, 0);
+				vsed.WriteAtCursor(request);
 			});
 		},
 	);
@@ -269,22 +258,6 @@ export function RemoveDuplicates(data: string[], start: number, end: number): st
 	return data;
 }
 
-/** Writes lines at current cursor position. */
-export function WriteRequest(lines: string[]) {
-	let editor = vscode.window.activeTextEditor;
-	const position = editor?.selection.active!;
-	editor?.edit(editBuilder => {
-		lines.forEach(line => {
-			editBuilder.insert(position, line + "\n");
-		});
-	});
-}
-
-/** Writes lines at current cursor position. */
-// export function WriteRequestSimple() {
-//
-// }
-
 export enum UE4_ClassTypes {
 	UObject,
 	Actor,
@@ -293,27 +266,10 @@ export enum UE4_ClassTypes {
 	FStruct,
 }
 
-export function GetLineMatchingRegexInActiveFile(ex: RegExp): Promise<number> {
-	let editor = vscode.window.activeTextEditor!;
-	let LineCount = editor.document.lineCount;
-	return new Promise<number>((resolve, reject) => {
-		for (let i = 0; i < LineCount; i++) {
-			if (ex.test(editor.document.lineAt(i).text)) {
-				resolve(i);
-			}
-		}
-		reject(DErrorCode.HEADER_NOT_FOUND);
-	});
-}
-
 /** Writes prototypes to both header and function */
 export function AddFunction(data: filesys.FileData, func: FunctionDefinition, FromHeader: true) {
 	if (FromHeader === true) {
-		WriteRequest(["// " + func.comment, func.header]);
-		//testing
-		// vscode.workspace.saveAll().then(() => {
-		//     filesys.WriteAtLine(data.sourcepath, 5, ["jeez", "you are a meanie", "Onii-chan <3"]).then(() => { });
-		// });
+		vsed.WriteAtCursor(["// " + func.comment, func.header]);
 		vscode.workspace.saveAll().then(() => {
 			filesys.WriteFunctionToFile(data.sourcepath, func.source, data.stripped_classname);
 		});

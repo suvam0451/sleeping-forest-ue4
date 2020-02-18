@@ -28,20 +28,6 @@ export async function QuickPick(
 	});
 }
 
-export async function InputBox(): Promise<string> {
-	return new Promise<string>((resolve, reject) => {
-		const input = vscode.window.showInputBox(); // request classname as string
-		input.then(
-			value => {
-				typeof value !== "undefined" ? resolve(value) : reject("UNDEF");
-			},
-			() => {
-				resolve("ABORT");
-			},
-		);
-	});
-}
-
 export async function PickFolder(): Promise<string> {
 	let opt: vscode.OpenDialogOptions = {};
 	opt.canSelectFiles = false;
@@ -61,10 +47,6 @@ export function GetVSConfig<T>(namespace: string, key: string): T {
 	let retval = config.get<T>(key)!;
 	console.log(retval);
 	return retval;
-}
-
-export function showInfo(message: string) {
-	vscode.window.showInformationMessage(message);
 }
 
 /** Gets vs config and updates it. Must be a list of strings */

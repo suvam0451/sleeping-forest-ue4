@@ -19,6 +19,7 @@ import {
 } from "../utils/FilesystemHelper";
 import { AddLinesToFile } from "../utils/FileHelper";
 import { AddOverrideFunction } from "../modules/AddOverrideFunction";
+import { vsui } from "@suvam0451/vscode-geass";
 
 interface InitContextData {
 	line: number;
@@ -62,7 +63,7 @@ export default async function InitializerModule(): Promise<void> {
 					case "copy": {
 						let lineToWrite = edit.ResolveLines(rule.body, symbolarray, data.line);
 						vscode.env.clipboard.writeText(lineToWrite);
-						vscode.window.showInformationMessage("Initializer copied to clipboard.");
+						vsui.Info("Initializer copied to clipboard.");
 						break;
 					}
 					case "edit": {

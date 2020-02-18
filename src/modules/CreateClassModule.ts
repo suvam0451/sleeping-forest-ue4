@@ -13,9 +13,9 @@ import Default_Actor_h from "../data/generators/Default_Actor_h.json";
 import Default_Actor_cpp from "../data/generators/Default_Actor_cpp.json";
 import { InjectHeaders, InjectFunctions } from "../utils/FileHelper";
 import * as _ from "lodash";
-import { QuickPick, InputBox } from "./VSInterface";
+import { QuickPick } from "./VSInterface";
 import * as filesys from "../utils/FilesystemHelper";
-
+import { vsui } from "@suvam0451/vscode-geass";
 const _buildspaceModPath = "data/extensions/Buildspaces_Ext.json";
 
 interface ClassCreationKit {
@@ -100,7 +100,8 @@ async function ClassSelection(data: ClassCreationKit): Promise<ClassCreationKit>
 	return new Promise<ClassCreationKit>((resolve, reject) => {
 		QuickPick(classList, false).then(sel => {
 			data.parentclass = sel;
-			InputBox()
+			vsui
+				.GetString()
 				.then(ret => {
 					data.classname = ret;
 					vscode.window.showWarningMessage(
