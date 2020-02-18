@@ -2,6 +2,14 @@ image: node:latest
 
 4.22.vsix:
   script:
+    # Comment out to use gitlab packages
+    - yarn config set '//npm.pkg.github.com/:_authToken' "${GITHUB_AUTH_TOKEN}"
+    - npm config set '//npm.pkg.github.com/:_authToken' "${GITHUB_AUTH_TOKEN}"
+    - yarn login --registry=https://npm.pkg.github.com
+    # Comment out to use github packages
+    # - npm config set '//gitlab.com/api/v4/packages/npm/:_authToken' "${GITLAB_AUTH_TOKEN}
+    # - yarn config set '//gitlab.com/api/v4/packages/npm/:_authToken' "${GITLAB_AUTH_TOKEN}
+    # - yarn login --registry=https://gitlab.com/api/v4/packages/npm
     - yarn install
     - yarn run webpack
     - yarn vsce package

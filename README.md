@@ -1,6 +1,6 @@
 # Sleeping Forest
 
-![](https://gitlab.com/winterwildfire/ue4/trailblazer/badges/master/pipeline.svg)
+[![](https://gitlab.com/winterwildfire/ue4/trailblazer/badges/master/pipeline.svg)](https://gitlab.com/suvam0451/sleeping-forest-ue4/pipelines/)
 ![](https://img.shields.io/badge/4.24%20--%204.24-supported-green)
 [![](https://img.shields.io/discord/573495259926102017)](https://discord.gg/8Qd8a66)
 ![](https://img.shields.io/badge/platform-windows-lightgrey)
