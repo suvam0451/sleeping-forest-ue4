@@ -12,3 +12,6 @@ images/**
 
 node_modules
 !bin
+webpack.config.js
+.gitlab-ci.yml
+microservices/**

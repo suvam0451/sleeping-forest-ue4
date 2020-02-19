@@ -22,6 +22,10 @@ To install through VS Code extensions, Search for `Sleeping Forest - UE4 Multito
 
 To get the beta releases/requested patches, visit the [website](https://suvam0451.netlify.com/docs/sleeping-forest/getting-started/)
 
+The nightly builds are available below and updated daily.
+
+[![](https://gitlab.com/winterwildfire/ue4/trailblazer/badges/master/pipeline.svg)](https://gitlab.com/suvam0451/sleeping-forest-ue4/pipelines/)
+
 ## Key Features
 
 - Improved Intellisense

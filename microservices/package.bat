@@ -1,0 +1,1 @@
+go build -o ./bin/texture_packer.exe microservices/texture_packer.go
