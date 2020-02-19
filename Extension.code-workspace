@@ -1,0 +1,23 @@
+{
+	"folders": [
+		{
+			"name": "Extension",
+			"path": "."
+		}
+	],
+	"settings": {
+		"files.exclude": {
+			"**.md": true,
+			".npmrc": true,
+			".yarnrc": true,
+			".vscodeignore": true,
+			"LICENSE": true,
+			"node_modules/**": true,
+			".gitignore": true,
+			".gitattributes": true,
+			"webpack.config.js": true,
+			"tsconfig.json": true,
+			"images/**": true,
+			".prettierrc.yaml": true
+		}
+}
