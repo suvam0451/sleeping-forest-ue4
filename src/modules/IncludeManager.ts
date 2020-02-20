@@ -10,7 +10,6 @@ import DefaultData from "../data/IncludeTemplates.json";
 import * as _ from "lodash";
 import * as path from "path";
 import * as filesys from "../utils/FilesystemHelper";
-import { vsed, vsui } from "@suvam0451/vscode-geass";
 
 export default async function IncludeManager(): Promise<void> {
 	let modpath = filesys.RelativeToAbsolute(

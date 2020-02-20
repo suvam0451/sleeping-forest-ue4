@@ -1,0 +1,61 @@
+{
+	"float2": {
+		"prefix": "2",
+		"body": "float2(1,1)"
+	},
+	"float3": {
+		"prefix": "f3_xyz",
+		"body": "float3(1,1,1)"
+	},
+	"float3_X": {
+		"prefix": "f3_x",
+		"body": "float3(1,0,0)"
+	},
+	"float3_Y": {
+		"prefix": "f3_y",
+		"body": "float3(0,1,0)"
+	},
+	"float3_Z": {
+		"prefix": "f3_z",
+		"body": "float3(0,0,1)"
+	},
+	"float3_XY": {
+		"prefix": "f3_xy",
+		"body": "float3(1,1,0)"
+	},
+	"float3_YZ": {
+		"prefix": "f3_yz",
+		"body": "float3(0,1,1)"
+	},
+	"float3_XZ": {
+		"prefix": "f3_xz",
+		"body": "float3(1,0,1)"
+	},
+	"Camera Position": {
+		"prefix": "camera_position",
+		"body": "ResolvedView.WorldCameraOrigin"
+	},
+	"Object Position": {
+		"prefix": "object_position",
+		"body": "GetObjectWorldPosition(Parameters)"
+	},
+	"Rotate About Axis": {
+		"prefix": "rotate_about_axis",
+		"body": "RotateAboutAxis(float4(GetObjectOrientation(Parameters.PrimitiveId),${1:Angle}),${2:Pivot},${3:GetWorldPosition(Parameters)})",
+		"description": [
+			"1 (float) : Angle of rotation",
+			"2 (float3) : Pivot point",
+			"3 (float3) : Point on the axis. WorldPosition can't go wrong"
+		]
+	},
+	"Absolute World Position": {
+		"prefix": "absolute_world_position",
+		"body": "GetWorldPosition(Parameters)",
+		"description": "pixel position in the world."
+	},
+	"Transform Position: Local to World": {
+		"prefix": "transform_position_localtoworld",
+		"body": "TransformLocalPositionToWorld(Parameters, MaterialFloat4(MaterialFloat3(Parameters.TexCoords[0].xy,Parameters.TexCoords[0].xy.r), 1).xyz).xyz",
+		"description": "Position vector from local to position in world"
+	}
+}

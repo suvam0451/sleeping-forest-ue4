@@ -24,23 +24,4 @@ export default class FileHandler {
 	constructor(path: string) {
 		this.filepath = path;
 	}
-
-	WriteAtLine(at: number, lines: string[]) {
-		console.log("Internal function called");
-		fs.open(this.filepath, "w", (err, fd) => {
-			if (err) {
-				// error not handled
-			}
-			let buffer = new Buffer("expedia");
-			fs.writeSync(fd, buffer, at, buffer.length, 10);
-			// fs.write(fd, buffer, at, buffer.length, null, (err) => {
-			//     if (err) {
-			//         // error not handled
-			//     }
-			//     fs.close(fd, () => {
-			//         // success
-			//     });
-			// });
-		});
-	}
 }

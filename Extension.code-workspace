@@ -18,6 +18,10 @@
 			"webpack.config.js": true,
 			"tsconfig.json": true,
 			"images/**": true,
-			".prettierrc.yaml": true
+			".prettierrc.yaml": true,
+			"bin/**": true,
+			"tests/**": true,
+			"dist/**": true
 		}
+	}
 }

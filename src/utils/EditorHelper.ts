@@ -8,6 +8,7 @@ import * as filesys from "./FilesystemHelper";
 import { AActor, UActorComponent } from "../data/headerFunctions.json";
 import { vsui, vsed } from "@suvam0451/vscode-geass";
 import { start } from "repl";
+import { resolve } from "dns";
 
 export interface FunctionDefinition {
 	comment: string;
@@ -33,34 +34,20 @@ export async function ActiveFileName(editor: vscode.TextEditor): Promise<string>
 }
 
 export function InjectHeaders(lines: string[]) {
-	let startingLine = vsed.MatchRegexInFile(/^#include (.*?).h/);
-	let finishingLine = vsed.MatchRegexInFile(/^#include (.*?).generated.h/);
+	let startingLine = vsed.MatchRegexInFile_Bounds(/^#include (.*?).h/); // returns range of match
+	let finishingLine = vsed.MatchRegexInFile(/^#include (.*?).generated.h/); // single match/false (.cpp/.h)
 
-	Promise.all([startingLine, finishingLine]).then(
-		values => {
-			// Get updates list of headers
-			let request = RemoveDuplicates(lines, values[0], values[1]);
-			vsed.MoveCursorTo(values[1], 0);
-			vsed.WriteAtCursor(request);
-		},
-		() => {
-			// Handle if not header
-			vsed.MatchRegexInFile(/^#include (.*?).h/).then(startline => {
-				// Get updates list of headers
-				let request = RemoveDuplicates(lines, startline, startline);
-				vsed.MoveCursorTo(startline, 0);
-				vsed.WriteAtCursor(request);
-			});
-		},
-	);
-	// }
-}
-
-/** Adds and evaluats a snippet at given line positio */
-export function InsertSnippetAt(snip: vscode.SnippetString, at: number) {
-	let editor = vscode.window.activeTextEditor;
-	let lineEnd = editor?.document.lineAt(at).range.end;
-	editor?.insertSnippet(snip, lineEnd);
+	let arr = vsed.MatchRegexInFile_Bounds(/^#include (.*?).h/);
+	console.log(arr[0], arr[1]);
+	Promise.all([startingLine, finishingLine]).then(values => {
+		if (values[1] !== -1) {
+			let request = RemoveDuplicates(lines, values[0][0], values[1]);
+			vsed.WriteAtLine_Silent(values[1], request);
+		} else {
+			let request = RemoveDuplicates(lines, values[0][0], values[0][1]);
+			vsed.WriteAtLine_Silent(values[0][0], request);
+		}
+	});
 }
 
 /**  */
@@ -162,7 +149,6 @@ export function InsertLineAsParsedData(lines: string[], at: number, symbols: str
 	lines.forEach(line => {
 		symbols.forEach((symbol, i) => {
 			let str = "\\$" + (i + 1);
-			// console.log(str);
 			line = line.replace(RegExp(str, "g"), symbol);
 		});
 		// caliberate tab offset (scope end)

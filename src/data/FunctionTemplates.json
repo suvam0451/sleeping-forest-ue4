@@ -73,7 +73,14 @@
 		"id": "PostEditChangeProperty",
 		"comment": "",
 		"signature": "virtual void PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent) override;",
-		"field": "property",
+		"field": "protected",
 		"body": ["// Not implemented"]
+	},
+	{
+		"id": "TickComponent",
+		"comment": "",
+		"signature": "virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) override;",
+		"field": "protected",
+		"body": ["// Function not implemented"]
 	}
 ]
