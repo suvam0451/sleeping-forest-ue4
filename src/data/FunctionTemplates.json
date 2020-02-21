@@ -1,44 +1,41 @@
 [
 	{
 		"id": "BeginPlay",
-		"comment": "// Called when the game starts or when spawned",
-		"signature": "virtual void BeginPlay() override;",
+		"body": ["Super::BeginPlay();"],
 		"field": "protected",
-		"body": ["Super::BeginPlay();"]
+		"comment": "// Called when the game starts or when spawned",
+		"signature": "virtual void BeginPlay() override;"
 	},
 	{
 		"id": "Tick",
-		"comment": "// Called every frame",
-		"signature": "virtual void Tick(float DeltaTime) override;",
+		"body": ["Super::Tick(DeltaTime);"],
 		"field": "public",
-		"body": ["Super::Tick(DeltaTime);"]
+		"comment": "// Called every frame",
+		"signature": "virtual void Tick(float DeltaTime) override;"
 	},
 	{
 		"id": "OnConstruction",
-		"comment": "// Called when an instance of this class is placed (in editor) or spawned.",
-		"signature": "virtual void OnConstruction(const FTransform &Transform) override;",
+		"body": ["// Function not implemented"],
 		"field": "private",
-		"body": ["// Function not implemented"]
+		"comment": "// Called when an instance of this class is placed (in editor) or spawned.",
+		"signature": "virtual void OnConstruction(const FTransform &Transform) override;"
 	},
 	{
 		"id": "SetupPlayerInputComponent",
-		"comment": "// Called to bind functionality to input",
-		"signature": "virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;",
+		"body": ["Super::SetupPlayerInputComponent(PlayerInputComponent);"],
 		"field": "public",
-		"body": ["Super::SetupPlayerInputComponent(PlayerInputComponent);"]
+		"comment": "// Called to bind functionality to input",
+		"signature": "virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;"
 	},
 	{
 		"id": "OnPossess",
-		"comment": "// ",
-		"signature": "virtual void OnPossess(APawn *MyPawn) override;",
+		"body": [],
 		"field": "protected",
-		"body": []
+		"comment": "// ",
+		"signature": "virtual void OnPossess(APawn *MyPawn) override;"
 	},
 	{
 		"id": "GetControlRotation",
-		"comment": "// ",
-		"signature": "virtual FRotator GetControlRotation() const override;",
-		"field": "private",
 		"body": [
 			"if(GetPawn() != nullptr){",
 			"\treturn FRotator(0.0f, GetPawn()->GetActorRotation().Yaw, 0.0f);",
@@ -46,41 +43,44 @@
 			"else{",
 			"\treturn FRotator(0.0f);",
 			"}"
-		]
+		],
+		"field": "private",
+		"comment": "// ",
+		"signature": "virtual FRotator GetControlRotation() const override;"
 	},
 	{
 		"id": "NativeUpdateAnimation",
-		"comment": "// Similar to Tick() for animations",
-		"signature": "virtual void NativeUpdateAnimation(float DeltaTimeX) override;",
+		"body": ["Super::NativeUpdateAnimation(DeltaTimeX);"],
 		"field": "protected",
-		"body": ["Super::NativeUpdateAnimation(DeltaTimeX);"]
+		"comment": "// Similar to Tick() for animations",
+		"signature": "virtual void NativeUpdateAnimation(float DeltaTimeX) override;"
 	},
 	{
 		"id": "NativeInitializeAnimation",
-		"comment": "// Similar to BeginPlay() for animations",
-		"signature": "virtual void NativeInitializeAnimation() override;",
+		"body": ["Super::NativeInitializeAnimation();"],
 		"field": "protected",
-		"body": ["Super::NativeInitializeAnimation();"]
+		"comment": "// Similar to BeginPlay() for animations",
+		"signature": "virtual void NativeInitializeAnimation() override;"
 	},
 	{
 		"id": "PreEditChange",
-		"comment": "",
-		"signature": "virtual void PreEditChange(UProperty* PropertyThatWillChange) override;",
+		"body": ["Super::PreEditChange(PropertyThatChanged);"],
 		"field": "protected",
-		"body": ["Super::PreEditChange(PropertyThatChanged);"]
+		"comment": "",
+		"signature": "virtual void PreEditChange(UProperty* PropertyThatWillChange) override;"
 	},
 	{
 		"id": "PostEditChangeProperty",
-		"comment": "",
-		"signature": "virtual void PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent) override;",
+		"body": ["// Not implemented"],
 		"field": "protected",
-		"body": ["// Not implemented"]
+		"comment": "",
+		"signature": "virtual void PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent) override;"
 	},
 	{
 		"id": "TickComponent",
-		"comment": "",
-		"signature": "virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) override;",
+		"body": ["// Function not implemented"],
 		"field": "protected",
-		"body": ["// Function not implemented"]
+		"comment": "",
+		"signature": "virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) override;"
 	}
 ]

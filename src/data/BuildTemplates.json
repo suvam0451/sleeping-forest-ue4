@@ -3,67 +3,67 @@
 		"buildspace": "Default",
 		"templates": [
 			{
+				"classprefix": "A",
 				"id": "Actor",
-				"classprefix": "A",
 				"parent": "AActor",
-				"Headers": ["CoreMinimal.h", "GameFramework/Actor.h"],
-				"Functions": ["BeginPlay", "Tick", "OnConstruction"]
+				"Functions": ["BeginPlay", "Tick", "OnConstruction"],
+				"Headers": ["CoreMinimal.h", "GameFramework/Actor.h"]
 			},
 			{
+				"classprefix": "U",
 				"id": "ActorComponent",
-				"classprefix": "U",
 				"parent": "UActorComponent",
-				"Headers": ["CoreMinimal.h", "Components/ActorComponent.h"],
-				"Functions": []
+				"Functions": [],
+				"Headers": ["CoreMinimal.h", "Components/ActorComponent.h"]
 			},
 			{
+				"classprefix": "A",
 				"id": "Character",
-				"classprefix": "A",
 				"parent": "ACharacter",
-				"Headers": ["CoreMinimal.h", "GameFramework/Character.h"],
-				"Functions": ["BeginPlay", "Tick", "SetupPlayerInputComponent"]
+				"Functions": ["BeginPlay", "Tick", "SetupPlayerInputComponent"],
+				"Headers": ["CoreMinimal.h", "GameFramework/Character.h"]
 			},
 			{
-				"id": "Interface",
 				"classprefix": "I",
+				"id": "Interface",
 				"parent": "UInterface",
-				"Headers": ["CoreMinimal.h", "UObject/Interface.h"],
-				"Functions": []
+				"Functions": [],
+				"Headers": ["CoreMinimal.h", "UObject/Interface.h"]
 			},
 			{
+				"classprefix": "U",
 				"id": "Object",
-				"classprefix": "U",
 				"parent": "UObject",
-				"Headers": [],
-				"Functions": []
+				"Functions": [],
+				"Headers": []
 			},
 			{
+				"classprefix": "U",
 				"id": "DataAsset",
-				"classprefix": "U",
 				"parent": "UDataAsset",
-				"Headers": ["CoreMinimal.h", "Engine/DataAsset.h"],
-				"Functions": []
+				"Functions": [],
+				"Headers": ["CoreMinimal.h", "Engine/DataAsset.h"]
 			},
 			{
-				"id": "AIController",
 				"classprefix": "A",
+				"id": "AIController",
 				"parent": "AAIController",
-				"Headers": ["CoreMinimal.h", "AIController.h"],
-				"Functions": ["BeginPlay", "Tick", "GetControlRotation", "OnPossess"]
+				"Functions": ["BeginPlay", "Tick", "GetControlRotation", "OnPossess"],
+				"Headers": ["CoreMinimal.h", "AIController.h"]
 			},
 			{
+				"classprefix": "U",
 				"id": "BTSerive",
-				"classprefix": "U",
 				"parent": "UBT",
-				"Headers": ["CoreMinimal.h", "BehaviorTree/BTService.h"],
-				"Functions": []
+				"Functions": [],
+				"Headers": ["CoreMinimal.h", "BehaviorTree/BTService.h"]
 			},
 			{
-				"id": "AnimInstance",
 				"classprefix": "U",
+				"id": "AnimInstance",
 				"parent": "UAnimInstance",
-				"Headers": ["CoreMinimal.h", "Animation/AnimInstance.h"],
-				"Functions": ["NativeInitializeAnimation", "NativeUpdateAnimation"]
+				"Functions": ["NativeInitializeAnimation", "NativeUpdateAnimation"],
+				"Headers": ["CoreMinimal.h", "Animation/AnimInstance.h"]
 			}
 		]
 	},
@@ -71,11 +71,11 @@
 		"buildspace": "Debashish",
 		"templates": [
 			{
-				"id": "Actor",
 				"classprefix": "A",
+				"id": "Actor",
 				"parent": "AActor",
-				"Headers": ["CoreMinimal.h", "GameFramework/Actor.h"],
-				"Functions": ["BeginPlay", "Tick", "OnConstruction"]
+				"Functions": ["BeginPlay", "Tick", "OnConstruction"],
+				"Headers": ["CoreMinimal.h", "GameFramework/Actor.h"]
 			}
 		]
 	}

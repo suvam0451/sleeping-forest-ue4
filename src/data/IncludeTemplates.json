@@ -31,10 +31,7 @@
 	},
 	{
 		"id": "Spline",
-		"headers": [
-			"Components/SplineComponent.h",
-			"Components/SplineMeshComponent.h"
-		]
+		"headers": ["Components/SplineComponent.h", "Components/SplineMeshComponent.h"]
 	},
 	{
 		"id": "Subsystems",
@@ -46,13 +43,22 @@
 	},
 	{
 		"id": "Visualization",
-		"headers": [
-			"Components/BillboardComponent.h",
-			"Components/ArrowComponent.h"
-		]
+		"headers": ["Components/BillboardComponent.h", "Components/ArrowComponent.h"]
 	},
 	{
 		"id": "Data",
 		"headers": ["Engine/DataTable.h"]
+	},
+	{
+		"id": "Timer",
+		"headers": ["TimerManager.h"]
+	},
+	{
+		"id": "Material",
+		"headers": ["Materials/MaterialInstanceDynamic.h"]
+	},
+	{
+		"id": "Mesh",
+		"headers": ["Components/StaticMeshComponent.h"]
 	}
 ]

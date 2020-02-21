@@ -2,9 +2,24 @@
 	"Add material instance": {
 		"prefix": "umat_instance",
 		"body": [
-			"UMaterialInterface* mat${1:_0} = MyMesh->GetMaterial(${2:0});",
-			"UMaterialInstanceDynamic* Inst_mat${1:_0} = UMaterialInstanceDynamic::Create(mat, MyMesh); // context",
+			"UMaterialInterface* mat${1:_0} = ${2:MyMesh}->GetMaterial(${2:0});",
+			"UMaterialInstanceDynamic* Inst_mat${1:_0} = UMaterialInstanceDynamic::Create(mat${1:_0}, ${2:MyMesh}); // context",
 			"$0"
 		]
+	},
+	"umat : Set Scalar parameter": {
+		"prefix": "umat_setscalar",
+		"body": ["${2:Inst_mat_0}->SetScalarParameterValue(${1:\"\"}, 0);"]
+	},
+	"umat : Set Vector parameter": {
+		"prefix": "umat_setvector",
+		"body": [
+			"${2:Inst_mat_0}->SetVecotrParameterValue(${1:\"\"}, FLinearColor(FColor(255,255,255)));"
+		]
+	},
+	"umat : Set Texture parameter": {
+		"prefix": "umat_settexture",
+		"body": ["${2:Inst_mat_0}->SetTextureParameterValue($1{\"\"}, AssetPtr.Get());"],
+		"description": "YYoucan set texture either through a hard UTexture* or a soft AssetPtr<UTexture>."
 	}
 }

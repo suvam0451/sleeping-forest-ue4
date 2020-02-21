@@ -19,7 +19,7 @@ import {
 } from "../utils/FilesystemHelper";
 import { AddLinesToFile } from "../utils/FileHelper";
 import { AddOverrideFunction } from "../modules/AddOverrideFunction";
-import { vsui } from "@suvam0451/vscode-geass";
+import { vsui, vsed } from "@suvam0451/vscode-geass";
 
 interface InitContextData {
 	line: number;
@@ -33,7 +33,6 @@ export default async function InitializerModule(): Promise<void> {
 	let editor = vscode.window.activeTextEditor;
 	let _file = editor?.document.uri.path;
 	_file = _file?.substring(1, _file.length);
-	console.log(_file);
 
 	let data: InitContextData = {
 		line: -1,
@@ -100,6 +99,10 @@ export default async function InitializerModule(): Promise<void> {
 						AddOverrideFunction();
 						break;
 					}
+					case "replace_super": {
+						ReplaceSuper();
+						break;
+					}
 					default: {
 						break;
 					}
@@ -113,6 +116,35 @@ export default async function InitializerModule(): Promise<void> {
 	});
 }
 
+function ReplaceSuper() {
+	let editor = vscode.window.activeTextEditor;
+	let testline = editor.selection.active.line - 1;
+	let mytext = editor.document.lineAt(testline).text;
+	if (/::(.*?) ?{/.test(mytext)) {
+		let exres = mytext.match(/::(.*?) ?{/);
+		let mystr = exres[1].replace(/ const/, "");
+		mystr = mystr.replace(/\((.*?)\)/, "");
+		let str = "Super::" + mystr + "("; // starting Super::Tick(
+
+		if (/( [a-zA-Z]*\,?)[\)|\,]/.test(mytext)) {
+			let exres2 = mytext.match(/( [a-zA-Z]*\,?)[\)|\,]/g);
+			for (let i = 0; i < exres2.length; i++) {
+				let element = exres2[i];
+				if (i === 0) {
+					element = element.trim();
+				}
+				str = str.concat(element);
+			}
+			str = str.concat(";");
+		} else {
+			str = str.concat(");");
+		}
+
+		vsed.WriteAtLine_Silent(testline + 1, ["\t" + str]);
+	} else {
+		vsui.Info("Function syntax incompatible.");
+	}
+}
 function GetEOL(editor: vscode.TextEditor, line: number): vscode.Position {
 	// let editor = vscode.window.activeTextEditor;
 	let text = editor?.document.lineAt(line).range.end;

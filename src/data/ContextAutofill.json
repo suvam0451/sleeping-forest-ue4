@@ -102,5 +102,35 @@
 		"parsemap": [],
 		"body": [],
 		"action": "overridelib"
+	},
+	{
+		"id": "super_override",
+		"desc": "Replaces function default body with super",
+		"pattern": "// Function not implemented",
+		"parsemap": [],
+		"body": [],
+		"action": "replace_super"
+	},
+	{
+		"id": "timer_init(delegate)",
+		"desc": "Initializes timers with a function",
+		"pattern": "FTimerDelegate (.*?);",
+		"parsemap": [1],
+		"body": [
+			"$1.BindUFunction(this, FName(\"MyFunction\"), 0.5f);",
+			"GetWorldTimerManager().SetTimer(YourTimerHandle, $1, 0.016f, true);"
+		],
+		"action": "copy"
+	},
+	{
+		"id": "timer_init(handle)",
+		"desc": "Initializes timer with a function",
+		"pattern": "FTimerHandle (.*?);",
+		"parsemap": [1],
+		"body": [
+			"YourDel.BindUFunction(this, FName(\"MyFunction\"), 0.5f);",
+			"GetWorldTimerManager().SetTimer($1, YourDel, 0.016f, true);"
+		],
+		"action": "copy"
 	}
 ]
