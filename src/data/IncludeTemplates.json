@@ -60,5 +60,7 @@
 	{
 		"id": "Mesh",
 		"headers": ["Components/StaticMeshComponent.h"]
-	}
+	},
+	{"id": "Widget",
+	"headers": ["Blueprint/UserWidget.h","Components/TextBlock.h"]}
 ]

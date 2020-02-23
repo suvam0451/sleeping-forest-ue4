@@ -1,4 +1,16 @@
 {
+	"pi": {
+		"prefix": "pi_one",
+		"body": "3.14159274"
+	},
+	"pi2": {
+		"prefix": "pi_two",
+		"body": "6.28318548"
+	},
+	"pibytwo": {
+		"prefix": "pi_half",
+		"body": "1.57079637"
+	},
 	"float2": {
 		"prefix": "2",
 		"body": "float2(1,1)"
@@ -43,6 +55,7 @@
 		"prefix": "rotate_about_axis",
 		"body": "RotateAboutAxis(float4(GetObjectOrientation(Parameters.PrimitiveId),${1:Angle}),${2:Pivot},${3:GetWorldPosition(Parameters)})",
 		"description": [
+			"Don't forget to multiply 2PI in angle since ue4 rotations are normalized betewwen (0,2PI)",
 			"1 (float) : Angle of rotation",
 			"2 (float3) : Pivot point",
 			"3 (float3) : Point on the axis. WorldPosition can't go wrong"
@@ -57,5 +70,19 @@
 		"prefix": "transform_position_localtoworld",
 		"body": "TransformLocalPositionToWorld(Parameters, MaterialFloat4(MaterialFloat3(Parameters.TexCoords[0].xy,Parameters.TexCoords[0].xy.r), 1).xyz).xyz",
 		"description": "Position vector from local to position in world"
+	},
+	"Time": {
+		"prefix": "time",
+		"body": "View.GameTime",
+		"description": "Time node"
+	},
+	"Texture Sample": {
+		"prefix": "texture_sample",
+		"body": "ProcessMaterialColorTextureLookup(Texture2DSampleBias(${1:TextureName}, Material.Texture2D_0Sampler,Parameters.TexCoords[0].xy,View.MaterialTextureMipBias))"
+	},
+	"GetScreenPosition(Parameters).w": {
+		"prefix": "screen_position",
+		"body": "GetScreenPosition(Parameters)",
+		"description": [".uv for screen coordinates", ".w is pixel position"]
 	}
 }

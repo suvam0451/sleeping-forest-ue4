@@ -16,22 +16,30 @@ import * as vs from "../modules/VSInterface";
 
 export default async function InjectExcludeDefinition(): Promise<void> {
 	return new Promise<void>((resolve, reject) => {
-		let initDir = vscode.workspace.workspaceFolders![0].uri.fsPath;
+		let ws = vscode.workspace.workspaceFolders;
+		if (ws === undefined) {
+			resolve();
+		}
+		let falsePositive = true;
+		let initDir = ws[0].uri.fsPath;
 		// console.log();
 		let files = fs.readdirSync(initDir);
 		_.forEach(files, file => {
-			let ex = /^(.*?).code-workspace/;
-			if (ex.test(file)) {
+			if (/(.*?).uproject$/.test(file)) {
+				falsePositive = false;
 				// console.log(file);
 			}
 		});
+		if (falsePositive) {
+			resolve();
+		}
 
 		// Get this extension's settings
 		let myretval;
 
 		// files.exclude
-		let config = vscode.workspace.getConfiguration("files");
-		let retval: any = config.get("exclude")!;
+		let config_01 = vscode.workspace.getConfiguration("files");
+		let retval: any = config_01.get("exclude")!;
 		myretval = vs.GetVSConfig<string[]>("SF", "excludedExtensions");
 		myretval.forEach(val => {
 			retval["**." + val] = true;
@@ -40,22 +48,26 @@ export default async function InjectExcludeDefinition(): Promise<void> {
 		myretval.forEach(val => {
 			retval["**/" + val] = true;
 		});
-		config.update("exclude", retval, false);
 
 		// files.watcherExclude
-		config = vscode.workspace.getConfiguration("files");
-		retval = config.get("watcherExclude");
+		let config_02 = vscode.workspace.getConfiguration("files");
+		retval = config_02.get("watcherExclude");
 		retval["**/Engine/**"] = true;
-		config.update("watcherExclude", retval, undefined);
 
 		// search.exclude
-		config = vscode.workspace.getConfiguration("search");
-		retval = config.get("exclude");
+		let config_03 = vscode.workspace.getConfiguration("search");
+		retval = config_03.get("exclude");
 		myretval = vs.GetVSConfig<string[]>("SF", "searchExclude");
 		myretval.forEach(val => {
 			retval["**/" + val] = true;
 		});
-		config.update("exclude", retval, undefined);
+
+		// update
+		config_01.update("exclude", retval, false).then(() => {
+			config_02.update("watcherExclude", retval, undefined).then(() => {
+				config_03.update("exclude", retval, undefined);
+			});
+		});
 
 		// Adds Extensions tab to workspace
 		let folderpath = filesys.RelativeToAbsolute(

@@ -65,5 +65,17 @@
 			"};"
 		],
 		"description": ["USTRUCT template"]
+	},
+	"ShaderDirectory": {
+		"prefix": "ushaderdir",
+		"body": [
+			"#if (ENGINE_MINOR_VERSION > 21)",
+			"AddShaderSourceDirectoryMapping(TEXT(\"/$2\"), FPaths::Combine(*(FPaths::ProjectPluginsDir()), TEXT(\"$1/Shaders\")));",
+			"#endif"
+		],
+		"description": [
+			"Adds a shader directory map.",
+			"NOTE : The snippet works for a folder called \"Shader\" inside the plugin folder."
+		]
 	}
 }

@@ -64,5 +64,27 @@
 			"${1:Timer}Del.BindUFunction(this, FName(\"${2:MyFunction}\"));",
 			"GetWorld()->GetTimerManager().SetTimer(${1:Timer}Handle, 5.0f, true, 0.0f);"
 		]
+	},
+	"uinit : CameraShake": {
+		"prefix": "uinit_camerashake_fields",
+		"body": [
+			"bSingleInstance = true;",
+			"OscillationDuration = 1.5f;",
+			"OscillationBlendInTime = 0.2f;",
+			"OscillationBlendOutTime = 0.2f;",
+
+			"RotOscillation.Pitch.Amplitude = 0.5;",
+			"RotOscillation.Pitch.Frequency = 17.0;",
+
+			"RotOscillation.Yaw.Amplitude = 0.5;",
+			"RotOscillation.Yaw.Frequency = 8.5;",
+
+			"RotOscillation.Roll.Amplitude = 0.5;",
+			"RotOscillation.Roll.Frequency = 4.75;",
+
+			"LocOscillation.Z.Amplitude = 2.0f;",
+			"LocOscillation.Z.Frequency = 17.0f;"
+		],
+		"description": "Lists out parameters used for a camera shake. Use in constructor."
 	}
 }

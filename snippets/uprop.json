@@ -1,16 +1,24 @@
 {
 	"uprop : AbilitySystemComponent": {
 		"body": [
-			"// ${2:Description not provided } ",
 			"UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=\"Abilities\")",
 			"\tUAbilitySystemComponent* $1;",
 			"\n$0"
 		],
-		"prefix": "uprop_abilitysyscomp"
+		"prefix": "uprop_abilitysyscomp",
+		"description": ""
+	},
+	"uprop: TextBlock": {
+		"body": [
+			"UPROPERTY(meta = (BindWidget))",
+			"\tUTextBlock* CurrentDialogue;",
+			"\n$0"
+		],
+		"prefix": "uprop_textblock",
+		"description": "Adds UPROPERTY()"
 	},
 	"uprop : AISightConfigData": {
 		"body": [
-			"// Stores sight config data for AIController ",
 			"UPROPERTY(EditAnywhere, AdvancedDisplay, BlueprintReadWrite, Category=\"AI\")",
 			"\tclass UAISenseConfig_Sight* SightConfig;",
 			"\n$0"
@@ -20,7 +28,6 @@
 	},
 	"uprop : Base": {
 		"body": [
-			"// ${2:Description not provided } ",
 			"UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=\"Parameters\")",
 			"\t$1;",
 			"\n$0"

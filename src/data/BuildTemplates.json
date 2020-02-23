@@ -64,6 +64,27 @@
 				"parent": "UAnimInstance",
 				"Functions": ["NativeInitializeAnimation", "NativeUpdateAnimation"],
 				"Headers": ["CoreMinimal.h", "Animation/AnimInstance.h"]
+			},
+			{
+				"classprefix": "U",
+				"id": "UserWidget",
+				"parent": "UUserWidget",
+				"Functions": [],
+				"Headers": ["Coreminimal.h", "Animation/AnimInstance.h"]
+			},
+			{
+				"classprefix": "U",
+				"id": "CameraShake",
+				"parent": "UCameraShake",
+				"Functions": [],
+				"Headers": ["Camera/CameraShake.h"]
+			},
+			{
+				"classprefix": "A",
+				"id": "GameModeBase",
+				"parent": "AGameModeBase",
+				"Functions": [],
+				"Headers": ["GameFramework/GameModeBase.h"]
 			}
 		]
 	},

@@ -1,0 +1,13 @@
+[
+	{
+		"id": "Distance",
+		"body": [
+			"/** Returns distance between two vectors */",
+			"float Distance(float3 _A, float3 _B) {",
+			"float3 relative = (_A - _B);",
+			"float distance_squared = dot(relative, relative);",
+			"return sqrt(distance_squared);",
+			"}"
+		]
+	}
+]

@@ -221,6 +221,16 @@
 					"type": "boolean",
 					"default": true,
 					"description": "If set to true, generated code for UE4 functions is directly written to source files."
+				},
+				"SF.ShaderFolders": {
+					"type": "array",
+					"default": "",
+					"description": "List your HLSL shader directories here."
+				},
+				"SF.GitSubmodules": {
+					"type": "array",
+					"default": "",
+					"description": "List any git submodules here."
 				}
 			}
 		}
