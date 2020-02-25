@@ -13,8 +13,6 @@ image: node:latest
     - yarn install
     - yarn run webpack
     - yarn vsce package
-  only:
-    - master
   artifacts:
     paths:
       - ./*.vsix
