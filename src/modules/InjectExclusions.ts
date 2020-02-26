@@ -39,57 +39,84 @@ export default async function InjectExcludeDefinition(): Promise<void> {
 
 		// files.exclude
 		let config_01 = vscode.workspace.getConfiguration("files");
-		let retval: any = config_01.get("exclude")!;
+		let retval_01: any = config_01.get("exclude")!;
 		myretval = vs.GetVSConfig<string[]>("SF", "excludedExtensions");
 		myretval.forEach(val => {
-			retval["**." + val] = true;
+			retval_01["**." + val] = true;
 		});
+
 		myretval = vs.GetVSConfig<string[]>("SF", "excludeFolders");
 		myretval.forEach(val => {
-			retval["**/" + val] = true;
+			retval_01["**/" + val] = true;
 		});
 
 		// files.watcherExclude
 		let config_02 = vscode.workspace.getConfiguration("files");
-		retval = config_02.get("watcherExclude");
-		retval["**/Engine/**"] = true;
+		let retval_02 = config_02.get("watcherExclude");
+		retval_02["**/Engine/**"] = true;
 
 		// search.exclude
 		let config_03 = vscode.workspace.getConfiguration("search");
-		retval = config_03.get("exclude");
+		let retval_03 = config_03.get("exclude");
 		myretval = vs.GetVSConfig<string[]>("SF", "searchExclude");
 		myretval.forEach(val => {
-			retval["**/" + val] = true;
+			retval_03["**/" + val] = true;
 		});
 
 		// update
-		config_01.update("exclude", retval, false).then(() => {
-			config_02.update("watcherExclude", retval, undefined).then(() => {
-				config_03.update("exclude", retval, undefined);
+		config_01.update("exclude", retval_01, false).then(() => {
+			config_02.update("watcherExclude", retval_02, false).then(() => {
+				config_03.update("exclude", retval_03, false).then(() => {
+					/* 
+					---------- After all configs are updated -----------------------
+					 */
+
+					let arr: WorkspaceFolderStruct[] = [];
+					let _initialOffset = vscode.workspace.workspaceFolders!.length;
+
+					// Adds Extensions tab to workspace
+					let folderpath = filesys.RelativeToAbsolute(
+						"suvam0451.sleeping-forest-ue4",
+						path.join("data", "extensions"),
+					);
+					arr.push({
+						uri: vscode.Uri.file(folderpath!),
+						name: "Extensions",
+					});
+
+					let AssetFolders = vs.GetVSConfig<string[]>("SF", "assetFolders");
+
+					AssetFolders.forEach((folder, i) => {
+						if (fs.existsSync(path.join(folder, "Audit"))) {
+							arr.push({
+								uri: vscode.Uri.file(path.join(folder, "Audit")),
+								name: "Stream #" + i,
+							});
+						}
+					});
+
+					let SubmoduleList = vs.GetVSConfig<string[]>("SF", "GitSubmodules");
+					SubmoduleList.forEach((submodule, i) => {
+						arr.push({
+							uri: vscode.Uri.file(submodule),
+							name: "Submodule #" + i,
+						});
+					});
+
+					console.log(_initialOffset, arr.length);
+					if (_initialOffset > 2) {
+						vscode.workspace.updateWorkspaceFolders(2, _initialOffset - 2, ...arr);
+					} else {
+						vscode.workspace.updateWorkspaceFolders(2, 0, ...arr);
+					}
+					resolve();
+				});
 			});
 		});
-
-		// Adds Extensions tab to workspace
-		let folderpath = filesys.RelativeToAbsolute(
-			"suvam0451.sleeping-forest-ue4",
-			path.join("data", "extensions"),
-		);
-		vscode.workspace.updateWorkspaceFolders(vscode.workspace.workspaceFolders!.length, 0, {
-			uri: vscode.Uri.file(folderpath!),
-			name: "Extensions",
-		});
-
-		// Include asset folders as siderbars in project
-		let choice = vs.GetVSConfig<string[]>("SF", "assetFolders");
-
-		choice.forEach((folder, i) => {
-			if (fs.existsSync(folder)) {
-				vscode.workspace.updateWorkspaceFolders(3 + i, 0, {
-					uri: vscode.Uri.file(folder),
-					name: "Stream #" + i,
-				});
-			}
-		});
-		resolve();
 	});
+}
+
+interface WorkspaceFolderStruct {
+	uri: vscode.Uri;
+	name: string;
 }

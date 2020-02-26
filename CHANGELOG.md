@@ -1,5 +1,9 @@
 # Change Log
 
+## [0.6.10] - 25 Feb 2020
+
+- Hotfix for breaking changes, where .code-workspace was not being generated properly.
+
 ## [0.6.9] - 25 Feb 2020
 
 - Removed all comment generation from UPROPERTY (`uprop`) and UFUNCTION(`ufunc`) macros.

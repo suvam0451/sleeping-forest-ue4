@@ -3,7 +3,7 @@
 	"displayName": "Sleeping Forest - UE4 multitool",
 	"description": "Code-completion, CLI tools and asset management/optimization for Unreal Engine 4 in VSCode. (In beta until v1.0.0. Read changelogs. Feedback at discord.)",
 	"publisher": "suvam0451",
-	"version": "0.6.9",
+	"version": "0.6.10",
 	"license": "MPL-2.0",
 	"repository": {
 		"type": "git",
@@ -149,12 +149,12 @@
 				"path": "./snippets/umat.json"
 			},
 			{
-				"language": "hlsl",
-				"path": "./snippets/usf/nodes.json"
+				"language": "cpp",
+				"path": "./snippets/ulog.json"
 			},
 			{
 				"language": "hlsl",
-				"path": "./snippets/usf/ulog.json"
+				"path": "./snippets/usf/nodes.json"
 			}
 		],
 		"configuration": {
@@ -215,12 +215,12 @@
 				},
 				"SF.ShaderFolders": {
 					"type": "array",
-					"default": "",
+					"default": [],
 					"description": "List your HLSL shader directories here."
 				},
 				"SF.GitSubmodules": {
 					"type": "array",
-					"default": "",
+					"default": [],
 					"description": "List any git submodules here."
 				}
 			}

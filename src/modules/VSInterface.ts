@@ -45,7 +45,6 @@ import * as edit from "../utils/EditorHelper";
 export function GetVSConfig<T>(namespace: string, key: string): T {
 	let config = vscode.workspace.getConfiguration(namespace);
 	let retval = config.get<T>(key)!;
-	console.log(retval);
 	return retval;
 }
 
@@ -54,7 +53,6 @@ export function AppendToVSConfig(namespace: string, key: string, vals: string): 
 	let config = vscode.workspace.getConfiguration(namespace);
 	let retval = config.get<string[]>(key)!;
 	if (retval === undefined) {
-		console.log("Shotto Mattee");
 	}
 
 	// If already included, get out
