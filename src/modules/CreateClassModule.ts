@@ -13,7 +13,6 @@ import Default_Actor_h from "../data/generators/Default_Actor_h.json";
 import Default_Actor_cpp from "../data/generators/Default_Actor_cpp.json";
 import { InjectHeaders, InjectFunctions } from "../utils/FileHelper";
 import * as _ from "lodash";
-import { QuickPick } from "./VSInterface";
 import * as filesys from "../utils/FilesystemHelper";
 import { vsui } from "@suvam0451/vscode-geass";
 const _buildspaceModPath = "data/extensions/Buildspaces_Ext.json";
@@ -98,7 +97,7 @@ async function ClassSelection(data: ClassCreationKit): Promise<ClassCreationKit>
 		});
 	}
 	return new Promise<ClassCreationKit>((resolve, reject) => {
-		QuickPick(classList, false).then(sel => {
+		vsui.QuickPick(classList, false).then(sel => {
 			data.parentclass = sel;
 			vsui
 				.GetString()
@@ -115,7 +114,7 @@ async function ClassSelection(data: ClassCreationKit): Promise<ClassCreationKit>
 					);
 				})
 				.then(() => {
-					QuickPick(["Yes", "No"], true, "Yes").then(() => {
+					vsui.QuickPick(["Yes", "No"], true, "Yes").then(() => {
 						resolve(data);
 					});
 				});
@@ -157,7 +156,7 @@ async function ModuleSelection(data: ClassCreationKit): Promise<ClassCreationKit
 			reject("Throw not implemented...");
 		}
 		// arr.push("Game");
-		QuickPick(arr, false).then(sel => {
+		vsui.QuickPick(arr, false).then(sel => {
 			let index = pluginDataArray.find(i => i.foldername === sel);
 			if (typeof index !== "undefined") {
 				switch (index.foldername) {

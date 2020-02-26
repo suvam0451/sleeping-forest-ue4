@@ -7,39 +7,39 @@ import * as vscode from "vscode";
 import { resolve } from "dns";
 import * as edit from "../utils/EditorHelper";
 
-export async function QuickPick(
-	arr: string[],
-	doCompare: boolean,
-	compareTo?: string,
-): Promise<string> {
-	return new Promise<string>((resolve, reject) => {
-		vscode.window.showQuickPick(arr).then(
-			retval => {
-				if (doCompare) {
-					retval === compareTo && doCompare ? resolve(retval) : reject("MISMATCH");
-				} else {
-					resolve(retval);
-				}
-			},
-			() => {
-				reject("ABORT");
-			},
-		);
-	});
-}
+// export async function QuickPick(
+// 	arr: string[],
+// 	doCompare: boolean,
+// 	compareTo?: string,
+// ): Promise<string> {
+// 	return new Promise<string>((resolve, reject) => {
+// 		vscode.window.showQuickPick(arr).then(
+// 			retval => {
+// 				if (doCompare) {
+// 					retval === compareTo && doCompare ? resolve(retval) : reject("MISMATCH");
+// 				} else {
+// 					resolve(retval);
+// 				}
+// 			},
+// 			() => {
+// 				reject("ABORT");
+// 			},
+// 		);
+// 	});
+// }
 
-export async function PickFolder(): Promise<string> {
-	let opt: vscode.OpenDialogOptions = {};
-	opt.canSelectFiles = false;
-	opt.canSelectFolders = true;
+// export async function PickFolder(): Promise<string> {
+// 	let opt: vscode.OpenDialogOptions = {};
+// 	opt.canSelectFiles = false;
+// 	opt.canSelectFolders = true;
 
-	return new Promise<string>((resolve, reject) => {
-		vscode.window.showOpenDialog(opt).then(success => {
-			console.log(success![0].fsPath);
-			resolve(success![0].fsPath);
-		});
-	});
-}
+// 	return new Promise<string>((resolve, reject) => {
+// 		vscode.window.showOpenDialog(opt).then(success => {
+// 			console.log(success![0].fsPath);
+// 			resolve(success![0].fsPath);
+// 		});
+// 	});
+// }
 
 /** Gets vs config */
 export function GetVSConfig<T>(namespace: string, key: string): T {
@@ -53,13 +53,13 @@ export function GetVSConfig<T>(namespace: string, key: string): T {
 export function AppendToVSConfig(namespace: string, key: string, vals: string): boolean {
 	let config = vscode.workspace.getConfiguration(namespace);
 	let retval = config.get<string[]>(key)!;
-	if (retval == undefined) {
+	if (retval === undefined) {
 		console.log("Shotto Mattee");
 	}
 
 	// If already included, get out
 	retval.forEach(val => {
-		if (val == vals) {
+		if (val === vals) {
 			return true;
 		}
 	});

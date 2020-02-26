@@ -5,7 +5,7 @@
 
 import * as vscode from "vscode";
 import * as edit from "../utils/EditorHelper";
-import { QuickPick } from "../modules/VSInterface";
+// import { QuickPick } from "../modules/VSInterface";
 import DefaultData from "../data/IncludeTemplates.json";
 import ExtensionData from "../data/extensions/Includes_Ext.json";
 import * as _ from "lodash";

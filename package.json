@@ -3,7 +3,7 @@
 	"displayName": "Sleeping Forest - UE4 multitool",
 	"description": "Code-completion, CLI tools and asset management/optimization for Unreal Engine 4 in VSCode. (In beta until v1.0.0. Read changelogs. Feedback at discord.)",
 	"publisher": "suvam0451",
-	"version": "0.6.8",
+	"version": "0.6.9",
 	"license": "MPL-2.0",
 	"repository": {
 		"type": "git",
@@ -21,7 +21,6 @@
 		"onCommand:extension.sf.compileCode",
 		"onCommand:extension.sf.onConstruction",
 		"onCommand:extension.sf.includeManager",
-		"onCommand:extension.sf.PopulateSourceFile",
 		"onCommand:extension.sf.errorLibrary",
 		"onCommand:extension.sf.createClass",
 		"onCommand:extension.sf.injectExcludes",
@@ -59,10 +58,6 @@
 			{
 				"command": "extension.sf.includeManager",
 				"title": "UE4 : Include Headers"
-			},
-			{
-				"command": "extension.sf.PopulateSourceFile",
-				"title": "UE4 : PopulateSourceFromHeader"
 			},
 			{
 				"command": "extension.sf.errorLibrary",
@@ -123,10 +118,6 @@
 			},
 			{
 				"language": "cpp",
-				"path": "./snippets/ue4_includes.json"
-			},
-			{
-				"language": "cpp",
 				"path": "./snippets/uprop.json"
 			},
 			{
@@ -158,12 +149,12 @@
 				"path": "./snippets/umat.json"
 			},
 			{
-				"language": "cpp",
-				"path": "./snippets/ufunclib.json"
+				"language": "hlsl",
+				"path": "./snippets/usf/nodes.json"
 			},
 			{
 				"language": "hlsl",
-				"path": "./snippets/usf/nodes.json"
+				"path": "./snippets/usf/ulog.json"
 			}
 		],
 		"configuration": {
@@ -247,9 +238,12 @@
 		"ship": "yarn run webpack && yarn vsce package"
 	},
 	"devDependencies": {
+		"@babel/core": "^7.8.4",
+		"@babel/node": "^7.8.4",
 		"@types/lodash": "^4.14.149",
 		"@types/node": "^13.7.1",
 		"@types/vscode": "^1.39.0",
+		"babel-preset-es2015": "^6.24.1",
 		"mocha": "^7.0.1",
 		"ts-loader": "^6.2.1",
 		"tslint": "^6.0.0",
@@ -260,14 +254,8 @@
 		"webpack-cli": "^3.3.10"
 	},
 	"dependencies": {
-		"@babel/core": "^7.8.4",
-		"@babel/node": "^7.8.4",
-		"@suvam0451/vscode-geass": "^0.0.15",
-		"babel-preset-es2015": "^6.24.1",
-		"fs": "^0.0.1-security",
-		"line-reader": "^0.4.0",
+		"@suvam0451/vscode-geass": "^0.0.19",
 		"lodash": "^4.17.15",
-		"path": "^0.12.7",
 		"xregexp": "^4.2.4"
 	}
 }

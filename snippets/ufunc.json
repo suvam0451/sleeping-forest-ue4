@@ -1,18 +1,12 @@
 {
 	"Function declaration: Blueprint callable": {
 		"prefix": "ufunc_bp",
-		"body": [
-			"// ${2:Description not provided } ",
-			"UFUNCTION(BlueprintCallable, Category = \"C++\")",
-			"\t$1;",
-			"\n$0"
-		],
+		"body": ["UFUNCTION(BlueprintCallable, Category = \"C++\")", "\t$1;", "\n$0"],
 		"description": "This function may be used in C++ or BP."
 	},
 	"Function declaration: BP_Impl": {
 		"prefix": "ufunc_event_bp",
 		"body": [
-			"// ${2:Description not provided } ",
 			"UFUNCTION(BlueprintCallable, BlueprintImplementableEvent, Category = \"C++\")",
 			"\t$1;",
 			"\n$0"
@@ -22,7 +16,6 @@
 	"Function declaration: NP_Native": {
 		"prefix": "ufunc_native_bp",
 		"body": [
-			"// ${2:Description not provided } ",
 			"UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=\"Parameters\")",
 			"\tTMap<int, UInstancedStaticMeshComponent*> $1;",
 			"\n$0"

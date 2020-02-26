@@ -110,10 +110,12 @@ export function InjectInDataTable(obj: any, type: AssetType, path: string): any 
 	}
 	return obj;
 }
+
+/** Gets called for subfolders in main asset folder. */
 export function RefreshStreamForFolder(data: AssetStreamKit) {
-	const obj1: Array<SM_JSONInterface> = []; // Used for DataTable imports (StaticMesh)
-	const obj2: Array<Music_JSONInterface> = []; // Used for DataTable imports (SoundWave)
-	const obj3: Array<T_JSONInterface> = []; // Used for DataTable imports (Textures)
+	const obj1: Array<IStaticMesh> = []; // Used for DataTable imports (StaticMesh)
+	const obj2: Array<IMusic> = []; // Used for DataTable imports (SoundWave)
+	const obj3: Array<ITexture> = []; // Used for DataTable imports (Textures)
 
 	if (/TexPacker/.test(data.folderpath)) {
 		return;
@@ -174,6 +176,9 @@ export function RefreshListedStreams() {
 
 		const fill = ReadJSON<RootObject>(path.join(entry, "assetdata.json"));
 		const settings = ReadJSON<SettingsStruct>(path.join(entry, "Audit", "settings.json"));
+		console.log(fill);
+		console.log(settings);
+
 
 		// reset
 		fill.StaticMesh.list.length = 0;
@@ -184,7 +189,7 @@ export function RefreshListedStreams() {
 			let stats = fs.lstatSync(path.join(_entry, file));
 			// Handle if directory
 			if (stats.isDirectory()) {
-				if (file == "Animations") {
+				if (file === "Animations") {
 				}
 				let funcdata: AssetStreamKit = {
 					dataJSON: fill,
@@ -220,9 +225,9 @@ export function RefreshListedStreams() {
 		}
 
 		// Populate JSON data for root...
-		const obj1: Array<SM_JSONInterface> = [];
-		const obj2: Array<Music_JSONInterface> = [];
-		const obj3: Array<T_JSONInterface> = [];
+		const obj1: Array<IStaticMesh> = [];
+		const obj2: Array<IMusic> = [];
+		const obj3: Array<ITexture> = [];
 		// .fbx
 		fill.StaticMesh.list.forEach(el => {
 			let enginePath = el.targetpath + "/" + el.name + "." + el.name;
@@ -307,7 +312,7 @@ export function CopyBinaries(os: string, folderpath: string) {
 /** Runs cmd in windows with given args */
 export function RunCmd(args: string, terminal?: vscode.Terminal) {
 	let cmd = "start-process cmd.exe" + " '" + '"/k "' + args + "'";
-	if (terminal == undefined) {
+	if (terminal === undefined) {
 		let terminal = vscode.window.createTerminal("suvam0451");
 		terminal.sendText(cmd);
 	} else {
@@ -315,19 +320,19 @@ export function RunCmd(args: string, terminal?: vscode.Terminal) {
 	}
 }
 
-export interface Music_JSONInterface {
+export interface IMusic {
 	Name: string;
 	SoundWave: string;
 	SoundWave_Soft: string;
 }
 
-export interface SM_JSONInterface {
+export interface IStaticMesh {
 	Name: string;
 	StaticMesh: string;
 	StaticMesh_Soft: string;
 }
 
-export interface T_JSONInterface {
+export interface ITexture {
 	Name: string;
 	Texture: string;
 	Texture_Soft: string;

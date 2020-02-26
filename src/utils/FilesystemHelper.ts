@@ -6,13 +6,9 @@
 var XRegExp = require("xregexp");
 var path = require("path");
 import * as vscode from "vscode";
-import { IsHeaderFile, IsSourceFile } from "./ExtensionHelper";
-import { resolve, promises } from "dns";
-import { rejects } from "assert";
 import * as feedback from "./ErrorLogger";
 import * as fs from "fs";
 import * as _ from "lodash";
-import { relative } from "path";
 
 export interface FunctionAnatomy {
 	prototype: string;
@@ -45,42 +41,6 @@ export interface FileData {
 	stripped_classname: string;
 	headerpath: string;
 	sourcepath: string;
-}
-
-/** Gets all the information about currently focused file... */
-export function GetActiveFileData(): FileData {
-	let retval: FileData = {
-		cppvalid: ActiveFileExtension.None,
-		fullpath: "",
-		filename: "",
-		folderpath: "",
-		stripped_classname: "",
-		headerpath: "",
-		sourcepath: "",
-	};
-
-	// Handle failstate
-	if (vscode.window.activeTextEditor === null) {
-		feedback.ThrowError(feedback.DErrorCode.HEADER_NOT_FOUND);
-		return retval;
-	}
-
-	retval.fullpath = vscode.window.activeTextEditor!.document.fileName;
-	retval.filename = path.basename(retval.fullpath);
-	retval.folderpath = path.dirname(retval.fullpath);
-
-	// Determine type of file
-	if (IsHeaderFile(retval.filename)) {
-		retval.cppvalid = ActiveFileExtension.Header;
-		retval.headerpath = retval.fullpath;
-		retval.stripped_classname = retval.filename.substring(0, retval.filename.length - 2);
-	} else if (IsSourceFile(retval.filename)) {
-		retval.cppvalid = ActiveFileExtension.Source;
-		retval.sourcepath = retval.fullpath;
-		retval.stripped_classname = retval.filename.substring(0, retval.filename.length - 4);
-	}
-	// Return success
-	return retval;
 }
 
 /** Gets the .h counterpart if standard convention was respected. */
@@ -137,7 +97,7 @@ export async function GetMatchingSourceSync(path: string): Promise<string> {
 /** Gets the .cpp counterpart if standard convention was respected. */
 export async function GetMatchingSource(data: FileData, filename?: string): Promise<string> {
 	let regex: RegExp = /^&/;
-	if (filename == undefined) {
+	if (filename === undefined) {
 		regex = new XRegExp("^" + data.stripped_classname + ".cpp$");
 	} else {
 		let _name = filename.replace(".h", ".cpp");

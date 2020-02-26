@@ -14,7 +14,7 @@
 	"umat : Set Vector parameter": {
 		"prefix": "umat_setvector",
 		"body": [
-			"${2:Inst_mat_0}->SetVecotrParameterValue(${1:\"\"}, FLinearColor(FColor(255,255,255)));"
+			"${2:Inst_mat_0}->SetVectorParameterValue(${1:\"\"}, FLinearColor(FColor(255,255,255)));"
 		]
 	},
 	"umat : Set Texture parameter": {

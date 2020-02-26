@@ -5,11 +5,16 @@
 
 import * as vscode from "vscode";
 import * as edit from "../utils/EditorHelper";
-import { QuickPick } from "../modules/VSInterface";
 import DefaultData from "../data/IncludeTemplates.json";
 import * as _ from "lodash";
 import * as path from "path";
 import * as filesys from "../utils/FilesystemHelper";
+import { vsui } from "@suvam0451/vscode-geass";
+
+interface IncludeJSON {
+	id: string;
+	headers: string[];
+}
 
 export default async function IncludeManager(): Promise<void> {
 	let modpath = filesys.RelativeToAbsolute(
@@ -20,7 +25,7 @@ export default async function IncludeManager(): Promise<void> {
 	if (modpath !== undefined) {
 		let extdata = filesys.ReadJSON<IncludeExtension[]>(modpath);
 
-		let arr = _.concat(DefaultData, extdata);
+		let arr: IncludeJSON[] = _.concat(DefaultData, extdata);
 		let editor = vscode.window.activeTextEditor;
 		let marr: string[] = [];
 		arr.forEach(element => {
@@ -32,7 +37,7 @@ export default async function IncludeManager(): Promise<void> {
 				resolve();
 			}
 			// Use createQuickPick for advanced use cases...
-			QuickPick(marr, false).then(val => {
+			vsui.QuickPick(marr, false).then(val => {
 				arr.forEach(element => {
 					if (val === element.id) {
 						let myarr: string[] = element.headers;
