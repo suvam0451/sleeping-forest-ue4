@@ -7,9 +7,7 @@ import * as vscode from "vscode";
 import * as fs from "fs";
 import * as path from "path";
 import _ from "lodash";
-import { GetVSConfig } from "./VSInterface";
 import {
-	CreateAndWrite,
 	WriteFileAsync,
 	WriteJSONToFile,
 	ReadJSON,
@@ -19,8 +17,7 @@ import settings from "../data/templates/streamSettings.json";
 import generator from "../data/templates/pythonGenerator.json";
 import assetexportdata from "../data/templates/assetBasicDataTmpl.json";
 import * as filesys from "../utils/FilesystemHelper";
-import * as vs from "../modules/VSInterface";
-import { vsui, vsed } from "@suvam0451/vscode-geass";
+import { vsui, vsed, vscfg } from "@suvam0451/vscode-geass";
 
 /** Generates module scaffold files for selected folder */
 export async function InitializeStream(): Promise<string> {
@@ -48,21 +45,15 @@ export async function InitializeStream(): Promise<string> {
 				]);
 				let d = WriteFileAsync(path.join(ret, "Audit", "report.txt"), [""], []);
 
-				Promise.all([a, b, c, d]).then(retvals => {
-					let duplicate = vs.AppendToVSConfig("SF", "assetFolders", ret);
-					if (duplicate) {
-						vscode.window.showInformationMessage(
-							"Duplicate detected. Folder reinitialized. Skipping other steps.",
-						);
-					} else {
-						vscode.window.showInformationMessage(
-							"A new asset stream is being tracked. Please update workspace file (Inject Excludes).",
-						);
-					}
+				Promise.all([a, b, c, d]).then(() => {
+					vscfg.AppendToVSConfig("SF", "assetFolders", [ret]);
+					vsui.Info(
+						"A new asset stream is being tracked. Please update workspace file (Inject Excludes).",
+					);
 					resolve(ret);
 				});
 			} catch {
-				console.log("failed to create file(s)/folder(s)");
+				vsui.Error("Failed to initialize stream.");
 			}
 		});
 	});
@@ -110,10 +101,12 @@ export function InjectInDataTable(obj: any, type: AssetType, path: string): any 
 	}
 	return obj;
 }
+
+/** Gets called for subfolders in main asset folder. */
 export function RefreshStreamForFolder(data: AssetStreamKit) {
-	const obj1: Array<SM_JSONInterface> = []; // Used for DataTable imports (StaticMesh)
-	const obj2: Array<Music_JSONInterface> = []; // Used for DataTable imports (SoundWave)
-	const obj3: Array<T_JSONInterface> = []; // Used for DataTable imports (Textures)
+	const obj1: Array<IStaticMesh> = []; // Used for DataTable imports (StaticMesh)
+	const obj2: Array<IMusic> = []; // Used for DataTable imports (SoundWave)
+	const obj3: Array<ITexture> = []; // Used for DataTable imports (Textures)
 
 	if (/TexPacker/.test(data.folderpath)) {
 		return;
@@ -167,8 +160,7 @@ export function RefreshStreamForFolder(data: AssetStreamKit) {
 
 /** Exported module */
 export function RefreshListedStreams() {
-	let retval = GetVSConfig<string[]>("SF", "assetFolders");
-	// let retval: any = config.get("exclude")!;
+	let retval = vscfg.GetVSConfig<string[]>("SF", "assetFolders");
 	retval.forEach(entry => {
 		let _entry = path.join(entry, "Assets");
 
@@ -184,7 +176,7 @@ export function RefreshListedStreams() {
 			let stats = fs.lstatSync(path.join(_entry, file));
 			// Handle if directory
 			if (stats.isDirectory()) {
-				if (file == "Animations") {
+				if (file === "Animations") {
 				}
 				let funcdata: AssetStreamKit = {
 					dataJSON: fill,
@@ -216,13 +208,13 @@ export function RefreshListedStreams() {
 		try {
 			WriteJSONToFile(path.join(entry, "assetdata.json"), fill);
 		} catch {
-			console.log("Writing to assetdata.json is failing...");
+			vsui.Error("Writing to assetdata.json failed.");
 		}
 
 		// Populate JSON data for root...
-		const obj1: Array<SM_JSONInterface> = [];
-		const obj2: Array<Music_JSONInterface> = [];
-		const obj3: Array<T_JSONInterface> = [];
+		const obj1: Array<IStaticMesh> = [];
+		const obj2: Array<IMusic> = [];
+		const obj3: Array<ITexture> = [];
 		// .fbx
 		fill.StaticMesh.list.forEach(el => {
 			let enginePath = el.targetpath + "/" + el.name + "." + el.name;
@@ -246,7 +238,6 @@ export function RefreshListedStreams() {
 		// Run binary toolchains
 		// -----------------------
 
-		console.log(settings.run_texturepacker);
 		if (settings.run_texturepacker) {
 			let args =
 				'"' +
@@ -307,7 +298,7 @@ export function CopyBinaries(os: string, folderpath: string) {
 /** Runs cmd in windows with given args */
 export function RunCmd(args: string, terminal?: vscode.Terminal) {
 	let cmd = "start-process cmd.exe" + " '" + '"/k "' + args + "'";
-	if (terminal == undefined) {
+	if (terminal === undefined) {
 		let terminal = vscode.window.createTerminal("suvam0451");
 		terminal.sendText(cmd);
 	} else {
@@ -315,19 +306,19 @@ export function RunCmd(args: string, terminal?: vscode.Terminal) {
 	}
 }
 
-export interface Music_JSONInterface {
+export interface IMusic {
 	Name: string;
 	SoundWave: string;
 	SoundWave_Soft: string;
 }
 
-export interface SM_JSONInterface {
+export interface IStaticMesh {
 	Name: string;
 	StaticMesh: string;
 	StaticMesh_Soft: string;
 }
 
-export interface T_JSONInterface {
+export interface ITexture {
 	Name: string;
 	Texture: string;
 	Texture_Soft: string;

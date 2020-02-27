@@ -1,9 +1,6 @@
 [
 	{
 		"id": "MaterialParameter",
-		"desc": "Used to debug print material parameter list",
-		"pattern": "UMaterialInstanceDynamic(\\*| ){2}(.*?)= UMaterialInstanceDynamic::Create",
-		"parsemap": [2],
 		"body": [
 			"",
 			"// Use this to list paramaters(vectors here)",
@@ -14,21 +11,22 @@
 			"UE_LOG(LogTemp, Warning, TEXT(\"Param at %i : name: %s\"), it.Index, *it.ToString());",
 			"}"
 		],
-		"action": "edit"
+		"desc": "Used to debug print material parameter list",
+		"action": "edit",
+		"pattern": "UMaterialInstanceDynamic(\\*| ){2}(.*?)= UMaterialInstanceDynamic::Create",
+		"parsemap": [2],
+		"filepattern": ".cpp$"
 	},
 	{
 		"id": "Example",
-		"desc": "Simple template for example",
-		"pattern": "Your regex here",
-		"parsemap": [2, 4],
 		"body": [],
-		"action": "edit"
+		"desc": "Simple template for example",
+		"action": "edit",
+		"pattern": "Your regex here",
+		"parsemap": [2, 4]
 	},
 	{
 		"id": "MultiResult RayCast",
-		"desc": "Helpers to draw debug spheres and lines for collisions(Multi result)",
-		"pattern": ".*?bool ([a-zA-Z_0-9]*)[ =]{3}.*?(Sweep)?Multi",
-		"parsemap": [1],
 		"body": [
 			"if ($1) {",
 			"for (auto it : HitRes) {",
@@ -38,13 +36,14 @@
 			"}",
 			"}"
 		],
-		"action": "edit"
+		"desc": "Helpers to draw debug spheres and lines for collisions(Multi result)",
+		"action": "edit",
+		"pattern": ".*?bool ([a-zA-Z_0-9]*)[ =]{3}.*?(Sweep)?Multi",
+		"parsemap": [1],
+		"filepattern": ".cpp$"
 	},
 	{
 		"id": "SingleResult RayCast",
-		"desc": "Helpers to draw debug spheres and lines for collisions(Single result)",
-		"pattern": ".*?bool ([a-zA-Z_0-9]*)[ =]{3}.*?Line.*?Single.*?\\(([a-zA-Z]*)\\,",
-		"parsemap": [1, 2],
 		"body": [
 			"if ($1) {",
 			"UE_LOG(LogTemp, Warning, TEXT(\"Impact at: %s caused by %s\"), *$2.GetActor()->GetActorLocation().ToString(), *$2.GetActor()->GetFName().ToString());",
@@ -52,40 +51,43 @@
 			"// DrawDebugPoint(this->GetWorld(), it.Location, 10.0f, FColor::Red, false, 4.0f, 0);",
 			"}"
 		],
-		"action": "edit"
+		"desc": "Helpers to draw debug spheres and lines for collisions(Single result)",
+		"action": "edit",
+		"pattern": ".*?bool ([a-zA-Z_0-9]*)[ =]{3}.*?Line.*?Single.*?\\(([a-zA-Z]*)\\,",
+		"parsemap": [1, 2],
+		"filepattern": ".cpp$"
 	},
 	{
 		"id": "init_components",
-		"desc": "Initialization Scene/Sphere/StaticMesh etc",
-		"pattern": ".*?U([a-zA-Z_]*)?Component[\\*| ]{2}([a-zA-Z_]*)( = .*?)?;",
-		"parsemap": [1, 2],
 		"body": [
 			"$2 = CreateDefaultSubobject<U$1Component>(\"My$1\");",
 			"$2->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);"
 		],
-		"action": "copy"
+		"desc": "Initialization Scene/Sphere/StaticMesh etc",
+		"action": "copy",
+		"pattern": ".*?U([a-zA-Z_]*)?Component[\\*| ]{2}([a-zA-Z_]*)( = .*?)?;",
+		"parsemap": [1, 2],
+		"filepattern": ".h$"
 	},
 	{
 		"id": "headerassembly",
-		"desc": "fires up the header include manager",
-		"pattern": "^#include ",
-		"parsemap": [],
 		"body": [],
-		"action": "headermodule"
+		"desc": "fires up the header include manager",
+		"action": "headermodule",
+		"pattern": "^#include ",
+		"parsemap": []
 	},
 	{
 		"id": "functionbodygen",
-		"desc": "Generates function body for a target line.",
-		"pattern": "(FORCEINLINE )?(virtual )?([a-z_A-Z<>,&*]*) ?([a-zA-Z_, <>(=0-9\"*& ]*\\))( const)?( override)?;",
-		"parsemap": [3, 4, 5],
 		"body": ["$1 $x::$2$3 {", "\t// Function not implemented", "}"],
-		"action": "fnbodygen"
+		"desc": "Generates function body for a target line.",
+		"action": "fnbodygen",
+		"pattern": "^\t?(FORCEINLINE )?(virtual )?([a-z_A-Z<>,&*]*) ?([a-zA-Z_, <>(=0-9\"*& ]*\\))( const)?( override)?;",
+		"parsemap": [3, 4, 5],
+		"filepattern": ".h$"
 	},
 	{
 		"id": "booleanswitch",
-		"desc": "Copies initialization code for a boolean switch",
-		"pattern": "bool ([a-zA-Z_]*) [=| ]* false;",
-		"parsemap": [1],
 		"body": [
 			"// Function(called on demand) will be bypassed while packaging",
 			"if ($1 == true) {",
@@ -93,44 +95,51 @@
 			"$1 = false;",
 			"}"
 		],
-		"action": "copy"
+		"desc": "Copies initialization code for a boolean switch",
+		"action": "copy",
+		"pattern": "bool ([a-zA-Z_]*) [=| ]* false;",
+		"parsemap": [1],
+		"filepattern": ".cpp$"
 	},
 	{
 		"id": "overrides",
+		"body": [],
 		"desc": "Generates header code for override functions.",
+		"action": "overridelib",
 		"pattern": "^(public|private|protected):$",
 		"parsemap": [],
-		"body": [],
-		"action": "overridelib"
+		"filepattern": ".h$"
 	},
 	{
 		"id": "super_override",
-		"desc": "Replaces function default body with super",
-		"pattern": "// Function not implemented",
-		"parsemap": [],
 		"body": [],
-		"action": "replace_super"
+		"desc": "Replaces function default body with super",
+		"action": "replace_super",
+		"pattern": "// Function not implemented",
+		"parsemap": []
 	},
 	{
 		"id": "timer_init(delegate)",
-		"desc": "Initializes timers with a function",
-		"pattern": "FTimerDelegate (.*?);",
-		"parsemap": [1],
 		"body": [
 			"$1.BindUFunction(this, FName(\"MyFunction\"), 0.5f);",
 			"GetWorldTimerManager().SetTimer(YourTimerHandle, $1, 0.016f, true);"
 		],
-		"action": "copy"
+		"desc": "Initializes timers with a function",
+		"action": "copy",
+		"pattern": "FTimerDelegate (.*?);",
+		"parsemap": [1],
+		"filepattern": ".cpp$"
 	},
 	{
 		"id": "timer_init(handle)",
-		"desc": "Initializes timer with a function",
-		"pattern": "FTimerHandle (.*?);",
-		"parsemap": [1],
 		"body": [
 			"YourDel.BindUFunction(this, FName(\"MyFunction\"), 0.5f);",
 			"GetWorldTimerManager().SetTimer($1, YourDel, 0.016f, true);"
 		],
-		"action": "copy"
+		"desc": "Initializes timer with a function",
+		"action": "copy",
+		"pattern": "FTimerHandle (.*?);",
+		"parsemap": [1],
+		"filepattern": ".cpp$"
 	}
 ]

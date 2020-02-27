@@ -6,13 +6,10 @@
 var XRegExp = require("xregexp");
 var path = require("path");
 import * as vscode from "vscode";
-import { IsHeaderFile, IsSourceFile } from "./ExtensionHelper";
-import { resolve, promises } from "dns";
-import { rejects } from "assert";
 import * as feedback from "./ErrorLogger";
 import * as fs from "fs";
 import * as _ from "lodash";
-import { relative } from "path";
+import { vsui } from "@suvam0451/vscode-geass";
 
 export interface FunctionAnatomy {
 	prototype: string;
@@ -45,42 +42,6 @@ export interface FileData {
 	stripped_classname: string;
 	headerpath: string;
 	sourcepath: string;
-}
-
-/** Gets all the information about currently focused file... */
-export function GetActiveFileData(): FileData {
-	let retval: FileData = {
-		cppvalid: ActiveFileExtension.None,
-		fullpath: "",
-		filename: "",
-		folderpath: "",
-		stripped_classname: "",
-		headerpath: "",
-		sourcepath: "",
-	};
-
-	// Handle failstate
-	if (vscode.window.activeTextEditor === null) {
-		feedback.ThrowError(feedback.DErrorCode.HEADER_NOT_FOUND);
-		return retval;
-	}
-
-	retval.fullpath = vscode.window.activeTextEditor!.document.fileName;
-	retval.filename = path.basename(retval.fullpath);
-	retval.folderpath = path.dirname(retval.fullpath);
-
-	// Determine type of file
-	if (IsHeaderFile(retval.filename)) {
-		retval.cppvalid = ActiveFileExtension.Header;
-		retval.headerpath = retval.fullpath;
-		retval.stripped_classname = retval.filename.substring(0, retval.filename.length - 2);
-	} else if (IsSourceFile(retval.filename)) {
-		retval.cppvalid = ActiveFileExtension.Source;
-		retval.sourcepath = retval.fullpath;
-		retval.stripped_classname = retval.filename.substring(0, retval.filename.length - 4);
-	}
-	// Return success
-	return retval;
 }
 
 /** Gets the .h counterpart if standard convention was respected. */
@@ -137,17 +98,14 @@ export async function GetMatchingSourceSync(path: string): Promise<string> {
 /** Gets the .cpp counterpart if standard convention was respected. */
 export async function GetMatchingSource(data: FileData, filename?: string): Promise<string> {
 	let regex: RegExp = /^&/;
-	if (filename == undefined) {
+	if (filename === undefined) {
 		regex = new XRegExp("^" + data.stripped_classname + ".cpp$");
 	} else {
 		let _name = filename.replace(".h", ".cpp");
-		console.log(_name);
 		regex = new XRegExp("^" + _name);
 	}
 
 	return new Promise<string>((resolve, reject) => {
-		console.log("Searching in: ", data.folderpath);
-		console.log("Searching in: ", path.join(data.folderpath, "../", "Private"));
 		const a = ScanFolderWithRegex(data.folderpath, regex);
 		const b = ScanFolderWithRegex(path.join(data.folderpath, "../", "Private"), regex);
 
@@ -410,7 +368,7 @@ export function ReadJSON<T>(filepath: string): T {
 
 /** Returns the absolute path for a given relative path during development
  * APPLIES ONLY IF USING WEBPACK !!!
- * dev builds use "src", published builds use "out"
+ * dev builds use "src", published builds use "src"
  */
 export function RelativeToAbsolute(
 	extensionName: string,
@@ -424,10 +382,11 @@ export function RelativeToAbsolute(
 
 		// Typescript is output to out folder in published extension
 		if (/.vscode/.test(extpath)) {
-			modpath = path.join(extpath!, "out", relativepath);
+			modpath = path.join(extpath!, "src", relativepath);
 		} else {
 			modpath = path.join(extpath!, "src", relativepath);
 		}
+		vsui.Info(modpath);
 		return modpath;
 	} else {
 		return undefined;

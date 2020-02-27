@@ -6,10 +6,9 @@
 import * as vscode from "vscode";
 import _ from "lodash";
 import * as filesys from "../utils/FilesystemHelper";
-import * as vsuii from "../modules/VSInterface";
 import FuncDefs from "../data/extensions/Functions_Core.json";
 import * as vs from "../utils/FileHelper";
-import { vsui } from "@suvam0451/vscode-geass";
+import { vsui, vsed, vsfs } from "@suvam0451/vscode-geass";
 
 const _functionModPath = "data/extensions/Functions_Ext.json";
 
@@ -24,60 +23,43 @@ interface FunctionTemplate {
 /**  */
 export async function AddOverrideFunction(): Promise<void> {
 	let filepath = vscode.window.activeTextEditor?.document.uri.fsPath;
-	console.log(filepath);
+	vscode.workspace.saveAll();
 
-	// If not header, quit
-	if (/.h$/.test(filepath!) === false) {
-		vsui.Info(
-			"Not a header file. Please use .h files OR contextually call from private:/public:/protected:",
-		);
-		return new Promise<void>((resolve, reject) => {
-			resolve();
-		});
-	}
 	// Append the xyz with
 	let modpath = filesys.RelativeToAbsolute("suvam0451.sleeping-forest-ue4", _functionModPath);
 	let extradata = filesys.ReadJSON<FunctionTemplate[]>(modpath!);
 	let data: FunctionTemplate[] = FuncDefs.concat(extradata);
 
 	let options: string[] = [];
-	data.forEach(val => {
-		options.push(val.id);
+	data.forEach(o => {
+		options.push(o.id);
 	});
 
-	let pub = vs.RegexMatchLine(filepath!, /^public:$/);
-	let prot = vs.RegexMatchLine(filepath!, /^protected:$/);
-	let priv = vs.RegexMatchLine(filepath!, /^private:$/);
-	let EOC = vs.RegexMatchLine(filepath!, /^};$/);
+	let pub = vsfs.RegexMatchLine(filepath, /^public:$/);
+	let prot = vsfs.RegexMatchLine(filepath, /^protected:$/);
+	let priv = vsfs.RegexMatchLine(filepath, /^private:$/);
+	let EOC = vsfs.RegexMatchLine(filepath, /^};$/);
 
 	Promise.all([pub, prot, priv, EOC]).then(vals => {
 		return new Promise<void>((resolve, reject) => {
-			console.log(vals[0], vals[1], vals[2], vals[3]);
-
-			vsuii.QuickPick(options, false).then(sel => {
+			vsui.QuickPick(options, false).then(sel => {
 				let choice = data.find(o => {
-					return sel == o.id;
+					return sel === o.id;
 				});
 				if (choice !== undefined) {
 					let placeToWrite = vals[3]; // Default to EOC
 					vscode.workspace.saveAll(true);
 					switch (choice.field) {
 						case "public": {
-							if (vals[1] !== -1) {
-								placeToWrite = vals[1];
-							}
+							placeToWrite = vals[1] !== -1 ? vals[1] : vals[3];
 							break;
 						}
 						case "protected": {
-							if (vals[2] !== -1) {
-								placeToWrite = vals[2];
-							}
+							placeToWrite = vals[2] !== -1 ? vals[2] : vals[3];
 							break;
 						}
 						case "private": {
-							if (vals[3] !== -1) {
-								placeToWrite = vals[3];
-							}
+							placeToWrite = vals[3];
 							break;
 						}
 						default: {

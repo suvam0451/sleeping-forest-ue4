@@ -27,11 +27,6 @@
 			"Full syntax: XYZ = NewObject<UType>(\"Your object name\", this)"
 		]
 	},
-	"Warning log": {
-		"prefix": "ulog",
-		"body": ["UE_LOG(LogTemp, Warning, TEXT(\"$1\")$2);"],
-		"description": "Prints a warning to console."
-	},
 	"Add a SceneComponent property to replace RootComponent": {
 		"prefix": "uroot_h",
 		"body": [
@@ -65,6 +60,11 @@
 			"};"
 		],
 		"description": ["USTRUCT template"]
+	},
+	"UENUM": {
+		"prefix": "uenum",
+		"body": ["UENUM()", "enum E$1", "{", "\t$0", "};"],
+		"description": "Simple enum in ue4."
 	},
 	"ShaderDirectory": {
 		"prefix": "ushaderdir",

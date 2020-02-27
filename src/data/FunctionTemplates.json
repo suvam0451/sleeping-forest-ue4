@@ -82,5 +82,12 @@
 		"field": "protected",
 		"comment": "",
 		"signature": "virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) override;"
+	},
+	{
+		"id": "OnRegister",
+		"body": ["// Function not implemented"],
+		"field": "private",
+		"comment": "",
+		"signature": "virtual void OnRegister() override;"
 	}
 ]

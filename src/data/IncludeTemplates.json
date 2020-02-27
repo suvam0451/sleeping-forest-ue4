@@ -1,5 +1,9 @@
 [
 	{
+		"id": "Kismet",
+		"headers": ["Kismet/GameplayStatics.h", "Kismet/KismetMathLibrary.h"]
+	},
+	{
 		"id": "AIPerception",
 		"headers": [
 			"Perception/AIPerceptionComponent.h",
@@ -12,10 +16,6 @@
 			"Perception/AISenseConfig_Sight.h",
 			"Perception/AISenseConfig_Team.h"
 		]
-	},
-	{
-		"id": "Math",
-		"headers": ["Kismet/KismetMathLibrary.h"]
 	},
 	{
 		"id": "PrimitiveShapes",
@@ -47,7 +47,7 @@
 	},
 	{
 		"id": "Data",
-		"headers": ["Engine/DataTable.h"]
+		"headers": ["Engine/DataTable.h", "Engine/DataAsset.h"]
 	},
 	{
 		"id": "Timer",
@@ -61,6 +61,16 @@
 		"id": "Mesh",
 		"headers": ["Components/StaticMeshComponent.h"]
 	},
-	{"id": "Widget",
-	"headers": ["Blueprint/UserWidget.h","Components/TextBlock.h"]}
+	{
+		"id": "Widget",
+		"headers": ["Blueprint/UserWidget.h", "Components/TextBlock.h"]
+	},
+	{
+		"id": "Movement",
+		"headers": ["GameFramework/CharacterMovementComponent.h"]
+	},
+	{
+		"id": "ShaderDirectory",
+		"headers": ["Misc/Paths.h", "Runtime/Launch/Resources/Version.h", "ShaderCore.h"]
+	}
 ]
