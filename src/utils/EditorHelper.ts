@@ -1,14 +1,7 @@
 import * as vscode from "vscode";
-var XRegExp = require("xregexp");
 var path = require("path");
-import * as ext from "./ExtensionHelper";
-import { DErrorCode } from "./ErrorLogger";
-const fs = require("fs");
 import * as filesys from "./FilesystemHelper";
-import { AActor, UActorComponent } from "../data/headerFunctions.json";
 import { vsui, vsed } from "@suvam0451/vscode-geass";
-import { start } from "repl";
-import { resolve } from "dns";
 
 export interface FunctionDefinition {
 	comment: string;
@@ -38,7 +31,6 @@ export function InjectHeaders(lines: string[]) {
 	let finishingLine = vsed.MatchRegexInFile(/^#include (.*?).generated.h/); // single match/false (.cpp/.h)
 
 	let arr = vsed.MatchRegexInFile_Bounds(/^#include (.*?).h/);
-	console.log(arr[0], arr[1]);
 	Promise.all([startingLine, finishingLine]).then(values => {
 		if (values[1] !== -1) {
 			let request = RemoveDuplicates(lines, values[0][0], values[1]);
@@ -94,7 +86,7 @@ export function ResolveLines(
 	lines.forEach(line => {
 		symbols.forEach((symbol, i) => {
 			let str = "\\$" + (i + 1);
-			if (symbol != undefined) {
+			if (symbol !== undefined) {
 				// console.log(str);
 
 				line = line.replace(RegExp(str, "g"), symbol);
@@ -132,7 +124,6 @@ export function ReplaceSymbols(lines: string[], symbols: string[]): string[] {
 			line = line.replace(RegExp(str, "g"), symbol);
 		});
 	});
-	// console.log("after patch", lines);
 	return lines;
 }
 export function InsertLineAsParsedData(lines: string[], at: number, symbols: string[]) {
@@ -163,7 +154,11 @@ export function InsertLineAsParsedData(lines: string[], at: number, symbols: str
 		}
 	});
 
-	InsertLineAt(retline, at);
+	vsed.InsertAt(retline, at);
+	// vsed.MoveCursorTo(retline);
+
+	// vsed.WriteAtLine_Silent(retline, )
+	// InsertLineAt(retline, at);
 }
 
 /** Insert multiple lines at given line

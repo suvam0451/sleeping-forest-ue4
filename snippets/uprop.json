@@ -36,7 +36,6 @@
 	},
 	"uprop : Boolean": {
 		"body": [
-			"// ${2:Description not provided } ",
 			"UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category=\"Parameters\")",
 			"\tbool $1;",
 			"\n$0"
@@ -45,7 +44,6 @@
 	},
 	"uprop : Boolean switch": {
 		"body": [
-			"// ${2:Toggle back to false(when user presses) in OnConstruction to use as a switch } ",
 			"UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=\"Triggers\")",
 			"\tbool $1 = false; // context",
 			"\n$0"
@@ -54,7 +52,6 @@
 	},
 	"uprop : Boolean switch (In Advanced View)": {
 		"body": [
-			"// ${2:Toggle back to false(when user presses) in OnConstruction to use as a switch } ",
 			"UPROPERTY(EditAnywhere, AdvancedDisplay, BlueprintReadWrite, Category=\"Triggers\")",
 			"\tbool $1 = false; // context",
 			"\n$0"
@@ -64,7 +61,6 @@
 	},
 	"uprop : Box Component": {
 		"body": [
-			"// ${2:Description not provided } ",
 			"UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=\"Parameters\")",
 			"\tUBoxComponent* $1;",
 			"\n$0"
@@ -73,7 +69,6 @@
 	},
 	"uprop : Floating point": {
 		"body": [
-			"// ${2:Description not provided } ",
 			"UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=\"Parameters\")",
 			"\tfloat $1;",
 			"\n$0"
@@ -86,7 +81,6 @@
 	},
 	"uprop : Integer": {
 		"body": [
-			"// ${2:Description not provided } ",
 			"UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=\"Parameters\")",
 			"\tint $1;",
 			"$0"
@@ -95,7 +89,6 @@
 	},
 	"uprop : ISMC Array": {
 		"body": [
-			"// ${2:Description not provided } ",
 			"UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=\"Parameters\")",
 			"\tTArray<UInstancedStaticMeshComponent*> $1;",
 			"\n$0"
@@ -107,7 +100,6 @@
 	},
 	"uprop : ISMC Map": {
 		"body": [
-			"// ${2:Description not provided } ",
 			"UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=\"Parameters\")",
 			"\tTMap<int, UInstancedStaticMeshComponent*> $1;",
 			"\n$0"
@@ -119,7 +111,6 @@
 	},
 	"uprop : ISMC Map (Advanced Display)": {
 		"body": [
-			"// ${2:Description not provided } ",
 			"UPROPERTY(EditAnywhere, AdvancedDisplay, BlueprintReadWrite, Category=\"Parameters\")",
 			"\tTMap<int, UInstancedStaticMeshComponent*> $1;",
 			"\n$0"
@@ -131,7 +122,6 @@
 	},
 	"uprop : ISMC property": {
 		"body": [
-			"// ${2:Description not provided } ",
 			"UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=\"Parameters\")",
 			"\tUInstancedStaticMeshComponent *$1;",
 			"\n$0"
@@ -145,7 +135,6 @@
 	},
 	"uprop : ReadOnly": {
 		"body": [
-			"// ${2:Description not provided } ",
 			"UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category=\"Parameters\")",
 			"\t$1;",
 			"\n$0"
@@ -154,7 +143,6 @@
 	},
 	"uprop : Single Spline": {
 		"body": [
-			"// ${2:Description not provided} ",
 			"UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = \"Parameters\")",
 			"USplineComponent *MySpline;"
 		],
@@ -163,7 +151,6 @@
 	},
 	"uprop : Sphere Component": {
 		"body": [
-			"// ${2:Description not provided } ",
 			"UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=\"Parameters\")",
 			"\tUSphereComponent* $1;",
 			"\n$0"
@@ -172,7 +159,6 @@
 	},
 	"uprop : SplineComponent": {
 		"body": [
-			"// ${2:Description not provided } ",
 			"UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=\"Parameters\")",
 			"\tUSplineComponent* $1;",
 			"\n$0"
@@ -182,7 +168,6 @@
 	},
 	"uprop : SplineComponent Array": {
 		"body": [
-			"// ${2:Description not provided } ",
 			"UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=\"Parameters\")",
 			"\tTArray<USplineComponent*> $1;",
 			"\n$0"
@@ -192,7 +177,6 @@
 	},
 	"uprop : SplineComponent Map": {
 		"body": [
-			"// ${2:Description not provided } ",
 			"UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=\"Parameters\")",
 			"\tTMap<int, USplineComponent*> $1;",
 			"\n$0"
@@ -202,7 +186,6 @@
 	},
 	"uprop : StaticMesh": {
 		"body": [
-			"// ${2:Description not provided } ",
 			"UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=\"Parameters\")",
 			"\tUStaticMesh *$1;",
 			"\n$0"
@@ -211,7 +194,6 @@
 	},
 	"uprop : StaticMesh Array": {
 		"body": [
-			"// ${2:Description not provided } ",
 			"UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=\"Parameters\")",
 			"\tTArray<UStaticMesh*> $1;",
 			"\n$0"
@@ -220,7 +202,6 @@
 	},
 	"uprop : StaticMesh Map": {
 		"body": [
-			"// ${2:Description not provided } ",
 			"UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=\"Parameters\")",
 			"\tTMap<int, UStaticMesh*> $1;",
 			"\n$0"
@@ -229,7 +210,6 @@
 	},
 	"uprop : StaticMesh Map(In advanced dropdown)": {
 		"body": [
-			"// ${2:Description not provided } ",
 			"UPROPERTY(VisibleAnywhere, AdvancedDisplay, BlueprintReadWrite, Category=\"Parameters\")",
 			"\tTMap<int, UStaticMesh*> $1;",
 			"\n$0"
@@ -239,7 +219,6 @@
 	},
 	"uprop : StaticMeshComponent": {
 		"body": [
-			"// ${2:Description not provided } ",
 			"UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=\"Parameters\")",
 			"\tUStaticMeshComponent *$1;",
 			"\n$0"
@@ -248,7 +227,6 @@
 	},
 	"uprop : String": {
 		"body": [
-			"// No comment ",
 			"UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=\"Triggers\")",
 			"\tFString $1;",
 			"\n$0"
@@ -262,7 +240,6 @@
 	},
 	"uprop : Transform": {
 		"body": [
-			"// ${2:Description not provided } ",
 			"UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=\"Parameters\")",
 			"\tFTransform $1;",
 			"\n$0"
@@ -271,7 +248,6 @@
 	},
 	"uprop : Transform Array": {
 		"body": [
-			"// ${2:Description not provided } ",
 			"UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=\"Parameters\")",
 			"\tTArray<FTransform> $1",
 			"\n$0"
@@ -280,7 +256,6 @@
 	},
 	"uprop : Transform Map": {
 		"body": [
-			"// ${2:Description not provided } ",
 			"UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=\"Parameters\")",
 			"\tTMap<int, FTransform*> $1;",
 			"\n$0"
@@ -289,7 +264,6 @@
 	},
 	"uprop : Vector": {
 		"body": [
-			"// ${2:Description not provided } ",
 			"UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=\"Parameters\")",
 			"\tFVector $1;",
 			"\n$0"
@@ -298,7 +272,6 @@
 	},
 	"uprop : Vector Array": {
 		"body": [
-			"// ${2:Description not provided } ",
 			"UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=\"Parameters\")",
 			"\tTArray<FVector> $1;",
 			"\n$0"
@@ -307,11 +280,27 @@
 	},
 	"uprop : Vector Map": {
 		"body": [
-			"// ${2:Description not provided } ",
 			"UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=\"Parameters\")",
 			"\tTMap<int, FVector> $1;",
 			"\n$0"
 		],
 		"prefix": "uprop_vector_map"
+	},
+	"uprop : Asset Pointer": {
+		"body": [
+			"UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=\"Parameters\")",
+			"\tTAssetPtr<$2> $1;",
+			"\n$0"
+		],
+		"prefix": "uprop_assetptr"
+	},
+	"uprop : Subclass": {
+		"body": [
+			"UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=\"Parameters\")",
+			"\tTAssetSubclassOf<$2> $1; // context",
+			"\n$0"
+		],
+		"prefix": "uprop_subclass",
+		"description": "Used to get references to blueprints. Activate context to get initializer."
 	}
 }

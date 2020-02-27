@@ -3,14 +3,8 @@
 // FileSystemHelaper.ts
 // Used to get filepaths, searching and indexing.
 
-var XRegExp = require("xregexp");
 var path = require("path");
 import * as vscode from "vscode";
-import { IsHeaderFile, IsSourceFile } from "./ExtensionHelper";
-import { resolve, promises } from "dns";
-import { rejects } from "assert";
-import * as feedback from "./ErrorLogger";
-import * as fs from "fs";
 import * as _ from "lodash";
 
 export async function CompileShaders() {

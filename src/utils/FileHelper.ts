@@ -3,19 +3,17 @@
 // ExtensionHelperr.ts
 // Used to get information about extensions.
 
-var XRegExp = require("xregexp");
-import * as vscode from "vscode";
 import * as fs from "fs";
-import readline from "readline";
 import * as _ from "lodash";
 import FuncDefs from "../data/extensions/Functions_Core.json";
 import * as filesys from "../utils/FilesystemHelper";
+import { vsfs } from "@suvam0451/vscode-geass";
 
 const _functionModPath = "data/extensions/Functions_Ext.json";
 
 export async function InjectHeaders(filepath: string, defs: string[]): Promise<number> {
-	let num = await RegexMatchLine(filepath, /^#include (.*?).h/);
-	let num2 = await RegexMatchLine(filepath, /^#include (.*?).generated.h/);
+	let num = await vsfs.RegexMatchLine(filepath, /^#include (.*?).h/);
+	let num2 = await vsfs.RegexMatchLine(filepath, /^#include (.*?).generated.h/);
 
 	defs = _.map(defs, o => {
 		return '#include "' + o + '"';
@@ -54,10 +52,10 @@ export async function InjectFunctions(
 	// let data = FuncDefs.concat(FuncDefs, FuncExts);
 
 	// Get header fields
-	let pub = await RegexMatchLine(headerpath, /^public:$/);
-	let prot = await RegexMatchLine(headerpath, /^protected:$/);
-	let priv = await RegexMatchLine(headerpath, /^private:$/);
-	let EOC = await RegexMatchLine(headerpath, /^};$/);
+	let pub = await vsfs.RegexMatchLine(headerpath, /^public:$/);
+	let prot = await vsfs.RegexMatchLine(headerpath, /^protected:$/);
+	let priv = await vsfs.RegexMatchLine(headerpath, /^private:$/);
+	let EOC = await vsfs.RegexMatchLine(headerpath, /^};$/);
 	let pubAdd: string[] = [];
 	let protAdd: string[] = [];
 	let privAdd: string[] = [];
@@ -108,32 +106,6 @@ export async function InjectFunctions(
 // ---------------------------------------------------------------------
 //                INTERNAL FUNCTIONS
 // ---------------------------------------------------------------------
-
-/** Use a regex pattern and look match for the first line  */
-export async function RegexMatchLine(filepath: string, ex: RegExp): Promise<number> {
-	let retval = -1,
-		index = 0;
-
-	const readInterface = readline.createInterface({
-		input: fs.createReadStream(filepath),
-		output: process.stdout,
-	});
-	return new Promise<number>((resolve, reject) => {
-		readInterface
-			.on("line", line => {
-				// console.log("test for", line, "is", ex.test(line));
-				if (ex.test(line) === true) {
-					resolve(index);
-					readInterface.close();
-				}
-				index++;
-			})
-			.on("close", () => {
-				resolve(-1);
-			});
-		// resolve(-1);
-	});
-}
 
 /** Writes a list of lines to the file. */
 export async function WriteAtLine(filepath: string, at: number, lines: string[]): Promise<void> {
