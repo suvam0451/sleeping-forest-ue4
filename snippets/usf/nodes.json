@@ -84,5 +84,16 @@
 		"prefix": "screen_position",
 		"body": "GetScreenPosition(Parameters)",
 		"description": [".uv for screen coordinates", ".w is pixel position"]
+	},
+	"UVCoordinates": {
+		"prefix": "texture_coordinates",
+		"body": "Parameters.TexCoords[${1:0}].xy",
+		"description": ["Input texture coordinates."]
+	},
+	"TextureLookup_Color": {
+		"body": "ProcessMaterialColorTextureLookup(Texture2DSampleBias(${2:texture}, Material.Texture2D_0Sampler, ${1:uv}, View.MaterialTextureMipBias)"
+	},
+	"Time(overflow fixed)": {
+		"body": ""
 	}
 }

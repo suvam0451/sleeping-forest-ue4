@@ -5,14 +5,13 @@
 
 import * as vscode from "vscode";
 import * as edit from "../utils/EditorHelper";
-import { GetVSConfig } from "../modules/VSInterface";
 import * as _ from "lodash";
 import context from "../data/ContextAutofill.json";
 import IncludeManager from "../modules/IncludeManager";
 import { GetMatchingSourceSync } from "../utils/FilesystemHelper";
 import { AddLinesToFile } from "../utils/FileHelper";
 import { AddOverrideFunction } from "../modules/AddOverrideFunction";
-import { vsui, vsed } from "@suvam0451/vscode-geass";
+import { vsui, vsed, vscfg } from "@suvam0451/vscode-geass";
 
 interface InitContextData {
 	line: number;
@@ -94,7 +93,7 @@ export default async function InitializerModule(): Promise<void> {
 								}
 							}
 							lineToWrite = lineToWrite.replace(/class /g, "");
-							let choice = GetVSConfig<boolean>("SF", "autoAddFunctionsInSource");
+							let choice = vscfg.GetVSConfig<boolean>("SF", "autoAddFunctionsInSource");
 							if (choice) {
 								GetMatchingSourceSync(_file!).then(ret => {
 									AddLinesToFile(ret, [lineToWrite]);

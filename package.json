@@ -3,7 +3,7 @@
 	"displayName": "Sleeping Forest - UE4 multitool",
 	"description": "Code-completion, CLI tools and asset management/optimization for Unreal Engine 4 in VSCode. (In beta until v1.0.0. Read changelogs. Feedback at discord.)",
 	"publisher": "suvam0451",
-	"version": "0.6.10",
+	"version": "0.6.11",
 	"license": "MPL-2.0",
 	"repository": {
 		"type": "git",
@@ -175,7 +175,6 @@
 						"DerivedDataCache",
 						"Documentation",
 						"Programs",
-						"Shaders",
 						"FeaturePacks",
 						"Samples",
 						"Templates",
@@ -213,11 +212,6 @@
 					"default": true,
 					"description": "If set to true, generated code for UE4 functions is directly written to source files."
 				},
-				"SF.ShaderFolders": {
-					"type": "array",
-					"default": [],
-					"description": "List your HLSL shader directories here."
-				},
 				"SF.GitSubmodules": {
 					"type": "array",
 					"default": [],
@@ -248,13 +242,13 @@
 		"ts-loader": "^6.2.1",
 		"tslint": "^6.0.0",
 		"typescript": "^3.6.4",
-		"vsce": "^1.73.0",
+		"vsce": "^1.74.0",
 		"vscode-test": "^1.2.2",
 		"webpack": "^4.41.5",
 		"webpack-cli": "^3.3.10"
 	},
 	"dependencies": {
-		"@suvam0451/vscode-geass": "^0.0.19",
+		"@suvam0451/vscode-geass": "^0.0.27",
 		"lodash": "^4.17.15",
 		"xregexp": "^4.2.4"
 	}

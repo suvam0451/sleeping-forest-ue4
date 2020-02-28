@@ -87,17 +87,5 @@
 				"Headers": ["GameFramework/GameModeBase.h"]
 			}
 		]
-	},
-	{
-		"buildspace": "Debashish",
-		"templates": [
-			{
-				"classprefix": "A",
-				"id": "Actor",
-				"parent": "AActor",
-				"Functions": ["BeginPlay", "Tick", "OnConstruction"],
-				"Headers": ["CoreMinimal.h", "GameFramework/Actor.h"]
-			}
-		]
 	}
 ]

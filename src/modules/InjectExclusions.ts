@@ -4,15 +4,11 @@
 // Isolated module to handle header inclusion. Refer database at IncludeMapping.json
 
 import * as vscode from "vscode";
-import * as edit from "../utils/EditorHelper";
-// import { QuickPick } from "../modules/VSInterface";
-import DefaultData from "../data/IncludeTemplates.json";
-import ExtensionData from "../data/extensions/Includes_Ext.json";
 import * as _ from "lodash";
 import * as fs from "fs";
 import * as filesys from "../utils/FilesystemHelper";
 import * as path from "path";
-import * as vs from "../modules/VSInterface";
+import { vscfg } from "@suvam0451/vscode-geass";
 
 export default async function InjectExcludeDefinition(): Promise<void> {
 	return new Promise<void>((resolve, reject) => {
@@ -22,12 +18,10 @@ export default async function InjectExcludeDefinition(): Promise<void> {
 		}
 		let falsePositive = true;
 		let initDir = ws[0].uri.fsPath;
-		// console.log();
 		let files = fs.readdirSync(initDir);
 		_.forEach(files, file => {
 			if (/(.*?).uproject$/.test(file)) {
 				falsePositive = false;
-				// console.log(file);
 			}
 		});
 		if (falsePositive) {
@@ -40,12 +34,12 @@ export default async function InjectExcludeDefinition(): Promise<void> {
 		// files.exclude
 		let config_01 = vscode.workspace.getConfiguration("files");
 		let retval_01: any = config_01.get("exclude")!;
-		myretval = vs.GetVSConfig<string[]>("SF", "excludedExtensions");
+		myretval = vscfg.GetVSConfig<string[]>("SF", "excludedExtensions");
 		myretval.forEach(val => {
 			retval_01["**." + val] = true;
 		});
 
-		myretval = vs.GetVSConfig<string[]>("SF", "excludeFolders");
+		myretval = vscfg.GetVSConfig<string[]>("SF", "excludeFolders");
 		myretval.forEach(val => {
 			retval_01["**/" + val] = true;
 		});
@@ -58,7 +52,7 @@ export default async function InjectExcludeDefinition(): Promise<void> {
 		// search.exclude
 		let config_03 = vscode.workspace.getConfiguration("search");
 		let retval_03 = config_03.get("exclude");
-		myretval = vs.GetVSConfig<string[]>("SF", "searchExclude");
+		myretval = vscfg.GetVSConfig<string[]>("SF", "searchExclude");
 		myretval.forEach(val => {
 			retval_03["**/" + val] = true;
 		});
@@ -84,7 +78,7 @@ export default async function InjectExcludeDefinition(): Promise<void> {
 						name: "Extensions",
 					});
 
-					let AssetFolders = vs.GetVSConfig<string[]>("SF", "assetFolders");
+					let AssetFolders = vscfg.GetVSConfig<string[]>("SF", "assetFolders");
 
 					AssetFolders.forEach((folder, i) => {
 						if (fs.existsSync(path.join(folder, "Audit"))) {
@@ -95,7 +89,8 @@ export default async function InjectExcludeDefinition(): Promise<void> {
 						}
 					});
 
-					let SubmoduleList = vs.GetVSConfig<string[]>("SF", "GitSubmodules");
+					// Git submodules
+					let SubmoduleList = vscfg.GetVSConfig<string[]>("SF", "GitSubmodules");
 					SubmoduleList.forEach((submodule, i) => {
 						arr.push({
 							uri: vscode.Uri.file(submodule),
@@ -103,7 +98,7 @@ export default async function InjectExcludeDefinition(): Promise<void> {
 						});
 					});
 
-					console.log(_initialOffset, arr.length);
+					// Apply changes (Cleaning if necessary)
 					if (_initialOffset > 2) {
 						vscode.workspace.updateWorkspaceFolders(2, _initialOffset - 2, ...arr);
 					} else {

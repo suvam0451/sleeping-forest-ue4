@@ -68,5 +68,9 @@
 	{
 		"id": "Movement",
 		"headers": ["GameFramework/CharacterMovementComponent.h"]
+	},
+	{
+		"id": "ShaderDirectory",
+		"headers": ["Misc/Paths.h", "Runtime/Launch/Resources/Version.h", "ShaderCore.h"]
 	}
 ]

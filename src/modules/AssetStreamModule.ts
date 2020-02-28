@@ -7,9 +7,7 @@ import * as vscode from "vscode";
 import * as fs from "fs";
 import * as path from "path";
 import _ from "lodash";
-import { GetVSConfig } from "./VSInterface";
 import {
-	CreateAndWrite,
 	WriteFileAsync,
 	WriteJSONToFile,
 	ReadJSON,
@@ -19,8 +17,7 @@ import settings from "../data/templates/streamSettings.json";
 import generator from "../data/templates/pythonGenerator.json";
 import assetexportdata from "../data/templates/assetBasicDataTmpl.json";
 import * as filesys from "../utils/FilesystemHelper";
-import * as vs from "../modules/VSInterface";
-import { vsui, vsed } from "@suvam0451/vscode-geass";
+import { vsui, vsed, vscfg } from "@suvam0451/vscode-geass";
 
 /** Generates module scaffold files for selected folder */
 export async function InitializeStream(): Promise<string> {
@@ -48,21 +45,15 @@ export async function InitializeStream(): Promise<string> {
 				]);
 				let d = WriteFileAsync(path.join(ret, "Audit", "report.txt"), [""], []);
 
-				Promise.all([a, b, c, d]).then(retvals => {
-					let duplicate = vs.AppendToVSConfig("SF", "assetFolders", ret);
-					if (duplicate) {
-						vscode.window.showInformationMessage(
-							"Duplicate detected. Folder reinitialized. Skipping other steps.",
-						);
-					} else {
-						vscode.window.showInformationMessage(
-							"A new asset stream is being tracked. Please update workspace file (Inject Excludes).",
-						);
-					}
+				Promise.all([a, b, c, d]).then(() => {
+					vscfg.AppendToVSConfig("SF", "assetFolders", [ret]);
+					vsui.Info(
+						"A new asset stream is being tracked. Please update workspace file (Inject Excludes).",
+					);
 					resolve(ret);
 				});
 			} catch {
-				console.log("failed to create file(s)/folder(s)");
+				vsui.Error("Failed to initialize stream.");
 			}
 		});
 	});
@@ -169,16 +160,12 @@ export function RefreshStreamForFolder(data: AssetStreamKit) {
 
 /** Exported module */
 export function RefreshListedStreams() {
-	let retval = GetVSConfig<string[]>("SF", "assetFolders");
-	// let retval: any = config.get("exclude")!;
+	let retval = vscfg.GetVSConfig<string[]>("SF", "assetFolders");
 	retval.forEach(entry => {
 		let _entry = path.join(entry, "Assets");
 
 		const fill = ReadJSON<RootObject>(path.join(entry, "assetdata.json"));
 		const settings = ReadJSON<SettingsStruct>(path.join(entry, "Audit", "settings.json"));
-		console.log(fill);
-		console.log(settings);
-
 
 		// reset
 		fill.StaticMesh.list.length = 0;
@@ -221,7 +208,7 @@ export function RefreshListedStreams() {
 		try {
 			WriteJSONToFile(path.join(entry, "assetdata.json"), fill);
 		} catch {
-			console.log("Writing to assetdata.json is failing...");
+			vsui.Error("Writing to assetdata.json failed.");
 		}
 
 		// Populate JSON data for root...
@@ -251,7 +238,6 @@ export function RefreshListedStreams() {
 		// Run binary toolchains
 		// -----------------------
 
-		console.log(settings.run_texturepacker);
 		if (settings.run_texturepacker) {
 			let args =
 				'"' +

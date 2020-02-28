@@ -6,7 +6,6 @@
 import * as vscode from "vscode";
 import _ from "lodash";
 import * as filesys from "../utils/FilesystemHelper";
-import * as vsuii from "../modules/VSInterface";
 import FuncDefs from "../data/extensions/Functions_Core.json";
 import * as vs from "../utils/FileHelper";
 import { vsui, vsed, vsfs } from "@suvam0451/vscode-geass";

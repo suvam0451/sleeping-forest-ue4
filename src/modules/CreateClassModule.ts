@@ -88,9 +88,7 @@ async function ClassSelection(data: ClassCreationKit): Promise<ClassCreationKit>
 	let extradata = filesys.ReadJSON<Buildspace[]>(modpath!);
 
 	let json: Buildspace[] = _.concat(classData, extradata);
-	console.log(json);
 	let bs = _.find(json, { buildspace: data.buildspace });
-	console.log(bs);
 	if (typeof bs !== "undefined") {
 		_.each(bs.templates, tmpl => {
 			classList.push(tmpl.id);
@@ -347,9 +345,8 @@ async function NamespaceSelection(): Promise<ClassCreationKit> {
 			.then(ret => {
 				if (ret) {
 					retval.buildspace = ret;
-					console.log("buildspace registred :", retval.buildspace);
 				} else {
-					reject("User did not select any namespace");
+					reject("USER_ABORT");
 				}
 			})
 			.then(() => {

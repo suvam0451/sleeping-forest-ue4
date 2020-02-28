@@ -9,6 +9,7 @@ import * as vscode from "vscode";
 import * as feedback from "./ErrorLogger";
 import * as fs from "fs";
 import * as _ from "lodash";
+import { vsui } from "@suvam0451/vscode-geass";
 
 export interface FunctionAnatomy {
 	prototype: string;
@@ -101,13 +102,10 @@ export async function GetMatchingSource(data: FileData, filename?: string): Prom
 		regex = new XRegExp("^" + data.stripped_classname + ".cpp$");
 	} else {
 		let _name = filename.replace(".h", ".cpp");
-		console.log(_name);
 		regex = new XRegExp("^" + _name);
 	}
 
 	return new Promise<string>((resolve, reject) => {
-		console.log("Searching in: ", data.folderpath);
-		console.log("Searching in: ", path.join(data.folderpath, "../", "Private"));
 		const a = ScanFolderWithRegex(data.folderpath, regex);
 		const b = ScanFolderWithRegex(path.join(data.folderpath, "../", "Private"), regex);
 
@@ -370,7 +368,7 @@ export function ReadJSON<T>(filepath: string): T {
 
 /** Returns the absolute path for a given relative path during development
  * APPLIES ONLY IF USING WEBPACK !!!
- * dev builds use "src", published builds use "out"
+ * dev builds use "src", published builds use "src"
  */
 export function RelativeToAbsolute(
 	extensionName: string,
@@ -384,10 +382,11 @@ export function RelativeToAbsolute(
 
 		// Typescript is output to out folder in published extension
 		if (/.vscode/.test(extpath)) {
-			modpath = path.join(extpath!, "out", relativepath);
+			modpath = path.join(extpath!, "src", relativepath);
 		} else {
 			modpath = path.join(extpath!, "src", relativepath);
 		}
+		vsui.Info(modpath);
 		return modpath;
 	} else {
 		return undefined;
