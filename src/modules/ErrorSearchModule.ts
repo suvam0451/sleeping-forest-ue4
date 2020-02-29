@@ -11,6 +11,6 @@ export default async function ErrorSearchModule(): Promise<void> {
 	// 	console.log(retval);
 	// });
 
-	console.log(num);
+	// console.log(num);
 	// vscode.env.openExternal(vscode.Uri.parse("https://winterwildfire.netlify.com"));
 }

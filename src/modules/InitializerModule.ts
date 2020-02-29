@@ -77,6 +77,14 @@ export default async function InitializerModule(): Promise<void> {
 						}
 						break;
 					}
+					case "replace": {
+						if (vsed.RegexTestActiveFile(rule.filepattern)) {
+							let outstr = StitchStringArray(rule.body, true);
+							let secondstr = ResolveSymbols(outstr, symbolarray);
+							ReplaceCurrentLine(secondstr);
+						}
+						break;
+					}
 					case "headermodule": {
 						IncludeManager();
 						break;
@@ -163,4 +171,70 @@ function GetEOL(editor: vscode.TextEditor, line: number): vscode.Position {
 	// let editor = vscode.window.activeTextEditor;
 	let text = editor?.document.lineAt(line).range.end;
 	return text!;
+}
+
+/** Simple replaces te current line with the new stitched string */
+export function ReplaceCurrentLine(_In: string){
+	let editor = vscode.window.activeTextEditor;
+	let pos = editor?.selection.active.line;
+	let startingloc = editor?.document.lineAt(pos);
+	editor
+		?.edit(editBuilder => {
+			editBuilder.replace(startingloc.range, _In);
+		});
+}
+
+export function StitchStringArray(newval: string[], preserveTabs?: boolean) : string{
+		let editor = vscode.window.activeTextEditor;
+		let pos = editor?.selection.active.line;
+		let startingloc = editor?.document.lineAt(pos);
+		let numtabs = (preserveTabs === true) ? NumberOfTabs(startingloc.text): 0;
+		let retstr = "";
+		newval.forEach((str)=>{
+			retstr = retstr.concat("\t".repeat(numtabs), str, "\n");
+		});
+		retstr = retstr.trimRight(); // get rid of ending \n ONLY
+		// editor
+		// 	?.edit(editBuilder => {
+		// 		editBuilder.replace(startingloc.range, retstr);
+		// 	});
+		return retstr;
+}
+
+function NumberOfTabs(_In: string) : number {
+	var count = 0;
+	var index = 0;
+	while (_In.charAt(index++) === "\t") {
+	  count++;
+	}
+	return count;
+}
+
+function ResolveSymbolsInMultiple(_In :string[], symbols: string[]) : string[]{
+	symbols.forEach((symbol, i) => {
+		let str = "\\$" + (i + 1);
+		if (symbol !== undefined) {
+			_In[i] = _In[i].replace(RegExp(str, "g"), symbol);
+		} else {
+			_In[i] = _In[i].replace(RegExp(str, "g"), "");
+		}
+	});
+	return _In;
+}
+
+/** Replaces $x with values from symbols array. Takes a single string.
+ * 	Use StitchStringArray to process an array.
+ * @param _In  
+ * @param symbols sumbol array
+*/
+function ResolveSymbols(_In :string, symbols: string[]) : string{
+	symbols.forEach((symbol, i) => {
+		let str = "\\$" + (i + 1);
+		if (symbol !== undefined) {
+			_In = _In.replace(RegExp(str, "g"), symbol);
+		} else {
+			_In = _In.replace(RegExp(str, "g"), "");
+		}
+	});
+	return _In;
 }

@@ -1,35 +1,16 @@
 {
 	"pi": {
-		"prefix": "pi_one",
-		"body": "3.14159274"
-	},
-	"pi2": {
-		"prefix": "pi_two",
-		"body": "6.28318548"
-	},
-	"pibytwo": {
-		"prefix": "pi_half",
-		"body": "1.57079637"
+		"prefix": "pi",
+		"body": "${1|6.28318548,3.14159274,1.57079637|}",
+		"description": "Contains snippet for 2pi, pi, pi/2"
 	},
 	"float2": {
 		"prefix": "2",
 		"body": "float2(1,1)"
 	},
-	"float3": {
-		"prefix": "f3_xyz",
-		"body": "float3(1,1,1)"
-	},
-	"float3_X": {
-		"prefix": "f3_x",
-		"body": "float3(1,0,0)"
-	},
-	"float3_Y": {
-		"prefix": "f3_y",
-		"body": "float3(0,1,0)"
-	},
-	"float3_Z": {
-		"prefix": "f3_z",
-		"body": "float3(0,0,1)"
+	"unitvector float3": {
+		"prefix": "float3_unit",
+		"body": "float3(${1|1\\,0\\,0,0\\,1\\,0,0\\,0\\,1|})"
 	},
 	"float3_XY": {
 		"prefix": "f3_xy",

@@ -6,22 +6,22 @@
 	},
 	"ulog: Integer": {
 		"prefix": "ulog_int",
-		"body": ["UE_LOG(LogTemp, Warning, TEXT(\"%d\"), ${1:MyInt};"],
+		"body": ["UE_LOG(LogTemp, Warning, TEXT(\"%d\"), ${1:MyInt});"],
 		"description": ["Prints the FName of the instance of this class in world."]
 	},
 	"ulog: Float": {
 		"prefix": "ulog_float",
-		"body": ["UE_LOG(LogTemp, Warning, TEXT(\"%f\"), ${1:MyFloat};"],
+		"body": ["UE_LOG(LogTemp, Warning, TEXT(\"%f\"), ${1:MyFloat});"],
 		"description": ["Logs an integer.", "Alternatively: *FString::SanitizeFloat(MyFloat)"]
 	},
 	"ulog: FVector": {
 		"prefix": "ulog_vector",
-		"body": ["UE_LOG(LogTemp, Warning, TEXT(\"%s\"), *${1:MyVector}.ToString();"],
+		"body": ["UE_LOG(LogTemp, Warning, TEXT(\"%s\"), *${1:MyVector}.ToString());"],
 		"description": ["Logs a vector.", "Alternatives:"]
 	},
 	"ulog: FName": {
 		"prefix": "ulog_fname",
-		"body": ["UE_LOG(LogTemp, Warning, TEXT(\"%s\"), *${1:MyActor}->GetFName().ToString();"],
+		"body": ["UE_LOG(LogTemp, Warning, TEXT(\"%s\"), *${1:MyActor}->GetFName().ToString());"],
 		"description": ["Logs an FName.", "Alternatives:"]
 	},
 	"ulog: default": {

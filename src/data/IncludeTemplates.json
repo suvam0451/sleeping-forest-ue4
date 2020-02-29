@@ -63,7 +63,10 @@
 	},
 	{
 		"id": "Widget",
-		"headers": ["Blueprint/UserWidget.h", "Components/TextBlock.h"]
+		"headers": ["Blueprint/UserWidget.h", "Components/TextBlock.h",
+			"Image.h",
+			"Components/GridPanel.h"
+		]
 	},
 	{
 		"id": "Movement",
@@ -72,5 +75,9 @@
 	{
 		"id": "ShaderDirectory",
 		"headers": ["Misc/Paths.h", "Runtime/Launch/Resources/Version.h", "ShaderCore.h"]
+	},
+	{
+		"id": "Curves",
+		"headers": ["Curves/CurveFloat.h", "Curves/CurveVector.h", "Curves/CurveLinearColor.h"]
 	}
 ]

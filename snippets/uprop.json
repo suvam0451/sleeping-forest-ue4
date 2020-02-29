@@ -19,7 +19,7 @@
 	},
 	"uprop : AISightConfigData": {
 		"body": [
-			"UPROPERTY(EditAnywhere, AdvancedDisplay, BlueprintReadWrite, Category=\"AI\")",
+			"UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=\"AI\")",
 			"\tclass UAISenseConfig_Sight* SightConfig;",
 			"\n$0"
 		],
@@ -36,7 +36,7 @@
 	},
 	"uprop : Boolean": {
 		"body": [
-			"UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category=\"Parameters\")",
+			"UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=\"Parameters\")",
 			"\tbool $1;",
 			"\n$0"
 		],
@@ -49,15 +49,6 @@
 			"\n$0"
 		],
 		"prefix": "uprop_switch"
-	},
-	"uprop : Boolean switch (In Advanced View)": {
-		"body": [
-			"UPROPERTY(EditAnywhere, AdvancedDisplay, BlueprintReadWrite, Category=\"Triggers\")",
-			"\tbool $1 = false; // context",
-			"\n$0"
-		],
-		"description": "Adds a boolean switch property(In Advanced dropdown).",
-		"prefix": "uprop_switch_adv"
 	},
 	"uprop : Box Component": {
 		"body": [
@@ -76,7 +67,7 @@
 		"prefix": "uprop_float"
 	},
 	"uprop : GUID": {
-		"body": ["UPROPERTY(BlueprintReadWrite, VisibleAnywhere)", "\tFGuid guid;", "$0"],
+		"body": ["UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=\"Parameters\")", "\tFGuid guid;", "$0"],
 		"prefix": "uprop_guid"
 	},
 	"uprop : Integer": {
@@ -87,43 +78,10 @@
 		],
 		"prefix": "uprop_int"
 	},
-	"uprop : ISMC Array": {
-		"body": [
-			"UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=\"Parameters\")",
-			"\tTArray<UInstancedStaticMeshComponent*> $1;",
-			"\n$0"
-		],
-		"description": [
-			"Adds a public TMap of ISMC. Useful for combining parts procedurally, while building dungeons, castles, walls etc."
-		],
-		"prefix": "uprop_ismc_arr"
-	},
-	"uprop : ISMC Map": {
-		"body": [
-			"UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=\"Parameters\")",
-			"\tTMap<int, UInstancedStaticMeshComponent*> $1;",
-			"\n$0"
-		],
-		"description": [
-			"Adds a public TMap of ISMC. Useful for combining parts procedurally, while building dungeons, castles, walls etc."
-		],
-		"prefix": "uprop_ismc_map"
-	},
-	"uprop : ISMC Map (Advanced Display)": {
-		"body": [
-			"UPROPERTY(EditAnywhere, AdvancedDisplay, BlueprintReadWrite, Category=\"Parameters\")",
-			"\tTMap<int, UInstancedStaticMeshComponent*> $1;",
-			"\n$0"
-		],
-		"description": [
-			"Adds a public TMap of ISMC(In the AdvancedDisplay dropdown). Useful for combining parts procedurally, while building dungeons, castles, walls etc."
-		],
-		"prefix": "uprop_ismc_map_adv"
-	},
 	"uprop : ISMC property": {
 		"body": [
 			"UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=\"Parameters\")",
-			"\tUInstancedStaticMeshComponent *$1;",
+			"\t${1|UInstancedStaticMeshComponent*,TArray<UInstancedStaticMeshComponent*>,TMap<int\\, UInstancedStaticMeshComponent*>|} $2;",
 			"\n$0"
 		],
 		"description": [
@@ -132,22 +90,6 @@
 			"Also use _adv to make property editor readonly."
 		],
 		"prefix": "uprop_ismc"
-	},
-	"uprop : ReadOnly": {
-		"body": [
-			"UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category=\"Parameters\")",
-			"\t$1;",
-			"\n$0"
-		],
-		"prefix": "uprop_ro"
-	},
-	"uprop : Single Spline": {
-		"body": [
-			"UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = \"Parameters\")",
-			"USplineComponent *MySpline;"
-		],
-		"description": ["a single spline"],
-		"prefix": "uprop_spline"
 	},
 	"uprop : Sphere Component": {
 		"body": [
@@ -160,62 +102,19 @@
 	"uprop : SplineComponent": {
 		"body": [
 			"UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=\"Parameters\")",
-			"\tUSplineComponent* $1;",
+			"\t${1|USplineComponent*,TArray<USplineComponent*>,TMap<int\\, USplineComponent*>|} $2;",
 			"\n$0"
 		],
 		"description": ["An array of spline components"],
-		"prefix": "uprop_splinearray"
-	},
-	"uprop : SplineComponent Array": {
-		"body": [
-			"UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=\"Parameters\")",
-			"\tTArray<USplineComponent*> $1;",
-			"\n$0"
-		],
-		"description": ["An array of spline components"],
-		"prefix": "uprop_splinearray"
-	},
-	"uprop : SplineComponent Map": {
-		"body": [
-			"UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=\"Parameters\")",
-			"\tTMap<int, USplineComponent*> $1;",
-			"\n$0"
-		],
-		"description": ["A map of Spline components."],
-		"prefix": "uprop_splinemap"
+		"prefix": "uprop_spline"
 	},
 	"uprop : StaticMesh": {
 		"body": [
 			"UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=\"Parameters\")",
-			"\tUStaticMesh *$1;",
+			"\t${1|UStaticMesh*,TArray<UStaticMesh*>,TMap<int\\, UStaticMesh*>|} $2;",
 			"\n$0"
 		],
-		"prefix": "uprop_mesh"
-	},
-	"uprop : StaticMesh Array": {
-		"body": [
-			"UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=\"Parameters\")",
-			"\tTArray<UStaticMesh*> $1;",
-			"\n$0"
-		],
-		"prefix": "uprop_mesh_array"
-	},
-	"uprop : StaticMesh Map": {
-		"body": [
-			"UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=\"Parameters\")",
-			"\tTMap<int, UStaticMesh*> $1;",
-			"\n$0"
-		],
-		"prefix": "uprop_meshmap"
-	},
-	"uprop : StaticMesh Map(In advanced dropdown)": {
-		"body": [
-			"UPROPERTY(VisibleAnywhere, AdvancedDisplay, BlueprintReadWrite, Category=\"Parameters\")",
-			"\tTMap<int, UStaticMesh*> $1;",
-			"\n$0"
-		],
-		"description": ["Adds a mesh map to property list.", "Use "],
-		"prefix": "uprop_meshmap_ro"
+		"prefix": "uprop_staticmesh"
 	},
 	"uprop : StaticMeshComponent": {
 		"body": [
@@ -241,50 +140,18 @@
 	"uprop : Transform": {
 		"body": [
 			"UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=\"Parameters\")",
-			"\tFTransform $1;",
+			"\t${1|FTransform,TArray<FTransform>,TMap<int\\, FTransform*>|} $2;",
 			"\n$0"
 		],
 		"prefix": "uprop_transform"
 	},
-	"uprop : Transform Array": {
-		"body": [
-			"UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=\"Parameters\")",
-			"\tTArray<FTransform> $1",
-			"\n$0"
-		],
-		"prefix": "uprop_transform_array"
-	},
-	"uprop : Transform Map": {
-		"body": [
-			"UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=\"Parameters\")",
-			"\tTMap<int, FTransform*> $1;",
-			"\n$0"
-		],
-		"prefix": "uprop_transform_map"
-	},
 	"uprop : Vector": {
 		"body": [
 			"UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=\"Parameters\")",
-			"\tFVector $1;",
+			"\t${1|FVector,TArray<FVector>,TMap<int\\, FVector>|} $2;",
 			"\n$0"
 		],
 		"prefix": "uprop_vector"
-	},
-	"uprop : Vector Array": {
-		"body": [
-			"UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=\"Parameters\")",
-			"\tTArray<FVector> $1;",
-			"\n$0"
-		],
-		"prefix": "uprop_vector_array"
-	},
-	"uprop : Vector Map": {
-		"body": [
-			"UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=\"Parameters\")",
-			"\tTMap<int, FVector> $1;",
-			"\n$0"
-		],
-		"prefix": "uprop_vector_map"
 	},
 	"uprop : Asset Pointer": {
 		"body": [
@@ -302,5 +169,21 @@
 		],
 		"prefix": "uprop_subclass",
 		"description": "Used to get references to blueprints. Activate context to get initializer."
+	},
+	"ufunc": {
+		"prefix": "ufunc",
+		"body": ["UFUNCTION(${1|BlueprintCallable,BlueprintImplementableEvent,BlueprintNativeEvent,BlueprintPure|}, Category = \"C++\")", 
+			"\t${2|void,int,float,FString|} $3();", 
+			"\n$0"],
+		"description": "Iterate through specifiers with context keys."
+	},
+	"uprop : curves": {
+		"prefix": "uprop_curve",
+		"body": [
+			"UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=\"Parameters\")",
+			"\t${1|UCurveFloat*,UCurveVector*,UCurveLinearCurve*|} $2;",
+			"\n$0"
+		],
+		"description": "uprop for the following curves {float, vector and color}."
 	}
 }

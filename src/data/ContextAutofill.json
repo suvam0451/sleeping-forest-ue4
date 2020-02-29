@@ -141,5 +141,38 @@
 		"pattern": "FTimerHandle (.*?);",
 		"parsemap": [1],
 		"filepattern": ".cpp$"
+	},
+	{
+		"id": "uprop 1-->2",
+		"body": [
+			"UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category=\"$1\")"
+		],
+		"pattern": "UPROPERTY\\(EditAnywhere, BlueprintReadWrite, Category=\"(.*?)\"\\)",
+		"desc": "Replaces fully accessible properties with editor readonly properties.",
+		"parsemap": [1],
+		"filepattern": ".h$",
+		"action": "replace"
+	},
+	{
+		"id": "uprop 2-->3",
+		"body": [
+			"UPROPERTY(EditAnywhere, AdvancedDisplay, BlueprintReadWrite, Category=\"$1\")"
+		],
+		"pattern": "UPROPERTY\\(VisibleAnywhere, BlueprintReadWrite, Category=\"(.*?)\"\\)",
+		"desc": "Jumps from ReadOnly property to AdvancedTab property.",
+		"parsemap": [1],
+		"filepattern": ".h$",
+		"action": "replace"
+	},
+	{
+		"id": "uprop 3-->4",
+		"body": [
+			"UPROPERTY()"
+		],
+		"pattern": "UPROPERTY\\(EditAnywhere, AdvancedDisplay, BlueprintReadWrite, Category=\"(.*?)\"\\)",
+		"desc": "Jumps from Advanced tab property to C++ only.",
+		"parsemap": [1],
+		"filepattern": ".h$",
+		"action": "replace"
 	}
 ]

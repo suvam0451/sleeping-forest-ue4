@@ -2,84 +2,22 @@
 	"VisualDebug: Line": {
 		"prefix": "udebug_line",
 		"body": [
-			"DrawDebugLine(this->GetWorld(), ${1:FVector()}, ${2:FVector()}, FColor::${2:Green}, false, 4.0f, 0, 0.2f);",
+			"DrawDebugLine(this->GetWorld(), ${2:FVector()}, ${3:FVector()}, FColor::${4:Green}, false, ${1|1.0f,0.03333f,0.01667f,0.00833f|}, 0, 0.2f);",
 			"$0"
-		]
-	},
-	"VisualDebug: Line(30fps)": {
-		"prefix": "udebug_line_30",
-		"body": [
-			"DrawDebugLine(this->GetWorld(), ${1:FVector()}, ${2:FVector()}, FColor::${2:Green}, false, 0.03333f, 0, 1.0f);",
-			"$0"
-		]
-	},
-	"VisualDebug: Line(60fps)": {
-		"prefix": "udebug_line_60",
-		"body": [
-			"DrawDebugLine(this->GetWorld(), ${1:FVector()}, ${2:FVector()}, FColor::${2:Green}, false, 0.01667f, 0, 1.0f);",
-			"$0"
-		]
-	},
-	"VisualDebug: Line(120fps)": {
-		"prefix": "udebug_line_120",
-		"body": [
-			"DrawDebugLine(this->GetWorld(), ${1:FVector()}, ${2:FVector()}, FColor::${2:Green}, false, 0.00833f, 0, 1.0f);",
-			"$0"
-		]
+		],
+		"description": "The dropdown corresponds to default, 30, 60, 120 fps respectively."
 	},
 	"VisualDebug Point": {
 		"prefix": "udebug_point",
 		"body": [
-			"DrawDebugPoint(this->GetWorld(), ${1FVector()}, 2.0f, FColor::${2:Red}, false, 4.0f, 0);",
-			"$0"
-		]
-	},
-	"VisualDebug Point(30fps)": {
-		"prefix": "udebug_point_30",
-		"body": [
-			"DrawDebugPoint(this->GetWorld(), ${1:FVector()}, 2.0f, FColor::${2:Red}, false, 0.03333f, 0);",
-			"$0"
-		]
-	},
-	"VisualDebug Point(60fps)": {
-		"prefix": "udebug_point_60",
-		"body": [
-			"DrawDebugPoint(this->GetWorld(), ${1:FVector()}, 2.0f, FColor::${2:Red}, false,  0.01667f, 0);",
-			"$0"
-		]
-	},
-	"VisualDebug Point(120fps)": {
-		"prefix": "udebug_point_120",
-		"body": [
-			"DrawDebugPoint(this->GetWorld(), ${1:FVector()}, 2.0f, FColor::${2:Red}, false, 0.00833f, 0);",
+			"DrawDebugPoint(this->GetWorld(), ${2:FVector()}, 2.0f, FColor::${3:Red}, false, ${1|1.0f,0.03333f,0.01667f,0.00833f|}, 0);",
 			"$0"
 		]
 	},
 	"VisualDebug Sphere": {
 		"prefix": "udebug_sphere",
 		"body": [
-			"DrawDebugSphere(this->GetWorld(), ${1:FVector()}, ${2:Radius}, 16, FColor::${3:Yellow}, false, 4.0f, 0);",
-			"$0"
-		]
-	},
-	"VisualDebug Sphere(30fps)": {
-		"prefix": "udebug_sphere_30",
-		"body": [
-			"DrawDebugSphere(this->GetWorld(), ${1:FVector()}, ${2:Radius}, 16, FColor::${3:Yellow}, false, 0.03333f, 0);",
-			"$0"
-		]
-	},
-	"VisualDebug Sphere(60fps)": {
-		"prefix": "udebug_sphere_60",
-		"body": [
-			"DrawDebugSphere(this->GetWorld(), ${1:FVector()}, ${2:Radius}, 16, FColor::${3:Yellow}, false, 0.01667f, 0);",
-			"$0"
-		]
-	},
-	"VisualDebug Sphere(120fps)": {
-		"prefix": "udebug_sphere_120",
-		"body": [
-			"DrawDebugSphere(this->GetWorld(), ${1:FVector()}, ${2:Radius}, 16, FColor::${3:Yellow}, false, 0.00833f, 0);",
+			"DrawDebugSphere(this->GetWorld(), ${2:FVector()}, ${3:Radius}, 16, FColor::${4:Yellow}, false, ${1|1.0f,0.03333f,0.01667f,0.00833f|}, 0);",
 			"$0"
 		]
 	}

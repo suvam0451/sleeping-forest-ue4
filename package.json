@@ -126,10 +126,6 @@
 			},
 			{
 				"language": "cpp",
-				"path": "./snippets/ufunc.json"
-			},
-			{
-				"language": "cpp",
 				"path": "./snippets/uinit.json"
 			},
 			{
