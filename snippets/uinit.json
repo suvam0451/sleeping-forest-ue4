@@ -86,5 +86,14 @@
 			"LocOscillation.Z.Frequency = 17.0f;"
 		],
 		"description": "Lists out parameters used for a camera shake. Use in constructor."
+	},
+	"uinit: AnimNode_Struct": {
+		"prefix": "uinit_animnode_struct",
+		"body": [
+			"public:",
+			"\tvirtual void Initialize_AnyThread(const FAnimationInitializeContext& Context) override;",
+			"\tvirtual void Update_AnyThread(const FAnimationUpdateContext& Context) override;",
+			"\tvirtual void Evaluate_AnyThread(FPoseContext& Output) override;"
+		]
 	}
 }

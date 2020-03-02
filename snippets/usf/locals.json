@@ -1,0 +1,6 @@
+{
+	"local: anglewithz": {
+		"prefix": "local_z_dot_normal",
+		"body": "dot(GetObjectOrientation(Parameters.PrimitiveId), Parameters.${1|TangentToWorld[2],WorldNormal|});"
+	}
+}

@@ -1,0 +1,72 @@
+{
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"name": "USF/USH file support",
+	"injectionSelector": "L:source",
+	"scopeName": "source.usf",
+	"fileTypes": ["hlsl"],
+	"patterns": [
+		{
+			"include": "#engine_params"
+		},
+		{
+			"include": "#comment_fix"
+		}
+	],
+	"repository": {
+		"comment_fix": {
+			"patterns": [
+				{
+					"name": "comment.line.double-slash.yeeto",
+					"begin": "//",
+					"end": "$"
+				}
+			]
+		},
+		"engine_params": {
+			"patterns": [
+				{
+					"name": "comment.line.double-slash.yeet",
+					"match": "//(.*?)$"
+				},
+				{
+					"match": "(Material|View).([a-zA-Z_0-9]*)",
+					"comment": "Material is inbuilt",
+					"captures": {
+						"1": {
+							"name": "support.type.object.hlsl"
+						},
+						"2": {
+							"name": "variable.parameter"
+						}
+					}
+				},
+				{
+					"match": "@param *([a-zA-Z0-9]*)",
+					"captures": {
+						"1": {
+							"name": "variable.parameter"
+						}
+					}
+				},
+				{
+					"match": "([a-zA-Z_]*)\\.(.*?)\\(.*?\\)",
+					"captures": {
+						"1": {
+							"name": "support.type.object"
+						},
+						"2": {
+							"name": "support.function"
+						}
+					}
+				},
+				{
+					"match": "(struct) (.*?) {",
+					"captures": {
+						"1": { "name": "storage.type.structured" },
+						"2": { "name": "support.type.object" }
+					}
+				}
+			]
+		}
+	}
+}

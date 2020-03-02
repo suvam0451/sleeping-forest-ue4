@@ -1,0 +1,14 @@
+{
+	"StaticMesh": {
+		"label": "StaticMesh",
+		"list": []
+	},
+	"Texture": {
+		"label": "Textures",
+		"list": []
+	},
+	"Audio": {
+		"label": "Audio",
+		"list": []
+	}
+}

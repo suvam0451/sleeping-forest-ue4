@@ -1,5 +1,16 @@
 # Change Log
 
+## [0.6.13]
+
+- Removed uprop_xyz_arr and uprop_xyz_adv snippets
+- You get a dropdown instead asking you for single/array/map propeerty.
+- `udebug_line`, `udebug_sphere`, `udebug_point` now just ask you for the FPS instead of having separate snippets for each FPS.
+- PI values for .usf files is similarly compacted in favor of more advanced snippets.
+
+### Feature update
+
+- You can now cycle through the properties *(snippet generated)* like this using context key.
+
 ## [0.6.12]
 
 - Fixed some typos

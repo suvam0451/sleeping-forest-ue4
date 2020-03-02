@@ -89,5 +89,49 @@
 		"field": "private",
 		"comment": "",
 		"signature": "virtual void OnRegister() override;"
+	},
+	{
+		"id": "CacheBones",
+		"body": ["// Function not implemented"],
+		"field": "private",
+		"comment": "",
+		"signature": "virtual void CacheBones(const FAnimationCacheBonesContext& Context) override;"
+	},
+	{
+		"id": "Update(Animation)",
+		"body": [
+			"EvaluateGraphExposedInputs.Execute(Context);",
+			"AActor* OwningActor = Context.AnimInstance->GetSkelMeshComponent()->GetOwner(); ",
+			"// BasePose.Update(Context)"
+		],
+		"field": "private",
+		"comment": "",
+		"signature": "virtual void Update_AnyThread(const FAnimationUpdateContext& Context) override;"
+	},
+	{
+		"id": "Evaluate(Animation)",
+		"body": ["// BasePose.Evaluate(Context)"],
+		"field": "private",
+		"comment": "",
+		"signature": "virtual void Evaluate_AnyThread(FPoseContext& Output) override;"
+	},
+	{
+		"id": "Initialize(Animation)",
+		"body": [
+			"// BasePose.Initialize(Context);",
+			"OwnerActor = Context.AnimInstance-> GetSkelMeshComponent()->GetOwner();",
+			"UWorld * TheWorld = Context.AnimInstance->GetWorld();",
+			"if (!TheWorld) return;"
+		],
+		"field": "private",
+		"comment": "",
+		"signature": "virtual void Initialize_AnyThread(const FAnimationInitializeContext& Context) override;"
+	},
+	{
+		"id": "CacheBones(Animation)",
+		"body": ["// BasePose.CacheBones(Context);"],
+		"field": "private",
+		"comment": "",
+		"signature": "virtual void CacheBones_AnyThread(const FAnimationCacheBonesContext& Context) override;"
 	}
 ]

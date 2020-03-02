@@ -53,5 +53,6 @@
 		"**/.git/subtree-cache/**": true,
 		"**/node_modules/*/**": true,
 		"**/Engine/**": true
-	}
+	},
+	"C_Cpp.errorSquiggles": "Enabled"
 }

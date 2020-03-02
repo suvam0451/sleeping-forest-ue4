@@ -13,11 +13,11 @@ import {
 	ReadJSON,
 	CreateDirIfMissing,
 } from "../utils/FilesystemHelper";
-import settings from "../data/templates/streamSettings.json";
 import generator from "../data/templates/pythonGenerator.json";
-import assetexportdata from "../data/templates/assetBasicDataTmpl.json";
-import * as filesys from "../utils/FilesystemHelper";
-import { vsui, vsed, vscfg } from "@suvam0451/vscode-geass";
+import { vsui, vscfg } from "@suvam0451/vscode-geass";
+
+const settings_pythonapi = "settings_pythonapi.json";
+const assetdata = "assetdata.json";
 
 /** Generates module scaffold files for selected folder */
 export async function InitializeStream(): Promise<string> {
@@ -35,17 +35,20 @@ export async function InitializeStream(): Promise<string> {
 				CreateDirIfMissing(path.join(ret, "Source", "TextureSets"));
 
 				// files
+				// settings_pythonapi.json
 
-				let a = WriteFileAsync(path.join(ret, "Audit", "settings.json"), settings, [
-					_normalizedpath,
-				]);
+				let _extdir = vscode.extensions.getExtension("suvam0451.sleeping-forest-ue4").extensionPath;
+
+				fs.copyFileSync(
+					path.join(_extdir, "shared", settings_pythonapi),
+					path.join(ret, "Audit", settings_pythonapi),
+				);
+				fs.copyFileSync(path.join(_extdir, "shared", assetdata), path.join(ret, assetdata));
+
 				let b = WriteFileAsync(path.join(ret, "ExportScript.py"), generator, [_normalizedpath]);
-				let c = WriteFileAsync(path.join(ret, "assetdata.json"), assetexportdata, [
-					_normalizedpath,
-				]);
 				let d = WriteFileAsync(path.join(ret, "Audit", "report.txt"), [""], []);
 
-				Promise.all([a, b, c, d]).then(() => {
+				Promise.all([b, d]).then(() => {
 					vscfg.AppendToVSConfig("SF", "assetFolders", [ret]);
 					vsui.Info(
 						"A new asset stream is being tracked. Please update workspace file (Inject Excludes).",
@@ -53,7 +56,7 @@ export async function InitializeStream(): Promise<string> {
 					resolve(ret);
 				});
 			} catch {
-				vsui.Error("Failed to initialize stream.");
+				vsui.Error("Failed to initialize stream. Maybe a related folder was still open ?");
 			}
 		});
 	});
@@ -160,46 +163,51 @@ export function RefreshStreamForFolder(data: AssetStreamKit) {
 
 /** Exported module */
 export function RefreshListedStreams() {
+	// console.log("yeet");
 	let retval = vscfg.GetVSConfig<string[]>("SF", "assetFolders");
+	console.log(retval);
 	retval.forEach(entry => {
+		console.log("path is: ", entry);
+		//
 		let _entry = path.join(entry, "Assets");
-
+		//
 		const fill = ReadJSON<RootObject>(path.join(entry, "assetdata.json"));
-		const settings = ReadJSON<SettingsStruct>(path.join(entry, "Audit", "settings.json"));
-
+		const settings = ReadJSON<SettingsStruct>(path.join(entry, "Audit", settings_pythonapi));
+		//
 		// reset
 		fill.StaticMesh.list.length = 0;
 		fill.Texture.list.length = 0;
 		fill.Audio.list.length = 0;
-
+		//
 		fs.readdirSync(_entry).forEach(file => {
+			// --> something.ext
 			let stats = fs.lstatSync(path.join(_entry, file));
 			// Handle if directory
 			if (stats.isDirectory()) {
-				if (file === "Animations") {
-				}
-				let funcdata: AssetStreamKit = {
-					dataJSON: fill,
-					settingJSON: settings,
-					folderpath: path.join(_entry, file),
-					targetBasePath: settings.targetPath + "/" + file,
-				};
-				RefreshStreamForFolder(funcdata);
+				// if (file === "Animations") {
+				// }
+				// let funcdata: AssetStreamKit = {
+				// 	dataJSON: fill,
+				// 	settingJSON: settings,
+				// 	folderpath: path.join(_entry, file),
+				// 	targetBasePath: settings.targetPath + "/" + file,
+				// };
+				// RefreshStreamForFolder(funcdata);
 			} else if (RegExp(/(.*?).fbx/i).test(file)) {
 				fill["StaticMesh"].list.push({
-					name: file.match(/^(.*?)\..*?/)![1],
+					name: file.match(/^(.*?)\..*?/)![1], // get path without extension
 					path: path.join(entry, "Assets", file),
 					targetpath: settings.targetPath,
 				});
 			} else if (RegExp(/(.*?).(png|jpg)/i).test(file)) {
 				fill["Texture"].list.push({
-					name: file.match(/^(.*?)\..*?/)![1],
+					name: file.match(/^(.*?)\..*?/)![1], // get path without extension
 					path: path.join(entry, "Assets", file),
 					targetpath: settings.targetPath,
 				});
 			} else if (RegExp(/(.*?).(wav|mp3)/i).test(file)) {
 				fill["Audio"].list.push({
-					name: file.match(/^(.*?)\..*?/)![1],
+					name: file.match(/^(.*?)\..*?/)![1], // get path without extension
 					path: path.join(entry, "Assets", file),
 					targetpath: settings.targetPath,
 				});
@@ -210,7 +218,7 @@ export function RefreshListedStreams() {
 		} catch {
 			vsui.Error("Writing to assetdata.json failed.");
 		}
-
+		//
 		// Populate JSON data for root...
 		const obj1: Array<IStaticMesh> = [];
 		const obj2: Array<IMusic> = [];
@@ -233,22 +241,25 @@ export function RefreshListedStreams() {
 			InjectInDataTable(obj3, AssetType.Textures, enginePath);
 		});
 		WriteJSONToFile(path.join(entry, "Audit", "Tex.json"), obj3);
-
+		//
+		console.log(" I knew it was trouble...");
 		// -----------------------
 		// Run binary toolchains
 		// -----------------------
-
+		//
 		if (settings.run_texturepacker) {
 			let args =
 				'"' +
 				path.join(entry, "Binaries", "texpack.exe") +
 				'" "' +
-				path.join(entry, "settings2.json") +
+				path.join(entry, "Audit", "settings_texpacker.json") +
 				'" "' +
 				path.join(entry, "Source", "TextureSets") +
 				'" "' +
 				path.join(entry, "Assets", "TexPacker") +
 				'"';
+			console.log(args);
+			vsui.Info(args);
 			RunCmd(args);
 		}
 	});
@@ -274,25 +285,24 @@ export function CopyBinaries(os: string, folderpath: string) {
 		}
 		case "Windows_NT": {
 			_binpath = "bin/win64";
-			_extdir = path.join(process.env["USERPROFILE"]!, ".vscode-insiders\\extensions");
 			break;
 		}
 		default:
 			break;
 	}
 
-	if (_extdir !== "") {
-		filesys.ScanFolderWithRegex(_extdir, /suvam0451/).then(folder => {
-			_extdir = path.join(_extdir, folder, _binpath);
-			fs.copyFileSync(
-				path.join(_extdir, "texpack.exe"),
-				path.join(folderpath, "Binaries", "texpack.exe"),
-			);
-			// filesys.ScanFolderWithRegex(_extdir, /suvam0451/);
-		});
+	_extdir = vscode.extensions.getExtension("suvam0451.sleeping-forest-ue4").extensionPath;
 
-		// fs.copyFileSync()
-	}
+	// _extdir = path.join(_extdir, _binpath);
+
+	fs.copyFileSync(
+		path.join(_extdir, _binpath, "texpack.exe"),
+		path.join(folderpath, "Binaries", "texpack.exe"),
+	);
+	fs.copyFileSync(
+		path.join(_extdir, "shared", "settings_texpacker.json"),
+		path.join(folderpath, "Audit", "settings_texpacker.json"),
+	);
 }
 
 /** Runs cmd in windows with given args */
@@ -354,13 +364,8 @@ export interface RootObject {
 
 export interface SettingsStruct {
 	targetPath: string;
-	createMaterials: boolean;
+	create_mats: boolean;
 	importTexturesForMesh: boolean;
-	auto_generate_lods: boolean;
+	auto_generate_mesh_lod: boolean;
 	run_texturepacker: boolean;
-	texPacker: {
-		alias: {
-			normal: ["normal"];
-		};
-	};
 }

@@ -4,8 +4,8 @@
 		"body": "${1|6.28318548,3.14159274,1.57079637|}",
 		"description": "Contains snippet for 2pi, pi, pi/2"
 	},
-	"float2": {
-		"prefix": "2",
+	"unitvector float2": {
+		"prefix": "float2_unit",
 		"body": "float2(1,1)"
 	},
 	"unitvector float3": {
@@ -72,9 +72,35 @@
 		"description": ["Input texture coordinates."]
 	},
 	"TextureLookup_Color": {
-		"body": "ProcessMaterialColorTextureLookup(Texture2DSampleBias(${2:texture}, Material.Texture2D_0Sampler, ${1:uv}, View.MaterialTextureMipBias)"
+		"prefix": "texture_mip_biased",
+		"body": "ProcessMaterialColorTextureLookup(Texture2DSampleBias(Material.Texture2D_${2:0}, Material.Texture2D_${2:0}Sampler, ${3|Parameters.TexCoords[0].xy,UV|}, -1 + View.MaterialTextureMipBias)",
+		"description": "Color texture lookup with mip-map biased"
+	},
+	"TextureLookup_MipLevel": {
+		"prefix": "texture_mip_level",
+		"body": "ProcessMaterialColorTextureLookup(Texture2DSampleLevel(Material.Texture2D_${2:0}, Material.Texture2D_${2:0}Sampler, ${3|Parameters.TexCoords[0].xy,UV|}, float4(4)))"
+	},
+	"TextureLookup_MipNone": {
+		"prefix": "texture_mip_none",
+		"body": "ProcessMaterialColorTextureLookup(Texture2DSampleBias(Material.Texture2D_${2:0}, Material.Texture2D_${2:0}Sampler, ${3|Parameters.TexCoords[0].xy,UV|}, View.MaterialTextureMipBias));"
 	},
 	"Time(overflow fixed)": {
 		"body": ""
+	},
+	"PixelNormalWS": {
+		"prefix": "pixel_normal_ws",
+		"body": "Parameters.WorldNormal"
+	},
+	"VertexNormalWS": {
+		"prefix": "vertex_normal_ws",
+		"body": "Parameters.TangentToWorld[2]"
+	},
+	"SmoothStep": {
+		"prefix": "smoothstep",
+		"body": "smoothstep(0, 1, UV.y);"
+	},
+	"power UE4": {
+		"prefix": "pow_ue4",
+		"body": "PositiveClampedPow($1, $2);"
 	}
 }

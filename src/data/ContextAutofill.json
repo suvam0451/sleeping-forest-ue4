@@ -82,7 +82,7 @@
 		"body": ["$1 $x::$2$3 {", "\t// Function not implemented", "}"],
 		"desc": "Generates function body for a target line.",
 		"action": "fnbodygen",
-		"pattern": "^\t?(FORCEINLINE )?(virtual )?([a-z_A-Z<>,&*]*) ?([a-zA-Z_, <>(=0-9\"*& ]*\\))( const)?( override)?;",
+		"pattern": "^\t?(FORCEINLINE )?(virtual )?([a-z_A-Z<>,&*]*) ?([a-zA-Z_, :<>(=0-9\"*& ]*\\))( const)?( override)?;",
 		"parsemap": [3, 4, 5],
 		"filepattern": ".h$"
 	},
@@ -144,10 +144,8 @@
 	},
 	{
 		"id": "uprop 1-->2",
-		"body": [
-			"UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category=\"$1\")"
-		],
-		"pattern": "UPROPERTY\\(EditAnywhere, BlueprintReadWrite, Category=\"(.*?)\"\\)",
+		"body": ["UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category=\"$1\")"],
+		"pattern": "UPROPERTY\\(EditAnywhere, BlueprintReadWrite, Category ?= ?\"(.*?)\"\\)",
 		"desc": "Replaces fully accessible properties with editor readonly properties.",
 		"parsemap": [1],
 		"filepattern": ".h$",
@@ -155,10 +153,8 @@
 	},
 	{
 		"id": "uprop 2-->3",
-		"body": [
-			"UPROPERTY(EditAnywhere, AdvancedDisplay, BlueprintReadWrite, Category=\"$1\")"
-		],
-		"pattern": "UPROPERTY\\(VisibleAnywhere, BlueprintReadWrite, Category=\"(.*?)\"\\)",
+		"body": ["UPROPERTY(EditAnywhere, AdvancedDisplay, BlueprintReadWrite, Category=\"$1\")"],
+		"pattern": "UPROPERTY\\(VisibleAnywhere, BlueprintReadWrite, Category ?= ?\"(.*?)\"\\)",
 		"desc": "Jumps from ReadOnly property to AdvancedTab property.",
 		"parsemap": [1],
 		"filepattern": ".h$",
@@ -166,10 +162,8 @@
 	},
 	{
 		"id": "uprop 3-->4",
-		"body": [
-			"UPROPERTY()"
-		],
-		"pattern": "UPROPERTY\\(EditAnywhere, AdvancedDisplay, BlueprintReadWrite, Category=\"(.*?)\"\\)",
+		"body": ["UPROPERTY()"],
+		"pattern": "UPROPERTY\\(EditAnywhere, AdvancedDisplay, BlueprintReadWrite, Category ?= ?\"(.*?)\"\\)",
 		"desc": "Jumps from Advanced tab property to C++ only.",
 		"parsemap": [1],
 		"filepattern": ".h$",

@@ -9,11 +9,7 @@
 		"description": ""
 	},
 	"uprop: TextBlock": {
-		"body": [
-			"UPROPERTY(meta = (BindWidget))",
-			"\tUTextBlock* CurrentDialogue;",
-			"\n$0"
-		],
+		"body": ["UPROPERTY(meta = (BindWidget))", "\tUTextBlock* CurrentDialogue;", "\n$0"],
 		"prefix": "uprop_textblock",
 		"description": "Adds UPROPERTY()"
 	},
@@ -67,7 +63,11 @@
 		"prefix": "uprop_float"
 	},
 	"uprop : GUID": {
-		"body": ["UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=\"Parameters\")", "\tFGuid guid;", "$0"],
+		"body": [
+			"UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=\"Parameters\")",
+			"\tFGuid guid;",
+			"$0"
+		],
 		"prefix": "uprop_guid"
 	},
 	"uprop : Integer": {
@@ -172,9 +172,11 @@
 	},
 	"ufunc": {
 		"prefix": "ufunc",
-		"body": ["UFUNCTION(${1|BlueprintCallable,BlueprintImplementableEvent,BlueprintNativeEvent,BlueprintPure|}, Category = \"C++\")", 
-			"\t${2|void,int,float,FString|} $3();", 
-			"\n$0"],
+		"body": [
+			"UFUNCTION(${1|BlueprintCallable,BlueprintImplementableEvent,BlueprintNativeEvent,BlueprintPure|}, Category = \"C++\")",
+			"\t${2|void,int,float,FString|} $3();",
+			"\n$0"
+		],
 		"description": "Iterate through specifiers with context keys."
 	},
 	"uprop : curves": {
@@ -185,5 +187,24 @@
 			"\n$0"
 		],
 		"description": "uprop for the following curves {float, vector and color}."
+	},
+	"uprop : poselink": {
+		"prefix": "uprop_poselink",
+		"body": [
+			"UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Links)",
+			"FPoseLink ${1:BasePose};"
+		],
+		"description": "This Can Be Entire Anim Graph Up To This Point, or Any Combination of Other Nodes"
+	},
+	"uprop: poselink(component space)": {
+		"prefix": "uprop_poselink_componentspace",
+		"body": ["UPROPERTY(Category=Links)", "FComponentSpacePoseLink ${1:ComponentPose};"]
+	},
+	"uprop: animationnode": {
+		"prefix": "uprop_animgraph_pin",
+		"body": [
+			"UPROPERTY(Category=CustomAnim, meta(${1|PinShownByDefault,AlwaysAsPin,PinHiddenByDefault,NeverAsPin|}))",
+			"${2|float} ${3:VarName};"
+		]
 	}
 }

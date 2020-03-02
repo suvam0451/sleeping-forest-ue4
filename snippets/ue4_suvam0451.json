@@ -61,6 +61,25 @@
 		],
 		"description": ["USTRUCT template"]
 	},
+	"ustruct: animnode": {
+		"prefix": "ustruct_animnode",
+		"body": [
+			"USTRUCT(BlueprintType)",
+			"struct F$1 : public FAnimNode_Base {",
+			"\tGENERATED_USTRUCT_BODY()",
+			"",
+			"\tUPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Links, meta=(PinShownByDefault))",
+			"\tfloat SampleProp;",
+			"",
+			"public:",
+			"\tvirtual void Initialize(const FAnimationInitializeContext& Context) override;",
+			"\tvirtual void Update(const FAnimationUpdateContext& Context) override;",
+			"\tvirtual void Evaluate(FPoseContext& Output) override;",
+			"",
+			"$1();",
+			"};"
+		]
+	},
 	"UENUM": {
 		"prefix": "uenum",
 		"body": ["UENUM()", "enum E$1", "{", "\t$0", "};"],

@@ -77,6 +77,7 @@ export function activate(context: vscode.ExtensionContext) {
 	let RefreshAssetFolder = vscode.commands.registerCommand(
 		"extension.sf.refreshAssetFolders",
 		() => {
+			console.log("Knnichiwa Desu");
 			AssetStream.RefreshListedStreams();
 		},
 	);

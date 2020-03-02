@@ -111,8 +111,10 @@ func SeekDir(pathIn string, includeDir bool, includeFiles bool) (retval []FileDa
 func main() {
 	var mySettings Tex4Settings
 	if len(os.Args) < 3 {
+		println("Inadequate number of arguments !!!")
 		return
 	}
+	fmt.Println("All checks completed")
 	settingFileLoc := os.Args[1]
 	jsonFile, _ := os.Open(settingFileLoc)
 	jsonFileData, _ := ioutil.ReadAll(jsonFile)

@@ -1,0 +1,7 @@
+{
+	"targetPath": "/Game/StreamExample",
+	"create_mats": false,
+	"importTexturesForMesh": false,
+	"auto_generate_mesh_lod": true,
+	"run_texturepacker": true
+}
