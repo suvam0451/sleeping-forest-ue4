@@ -174,43 +174,42 @@ function GetEOL(editor: vscode.TextEditor, line: number): vscode.Position {
 }
 
 /** Simple replaces te current line with the new stitched string */
-export function ReplaceCurrentLine(_In: string){
+export function ReplaceCurrentLine(_In: string) {
 	let editor = vscode.window.activeTextEditor;
 	let pos = editor?.selection.active.line;
 	let startingloc = editor?.document.lineAt(pos);
-	editor
-		?.edit(editBuilder => {
-			editBuilder.replace(startingloc.range, _In);
-		});
+	editor?.edit(editBuilder => {
+		editBuilder.replace(startingloc.range, _In);
+	});
 }
 
-export function StitchStringArray(newval: string[], preserveTabs?: boolean) : string{
-		let editor = vscode.window.activeTextEditor;
-		let pos = editor?.selection.active.line;
-		let startingloc = editor?.document.lineAt(pos);
-		let numtabs = (preserveTabs === true) ? NumberOfTabs(startingloc.text): 0;
-		let retstr = "";
-		newval.forEach((str)=>{
-			retstr = retstr.concat("\t".repeat(numtabs), str, "\n");
-		});
-		retstr = retstr.trimRight(); // get rid of ending \n ONLY
-		// editor
-		// 	?.edit(editBuilder => {
-		// 		editBuilder.replace(startingloc.range, retstr);
-		// 	});
-		return retstr;
+export function StitchStringArray(newval: string[], preserveTabs?: boolean): string {
+	let editor = vscode.window.activeTextEditor;
+	let pos = editor?.selection.active.line;
+	let startingloc = editor?.document.lineAt(pos);
+	let numtabs = preserveTabs === true ? NumberOfTabs(startingloc.text) : 0;
+	let retstr = "";
+	newval.forEach(str => {
+		retstr = retstr.concat("\t".repeat(numtabs), str, "\n");
+	});
+	retstr = retstr.trimRight(); // get rid of ending \n ONLY
+	// editor
+	// 	?.edit(editBuilder => {
+	// 		editBuilder.replace(startingloc.range, retstr);
+	// 	});
+	return retstr;
 }
 
-function NumberOfTabs(_In: string) : number {
+function NumberOfTabs(_In: string): number {
 	var count = 0;
 	var index = 0;
 	while (_In.charAt(index++) === "\t") {
-	  count++;
+		count++;
 	}
 	return count;
 }
 
-function ResolveSymbolsInMultiple(_In :string[], symbols: string[]) : string[]{
+function ResolveSymbolsInMultiple(_In: string[], symbols: string[]): string[] {
 	symbols.forEach((symbol, i) => {
 		let str = "\\$" + (i + 1);
 		if (symbol !== undefined) {
@@ -224,10 +223,10 @@ function ResolveSymbolsInMultiple(_In :string[], symbols: string[]) : string[]{
 
 /** Replaces $x with values from symbols array. Takes a single string.
  * 	Use StitchStringArray to process an array.
- * @param _In  
+ * @param _In
  * @param symbols sumbol array
-*/
-function ResolveSymbols(_In :string, symbols: string[]) : string{
+ */
+function ResolveSymbols(_In: string, symbols: string[]): string {
 	symbols.forEach((symbol, i) => {
 		let str = "\\$" + (i + 1);
 		if (symbol !== undefined) {

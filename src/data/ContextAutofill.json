@@ -75,7 +75,8 @@
 		"desc": "fires up the header include manager",
 		"action": "headermodule",
 		"pattern": "^#include ",
-		"parsemap": []
+		"parsemap": [],
+		"filepattern": ".(h|cpp)$"
 	},
 	{
 		"id": "functionbodygen",
@@ -116,7 +117,8 @@
 		"desc": "Replaces function default body with super",
 		"action": "replace_super",
 		"pattern": "// Function not implemented",
-		"parsemap": []
+		"parsemap": [],
+		"filepattern": ".cpp$"
 	},
 	{
 		"id": "timer_init(delegate)",
@@ -128,7 +130,7 @@
 		"action": "copy",
 		"pattern": "FTimerDelegate (.*?);",
 		"parsemap": [1],
-		"filepattern": ".cpp$"
+		"filepattern": ".h$"
 	},
 	{
 		"id": "timer_init(handle)",
@@ -140,7 +142,7 @@
 		"action": "copy",
 		"pattern": "FTimerHandle (.*?);",
 		"parsemap": [1],
-		"filepattern": ".cpp$"
+		"filepattern": ".h$"
 	},
 	{
 		"id": "uprop 1-->2",

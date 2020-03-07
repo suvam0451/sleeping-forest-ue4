@@ -1,18 +1,20 @@
 # Change Log
 
-## [0.6.13] - 3 March 2020
+## [0.6.13] - 7 March 2020
+
+- PI values for .usf files similarily provide dropdowns for PI, 2PI, PI/2.
+- Logo update
+- Included most nodes covered by YT series by M. Wadstein. Exclusions listen in snippets/usf/MissingNodes.md
+- Experimental grammar support for usf files.
+
+### Feature update
 
 - Removed `uprop_xyz_arr` and `uprop_xyz_adv` snippets.
 - You get a dropdown instead asking you for single/array/map properties.
 - Similarily, `udebug_line`, `udebug_sphere`, `udebug_point` now just ask you for the FPS instead of having separate snippets for each FPS.
-- PI values for .usf files similarily provide dropdowns for PI, 2PI, PI/2.
-- Logo update
-- Added material nodes : Camera vectors, vertex tangents/normals, panner, rotator
-- transpiled HLSL functions : BumpOffset
+- You can now cycle through the properties _(snippet generated)_ like this using snippets.
 
-### Feature update
-
-- You can now cycle through the properties _(snippet generated)_ like this using context key.
+![Choice](https://i.imgur.com/DavFgyE.png)
 
 ## [0.6.12]
 

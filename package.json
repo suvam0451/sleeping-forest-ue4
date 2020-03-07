@@ -108,6 +108,15 @@
 				]
 			}
 		],
+		"grammars": [
+			{
+				"scopeName": "source.usf",
+				"path": "./syntaxes/usf.tmLanguage.json",
+				"injectTo": [
+					"source.hlsl"
+				]
+			}
+		],
 		"snippets": [
 			{
 				"language": "cpp",
