@@ -15,48 +15,31 @@ import { InjectHeaders, InjectFunctions } from "../utils/FileHelper";
 import * as _ from "lodash";
 import * as filesys from "../utils/FilesystemHelper";
 import { vsui } from "@suvam0451/vscode-geass";
+import { ClassCreationKit, PluginPathInfo } from "./TypesExport";
 const _buildspaceModPath = "data/extensions/Buildspaces_Ext.json";
-
-interface ClassCreationKit {
-	modulepath: string;
-	modulename: string;
-	classprefix: string;
-	parentclass: string;
-	classname: string;
-	buildspace: string;
-	isGameModule: boolean;
-	headerpath: string;
-	sourcepath: string;
-}
-
-export interface PluginPathInfo {
-	foldername: string;
-	folderpath: string;
-	isGameModule: boolean;
-}
 
 /** ENTRY POINT of module */
 export default async function CreateClassModule(): Promise<void> {
-	NamespaceSelection().then(ret => {
-		// Gets { buildspace }
-		ModuleSelection(ret).then(ret2 => {
-			// Gets { modulename, modulepath }
-			ClassSelection(ret2).then(ret3 => {
-				// Gets { parentclass, classname }
-				GenerateFileData(ret3).then(ret4 => {
-					// Gets { headerpath,  sourcepath }
-					ValidateRequest(ret4).then(ret5 => {
-						if (ret5) {
-							HandleClassGeneration(ret4).then(() => {
-								// WriteAtLine(ret4.headerpath, 8, ["Onii chan", "Yamete Kudasai"]);
-							});
-						}
+	return new Promise<void>((resolve, reject) => {
+		NamespaceSelection().then(ret => {
+			// Gets { buildspace }
+			ModuleSelection(ret).then(ret2 => {
+				// Gets { modulename, modulepath }
+				ClassSelection(ret2).then(ret3 => {
+					// Gets { parentclass, classname }
+					GenerateFileData(ret3).then(ret4 => {
+						// Gets { headerpath,  sourcepath }
+						ValidateRequest(ret4).then(ret5 => {
+							if (ret5) {
+								HandleClassGeneration(ret4).then(() => {
+									// This needs to be purged
+								});
+							}
+						});
 					});
 				});
 			});
 		});
-	});
-	return new Promise<void>((resolve, reject) => {
 		resolve();
 	});
 }

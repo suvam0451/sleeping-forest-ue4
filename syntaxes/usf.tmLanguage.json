@@ -29,7 +29,7 @@
 					"match": "//(.*?)$"
 				},
 				{
-					"match": "(Material|View).([a-zA-Z_0-9]*)",
+					"match": " (Material|View).([a-zA-Z_0-9]*)",
 					"comment": "Material is inbuilt",
 					"captures": {
 						"1": {

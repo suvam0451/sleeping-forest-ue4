@@ -9,5 +9,38 @@
 			"return sqrt(distance_squared);",
 			"}"
 		]
+	},
+	{
+		"id": "BumpOffset",
+		"body": [
+			"/** Parallex mapping. Used to fake depth using heightmap without tesselation. Outputs UV for normal map. Takes DiffuseMap as input",
+			"float2 BumpOffset(float3 BaseColor, float HeightRatioInput) {",
+			"float Offsetted = (BaseColor.y * HeightRatioInput) - 0.5 * HeightRatioInput;",
+			"float4 multiplied = mul(float3x3(Parameters.TangentToWorld), Parameters.CameraVector); // Basically dot product",
+			"float2 FullAccess = multiplied.xy * Offsetted + float2(0,0); // Coordinate offset 0 by default",
+			"return NeUV;",
+			"}"
+		]
+	},
+	{
+		"id": "DepthFade",
+		"body": [
+			"float DepthFade(float Opacity, flaot FadeDistance) {",
+			"float reldepth = CalcSceneDepth(ScreenAlignedPosition(GetScreenPosition(Parameters))) - GetScreenPosition(Parameters).w;",
+			"float factored = reldepth / FadeDistance;",
+			"float clamped = min(max(factored, 0), 1) * Opacity;",
+			"return clamped;",
+			"}"
+		]
+	},
+	{
+		"id": "Fresnel",
+		"body": [
+			"float Fresnel(float ExponentIn, float BaseReflectFractionIn) {",
+			"float magnitude = dot(Parameters.WorldNormal, Parameters.CameraVector);",
+			"float Leniant = clamp(abs(1 - max(0, magnitude)), ExponentIn);",
+			"float _Out = Leniant * (1 - BaseReflectFractionIn) + BaseReflectFractionIn;",
+			"}"
+		]
 	}
 ]

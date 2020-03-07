@@ -28,6 +28,10 @@
 		"prefix": "camera_position",
 		"body": "ResolvedView.WorldCameraOrigin"
 	},
+	"Camera Vector": {
+		"prefix": "camera_vector",
+		"body": "Parameters.CameraVector"
+	},
 	"Object Position": {
 		"prefix": "object_position",
 		"body": "GetObjectWorldPosition(Parameters)"
@@ -61,7 +65,7 @@
 		"prefix": "texture_sample",
 		"body": "ProcessMaterialColorTextureLookup(Texture2DSampleBias(${1:TextureName}, Material.Texture2D_0Sampler,Parameters.TexCoords[0].xy,View.MaterialTextureMipBias))"
 	},
-	"GetScreenPosition(Parameters).w": {
+	"Screen Position": {
 		"prefix": "screen_position",
 		"body": "GetScreenPosition(Parameters)",
 		"description": [".uv for screen coordinates", ".w is pixel position"]
@@ -87,20 +91,62 @@
 	"Time(overflow fixed)": {
 		"body": ""
 	},
-	"PixelNormalWS": {
+	"Pixel Normal": {
 		"prefix": "pixel_normal_ws",
 		"body": "Parameters.WorldNormal"
 	},
-	"VertexNormalWS": {
+	"Vertex Normal": {
 		"prefix": "vertex_normal_ws",
 		"body": "Parameters.TangentToWorld[2]"
 	},
-	"SmoothStep": {
-		"prefix": "smoothstep",
-		"body": "smoothstep(0, 1, UV.y);"
+	"Vertex_All_Vectors": {
+		"prefix": "vertex_vectors_ws",
+		"body": "(float3x3)(Parameters.TangentToWorld)",
+		"description": "Contains three vectors. local X/Y(surface tangenst), local Z(Normal). All outputs in world space."
+	},
+	"Vertex_Tangent_X": {
+		"prefix": "vertex_tangent_x",
+		"body": "Parameters.TangentToWorld[0]",
+		"description": "Local X tangent per vertex"
+	},
+	"Vertex_Tangent_Y": {
+		"prefix": "vertex_tangent_y",
+		"body": "Parameters.TangentToWorld[1]",
+		"description": "Local Y tangent per vertex"
 	},
 	"power UE4": {
-		"prefix": "pow_ue4",
+		"prefix": "power_ue4",
 		"body": "PositiveClampedPow($1, $2);"
+	},
+	"Panner": {
+		"prefix": "panner",
+		"body": "(float2(0.1,0.1) * View.GameTime + Parameters.TexCoords[0].xy)"
+	},
+	"Rotator": {
+		"prefix": "rotator",
+		"body": [
+			"float3 comps = float3(cos(View.GameTime), sin(View.GameTime), sin(View.GameTime) - 1); // sine is negative in 2nd quadrant. Multiply speed to time.",
+			"float2 NeUV = Parameters.TexCoords[0].xy - float2(0.5,0.5); // Origin to center",
+			"float2 RetUV = float2(dot(comps.xz, NeUV), dot(comps.yx, NeUV)); // Origin to original after transforming with center as pivot.",
+			"return RetUV;"
+		]
+	},
+	"ActorPosition": {
+		"prefix": "actor_position",
+		"body": ["GetActorWorldPosition(Parameters.PrimitiveId)"]
+	},
+	"Object Radius": {
+		"prefix": "object_radius",
+		"body": "GetPrimitiveData(Parameters.PrimitiveId).ObjectWorldPositionAndRadius.w"
+	},
+	"View Size": {
+		"prefix": "view_size",
+		"body": "View.ViewSizeAndInvSize.xy",
+		"description": "Size of the screen."
+	},
+	"Object Orientation": {
+		"prefix": "object_orientation",
+		"body": "GetObjectOrientation(Parameters.PrimitiveId)",
+		"description": "At no rotation, Z is up for UE4"
 	}
 }

@@ -7,6 +7,8 @@
 - Similarily, `udebug_line`, `udebug_sphere`, `udebug_point` now just ask you for the FPS instead of having separate snippets for each FPS.
 - PI values for .usf files similarily provide dropdowns for PI, 2PI, PI/2.
 - Logo update
+- Added material nodes : Camera vectors, vertex tangents/normals, panner, rotator
+- transpiled HLSL functions : BumpOffset
 
 ### Feature update
 
