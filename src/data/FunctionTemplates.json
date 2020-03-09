@@ -133,5 +133,12 @@
 		"field": "private",
 		"comment": "",
 		"signature": "virtual void CacheBones_AnyThread(const FAnimationCacheBonesContext& Context) override;"
+	},
+	{
+		"id": "Tick(Widget)",
+		"body": ["Super::Tick(MyGeometry, InDeltaTime);"],
+		"field": "private",
+		"comment": "",
+		"signature": "void Tick(FGeometry MyGeometry, float InDeltaTime);"
 	}
 ]

@@ -159,6 +159,10 @@
 				"path": "./snippets/ulog.json"
 			},
 			{
+				"language": "cpp",
+				"path": "./snippets/uwidget.json"
+			},
+			{
 				"language": "hlsl",
 				"path": "./snippets/usf/nodes.json"
 			},

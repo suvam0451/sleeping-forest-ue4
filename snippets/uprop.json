@@ -206,5 +206,12 @@
 			"UPROPERTY(Category=CustomAnim, meta(${1|PinShownByDefault,AlwaysAsPin,PinHiddenByDefault,NeverAsPin|}))",
 			"${2|float} ${3:VarName};"
 		]
+	},
+	"uprop: vector 2d": {
+		"prefix": "uprop_vec2d",
+		"body": [
+			"UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Parameters)",
+			"FVector2D ${1:VarName};"
+		]
 	}
 }

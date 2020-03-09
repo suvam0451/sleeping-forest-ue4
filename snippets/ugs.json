@@ -32,5 +32,9 @@
 			"}",
 			"$0"
 		]
+	},
+	"ugs : Get player controller": {
+		"prefix": "ugs_playercontroller",
+		"body": "UGameplayStatics::GetPlayerController(this, 0);"
 	}
 }

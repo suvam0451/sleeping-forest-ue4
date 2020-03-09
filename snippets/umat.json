@@ -21,5 +21,22 @@
 		"prefix": "umat_settexture",
 		"body": ["${2:Inst_mat_0}->SetTextureParameterValue($1{\"\"}, AssetPtr.Get());"],
 		"description": "YYoucan set texture either through a hard UTexture* or a soft AssetPtr<UTexture>."
+	},
+	"umat: Run Compute shader": {
+		"prefix": "umat_runcomputeshader",
+		"body": [
+			"static void RunComputeShader_RenderThread(FRHICommandListImmediate& RHICmdList, const FShaderUsageExampleParameters& DrawParameters, FUnorderedAccessViewRHIRef ComputeShaderOutputUAV);"
+		]
+	},
+	"ucompute: implement": {
+		"prefix": "ucompute_implement",
+		"body": [
+			"IMPLEMENT_GLOBAL_SHADER(${1|FComputeShaderClass}, \"/TutorialShaders/Private/ComputeShader.usf\", \"${2|MainComputeShader}\", SF_Compute);"
+		],
+		"description": "Parameters are ShaderType, ShaderPath, Shader function name, Type"
+	},
+	"ucompute: declare": {
+		"prefix": "ucompute_declare",
+		"body": "DECLARE_GLOBAL_SHADER({1:FYourComputeShaderDerivedClass})"
 	}
 }

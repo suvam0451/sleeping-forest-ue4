@@ -1,0 +1,26 @@
+{
+	"uwidget: localtoviewport": {
+		"prefix": "uwidget_locatoviewport",
+		"body": [
+			"FVector2D out_pixelpos, out_viewportpos;",
+			"USlateBlueprintLibrary::LocalToViewport(this, geometry, MousePos, out_pixelpos, out_viewportpos);"
+		],
+		"description": "Mostly useful to convert from mouse position function to viewport space for (proper)pixel position in shaders."
+	},
+	"uwidget: getgeometry": {
+		"prefix": "uwidget_geometry",
+		"body": "FGeometry ${1|geometry} = UWidgetLayoutLibrary::GetViewportWidgetGeometry(this);"
+	},
+	"uwidget: mouseposition": {
+		"prefix": "uwidget_mouseposition",
+		"body": "FVector2D MousePos = UWidgetLayoutLibrary::GetMousePositionOnViewport(this);"
+	},
+	"uwidget: mousepos scaled by DPI": {
+		"prefix": "uwidgte_mousepos_scaledbydpi",
+		"body": [
+			"float locx, locy;",
+			"APlayerController* controller = UGameplayStatics::GetPlayerController(this, ${1:0});",
+			"UWidgetLayoutLibrary::GetMousePositionScaledbyDPI(controller, locx, locy);"
+		]
+	}
+}
