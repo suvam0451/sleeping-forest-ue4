@@ -33,7 +33,7 @@
 	"uprop : Boolean": {
 		"body": [
 			"UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=\"Parameters\")",
-			"\tbool $1;",
+			"\t{1|bool,TArray<bool>|} $1;",
 			"\n$0"
 		],
 		"prefix": "uprop_bool"
@@ -57,7 +57,7 @@
 	"uprop : Floating point": {
 		"body": [
 			"UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=\"Parameters\")",
-			"\tfloat $1;",
+			"\t${1|float,TArray<float>|} $2;",
 			"\n$0"
 		],
 		"prefix": "uprop_float"
@@ -94,7 +94,7 @@
 	"uprop : Sphere Component": {
 		"body": [
 			"UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=\"Parameters\")",
-			"\tUSphereComponent* $1;",
+			"\t${1|USphereComponent*,TArray<USphereComponent*>,TMap<int\\, USphereComponent*>| $2;",
 			"\n$0"
 		],
 		"prefix": "uprop_sphere"
@@ -119,7 +119,7 @@
 	"uprop : StaticMeshComponent": {
 		"body": [
 			"UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=\"Parameters\")",
-			"\tUStaticMeshComponent *$1;",
+			"\t${1|UStaticMeshComponent*,TArray<UStaticMeshComponent*>,TMap<int\\, UStaticMeshComponent*>|} $2;",
 			"\n$0"
 		],
 		"prefix": "uprop_meshcomp"
@@ -127,10 +127,10 @@
 	"uprop : String": {
 		"body": [
 			"UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=\"Triggers\")",
-			"\tFString $1;",
+			"\t${1|FString,TArray<FString>|} $2;",
 			"\n$0"
 		],
-		"description": "Adds a FString property.",
+		"description": "Add FString property/array.",
 		"prefix": "uprop_string"
 	},
 	"uprop : Timer(Handle + Del)": {
@@ -212,6 +212,14 @@
 		"body": [
 			"UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Parameters)",
 			"FVector2D ${1:VarName};"
+		]
+	},
+	"uprop: arrow component": {
+		"prefix": "uprop_arrow",
+		"body": [
+			"UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = \"Parameters\")",
+			"${1|UArrowComponent*, TArray<UArrowComponent*>|} $2;",
+			"\n$0"
 		]
 	}
 }

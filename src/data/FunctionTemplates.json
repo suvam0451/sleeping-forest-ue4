@@ -140,5 +140,12 @@
 		"field": "private",
 		"comment": "",
 		"signature": "void Tick(FGeometry MyGeometry, float InDeltaTime);"
+	},
+	{
+		"id": "Landed",
+		"body": [""],
+		"field": "private",
+		"comment": "",
+		"signature": "virtual void Landed(const FHitResult& Hit) override;"
 	}
 ]

@@ -28,5 +28,11 @@
 		"prefix": "ulog",
 		"body": ["UE_LOG(LogTemp, Warning, TEXT(\"$1\")$2);"],
 		"description": "Prints a warning to console."
+	},
+	"ulog: boolean": {
+		"prefix": "ulog_bool",
+		"body": [
+			"UE_LOG(LogTemp, Warning, TEXT(\"Boolean value is: %s\"), (MyAnimInstance->IsCrouched ? TEXT(\"True\") : TEXT(\"False\")));"
+		]
 	}
 }

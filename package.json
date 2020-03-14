@@ -196,9 +196,7 @@
 						"FeaturePacks",
 						"Samples",
 						"Templates",
-						"Engine/Build",
-						"Engine/Extras",
-						"Engine/Content",
+						"Extras",
 						"Engine/Source/Editor",
 						"Content",
 						"Resources"
