@@ -22,7 +22,6 @@
 		"onCommand:extension.sf.compileCode",
 		"onCommand:extension.sf.onConstruction",
 		"onCommand:extension.sf.includeManager",
-		"onCommand:extension.sf.errorLibrary",
 		"onCommand:extension.sf.createClass",
 		"onCommand:extension.sf.injectExcludes",
 		"onCommand:extension.sf.initializeAssetFolder",
@@ -59,10 +58,6 @@
 			{
 				"command": "extension.sf.includeManager",
 				"title": "UE4 : Include Headers"
-			},
-			{
-				"command": "extension.sf.errorLibrary",
-				"title": "UE4 : Search Error Library"
 			},
 			{
 				"command": "extension.sf.createClass",

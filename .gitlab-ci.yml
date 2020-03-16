@@ -1,6 +1,6 @@
 image: node:latest
 
-4.22.vsix:
+Default:
   script:
     # Comment out to use github packages
     - yarn config set '//npm.pkg.github.com/:_authToken' "${GITHUB_AUTH_TOKEN}"
@@ -16,3 +16,51 @@ image: node:latest
   artifacts:
     paths:
       - ./*.vsix
+
+# patch updates
+Shipping_Patch:
+  script:
+    - yarn config set '//npm.pkg.github.com/:_authToken' "${GITHUB_AUTH_TOKEN}"
+    - npm config set '//npm.pkg.github.com/:_authToken' "${GITHUB_AUTH_TOKEN}"
+    - yarn login --registry=https://npm.pkg.github.com
+    - yarn install
+    - yarn run webpack
+    - yarn vsce publish patch -p ${VSCODE_AUTH_TOKEN}
+  artifacts:
+    paths:
+      - ./*.vsix
+  only:
+    variables:
+      - $CI_COMMIT_MESSAGE =~ /-patch/
+
+# minor version increments
+Shipping_Minor:
+  script:
+    - yarn config set '//npm.pkg.github.com/:_authToken' "${GITHUB_AUTH_TOKEN}"
+    - npm config set '//npm.pkg.github.com/:_authToken' "${GITHUB_AUTH_TOKEN}"
+    - yarn login --registry=https://npm.pkg.github.com
+    - yarn install
+    - yarn run webpack
+    - yarn vsce publish minor -p ${VSCODE_AUTH_TOKEN}
+  artifacts:
+    paths:
+      - ./*.vsix
+  only:
+    variables:
+      - $CI_COMMIT_MESSAGE =~ /-minor/
+
+# major version increments
+Shipping_Major:
+  script:
+    - yarn config set '//npm.pkg.github.com/:_authToken' "${GITHUB_AUTH_TOKEN}"
+    - npm config set '//npm.pkg.github.com/:_authToken' "${GITHUB_AUTH_TOKEN}"
+    - yarn login --registry=https://npm.pkg.github.com
+    - yarn install
+    - yarn run webpack
+    - yarn vsce publish major -p ${VSCODE_AUTH_TOKEN}
+  artifacts:
+    paths:
+      - ./*.vsix
+  only:
+    variables:
+      - $CI_COMMIT_MESSAGE =~ /-major/

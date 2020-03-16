@@ -2,7 +2,6 @@
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from "vscode";
 import IncludeManager from "./modules/IncludeManager";
-import ErrorSearchModule from "./modules/ErrorSearchModule";
 import CreateClassModule from "./modules/CreateClassModule";
 import InjectExcludeDefinition from "./modules/InjectExclusions";
 import * as AssetStream from "./modules/AssetStreamModule";
@@ -46,13 +45,6 @@ export function activate(context: vscode.ExtensionContext) {
 	});
 
 	context.subscriptions.push(InjectExclusions);
-	//#endregion
-
-	//#region module:Error search
-	let ErrorWiki = vscode.commands.registerCommand("extension.sf.errorLibrary", () => {
-		ErrorSearchModule();
-	});
-	context.subscriptions.push(ErrorWiki);
 	//#endregion
 
 	//#region moduele:Class creation
