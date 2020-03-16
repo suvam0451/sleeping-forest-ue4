@@ -34,5 +34,18 @@
 		"body": [
 			"UE_LOG(LogTemp, Warning, TEXT(\"Boolean value is: %s\"), (MyAnimInstance->IsCrouched ? TEXT(\"True\") : TEXT(\"False\")));"
 		]
+	},
+	"udata: getrows": {
+		"prefix": "udata_getrows",
+		"body": [
+			"TArray<{1:FStruct} *> MyMeshArray;",
+			"const FString ContextString = \"any\";",
+			"MeshTable->GetAllRows<{1:FStruct}>(*ContextString, MyMeshArray);",
+			"",
+			"for (int i = 0; i < MyMeshArray.Num(); i++)",
+			"{",
+			"\t",
+			""
+		]
 	}
 }

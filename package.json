@@ -168,11 +168,15 @@
 			},
 			{
 				"language": "hlsl",
-				"path": "./snippets/usf/local.json"
+				"path": "./snippets/usf/locals.json"
 			},
 			{
 				"language": "hlsl",
 				"path": "./snippets/usf/hlsl.json"
+			},
+			{
+				"langauge": "hlsl",
+				"path": "./snippets/usf/functions.json"
 			}
 		],
 		"configuration": {

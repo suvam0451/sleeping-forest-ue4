@@ -2,5 +2,22 @@
 	"local: anglewithz": {
 		"prefix": "local_z_dot_normal",
 		"body": "dot(GetObjectOrientation(Parameters.PrimitiveId), Parameters.${1|TangentToWorld[2],WorldNormal|});"
+	},
+	"sf: library struct": {
+		"prefix": "sflib",
+		"body": [
+			"// -----------------------------------------------",
+			"// AUTO-GENERATED. DO NOT MODIFY.",
+			"struct sflib {",
+			"\t",
+			"};",
+			"",
+			"sflib lib;",
+			"// -----------------------------------------------"
+		]
+	},
+	"struct": {
+		"prefix": "struct",
+		"body": ["struct ${1:Name} {", "", "};"]
 	}
 }
