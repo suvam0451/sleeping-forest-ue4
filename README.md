@@ -18,25 +18,26 @@ As of now, only Windows support is available for micro-services.
 
 ## Installation
 
-To install through VS Code extensions, Search for `Sleeping Forest - UE4 Multitool`
+To install through VS Code extensions, Search for `Sleeping Forest - UE4 Multitool` in extension market.
 
-To get the beta releases/requested patches, visit the [website](https://suvam0451.netlify.com/docs/sleeping-forest/getting-started/)
-
-The nightly builds are available below and updated daily.
-
-[![](https://gitlab.com/winterwildfire/ue4/trailblazer/badges/master/pipeline.svg)](https://gitlab.com/suvam0451/sleeping-forest-ue4/pipelines/)
+Or you can grab one of the CI build output packages from here --> [![](https://gitlab.com/winterwildfire/ue4/trailblazer/badges/master/pipeline.svg)](https://gitlab.com/suvam0451/sleeping-forest-ue4/pipelines/)
 
 ## Key Features
 
 - Improved Intellisense
-- 200+ snippets
-- Context aware custom auto-completion
-- file/function/header generation/management
-- Asset management via asset streams
+- Exhaustive snippet library *(200+ from select modules)*
+- Context-aware convenient code-completion features
+- File/function/header generator/manager
 - Command line shader/game/code compilation support
 - Modding support for most modules
 - Various micro-service integrations
 - Support for writing UE4 HLSL shaders [Planned]
+
+### Asset Streams Overview
+
+UE4 allows convenient importing of assets via python scripts. We have a bundled app *(a group of golang scripts)* which dynamically generate the import data for the raw assets we have in a folder.
+
+This makes adding/managing raw .fbx/.png assets easier.
 
 ## Documentation
 
@@ -45,7 +46,9 @@ The nightly builds are available below and updated daily.
 - [Asset streams overview](https://suvam0451.netlify.com/docs/sleeping-forest/hello-asset-streams)
 - [Modding/Customizing guide](https://suvam0451.netlify.com/docs/sleeping-forest/extension-files)
 
-## Feature Overview
+**Most of the documentations are now being configured to be auto-generated. So, any changes in the extension will be immediately reflected in the website.**
+
+## Coding Features Overview
 
 ### Better intellisense
 
@@ -107,15 +110,6 @@ Every folder is inside an asset stream is scanned and indexed in JSON files. The
 
 ## Building from source
 
-**The golang executables** can be built by
-
-```go
-go build texture_packer.go
-```
-
-Don't forget to set GOOS/GOARCH environment variables.
-The executables should be copied to the appropriate bin folder after being built from the microservices folder.
-
 **The VSCode package** can be obtained by
 
 ```npm
@@ -123,6 +117,15 @@ yarn install
 yarn run webpack
 yarn vsce package
 ```
+
+**The golang executables** can be built by
+
+```go
+go build texture_packer.go
+```
+
+Don't forget to set GOOS/GOARCH environment variables.
+You just need executables for your own platform. Copy then to respective /bin folder for the extension before packaging.
 
 # Disclaimer
 
