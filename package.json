@@ -27,7 +27,8 @@
 		"onCommand:extension.sf.initializeAssetFolder",
 		"onCommand:extension.sf.refreshAssetFolders",
 		"onCommand:extension.sf.tryInitialize",
-		"onCommand:extension.sf.addOverride"
+		"onCommand:extension.sf.addOverride",
+		"onCommand:extension.sf.RefactorAPI"
 	],
 	"main": "/dist/extension",
 	"keywords": [
@@ -78,6 +79,10 @@
 			{
 				"command": "extension.sf.tryInitialize",
 				"title": "UE4 : Action by context"
+			},
+			{
+				"command": "extension.sf.RefactorAPI",
+				"title": "UE4 : Refactoring Tool"
 			}
 		],
 		"menus": {
@@ -156,6 +161,10 @@
 			{
 				"language": "cpp",
 				"path": "./snippets/uwidget.json"
+			},
+			{
+				"language": "cpp",
+				"path": "./snippets/uclass.json"
 			},
 			{
 				"language": "hlsl",

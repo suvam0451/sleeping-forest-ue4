@@ -1,104 +1,145 @@
 [
-	{
-		"id": "Kismet",
-		"headers": ["Kismet/GameplayStatics.h", "Kismet/KismetMathLibrary.h"]
-	},
-	{
-		"id": "AIPerception",
-		"headers": [
-			"Perception/AIPerceptionComponent.h",
-			"Perception/AISense_Damage.h",
-			"Perception/AISense_Hearing.h",
-			"Perception/AISense_Sight.h",
-			"Perception/AISense_Team.h",
-			"Perception/AISenseConfig_Damage.h",
-			"Perception/AISenseConfig_Hearing.h",
-			"Perception/AISenseConfig_Sight.h",
-			"Perception/AISenseConfig_Team.h"
-		]
-	},
-	{
-		"id": "PrimitiveShapes",
-		"headers": [
-			"Components/SphereComponent.h",
-			"Components/BoxComponent.h",
-			"Components/CapsuleComponent.h"
-		]
-	},
-	{
-		"id": "Procedural",
-		"headers": ["Components/InstancedStaticMeshComponent.h"]
-	},
-	{
-		"id": "Spline",
-		"headers": ["Components/SplineComponent.h", "Components/SplineMeshComponent.h"]
-	},
-	{
-		"id": "Subsystems",
-		"headers": [
-			"Subsystems/GameInstanceSubsystem.h",
-			"Subsystems/LocalPlayerSubsystem.h",
-			"Subsystems/WorldSubsystem.h"
-		]
-	},
-	{
-		"id": "Visualization",
-		"headers": ["Components/BillboardComponent.h", "Components/ArrowComponent.h"]
-	},
-	{
-		"id": "Data",
-		"headers": ["Engine/DataTable.h", "Engine/DataAsset.h"]
-	},
-	{
-		"id": "Timer",
-		"headers": ["TimerManager.h"]
-	},
-	{
-		"id": "Material",
-		"headers": ["Materials/MaterialInstanceDynamic.h"]
-	},
-	{
-		"id": "Mesh",
-		"headers": ["Components/StaticMeshComponent.h"]
-	},
-	{
-		"id": "Widget",
-		"headers": [
-			"Blueprint/UserWidget.h",
-			"Components/TextBlock.h",
-			"Image.h",
-			"Components/GridPanel.h",
-			"Blueprint/WidgetLayoutLibrary.h"
-		]
-	},
-	{
-		"id": "Movement",
-		"headers": ["GameFramework/CharacterMovementComponent.h"]
-	},
-	{
-		"id": "ShaderDirectory",
-		"headers": ["Misc/Paths.h", "Runtime/Launch/Resources/Version.h", "ShaderCore.h"]
-	},
-	{
-		"id": "Curves",
-		"headers": ["Curves/CurveFloat.h", "Curves/CurveVector.h", "Curves/CurveLinearColor.h"]
-	},
-	{
-		"id": "ComputeShader",
-		"headers": [
-			"ShaderParameterUtils.h",
-			"RHIStaticStates.h",
-			"Shader.h",
-			"GlobalShader.h",
-			"RenderGraphBuilder.h",
-			"RenderGraphUtils.h",
-			"ShaderParameterStruct.h",
-			"UniformBuffer.h",
-			"RHICommandList.h"
-		]
-	},
-	{
-		"id": "PlayerBase",
-		"headers": ["GameFramework/PlayerController.h", "GameFramework/Actor.h"]
-	}
+    {
+        "id": "Kismet",
+        "headers": [
+            "Kismet/GameplayStatics.h",
+            "Kismet/KismetMathLibrary.h"
+        ]
+    },
+    {
+        "id": "AIPerception",
+        "headers": [
+            "Perception/AIPerceptionComponent.h",
+            "Perception/AISense_Damage.h",
+            "Perception/AISense_Hearing.h",
+            "Perception/AISense_Sight.h",
+            "Perception/AISense_Team.h",
+            "Perception/AISenseConfig_Damage.h",
+            "Perception/AISenseConfig_Hearing.h",
+            "Perception/AISenseConfig_Sight.h",
+            "Perception/AISenseConfig_Team.h"
+        ]
+    },
+    {
+        "id": "PrimitiveShapes",
+        "headers": [
+            "Components/SphereComponent.h",
+            "Components/BoxComponent.h",
+            "Components/CapsuleComponent.h"
+        ]
+    },
+    {
+        "id": "Procedural",
+        "headers": [
+            "Components/InstancedStaticMeshComponent.h"
+        ]
+    },
+    {
+        "id": "Spline",
+        "headers": [
+            "Components/SplineComponent.h",
+            "Components/SplineMeshComponent.h"
+        ]
+    },
+    {
+        "id": "Subsystems",
+        "headers": [
+            "Subsystems/GameInstanceSubsystem.h",
+            "Subsystems/LocalPlayerSubsystem.h",
+            "Subsystems/WorldSubsystem.h"
+        ]
+    },
+    {
+        "id": "Visualization",
+        "headers": [
+            "Components/BillboardComponent.h",
+            "Components/ArrowComponent.h"
+        ]
+    },
+    {
+        "id": "Data",
+        "headers": [
+            "Engine/DataTable.h",
+            "Engine/DataAsset.h"
+        ]
+    },
+    {
+        "id": "Timer",
+        "headers": [
+            "TimerManager.h"
+        ]
+    },
+    {
+        "id": "Material",
+        "headers": [
+            "Materials/MaterialInstanceDynamic.h"
+        ]
+    },
+    {
+        "id": "Mesh",
+        "headers": [
+            "Components/StaticMeshComponent.h"
+        ]
+    },
+    {
+        "id": "Widget",
+        "headers": [
+            "Blueprint/UserWidget.h",
+            "Components/TextBlock.h",
+            "Image.h",
+            "Components/GridPanel.h",
+            "Blueprint/WidgetLayoutLibrary.h"
+        ]
+    },
+    {
+        "id": "Movement",
+        "headers": [
+            "GameFramework/CharacterMovementComponent.h"
+        ]
+    },
+    {
+        "id": "ShaderDirectory",
+        "headers": [
+            "Misc/Paths.h",
+            "Runtime/Launch/Resources/Version.h",
+            "ShaderCore.h"
+        ]
+    },
+    {
+        "id": "Curves",
+        "headers": [
+            "Curves/CurveFloat.h",
+            "Curves/CurveVector.h",
+            "Curves/CurveLinearColor.h"
+        ]
+    },
+    {
+        "id": "ComputeShader",
+        "headers": [
+            "ShaderParameterUtils.h",
+            "RHIStaticStates.h",
+            "Shader.h",
+            "GlobalShader.h",
+            "RenderGraphBuilder.h",
+            "RenderGraphUtils.h",
+            "ShaderParameterStruct.h",
+            "UniformBuffer.h",
+            "RHICommandList.h"
+        ]
+    },
+    {
+        "id": "PlayerBase",
+        "headers": [
+            "GameFramework/PlayerController.h",
+            "GameFramework/Actor.h"
+        ]
+    },
+    {
+        "id": "BehaviorTree",
+        "headers": [
+            "BehaviorTree/BlackboardComponent.h",
+            "BehaviorTree/BehaviorTree.h",
+            "BehaviorTree/BehaviorTreeComponent.h"
+        ]
+    }
 ]

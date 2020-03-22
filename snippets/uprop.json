@@ -221,5 +221,29 @@
 			"${1|UArrowComponent*, TArray<UArrowComponent*>|} $2;",
 			"\n$0"
 		]
+	},
+	"uprop: blackboard": {
+		"prefix": "uprop_blackboard",
+		"body": [
+			"UPROPERTY(transient)",
+			"class UBlackboardComponent* ${1:BlackboardComp}",
+			"\n$0"
+		]
+	},
+	"uprop: behaviortree_comp": {
+		"prefix": "uprop_behaviortree_comp",
+		"body": [
+			"UPROPERTY(transient)",
+			"class UBehaviorTreeComponent* ${1:BehaviorComp}",
+			"\n$0"
+		]
+	},
+	"uprop: behaviortree": {
+		"prefix": "uprop_behaviortree",
+		"body": [
+			"UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = \"Parameters\")",
+			"class UBehaviorTree* ${1:BehaviorTree}",
+			"\n$0"
+		]
 	}
 }

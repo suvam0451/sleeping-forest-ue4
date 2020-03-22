@@ -8,6 +8,7 @@ import * as AssetStream from "./modules/AssetStreamModule";
 import * as uauto from "./utils/UnrealAutomation";
 import InitializerModule from "./modules/InitializerModule";
 import { AddOverrideFunction } from "./modules/AddOverrideFunction";
+import RefactorAPI from "./modules/RefactorAPI";
 import os from "os";
 
 // entry point
@@ -84,6 +85,11 @@ export function activate(context: vscode.ExtensionContext) {
 		AddOverrideFunction();
 	});
 	context.subscriptions.push(AddOverride);
+
+	let RefactorAPI_Sub = vscode.commands.registerCommand("extension.sf.RefactorAPI", () => {
+		RefactorAPI();
+	});
+	context.subscriptions.push(RefactorAPI_Sub);
 }
 
 // this method is called when your extension is deactivated

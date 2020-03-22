@@ -1,0 +1,10 @@
+{
+    "AnimInstance": {
+        "prefix": "uget_animinstance",
+        "body": ["if (GetMesh() != NULL)",
+        "{",
+            "USkeletalMeshComponent *MyMesh = GetMesh();",
+            "MyAnimInstance = Cast<UCritAnimInstance>(MyMesh->GetAnimInstance());",
+        "}"]
+    }
+}

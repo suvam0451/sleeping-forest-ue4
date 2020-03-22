@@ -1,0 +1,28 @@
+{
+	"uclass: AnimNotify": {
+		"prefix": "uanim_notify",
+		"body": [
+			"UCLASS()",
+			"class ${2:XYZ}_API U${1:PunchThrow}AnimNotify : public UAnimNotify",
+			"{",
+			"\tGENERATED_BODY()",
+			"public:",
+			"virtual void Notify(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation) override;",
+			"};"
+		]
+	},
+	"uclass: AnimNotify State": {
+		"prefix": "uanim_notify_state",
+		"body": [
+			"UCLASS()",
+			"class ${2:XYZ}_API U${1:XYZ}AnimNotifyState : public UAnimNotifyState",
+			"{",
+			"\tGENERATED_BODY()",
+			"public:",
+			"\tvirtual void NotifyBegin(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation, float TotalDuration) override;",
+			"\tvirtual void NotifyTick(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation, float FrameDeltaTime) override;",
+			"\tvirtual void NotifyEnd(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation) override;",
+			"}"
+		]
+	}
+}
