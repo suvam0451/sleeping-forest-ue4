@@ -5,38 +5,47 @@
 			"UMaterialInterface* mat${1:_0} = ${2:MyMesh}->GetMaterial(${2:0});",
 			"UMaterialInstanceDynamic* Inst_mat${1:_0} = UMaterialInstanceDynamic::Create(mat${1:_0}, ${2:MyMesh}); // context",
 			"$0"
-		]
+		],
+		"category": "MaterialInstance"
 	},
 	"umat : Set Scalar parameter": {
 		"prefix": "umat_setscalar",
-		"body": ["${2:Inst_mat_0}->SetScalarParameterValue(${1:\"\"}, 0);"]
+		"body": ["${2:Inst_mat_0}->SetScalarParameterValue(${1:\"\"}, 0);"],
+		"category": "MaterialInstance"
 	},
 	"umat : Set Vector parameter": {
 		"prefix": "umat_setvector",
 		"body": [
 			"${2:Inst_mat_0}->SetVectorParameterValue(${1:\"\"}, FLinearColor(FColor(255,255,255)));"
-		]
+		],
+		"category": "MaterialInstance"
 	},
 	"umat : Set Texture parameter": {
 		"prefix": "umat_settexture",
 		"body": ["${2:Inst_mat_0}->SetTextureParameterValue($1{\"\"}, AssetPtr.Get());"],
-		"description": "YYoucan set texture either through a hard UTexture* or a soft AssetPtr<UTexture>."
+		"description": [
+			"You can set texture either through a hard UTexture* or a soft AssetPtr<UTexture>."
+		],
+		"category": "MaterialInstance"
 	},
 	"umat: Run Compute shader": {
 		"prefix": "umat_runcomputeshader",
 		"body": [
 			"static void RunComputeShader_RenderThread(FRHICommandListImmediate& RHICmdList, const FShaderUsageExampleParameters& DrawParameters, FUnorderedAccessViewRHIRef ComputeShaderOutputUAV);"
-		]
+		],
+		"category": "ComputeShader"
 	},
 	"ucompute: implement": {
 		"prefix": "ucompute_implement",
 		"body": [
 			"IMPLEMENT_GLOBAL_SHADER(${1|FComputeShaderClass}, \"/TutorialShaders/Private/ComputeShader.usf\", \"${2|MainComputeShader}\", SF_Compute);"
 		],
-		"description": "Parameters are ShaderType, ShaderPath, Shader function name, Type"
+		"description": ["Parameters are ShaderType, ShaderPath, Shader function name, Type"],
+		"category": "ComputeShader"
 	},
 	"ucompute: declare": {
 		"prefix": "ucompute_declare",
-		"body": "DECLARE_GLOBAL_SHADER({1:FYourComputeShaderDerivedClass})"
+		"body": ["DECLARE_GLOBAL_SHADER({1:FYourComputeShaderDerivedClass})"],
+		"category": "ComputeShader"
 	}
 }

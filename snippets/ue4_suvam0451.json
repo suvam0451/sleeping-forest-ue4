@@ -80,10 +80,20 @@
 			"};"
 		]
 	},
-	"UENUM": {
+	"uenum": {
 		"prefix": "uenum",
 		"body": ["UENUM()", "enum E$1", "{", "\t$0", "};"],
-		"description": "Simple enum in ue4."
+		"description": ["Simple enum in ue4."]
+	},
+	"uenum bitmasked": {
+		"prefix": "uenum_bitmasked",
+		"body": [
+			"UENUM(BlueprintType, meta = (BitFlags, UseEnumValuesAsMaskValuesInEditor = \"true\"))",
+			"enum E${1|name}",
+			"{",
+			"\t$0",
+			"};"
+		]
 	},
 	"ShaderDirectory": {
 		"prefix": "ushaderdir",

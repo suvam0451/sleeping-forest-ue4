@@ -1,0 +1,6 @@
+{
+	"uai : getblackboardkey": {
+		"prefix": "uai_blackboard_key",
+		"body": [""]
+	}
+}

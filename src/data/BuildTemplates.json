@@ -13,7 +13,6 @@
 				"classprefix": "U",
 				"id": "ActorComponent",
 				"parent": "UActorComponent",
-				"Functions": [],
 				"Headers": ["CoreMinimal.h", "Components/ActorComponent.h"]
 			},
 			{
@@ -27,21 +26,18 @@
 				"classprefix": "I",
 				"id": "Interface",
 				"parent": "UInterface",
-				"Functions": [],
 				"Headers": ["CoreMinimal.h", "UObject/Interface.h"]
 			},
 			{
 				"classprefix": "U",
 				"id": "Object",
 				"parent": "UObject",
-				"Functions": [],
 				"Headers": []
 			},
 			{
 				"classprefix": "U",
 				"id": "DataAsset",
 				"parent": "UDataAsset",
-				"Functions": [],
 				"Headers": ["CoreMinimal.h", "Engine/DataAsset.h"]
 			},
 			{
@@ -54,8 +50,8 @@
 			{
 				"classprefix": "U",
 				"id": "BTSerive",
-				"parent": "UBT",
-				"Functions": [],
+				"parent": "UBTService",
+				"Functions": ["TickNode"],
 				"Headers": ["CoreMinimal.h", "BehaviorTree/BTService.h"]
 			},
 			{
@@ -69,22 +65,33 @@
 				"classprefix": "U",
 				"id": "UserWidget",
 				"parent": "UUserWidget",
-				"Functions": [],
 				"Headers": ["Coreminimal.h", "Animation/AnimInstance.h"]
 			},
 			{
 				"classprefix": "U",
 				"id": "CameraShake",
 				"parent": "UCameraShake",
-				"Functions": [],
 				"Headers": ["Camera/CameraShake.h"]
 			},
 			{
 				"classprefix": "A",
 				"id": "GameModeBase",
 				"parent": "AGameModeBase",
-				"Functions": [],
 				"Headers": ["GameFramework/GameModeBase.h"]
+			},
+			{
+				"classprefix": "U",
+				"id": "BlueprintFunctionLibrary",
+				"parent": "UBlueprintFunctionLibrary",
+				"Headers": ["Kismet/BlueprintFunctionLibrary.h"],
+				"noconstructor": true
+			},
+			{
+				"classprefix": "U",
+				"id": "BTTask(BlackboardBase)",
+				"parent": "UBTTask_BlackboardBase",
+				"Headers": ["BehaviorTree/Tasks/BTTask_BlackboardBase.h"],
+				"Functions": ["ExecuteTask"]
 			}
 		]
 	}

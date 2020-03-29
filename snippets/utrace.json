@@ -10,7 +10,8 @@
 		"description": [
 			"Returns data for first object when scanned through a single specified channel",
 			"To avoid shadowing, append \"_1\" after calling macros second time onwards."
-		]
+		],
+		"category": "FirstObject"
 	},
 	"Line Trace: Single By Channel (All params)": {
 		"prefix": "utrace_singlechannel_full",
@@ -27,7 +28,8 @@
 			"Returns data for first object when scanned through a single specified channel",
 			"To avoid shadowing, append \"_1\" after calling macros second time onwards.",
 			"Also exposes all the parameters."
-		]
+		],
+		"category": "FirstObject"
 	},
 	"Line Trace: Single By Object": {
 		"prefix": "utrace_singleobject",
@@ -41,7 +43,8 @@
 		"description": [
 			"Returns data for first collided object (Using ObjectParams from inspector)",
 			"To avoid shadowing, append \"_1\" after calling macros second time onwards."
-		]
+		],
+		"category": "FirstObject"
 	},
 	"Line Trace: Single By Object (All params)": {
 		"prefix": "utrace_singleobject_full",
@@ -57,7 +60,8 @@
 		"description": [
 			"Returns data for first collided object (Using ObjectParams from inspector)",
 			"To avoid shadowing, append \"_1\" after calling macros second time onwards."
-		]
+		],
+		"category": "FirstObject"
 	},
 	"Line Trace: Single by Profile": {
 		"prefix": "utrace_singleprofile",
@@ -70,7 +74,8 @@
 		"description": [
 			"Returns data for first collided object (Using Collision Profile Name from inspector)",
 			"To avoid shadowing, append \"_1\" after calling macros second time onwards."
-		]
+		],
+		"category": "FirstObject"
 	},
 	"Line Trace: Single by Profile (All params)": {
 		"prefix": "utrace_singleprofile_full",
@@ -84,7 +89,8 @@
 		"description": [
 			"Returns data for first collided object (Using Collision Profile Name from inspector)",
 			"To avoid shadowing, append \"_1\" after calling macros second time onwards."
-		]
+		],
+		"category": "FirstObject"
 	},
 	"Line Trace: Multi By Channel": {
 		"prefix": "utrace_multichannel",
@@ -97,7 +103,8 @@
 		"description": [
 			"Returns data for all object when scanned through a single specified channel",
 			"To avoid shadowing, append \"_1\" after calling macros second time onwards."
-		]
+		],
+		"category": "MultiObject"
 	},
 	"Line Trace: Multi By Channel (All params)": {
 		"prefix": "utrace_multichannel_full",
@@ -114,7 +121,8 @@
 			"Returns data for all objects when scanned through a single specified channel",
 			"To avoid shadowing, append \"_1\" after calling macros second time onwards.",
 			"Also exposes all the parameters."
-		]
+		],
+		"category": "MultiObject"
 	},
 	"Line Trace: Multi By Object": {
 		"prefix": "utrace_multiobject",
@@ -128,7 +136,8 @@
 		"description": [
 			"Returns data for first collided object (Using ObjectParams from inspector)",
 			"To avoid shadowing, append \"_1\" after calling macros second time onwards."
-		]
+		],
+		"category": "MultiObject"
 	},
 	"Line Trace: Multi By Object (All params)": {
 		"prefix": "utrace_multiobject_full",
@@ -143,7 +152,8 @@
 		"description": [
 			"Returns data for first collided object (Using ObjectParams from inspector)",
 			"To avoid shadowing, append \"_1\" after calling macros second time onwards."
-		]
+		],
+		"category": "MultiObject"
 	},
 	"Line Trace: Multi by Profile": {
 		"prefix": "utrace_multiprofile",
@@ -156,7 +166,8 @@
 		"description": [
 			"Returns data for first collided object (Using Collision Profile Name from inspector)",
 			"To avoid shadowing, append \"_1\" after calling macros second time onwards."
-		]
+		],
+		"category": "MultiObject"
 	},
 	"Line Trace: Multi by Profile (All params)": {
 		"prefix": "utrace_multiprofile_full",
@@ -170,7 +181,8 @@
 		"description": [
 			"Returns data for first collided object (Using Collision Profile Name from inspector)",
 			"To avoid shadowing, append \"_1\" after calling macros second time onwards."
-		]
+		],
+		"category": "MultiObject"
 	},
 	"Line Trace: Multi Sphere Sweep": {
 		"prefix": "utrace_sweep_sphere",
@@ -183,6 +195,7 @@
 			"\t\tColQueryParams$1, ColResParams$1);",
 			"",
 			"$0"
-		]
+		],
+		"category": "MultiObject"
 	}
 }

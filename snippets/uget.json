@@ -1,10 +1,53 @@
 {
-    "AnimInstance": {
-        "prefix": "uget_animinstance",
-        "body": ["if (GetMesh() != NULL)",
-        "{",
-            "USkeletalMeshComponent *MyMesh = GetMesh();",
-            "MyAnimInstance = Cast<UCritAnimInstance>(MyMesh->GetAnimInstance());",
-        "}"]
-    }
+	"AnimInstance": {
+		"prefix": "uget_animinstance",
+		"body": [
+			"USkeletalMeshComponent *MyMesh = GetMesh();",
+			"if (GetMesh() != NULL)",
+			"{",
+			"\t${1:UAnimInstance} = Cast<${1:UAnimInstance}>(MyMesh->GetAnimInstance());",
+			"\t$0",
+			"}"
+		],
+		"description": ["Gets animinstance. Call from character"],
+		"category": "CharacterContext"
+	},
+	"uget: playercontroller": {
+		"prefix": "uget_playercontroller",
+		"body": [
+			"${1:APlayerController} *PC = Cast<${1:APlayerController}>(UGameplayStatics::GetPlayerController(this, 0));"
+		],
+		"description": ["Get player controller"],
+		"category": "GameplayStatics"
+	},
+	"uget: playercharacter": {
+		"prefix": "uget_playercharacter",
+		"body": [
+			"${1:ACharacter} *Char = Cast<${1:ACharacter}>(UGameplayStatics::GetPlayerCharacter(this, 0));"
+		],
+		"description": ["Get player character"],
+		"category": "GameplayStatics"
+	},
+	"uget: playerpawn": {
+		"prefix": "uget_pawn",
+		"body": ["${1:APawn} *PlayerPawn = Cast<${1:APawn}>UGameplayStatics::GetPlayerPawn(this, 0);"],
+		"description": ["Gets the pawn with optional casting"],
+		"category": "GameplayStatics"
+	},
+	"uget: gamemode": {
+		"prefix": "uget_gamemode",
+		"body": [
+			"${1:AGameModeBase} *GM = Cast<${1:AGameModeBase}>(UGameplayStatics::GetGameMode(this));"
+		],
+		"description": ["Gets the gamemode with optional casting"],
+		"category": "GameplayStatics"
+	},
+	"uget: gameinstance": {
+		"prefix": "uget_gameinstance",
+		"body": [
+			"${1:UGameInstance} *GI = Cast<${1:UGameInstance}>(UGameplayStatics::GetGameInstance(this));"
+		],
+		"description": ["Gets the gameinstance with optional casting"],
+		"category": "GameplayStatics"
+	}
 }

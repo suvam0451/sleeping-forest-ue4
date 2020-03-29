@@ -2,12 +2,12 @@
 	"step": {
 		"prefix": "step",
 		"body": "step(${1:y}, ${2:x});",
-		"description": "0 if the y <= x, otherwise, 1."
+		"description": ["0 if the y <= x, otherwise, 1."]
 	},
 	"smoothstep": {
 		"prefix": "smoothstep",
 		"body": "smoothstep(${1|min,-0.5,0|}, ${2|max,0.5|}, ${3:with});",
-		"description": "Returns 0 if x is less than min; 1 if x is greater than max; otherwise, a value between 0 and 1 if x is in the range [min, max]."
+		"description": ["Returns 0 if x is less than min; 1 if x is greater than max; otherwise, a value between 0 and 1 if x is in the range [min, max]."]
 	},
 	"floor": {
 		"prefix": "floor",
@@ -20,17 +20,17 @@
 	"desaturate": {
 		"prefix": "desaturate",
 		"body": "lerp(${1:_In}, dot(${1:_In}, LF), Fraction);",
-		"description": "luminance Factor determines which channels will grey out earliest. Fraction values of 1, all channels are greyed out."
+		"description": ["luminance Factor determines which channels will grey out earliest. Fraction values of 1, all channels are greyed out."]
 	},
 	"distance": {
 		"prefix": "distance",
 		"body": "sqrt(dot(($1 - $2), ($1 - $2)));",
-		"description": "Short-hand version. Uses 1 extra instruction. Input two float1/2/3"
+		"description": ["Short-hand version. Uses 1 extra instruction. Input two float1/2/3"]
 	},
 	"fmod": {
 		"prefix": "fmod",
 		"body": "fmod($2,${1|float,float2(),float3()|})",
-		"description": "Floating point remainders of division operations."
+		"description": ["Floating point remainders of division operations."]
 	},
 	"e": {
 		"prefix": "e",

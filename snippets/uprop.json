@@ -6,12 +6,14 @@
 			"\n$0"
 		],
 		"prefix": "uprop_abilitysyscomp",
-		"description": ""
+		"description": [""],
+		"category": "AbilitySystem"
 	},
 	"uprop: TextBlock": {
 		"body": ["UPROPERTY(meta = (BindWidget))", "\tUTextBlock* CurrentDialogue;", "\n$0"],
 		"prefix": "uprop_textblock",
-		"description": "Adds UPROPERTY()"
+		"description": ["Adds UPROPERTY()"],
+		"category": "UMG"
 	},
 	"uprop : AISightConfigData": {
 		"body": [
@@ -19,8 +21,9 @@
 			"\tclass UAISenseConfig_Sight* SightConfig;",
 			"\n$0"
 		],
-		"description": "Configure this in class body to give sight to bot.",
-		"prefix": "uprop_ai_sightconfig"
+		"description": ["Configure this in class body to give sight to bot."],
+		"prefix": "uprop_ai_sightconfig",
+		"category": "AIModule"
 	},
 	"uprop : Base": {
 		"body": [
@@ -28,7 +31,8 @@
 			"\t$1;",
 			"\n$0"
 		],
-		"prefix": "uprop"
+		"prefix": "uprop",
+		"category": "General"
 	},
 	"uprop : Boolean": {
 		"body": [
@@ -36,7 +40,8 @@
 			"\t{1|bool,TArray<bool>|} $1;",
 			"\n$0"
 		],
-		"prefix": "uprop_bool"
+		"prefix": "uprop_bool",
+		"category": "General"
 	},
 	"uprop : Boolean switch": {
 		"body": [
@@ -44,7 +49,8 @@
 			"\tbool $1 = false; // context",
 			"\n$0"
 		],
-		"prefix": "uprop_switch"
+		"prefix": "uprop_switch",
+		"category": "General"
 	},
 	"uprop : Box Component": {
 		"body": [
@@ -52,7 +58,8 @@
 			"\tUBoxComponent* $1;",
 			"\n$0"
 		],
-		"prefix": "uprop_box"
+		"prefix": "uprop_box",
+		"category": "Engine"
 	},
 	"uprop : Floating point": {
 		"body": [
@@ -60,7 +67,8 @@
 			"\t${1|float,TArray<float>|} $2;",
 			"\n$0"
 		],
-		"prefix": "uprop_float"
+		"prefix": "uprop_float",
+		"category": "General"
 	},
 	"uprop : GUID": {
 		"body": [
@@ -68,7 +76,8 @@
 			"\tFGuid guid;",
 			"$0"
 		],
-		"prefix": "uprop_guid"
+		"prefix": "uprop_guid",
+		"category": "Engine"
 	},
 	"uprop : Integer": {
 		"body": [
@@ -76,7 +85,8 @@
 			"\tint $1;",
 			"$0"
 		],
-		"prefix": "uprop_int"
+		"prefix": "uprop_int",
+		"category": "General"
 	},
 	"uprop : ISMC property": {
 		"body": [
@@ -89,7 +99,8 @@
 			"(Editable anywhere) Not recommended. try using maps/arrays.",
 			"Also use _adv to make property editor readonly."
 		],
-		"prefix": "uprop_ismc"
+		"prefix": "uprop_ismc",
+		"category": "Procedural"
 	},
 	"uprop : Sphere Component": {
 		"body": [
@@ -97,7 +108,8 @@
 			"\t${1|USphereComponent*,TArray<USphereComponent*>,TMap<int\\, USphereComponent*>| $2;",
 			"\n$0"
 		],
-		"prefix": "uprop_sphere"
+		"prefix": "uprop_sphere",
+		"category": "Engine"
 	},
 	"uprop : SplineComponent": {
 		"body": [
@@ -106,7 +118,8 @@
 			"\n$0"
 		],
 		"description": ["An array of spline components"],
-		"prefix": "uprop_spline"
+		"prefix": "uprop_spline",
+		"category": "LevelDesign"
 	},
 	"uprop : StaticMesh": {
 		"body": [
@@ -114,7 +127,8 @@
 			"\t${1|UStaticMesh*,TArray<UStaticMesh*>,TMap<int\\, UStaticMesh*>|} $2;",
 			"\n$0"
 		],
-		"prefix": "uprop_staticmesh"
+		"prefix": "uprop_staticmesh",
+		"category": "Engine"
 	},
 	"uprop : StaticMeshComponent": {
 		"body": [
@@ -122,7 +136,8 @@
 			"\t${1|UStaticMeshComponent*,TArray<UStaticMeshComponent*>,TMap<int\\, UStaticMeshComponent*>|} $2;",
 			"\n$0"
 		],
-		"prefix": "uprop_meshcomp"
+		"prefix": "uprop_meshcomp",
+		"category": "Engine"
 	},
 	"uprop : String": {
 		"body": [
@@ -130,12 +145,14 @@
 			"\t${1|FString,TArray<FString>|} $2;",
 			"\n$0"
 		],
-		"description": "Add FString property/array.",
-		"prefix": "uprop_string"
+		"description": ["Add FString property/array."],
+		"prefix": "uprop_string",
+		"category": "General"
 	},
 	"uprop : Timer(Handle + Del)": {
 		"body": ["FTimerDelegate Del$1; // context", "FTimerHandle Handle$1;"],
-		"prefix": "uprop_timer"
+		"prefix": "uprop_timer",
+		"category": "Gameplay"
 	},
 	"uprop : Transform": {
 		"body": [
@@ -143,7 +160,8 @@
 			"\t${1|FTransform,TArray<FTransform>,TMap<int\\, FTransform*>|} $2;",
 			"\n$0"
 		],
-		"prefix": "uprop_transform"
+		"prefix": "uprop_transform",
+		"category": "General"
 	},
 	"uprop : Vector": {
 		"body": [
@@ -151,7 +169,8 @@
 			"\t${1|FVector,TArray<FVector>,TMap<int\\, FVector>|} $2;",
 			"\n$0"
 		],
-		"prefix": "uprop_vector"
+		"prefix": "uprop_vector",
+		"category": "General"
 	},
 	"uprop : Asset Pointer": {
 		"body": [
@@ -159,7 +178,8 @@
 			"\tTAssetPtr<$2> $1;",
 			"\n$0"
 		],
-		"prefix": "uprop_assetptr"
+		"prefix": "uprop_assetptr",
+		"category": "Optimization"
 	},
 	"uprop : Subclass": {
 		"body": [
@@ -168,7 +188,8 @@
 			"\n$0"
 		],
 		"prefix": "uprop_subclass",
-		"description": "Used to get references to blueprints. Activate context to get initializer."
+		"description": ["Used to get references to blueprints. Activate context to get initializer."],
+		"category": "General"
 	},
 	"ufunc": {
 		"prefix": "ufunc",
@@ -177,7 +198,8 @@
 			"\t${2|void,int,float,FString|} $3();",
 			"\n$0"
 		],
-		"description": "Iterate through specifiers with context keys."
+		"description": ["Iterate through specifiers with context keys."],
+		"category": "Functions"
 	},
 	"uprop : curves": {
 		"prefix": "uprop_curve",
@@ -186,7 +208,8 @@
 			"\t${1|UCurveFloat*,UCurveVector*,UCurveLinearCurve*|} $2;",
 			"\n$0"
 		],
-		"description": "uprop for the following curves {float, vector and color}."
+		"description": ["uprop for the following curves {float, vector and color}."],
+		"category": "LevelDesign"
 	},
 	"uprop : poselink": {
 		"prefix": "uprop_poselink",
@@ -194,25 +217,31 @@
 			"UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Links)",
 			"FPoseLink ${1:BasePose};"
 		],
-		"description": "This Can Be Entire Anim Graph Up To This Point, or Any Combination of Other Nodes"
+		"description": [
+			"This Can Be Entire Anim Graph Up To This Point, or Any Combination of Other Nodes"
+		],
+		"category": "AnimGraph"
 	},
 	"uprop: poselink(component space)": {
 		"prefix": "uprop_poselink_componentspace",
-		"body": ["UPROPERTY(Category=Links)", "FComponentSpacePoseLink ${1:ComponentPose};"]
+		"body": ["UPROPERTY(Category=Links)", "FComponentSpacePoseLink ${1:ComponentPose};"],
+		"category": "AnimGraph"
 	},
 	"uprop: animationnode": {
 		"prefix": "uprop_animgraph_pin",
 		"body": [
 			"UPROPERTY(Category=CustomAnim, meta(${1|PinShownByDefault,AlwaysAsPin,PinHiddenByDefault,NeverAsPin|}))",
 			"${2|float} ${3:VarName};"
-		]
+		],
+		"category": "AnimGraph"
 	},
 	"uprop: vector 2d": {
 		"prefix": "uprop_vec2d",
 		"body": [
 			"UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Parameters)",
 			"FVector2D ${1:VarName};"
-		]
+		],
+		"category": "General"
 	},
 	"uprop: arrow component": {
 		"prefix": "uprop_arrow",
@@ -220,23 +249,18 @@
 			"UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = \"Parameters\")",
 			"${1|UArrowComponent*, TArray<UArrowComponent*>|} $2;",
 			"\n$0"
-		]
+		],
+		"category": "Engine"
 	},
 	"uprop: blackboard": {
 		"prefix": "uprop_blackboard",
-		"body": [
-			"UPROPERTY(transient)",
-			"class UBlackboardComponent* ${1:BlackboardComp}",
-			"\n$0"
-		]
+		"body": ["UPROPERTY(transient)", "class UBlackboardComponent* ${1:BlackboardComp}", "\n$0"],
+		"category": "AIModule"
 	},
 	"uprop: behaviortree_comp": {
 		"prefix": "uprop_behaviortree_comp",
-		"body": [
-			"UPROPERTY(transient)",
-			"class UBehaviorTreeComponent* ${1:BehaviorComp}",
-			"\n$0"
-		]
+		"body": ["UPROPERTY(transient)", "class UBehaviorTreeComponent* ${1:BehaviorComp}", "\n$0"],
+		"category": "AIModule"
 	},
 	"uprop: behaviortree": {
 		"prefix": "uprop_behaviortree",
@@ -244,6 +268,16 @@
 			"UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = \"Parameters\")",
 			"class UBehaviorTree* ${1:BehaviorTree}",
 			"\n$0"
-		]
+		],
+		"category": "AIModule"
+	},
+	"uprop: userwidget": {
+		"prefix": "uprop_userwidget",
+		"body": [
+			"UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = \"UMG\")",
+			"${1|UUserWidget*,TSubclassOf<UUserWidget>|} ${2:WidgetName}",
+			"\n$0"
+		],
+		"category": "UMG"
 	}
 }

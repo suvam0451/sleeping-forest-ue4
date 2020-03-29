@@ -1,5 +1,11 @@
 # Change Log
 
+## [0.6.14]
+
+- Minor bug where a pop-up appears when running commands specifying paths to json files.
+- Snippets for userwidget
+- BUG : If the function is two tabs away, body doesn't get generated.
+
 ## [0.6.13] - 7 March 2020
 
 - PI values for .usf files similarily provide dropdowns for PI, 2PI, PI/2.

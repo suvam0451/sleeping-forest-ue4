@@ -18,6 +18,20 @@ import { vsui } from "@suvam0451/vscode-geass";
 import { ClassCreationKit, PluginPathInfo } from "./TypesExport";
 const _buildspaceModPath = "data/extensions/Buildspaces_Ext.json";
 
+interface Buildspace {
+	buildspace: string;
+	templates: ClassTemplate[];
+}
+
+interface ClassTemplate {
+	classprefix: string;
+	id: string;
+	parent: string;
+	Functions?: string[];
+	Headers?: string[];
+	noconstructor?: boolean;
+}
+
 /** ENTRY POINT of module */
 export default async function CreateClassModule(): Promise<void> {
 	return new Promise<void>((resolve, reject) => {
@@ -175,19 +189,21 @@ async function HandleClassGeneration(kit: ClassCreationKit): Promise<void> {
 
 	// Append the xyz with
 	let modpath = filesys.RelativeToAbsolute("suvam0451.sleeping-forest-ue4", _buildspaceModPath);
+	let basedata: Buildspace[] = classData;
 	let extradata = filesys.ReadJSON<Buildspace[]>(modpath!);
-	let data = classData.concat(extradata);
+
+	let data = basedata.concat(extradata);
 
 	return new Promise<void>((resolve, reject) => {
 		data.forEach(bs => {
 			if (bs.buildspace === kit.buildspace) {
-				bs.templates.forEach(tmpl => {
+				bs.templates.forEach((tmpl: ClassTemplate) => {
 					if (tmpl.id === kit.parentclass) {
 						InjectHeaders(kit.headerpath, tmpl.Headers).then(() => {
 							InjectFunctions(
 								kit.headerpath,
 								kit.sourcepath,
-								tmpl.Functions,
+								tmpl.Functions === null ? tmpl.Functions : [],
 								sym.prefix + sym.classname,
 							);
 							resolve();
@@ -213,9 +229,10 @@ function GenerateSymbols(kit: ClassCreationKit): SymbolData {
 	};
 
 	let modpath = filesys.RelativeToAbsolute("suvam0451.sleeping-forest-ue4", _buildspaceModPath);
+	let basedata: Buildspace[] = classData;
 	let extradata = filesys.ReadJSON<Buildspace[]>(modpath!);
 
-	let data = classData.concat(extradata);
+	let data = basedata.concat(extradata);
 	data.forEach(val => {
 		if (val.buildspace === kit.buildspace) {
 			val.templates.forEach(each => {
@@ -314,10 +331,11 @@ async function NamespaceSelection(): Promise<ClassCreationKit> {
 	};
 
 	let modpath = filesys.RelativeToAbsolute("suvam0451.sleeping-forest-ue4", _buildspaceModPath);
-	let extradata = filesys.ReadJSON<Buildspace[]>(modpath!);
+	let basedata: Buildspace[] = classData;
+	let extradata = filesys.ReadJSON<Buildspace[]>(modpath);
 
 	let arr: string[] = [];
-	let data = classData.concat(extradata);
+	let data: Buildspace[] = basedata.concat(extradata);
 
 	data.forEach(val => {
 		arr.push(val.buildspace);
@@ -336,15 +354,4 @@ async function NamespaceSelection(): Promise<ClassCreationKit> {
 				resolve(retval);
 			});
 	});
-}
-
-interface Buildspace {
-	buildspace: string;
-	templates: {
-		id: string;
-		classprefix: string;
-		parent: string;
-		Headers: string[];
-		Functions: string[];
-	}[];
 }

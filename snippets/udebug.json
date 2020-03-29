@@ -5,7 +5,7 @@
 			"DrawDebugLine(this->GetWorld(), ${2:FVector()}, ${3:FVector()}, FColor::${4:Green}, false, ${1|1.0f,0.03333f,0.01667f,0.00833f|}, 0, 0.2f);",
 			"$0"
 		],
-		"description": "The dropdown corresponds to default, 30, 60, 120 fps respectively."
+		"description": ["The dropdown corresponds to default, 30, 60, 120 fps respectively."]
 	},
 	"VisualDebug Point": {
 		"prefix": "udebug_point",

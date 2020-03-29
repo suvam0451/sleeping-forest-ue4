@@ -147,5 +147,19 @@
 		"field": "private",
 		"comment": "",
 		"signature": "virtual void Landed(const FHitResult& Hit) override;"
+	},
+	{
+		"id": "TickNode(BTService)",
+		"body": ["AAIController *OwnerAI = Cast<AAIController>(OwnerComp.GetAIOwner());"],
+		"field": "private",
+		"comment": "",
+		"signature": "virtual void TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds) override;"
+	},
+	{
+		"id": "ExecuteTask(BTTask)",
+		"body": [""],
+		"field": "private",
+		"comment": "",
+		"signature": "virtual EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory);"
 	}
 ]

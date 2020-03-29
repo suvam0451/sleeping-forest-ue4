@@ -386,7 +386,7 @@ export function RelativeToAbsolute(
 		} else {
 			modpath = path.join(extpath!, "src", relativepath);
 		}
-		vsui.Info(modpath);
+		// vsui.Info(modpath);
 		return modpath;
 	} else {
 		return undefined;
