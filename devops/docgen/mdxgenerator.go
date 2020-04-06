@@ -3,8 +3,11 @@ package docgen
 import (
 	"encoding/json"
 	"errors"
+	"fmt"
 	"io/ioutil"
 	"os"
+	"path"
+	"path/filepath"
 	"sort"
 	"strconv"
 	"sync"
@@ -14,27 +17,40 @@ import (
 // entry function
 
 // GenerateSnippetDocs : Generates documentations for snippet namespaces
-func GenerateSnippetDocs() {
+func GenerateSnippetDocs(inputpath, outputpath string) {
+
 	var wg sync.WaitGroup
-	wg.Add(12)
+	snippetFileList := []string{} // list of .json files
 
-	// Asynchronously generate mdx files from intermediate json
-	go snippetDocTemplate(&wg, "uai", 1)
-	go snippetDocTemplate(&wg, "uclass", 2)
-	go snippetDocTemplate(&wg, "udebug", 3)
-	go snippetDocTemplate(&wg, "uget", 4)
-	go snippetDocTemplate(&wg, "ugs", 5)
-	go snippetDocTemplate(&wg, "uinit", 6)
-	go snippetDocTemplate(&wg, "ulog", 7)
-	go snippetDocTemplate(&wg, "umat", 8)
-	go snippetDocTemplate(&wg, "uprop", 9)
-	go snippetDocTemplate(&wg, "utrace", 10)
-	go snippetDocTemplate(&wg, "uwidget", 11)
-	go snippetDocTemplate(&wg, "ue4_suvam0451", 12)
+	if _, err := os.Stat(inputpath); err != nil {
+		return
+	}
+	// Ensure that output path exists
+	if _, err := os.Stat(outputpath); os.IsNotExist(err) {
+		fmt.Println("Generating", outputpath)
+		os.MkdirAll(outputpath, os.ModeDir.Perm())
+	}
 
+	filepath.Walk(inputpath,
+		func(path string, info os.FileInfo, err error) error {
+			if info.IsDir() == false {
+				snippetFileList = append(snippetFileList, info.Name())
+			}
+			return nil
+		})
+
+	// Map the obtained list to input/output/name pairs
+	for i, snippet := range snippetFileList {
+		snippetInPath := path.Join(inputpath, snippet)              // read from
+		snippetName := snippet[:len(snippet)-5]                     // uprop.json --> uprop
+		snippetOutPath := path.Join(outputpath, snippetName+".mdx") // write to
+		wg.Add(1)
+		go snippetDocTemplate(&wg, snippetName, i, snippetInPath, snippetOutPath)
+	}
 	wg.Wait()
 }
 
+// Generates the frontmatter for .mdx files
 func frontmatterGen(path, title string, submoduleID, seriesID, seriesIndex int) (retval []string) {
 	retval = []string{}
 	dt := time.Now()
@@ -75,6 +91,7 @@ func stringFromSlice(slice []string) (retval string) {
 }
 
 func getLinkAndTitle(name, module string) (link, title string, moduleID, submoduleID int) {
+
 	switch module {
 	case "snippet":
 		{
@@ -83,17 +100,6 @@ func getLinkAndTitle(name, module string) (link, title string, moduleID, submodu
 			moduleID = 2
 			submoduleID = 2
 			return
-		}
-	}
-	return
-}
-
-func getFileMapping(name, module string, context int) (infile, outfile string) {
-	switch module {
-	case "snippet":
-		{
-			infile = "intermediate/" + name + ".json"
-			outfile = "content/sleeping-forest/02-Snippets/02-Full-list/0" + strconv.Itoa(context) + "-" + name + ".mdx"
 		}
 	}
 	return
@@ -121,18 +127,18 @@ func writeSnippetDocEntryToFile(f *os.File, entry SnippetEntry) {
 	f.WriteString("| " + entry.Prefix + " | " + descriptionString + " | " + entry.Context + " |" + "\n")
 }
 
-func snippetDocTemplate(wg *sync.WaitGroup, name string, targetIndex int) {
+// Generates documentation from given input "snippet.json" file
+func snippetDocTemplate(wg *sync.WaitGroup, name string, targetIndex int, inpath, outpath string) {
 	defer wg.Done()
 	previousGroup := "None" // used for grouping tables
-	inFile, outFile := getFileMapping(name, "snippet", targetIndex)
 
 	// main loop
-	if EntryList, err := getSnippetList(inFile); err == nil {
-		if f, err2 := os.Create(outFile); err2 == nil {
+	if EntryList, err := getSnippetList(inpath); err == nil {
+		if f, err2 := os.Create(outpath); err2 == nil {
 			// Fill frontmatter
 			link, title, moduleID, submoduleID := getLinkAndTitle(name, "snippet")
 			fillFrontmatter(f, link, title, moduleID, submoduleID, targetIndex)
-			f.WriteString("Following snippets are available in " + name + " namespace. *Updated " + time.Now().Format("**02-Jan-2006***") + "\n\n")
+			f.WriteString("Following snippets are available in " + name + " namespace. *Last updated: " + time.Now().Format("**02-Jan-2006***") + "\n\n")
 
 			for _, entry := range EntryList {
 				// When group changes(already sorted), add a new subsection
@@ -144,5 +150,7 @@ func snippetDocTemplate(wg *sync.WaitGroup, name string, targetIndex int) {
 			}
 			f.WriteString("\nSee you later... 🖐")
 		}
+	} else {
+		fmt.Println("Intermediate snippet files could not be generated")
 	}
 }

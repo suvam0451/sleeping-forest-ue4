@@ -1,0 +1,10 @@
+content/*
+intermediate/*
+snippets/*
+*.exe
+
+# Generated intermediate junk files
+tmp_snippets/*
+
+# Output target matching the gatsby project
+content/*
