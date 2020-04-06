@@ -1,6 +1,12 @@
 image: node:latest
 
+stages:
+  - compile
+  - assembly
+  - publish
+
 Default:
+  stage: publish
   script:
     # Comment out to use github packages
     - yarn config set '//npm.pkg.github.com/:_authToken' "${GITHUB_AUTH_TOKEN}"
@@ -17,6 +23,23 @@ Default:
     paths:
       - ./*.vsix
 
+# Compile the golang project in /devops folder
+PackageCritstrike:
+  image: golang:latest
+  stage: compile
+  script:
+    # Make the output folders
+    - mkdir -p bin/{linux,macos,win64}
+    # Switch folders and generate binaries
+    - cd devops
+    - GOOS=linux GOARCH=amd64 go build -o ../bin/linux/critstrike critstrike.go
+    - GOOS=darwin GOARCH=amd64 go build -o ../bin/macos/critstrike critstrike.go
+    - GOOS=windows GOARCH=amd64 go build -o ../bin/win64/critstrike.exe critstrike.go
+    - cd ..
+  artifacts:
+    paths:
+      - ./bin
+
 # patch updates
 Shipping_Patch:
   script:
@@ -26,12 +49,14 @@ Shipping_Patch:
     - yarn install
     - yarn run webpack
     - yarn vsce publish patch -p ${VSCODE_AUTH_TOKEN}
-  artifacts:
-    paths:
-      - ./*.vsix
+  dependencies:
+    - PackageCritstrike
   only:
     variables:
       - $CI_COMMIT_MESSAGE =~ /-patch/
+  artifacts:
+    paths:
+      - ./*.vsix
 
 # minor version increments
 Shipping_Minor:
@@ -42,12 +67,14 @@ Shipping_Minor:
     - yarn install
     - yarn run webpack
     - yarn vsce publish minor -p ${VSCODE_AUTH_TOKEN}
-  artifacts:
-    paths:
-      - ./*.vsix
+  dependencies:
+    - PackageCritstrike
   only:
     variables:
       - $CI_COMMIT_MESSAGE =~ /-minor/
+  artifacts:
+    paths:
+      - ./*.vsix
 
 # major version increments
 Shipping_Major:
@@ -58,9 +85,11 @@ Shipping_Major:
     - yarn install
     - yarn run webpack
     - yarn vsce publish major -p ${VSCODE_AUTH_TOKEN}
-  artifacts:
-    paths:
-      - ./*.vsix
+  dependencies:
+    - PackageCritstrike
   only:
     variables:
       - $CI_COMMIT_MESSAGE =~ /-major/
+  artifacts:
+    paths:
+      - ./*.vsix

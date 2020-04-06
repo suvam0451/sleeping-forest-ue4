@@ -17,4 +17,6 @@ node_modules
 !shared
 webpack.config.js
 .gitlab-ci.yml
+# Compiled into CLI tools
 microservices/**
+devops/*

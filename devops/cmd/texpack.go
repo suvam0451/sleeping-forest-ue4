@@ -1,22 +1,12 @@
-/*
-Copyright © 2020 NAME HERE <EMAIL ADDRESS>
+// Copyright © 2020 Debashish Patra suvam0451@outlook.com
+// Distributed under MPL-v2 license. http://www.apache.org/licenses/LICENSE-2.0
 
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-*/
 package cmd
 
 import (
 	"fmt"
+	"os"
+	"suvam0451/critstrike/texpack"
 
 	"github.com/spf13/cobra"
 )
@@ -25,25 +15,34 @@ import (
 var texpackCmd = &cobra.Command{
 	Use:   "texpack",
 	Short: "Packs textures from same folder into single texture/atlas",
-	Long: `Texture packing is a textureset optimization/management feature
-Multiple single channel masks are better off as one texture to save space/memory and for future convenience.
-The original textures will remain unaffected
-	Channel Packing : Used to generate RMA, MRA maps`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("texpack called")
+
+		// Generate
+		ipath, _ := cmd.Flags().GetString("inputpath")
+		opath, _ := cmd.Flags().GetString("outputpath")
+		config, _ := cmd.Flags().GetString("config")
+
+		// Handle edge case errors
+		if _, err := os.Stat(ipath); err != nil {
+			fmt.Println("No input directory provided/not-found. See --help.")
+			return
+		} else if _, err := os.Stat(opath); err != nil {
+			fmt.Println("No output directory provided/not-found. See --help.")
+			return
+		} else if _, err := os.Stat(config); err != nil {
+			fmt.Println("No config file detected. See --help.")
+			return
+		} else {
+			texpack.QuadPackEntry(ipath, opath, config)
+		}
 	},
 }
 
 func init() {
 	rootCmd.AddCommand(texpackCmd)
-
-	// Here you will define your flags and configuration settings.
-
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	// texpackCmd.PersistentFlags().String("foo", "", "A help for foo")
-
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	// texpackCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	// Flags
+	texpackCmd.Flags().StringP("mode", "m", "quadpack", "Mode of texture packing to use.")
+	texpackCmd.Flags().StringP("inputpath", "i", "", "Folder with subfolders with texture sets.")
+	texpackCmd.Flags().StringP("outputpath", "o", "", "Folder to output packed textures to.")
+	texpackCmd.Flags().StringP("config", "c", "", "Invoking this command needs a valid compatible config filee.")
 }

@@ -1,6 +1,9 @@
 packages/*/yarn.lock
 packages/*/package-lock.json
+# These directories are used to test CLI tools
 devops/snippets/*
+devops/out/*
+devops/source/*
 
 # Logs
 logs

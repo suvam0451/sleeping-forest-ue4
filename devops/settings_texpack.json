@@ -1,0 +1,19 @@
+{
+  "TextureSize": 1024,
+  "FillMissingWithWhite": true,
+  "Alias": {
+    "albedo": ["albedo", "color"],
+    "normal": ["normal", "bump"],
+    "ao": ["ao"],
+    "roughness": ["rough"],
+    "height": ["height"],
+    "transparency": ["transparency"],
+    "translucency": ["translucency"],
+    "rma": ["_rma"],
+    "emissive": ["emissive"],
+    "metallic": ["metal"],
+    "detail": ["detail"],
+    "opacity": ["opacity"],
+    "specular": ["specular"]
+  }
+}
