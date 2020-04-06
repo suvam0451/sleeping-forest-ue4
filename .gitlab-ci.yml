@@ -42,6 +42,7 @@ PackageCritstrike:
 
 # patch updates
 Shipping_Patch:
+  stage: publish
   script:
     - yarn config set '//npm.pkg.github.com/:_authToken' "${GITHUB_AUTH_TOKEN}"
     - npm config set '//npm.pkg.github.com/:_authToken' "${GITHUB_AUTH_TOKEN}"
@@ -60,6 +61,7 @@ Shipping_Patch:
 
 # minor version increments
 Shipping_Minor:
+  stage: publish
   script:
     - yarn config set '//npm.pkg.github.com/:_authToken' "${GITHUB_AUTH_TOKEN}"
     - npm config set '//npm.pkg.github.com/:_authToken' "${GITHUB_AUTH_TOKEN}"
@@ -78,6 +80,7 @@ Shipping_Minor:
 
 # major version increments
 Shipping_Major:
+  stage: publish
   script:
     - yarn config set '//npm.pkg.github.com/:_authToken' "${GITHUB_AUTH_TOKEN}"
     - npm config set '//npm.pkg.github.com/:_authToken' "${GITHUB_AUTH_TOKEN}"
