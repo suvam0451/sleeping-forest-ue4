@@ -24,7 +24,7 @@
 		"prefix": "umat_settexture",
 		"body": ["${2:Inst_mat_0}->SetTextureParameterValue($1{\"\"}, AssetPtr.Get());"],
 		"description": [
-			"You can set texture either through a hard UTexture* or a soft AssetPtr<UTexture>."
+			"You can set texture either through a hard UTexture* or a soft AssetPtr< UTexture>."
 		],
 		"category": "MaterialInstance"
 	},

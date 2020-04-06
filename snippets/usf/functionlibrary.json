@@ -1,0 +1,105 @@
+{
+	"radial_gradient_exponential": {
+		"prefix": "radial_gradient_exponential",
+		"body": [
+			"// Exponential square fallout function",
+			"float radial_gradient_exponential(float2 UV, float Radius, float Density) {",
+			"\tfloat2 NeUV = UV - 0.5;",
+			"\tfloat center_distance = sqrt(dot((NeUV - 0), (NeUV - 0))); // [0, 0.5] in X/Y",
+			"\tfloat linear_offset = 1 - (center_distance / Radius); // -ve, if center_distance > Radius",
+			"\tfloat pow = 1 - linear_offset * Density;",
+			"\tfloat output = 1 / PositiveClampedPow(2.71828198, pow * pow); // 1/e^(x^2) --> Exponential sq. Falloff",
+			"float retval = (abs(linear_offset) > 0.00001) ? ((linear_offset >= 0) ? output : 1) : 1; // Goes to INF at center.",
+			"return 1 - retval;",
+			"}"
+		]
+	},
+	"radial_gradient_exponential_band": {
+		"prefix": "radial_gradient_exponential_band",
+		"body": [
+			"// Exponential square fallout function. Works on a band. Alternative to subtracting separate gradients",
+			"float radial_gradient_exponential_band(float2 UV, float Radius_Start, float Radius_End, float Density) {",
+			"\tfloat2 NeUV = UV - 0.5;",
+			"\tfloat band_width = abs(Radius_End - Radius_Start);",
+			"\tfloat center_distance = sqrt(dot(NeUV, NeUV));",
+			"\tfloat offset_distance = min(max(center_distance - Radius_Start, 0), band_width); // 0 till radius_start, [Radius_Start, Radius_End] in X/Y for band",
+			"\tfloat linear_offset = 1 - (offset_distance / band_width); // -ve, if center_distance > Radius",
+			"\tfloat pow = linear_offset * Density;",
+			"\tfloat output = 1 / PositiveClampedPow(2.71828198, pow * pow); // 1/e^(x^2) --> Exponential sq. Falloff",
+			"\tfloat retval = (abs(linear_offset) > 0.00001) ? ((linear_offset >= 0) ? output : 1) : 1; // Goes to INF at center.",
+			"\treturn (1 - retval) * step(Radius_Start, center_distance); // Removes values before Radius_Start",
+			"}"
+		]
+	},
+	"DitherTemporalAA": {
+		"prefix": "dither_temporal_aa",
+		"body": [
+			"// Logic used in UE4 for DitheralTemporalAA node",
+			"float DistanceFieldCustomLogic(float2 ModifiedScreenPosition) {",
+			"\treturn fmod( ((uint)(ModifiedScreenPosition.x) + 2 * (uint)(ModifiedScreenPosition.y)) , 5 );",
+			"}",
+			"",
+			"// Default DitherTemporalAA node",
+			"float DitherTemporalAA(float InputAlpha) {",
+			"\tfloat2 pixelpos = GetPixelPosition(Parameters);",
+			"\tfloat AAparam = View.TemporalAAParams.x;",
+			"\tfloat2 CustomInputParam = pixelpos + float2(AAparam, AAparam);",
+			"\tfloat retval = DistanceFieldCustomLogic(CustomInputParam); // DitheralTemporalAA internal logic",
+			"\tfloat2 scaledUV = pixelpos / float2(64, 64);",
+			"\t",
+			"\t// A noise texture(must be same size as above calculations) is used to offset the input alpha value ",
+			"\tfloat noisepixel = ProcessMaterialLinearGreyscaleTextureLookup((Texture2DSampleBias(Material.Texture2D_0, Material.Texture2D_0Sampler, scaledUV, View.MaterialTextureMipBias)).x).x;",
+			"\tfloat newalpha_offset = retval + noisepixel;",
+			"\tfloat adjustedalpha_offset = newalpha_offset / 6; // Have to experiment with this value",
+			"\tfloat ReturnValue = InputAlpha + adjustedalpha_offset - 0.5; // InputAlpha a.k.a. - Alpha Threshold(S)",
+			"\treturn ReturnValue;",
+			"}"
+		],
+		"description": [
+			"Uses a 64*64 texture as dither-mask, usually used to apply a grainy dithered opacity mask blending with surrounding materials",
+			"Has a very low cost w.r.t to opacity masks"
+		],
+		"category": "Blending"
+	},
+	"DistanceBetween": {
+		"prefix": "distance_between",
+		"body": [
+			"// Calculate distance (some platforms lack distance nodes)",
+			"float DistanceBetween(float3 A, float3 B) {",
+			"float3 delta = A - B;",
+			"float dotproduct = dot(delta, delta);",
+			"return sqrt(dotproduct);",
+			"}"
+		],
+		"description": [
+			"UE4 does not have distance(A,B) function anywhere. I assume that is because some shading models must be lacking it."
+		],
+		"category": "Utility"
+	},
+	"Blend_Linear_Band": {
+		"prefix": "blend_linear_band",
+		"body": [
+			"// Blending over distance with defined start/end. 0 at start/1 at end.",
+			"float DistanceBlend_Band(float BeginBandAt, float EndBandAt) { // needs { distance_between }",
+			"// Initialize",
+			"float BandWidth = max(EndBandAt - BeginBandAt, 0);",
+			"float DistanceFromCamera = DistanceBetween(ResolvedView.WorldCameraOrigin, GetWorldPosition(Parameters));",
+			"float Delta = DistanceFromCamera - BeginBandAt;",
+			"float Proportion = smoothstep(0, BandWidth, Delta); ",
+			"}"
+		],
+		"description": ["Depends on \"distance_between\"."],
+		"category": "Blending"
+	},
+	"Panner": {
+		"prefix": "panner",
+		"body": [
+			"// Pans the UVs with time",
+			"float2 Panner(float2 inUV, float Rate, float2 Direction) {",
+			"float rateAdjusted = View.GameTime * Rate;",
+			"return inUV + Direction * float2(rateAdjusted, rateAdjusted);",
+			"}"
+		],
+		"category": "Utility"
+	}
+}

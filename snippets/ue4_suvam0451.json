@@ -24,7 +24,7 @@
 			"Used to initialize object outside constructor",
 			"Don't forget to register component and attach to SceneComponent to be visible in inspector.",
 			"Naming field and owner field are optional and hence left out.",
-			"Full syntax: XYZ = NewObject<UType>(\"Your object name\", this)"
+			"Full syntax: XYZ = NewObject< UType>(\"Your object name\", this)"
 		]
 	},
 	"Add a SceneComponent property to replace RootComponent": {

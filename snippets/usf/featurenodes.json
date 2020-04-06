@@ -1,0 +1,11 @@
+{
+    "get_distance_to_nearestsurface": {
+        "prefix": "get_distance_to_nearestsurface",
+        "body": "GetDistanceToNearestSurfaceGlobal(GetWorldPosition(Parameters));",
+        "description": ["Gives distance to nearest surface", 
+            "Used for surface blending.", 
+            "Activate by going to editor settings and \"Generate mesh distance fields\""
+        ],
+        "Category": "Mesh Distance Field"
+    }
+}

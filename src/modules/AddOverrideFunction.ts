@@ -9,6 +9,7 @@ import * as filesys from "../utils/FilesystemHelper";
 import FuncDefs from "../data/extensions/Functions_Core.json";
 import * as vs from "../utils/FileHelper";
 import { vsui, vsed, vsfs } from "@suvam0451/vscode-geass";
+import { ADDRGETNETWORKPARAMS } from "dns";
 
 const _functionModPath = "data/extensions/Functions_Ext.json";
 

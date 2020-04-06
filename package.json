@@ -172,19 +172,19 @@
 			},
 			{
 				"language": "hlsl",
-				"path": "./snippets/usf/nodes.json"
+				"path": "./snippets/usf/functionlibrary.json"
 			},
 			{
 				"language": "hlsl",
-				"path": "./snippets/usf/locals.json"
+				"path": "./snippets/usf/featurenodes.json"
 			},
 			{
 				"language": "hlsl",
 				"path": "./snippets/usf/hlsl.json"
 			},
 			{
-				"langauge": "hlsl",
-				"path": "./snippets/usf/functions.json"
+				"language": "hlsl",
+				"path": "./snippets/usf/locals.json"
 			}
 		],
 		"configuration": {
@@ -221,6 +221,23 @@
 						"Engine/Source/Editor"
 					],
 					"description": "Folders to ignore while searching. For example, editor classes are not needed for gameplay scripting."
+				},
+				"SF.customShaderIncludePath": {
+					"type": "array",
+					"default": [
+						""
+					],
+					"description": "If you are using usf shaders, mention the include directories here."
+				},
+				"SF.usfResolvedNamespace": {
+					"type": "string",
+					"default": [
+						"CS/"
+					],
+					"description": [
+						"In code you must have named the additional shader include directory something.",
+						"Specify that here (Although this is not very significant and you can always change it later)."
+					]
 				},
 				"SF.excludedExtensions": {
 					"type": "array",
