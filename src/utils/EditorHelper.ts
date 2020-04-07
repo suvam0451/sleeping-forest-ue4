@@ -2,6 +2,7 @@ import * as vscode from "vscode";
 var path = require("path");
 import * as filesys from "./FilesystemHelper";
 import { vsui, vsed } from "@suvam0451/vscode-geass";
+import * as _ from "lodash";
 
 export interface FunctionDefinition {
 	comment: string;
@@ -10,6 +11,50 @@ export interface FunctionDefinition {
 	source: { prototype: string; returnType: string };
 	access: string;
 	important: boolean;
+}
+
+/** Globally removes parts of text from a line using regex */
+export function StringRemoveGlobal(inputstr: string, ...symbols: string[]): string {
+	_.forEach(symbols, (symbol) => {
+		inputstr = _.replace(inputstr, RegExp(symbol, "g"), "");
+	});
+	return inputstr;
+}
+
+/** Globally replaces string with symbols by order of index
+ * @param inputstr string input
+ * @param symbols organized array of symbols to replace
+ */
+export function StringReplaceGlobal(inputstr: string, ...symbols: string[]): string {
+	_.forEach(symbols, (symbol, idx) => {
+		let str = "\\$" + (idx + 1);
+
+		if (symbol !== undefined) {
+			inputstr = _.replace(inputstr, RegExp(str, "g"), symbol);
+		} else {
+			inputstr = _.replace(inputstr, RegExp(str, "g"), "");
+		}
+	});
+	return inputstr;
+}
+
+/** Returns number of leading tabs in front of a given line/string. */
+export function NumTabs(inputstr: string): number {
+	let tabcount = 0;
+	while (inputstr.charAt(tabcount) === "\t") {
+		tabcount++;
+	}
+	return tabcount;
+}
+
+/** Set number of leading tabs for a line */
+export function SetTabs(inputstr: string, num: number, appendNewline: boolean): string {
+	let striped = inputstr.trimLeft(); // Trim whitespaces from front
+	if (appendNewline) {
+		return "\t".repeat(num) + striped + "\n";
+	} else {
+		return "\t".repeat(num) + striped;
+	}
 }
 
 export async function ActiveFileName(editor: vscode.TextEditor): Promise<string> {
@@ -31,7 +76,7 @@ export function InjectHeaders(lines: string[]) {
 	let finishingLine = vsed.MatchRegexInFile(/^#include (.*?).generated.h/); // single match/false (.cpp/.h)
 
 	let arr = vsed.MatchRegexInFile_Bounds(/^#include (.*?).h/);
-	Promise.all([startingLine, finishingLine]).then(values => {
+	Promise.all([startingLine, finishingLine]).then((values) => {
 		if (values[1] !== -1) {
 			let request = RemoveDuplicates(lines, values[0][0], values[1]);
 			vsed.WriteAtLine_Silent(values[1], request);
@@ -42,24 +87,73 @@ export function InjectHeaders(lines: string[]) {
 	});
 }
 
-/**  */
+/** Gets the class symbols from one of tthe following signatures.
+ * 	Starts from current line and goes upward
+ */
 export function GetClassSymbol(at: number): string {
 	let editor = vscode.window.activeTextEditor;
 	let lineEnd = editor?.document.lineAt(at).range.end;
 
+	let exClass: RegExp = /^class .*?_API ([A-Za-z0-9_]+) ?/; // will detect class
+	let exStruct: RegExp = /^struct ([A-Za-z_0-9]+) ?/; // will detect structs
+
 	while (at-- > 0) {
 		let lineEnd = editor?.document.lineAt(at).text;
-		// class TEST_API UProceduralMultiSpline : public UActorComponent
-		if (/^class .*?_API/.test(lineEnd!)) {
-			let exres = lineEnd?.match(/^class .*?_API (.*?) /);
-			if (exres) {
-				return exres[1];
-			} else {
-				return "";
-			}
+		// class TEST_API UCapturedClass : public UObject
+		if (exClass.test(lineEnd!)) {
+			let exres = lineEnd.match(exClass);
+			return exres ? exres[1] : "";
+			// struct FCapturedStruct : public FTableRowBase
+		} else if (exStruct.test(lineEnd!)) {
+			let exres = lineEnd.match(exStruct);
+			return exres ? exres[1] : "";
 		}
 	}
 	return "";
+}
+
+/**  */
+export function ResolveLinesToSlice(
+	lines: string[],
+	symbols: string[],
+	at?: number,
+	initialTabOffset?: number,
+): string[] {
+	// Intitialization
+	let retlines: string[] = [];
+	at = at ? at : 0;
+
+	// Test these expressions to change offset
+	let exBracketBegin = /.*?{ ?\n?$/;
+	let exBracketEnd = /.*?} ?\n?$/;
+
+	// Get intiial tab offset
+	let taboffset = initialTabOffset === undefined ? 0 : initialTabOffset;
+	console.log("taboffset provided is", taboffset);
+
+	_.forEach(lines, (line, i) => {
+		let newline = StringReplaceGlobal(line, ...symbols);
+
+		console.log(newline, exBracketEnd.test(newline));
+		// update tab offset (end scope)
+		if (exBracketEnd.test(newline)) {
+			taboffset--;
+		}
+
+		if (i === lines.length - 1) {
+			// Dont add "/n" to last line
+			newline = SetTabs(newline, taboffset, false);
+		} else {
+			newline = SetTabs(newline, taboffset, true);
+		}
+
+		retlines.push(newline);
+		// update tab offset (begin scope)
+		if (exBracketBegin.test(newline)) {
+			taboffset++;
+		}
+	});
+	return retlines;
 }
 
 /** Accepts an array of strings(lines) and uses another array of string(symbols) to
@@ -72,23 +166,21 @@ export function ResolveLines(
 	useTabs?: boolean,
 ): string {
 	at = at ? at : 0;
-	useTabs = useTabs === undefined ? true : useTabs;
+	if (useTabs === undefined) {
+		useTabs = true;
+	}
 	let editor = vscode.window.activeTextEditor;
 	let startln = editor?.document.lineAt(at).text;
 	let retline = "\n";
 
 	// Get number of tabs
-	let tabcount = 0;
-	while (startln!.charAt(tabcount) === "\t") {
-		tabcount++;
-	}
+	let tabcount = NumTabs(startln);
 
-	lines.forEach(line => {
+	lines.forEach((line) => {
 		symbols.forEach((symbol, i) => {
 			let str = "\\$" + (i + 1);
 			if (symbol !== undefined) {
 				// console.log(str);
-
 				line = line.replace(RegExp(str, "g"), symbol);
 			} else {
 				line = line.replace(RegExp(str, "g"), "");
@@ -112,32 +204,15 @@ export function ResolveLines(
 	return retline;
 }
 
-/** Replaces symbols numerically for an array of strings
- * @param lines array of lines
- * @param symbols organized array of symbols to replace
- */
-export function ReplaceSymbols(lines: string[], symbols: string[]): string[] {
-	// console.log("awol", lines);
-	lines.forEach(line => {
-		symbols.forEach((symbol, i) => {
-			let str = "$" + (i + 1);
-			line = line.replace(RegExp(str, "g"), symbol);
-		});
-	});
-	return lines;
-}
 export function InsertLineAsParsedData(lines: string[], at: number, symbols: string[]) {
 	let editor = vscode.window.activeTextEditor;
 	let startln = editor?.document.lineAt(at).text;
 	// Get number of tabs
-	let tabcount = 0;
-	while (startln!.charAt(tabcount) === "\t") {
-		tabcount++;
-	}
+	let tabcount = NumTabs(startln);
 
 	let retline = "\n";
 
-	lines.forEach(line => {
+	lines.forEach((line) => {
 		symbols.forEach((symbol, i) => {
 			let str = "\\$" + (i + 1);
 			line = line.replace(RegExp(str, "g"), symbol);
@@ -172,14 +247,10 @@ export function InsertLinesAt(lines: string[], at: number, debug?: boolean) {
 	let startline = editor?.document.lineAt(at).text;
 
 	// Get number of tabs
-	let tabcount = 0;
-	while (startline!.charAt(tabcount) === "\t") {
-		console.log(startline?.charAt(tabcount));
-		tabcount++;
-	}
-	// console.log(tabcount);
+	let tabcount = NumTabs(startline);
+
 	let retline: string = "\n";
-	lines.forEach(line => {
+	lines.forEach((line) => {
 		// caliberate tab offset (scope end)
 		if (/.*?}$/.test(line)) {
 			tabcount--;
@@ -207,7 +278,7 @@ export function InsertLineAt(line: string, at: number, tabs?: number, debug?: bo
 	let editor = vscode.window.activeTextEditor;
 	let lineEnd = editor?.document.lineAt(at).range.end;
 	editor
-		?.edit(editBuilder => {
+		?.edit((editBuilder) => {
 			editBuilder.insert(lineEnd!, line + "\n");
 		})
 		.then(
@@ -216,7 +287,7 @@ export function InsertLineAt(line: string, at: number, tabs?: number, debug?: bo
 					vscode.window.showInformationMessage("copied to clipboard.");
 				}
 			},
-			err => {
+			(err) => {
 				if (debug === true) {
 					vscode.window.showInformationMessage("failed to write to editor : ", err);
 				}

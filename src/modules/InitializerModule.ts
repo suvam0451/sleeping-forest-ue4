@@ -9,7 +9,7 @@ import * as _ from "lodash";
 import context from "../data/ContextAutofill.json";
 import IncludeManager from "../modules/IncludeManager";
 import { GetMatchingSourceSync } from "../utils/FilesystemHelper";
-import { AddLinesToFile } from "../utils/FileHelper";
+import { AddLinesToFile, AddLinesToFileUsingStream } from "../utils/FileHelper";
 import { AddOverrideFunction } from "../modules/AddOverrideFunction";
 import { vsui, vsed, vscfg } from "@suvam0451/vscode-geass";
 
@@ -54,11 +54,11 @@ export default async function InitializerModule(): Promise<void> {
 	// ---------- JSON data is matched here ------------------------------
 	let datalist: Kill[] = context;
 	// let holla = context;
-	datalist.forEach(rule => {
+	datalist.forEach((rule) => {
 		if (RegExp(rule.pattern).test(data.text!)) {
 			let exres = data.text!.match(RegExp(rule.pattern));
 			if (exres) {
-				rule.parsemap.forEach(mapping => {
+				rule.parsemap.forEach((mapping) => {
 					symbolarray.push(exres![mapping]);
 				});
 
@@ -91,22 +91,35 @@ export default async function InitializerModule(): Promise<void> {
 					}
 					case "fnbodygen": {
 						if (vsed.RegexTestActiveFile(rule.filepattern)) {
-							let lineToWrite = edit.ResolveLines(rule.body, symbolarray, data.line, false);
-							let classname = edit.GetClassSymbol(data.line);
+							// Regular expressions
+							let exValue = /( ?=.*?)[,)]/; // (Type* Name = value); Capture "= value"
+							// Values can't be assigned in .cpp definitions
+
+							let lineToWrite: string = edit.ResolveLines(rule.body, symbolarray, data.line, false);
+							let LineToWriteTmp : string[] = edit.ResolveLinesToSlice(rule.body, symbolarray, data.line);
+							console.log(lineToWrite, LineToWriteTmp);
+							// Swap "$x" with the captured class/struct name symbol
+							let classname: string = edit.GetClassSymbol(data.line);
 							lineToWrite = lineToWrite.replace("$x", classname);
-							while (/( ?=.*?)[,)]/.test(lineToWrite)) {
-								let match = lineToWrite.match(/( ?=.*?)[,)]/);
+							LineToWriteTmp[0] = LineToWriteTmp[0].replace("$x", classname);
+							while (exValue.test(lineToWrite)) {
+								let match = lineToWrite.match(exValue);
 								if (match) {
-									lineToWrite = lineToWrite.replace(match[1], "");
+									lineToWrite = _.replace(lineToWrite, match[1], "");
+									LineToWriteTmp[0] = _.replace(LineToWriteTmp[0], match[1], "");
 								}
 							}
-							lineToWrite = lineToWrite.replace(/class /g, "");
+							LineToWriteTmp[0] = edit.StringRemoveGlobal(LineToWriteTmp[0], "class ");
+							lineToWrite = edit.StringRemoveGlobal(lineToWrite, "class ");
+
 							let choice = vscfg.GetVSConfig<boolean>("SF", "autoAddFunctionsInSource");
 							if (choice) {
-								GetMatchingSourceSync(_file!).then(ret => {
-									AddLinesToFile(ret, [lineToWrite]);
+								GetMatchingSourceSync(_file!).then((ret) => {
+									AddLinesToFileUsingStream(ret, LineToWriteTmp);
 								});
 							} else {
+								let singleLine = LineToWriteTmp.join();
+								console.log(singleLine);
 								vscode.env.clipboard.writeText(lineToWrite);
 								vscode.window.showInformationMessage("Function body copied to clipboard.");
 							}
@@ -178,7 +191,7 @@ export function ReplaceCurrentLine(_In: string) {
 	let editor = vscode.window.activeTextEditor;
 	let pos = editor?.selection.active.line;
 	let startingloc = editor?.document.lineAt(pos);
-	editor?.edit(editBuilder => {
+	editor?.edit((editBuilder) => {
 		editBuilder.replace(startingloc.range, _In);
 	});
 }
@@ -189,7 +202,7 @@ export function StitchStringArray(newval: string[], preserveTabs?: boolean): str
 	let startingloc = editor?.document.lineAt(pos);
 	let numtabs = preserveTabs === true ? NumberOfTabs(startingloc.text) : 0;
 	let retstr = "";
-	newval.forEach(str => {
+	newval.forEach((str) => {
 		retstr = retstr.concat("\t".repeat(numtabs), str, "\n");
 	});
 	retstr = retstr.trimRight(); // get rid of ending \n ONLY

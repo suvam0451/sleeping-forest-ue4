@@ -3,8 +3,17 @@
 ## [0.6.14]
 
 - Minor bug where a pop-up appears when running commands specifying paths to json files.
-- Snippets for userwidget
-- BUG : If the function is two tabs away, body doesn't get generated.
+
+- FEATURE : BP implementable event accessible via `ufunc_bpevent`(BP)
+
+- FIX : If the function is two tabs away, body doesn't get generated.
+- FIX : Struct functions definitions are now properly generated.
+- FIX : If code was formatted using uncoventional setting, function generator would break down.
+- FIX : Function body not being generated for two tabs (UE4 style default)
+
+#### Misc:
+
+- Added many hlsl nodes including internally used `object_bound_max`, `object_bound_min` nodes.
 
 ## [0.6.13] - 7 March 2020
 

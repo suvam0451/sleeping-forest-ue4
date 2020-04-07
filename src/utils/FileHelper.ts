@@ -15,7 +15,7 @@ export async function InjectHeaders(filepath: string, defs: string[]): Promise<n
 	let num = await vsfs.RegexMatchLine(filepath, /^#include (.*?).h/);
 	let num2 = await vsfs.RegexMatchLine(filepath, /^#include (.*?).generated.h/);
 
-	defs = _.map(defs, o => {
+	defs = _.map(defs, (o) => {
 		return '#include "' + o + '"';
 	});
 
@@ -61,8 +61,8 @@ export async function InjectFunctions(
 	let privAdd: string[] = [];
 	let srcAdd: string[] = [];
 
-	_.each(arr, fnid => {
-		let pnt = _.find(data, o => {
+	_.each(arr, (fnid) => {
+		let pnt = _.find(data, (o) => {
 			return o.id === fnid;
 		});
 		if (pnt) {
@@ -110,15 +110,12 @@ export async function InjectFunctions(
 /** Writes a list of lines to the file. */
 export async function WriteAtLine(filepath: string, at: number, lines: string[]): Promise<void> {
 	let content: string = "";
-	lines.forEach(str => {
+	lines.forEach((str) => {
 		content += str + "\n";
 	});
 	content = content.slice(0, content.length - 1); // Remove last newline character
 	return new Promise<void>((resolve, reject) => {
-		let data: string[] = fs
-			.readFileSync(filepath)
-			.toString()
-			.split("\n");
+		let data: string[] = fs.readFileSync(filepath).toString().split("\n");
 		data.splice(at, 0, content); // data.splice(at, 0, content);
 
 		// Using filestream
@@ -130,7 +127,7 @@ export async function WriteAtLine(filepath: string, at: number, lines: string[])
 			.on("finish", () => {
 				resolve();
 			});
-		data.forEach(line => {
+		data.forEach((line) => {
 			stream.write(line + "\n");
 		});
 		stream.end();
@@ -140,14 +137,11 @@ export async function WriteAtLine(filepath: string, at: number, lines: string[])
 /** Writes a list of lines to the file. */
 function WriteAtLineSync(filepath: string, at: number, lines: string[]) {
 	let content: string = "";
-	lines.forEach(str => {
+	lines.forEach((str) => {
 		content += str + "\n";
 	});
 	content = content.slice(0, content.length - 1); // Remove last newline character
-	let data: string[] = fs
-		.readFileSync(filepath)
-		.toString()
-		.split("\n");
+	let data: string[] = fs.readFileSync(filepath).toString().split("\n");
 	data.splice(at, 0, content); // data.splice(at, 0, content);
 	// Using filestream
 	let stream = fs
@@ -158,7 +152,7 @@ function WriteAtLineSync(filepath: string, at: number, lines: string[]) {
 		.on("finish", () => {
 			return;
 		});
-	data.forEach(line => {
+	data.forEach((line) => {
 		stream.write(line + "\n");
 	});
 	stream.end();
@@ -182,7 +176,7 @@ function GeneratedSourceBody(signature: string, namespace: string, fnbody: strin
 	retval.push("{");
 	retval = _.concat(
 		retval,
-		_.map(fnbody, o => {
+		_.map(fnbody, (o) => {
 			return "\t" + o;
 		}),
 	);
@@ -195,8 +189,19 @@ function GeneratedSourceBody(signature: string, namespace: string, fnbody: strin
  * 	@param body list of strings to write
  */
 export function AddLinesToFile(filepath: string, body: string[]) {
-	fs.appendFile(filepath, body, (err: any) => {
-		// if (err) { throw err };
-		console.log("Saved!");
+	_.forEach(body, (line) => {
+		fs.appendFile(filepath, line, (err: any) => {});
 	});
+}
+
+/** Appends a function at the end of a file. (WriteStream)
+ * 	@param filepath path to the file to be written
+ * 	@param body list of strings to write
+ */
+export function AddLinesToFileUsingStream(filepath: string, body: string[]) {
+	var stream = fs.createWriteStream(filepath, { flags: "a" });
+	_.forEach(body, (line) => {
+		stream.write(line);
+	});
+	stream.end();
 }

@@ -88,7 +88,9 @@
 			"float Proportion = smoothstep(0, BandWidth, Delta); ",
 			"}"
 		],
-		"description": ["Depends on \"distance_between\"."],
+		"description": [
+			"Depends on \"distance_between\"."
+		],
 		"category": "Blending"
 	},
 	"Panner": {
@@ -101,5 +103,20 @@
 			"}"
 		],
 		"category": "Utility"
+	},
+	"DepthFade": {
+		"prefix": "fn_depthfade",
+		"body": [
+			"float DepthFade(float Opacity, float FadeDistance) {",
+			"float reldepth = CalcSceneDepth(ScreenAlignedPosition(GetScreenPosition(Parameters))) - GetScreenPosition(Parameters).w;",
+			"float factored = reldepth / FadeDistance;",
+			"float clamped = min(max(factored, 0), 1) * Opacity;",
+			"return clamped;",
+			"}"
+		],
+		"description": [
+			"Depth fade node/function. Used for outlining and smooth blending."
+		],
+		"category": "Blending"
 	}
 }

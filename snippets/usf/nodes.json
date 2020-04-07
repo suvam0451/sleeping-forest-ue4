@@ -2,8 +2,10 @@
 	"pi": {
 		"prefix": "pi",
 		"body": "${1|6.28318548,3.14159274,1.57079637|}",
-		"description": ["Contains snippet for 2pi, pi, pi/2"]
-				},
+		"description": [
+			"Contains snippet for 2pi, pi, pi/2"
+		]
+	},
 	"unitvector float2": {
 		"prefix": "float2_unit",
 		"body": "float2(1,1)"
@@ -49,12 +51,16 @@
 	"Absolute World Position": {
 		"prefix": "absolute_world_position",
 		"body": "GetWorldPosition(Parameters)",
-		"description": ["pixel position in the world."]
+		"description": [
+			"pixel position in the world."
+		]
 	},
 	"Transform Position: Local to World": {
 		"prefix": "transform_position_localtoworld",
 		"body": "TransformLocalPositionToWorld(Parameters, MaterialFloat4(MaterialFloat3(Parameters.TexCoords[0].xy,Parameters.TexCoords[0].xy.r), 1).xyz).xyz",
-		"description": ["Position vector from local to position in world"]
+		"description": [
+			"Position vector from local to position in world"
+		]
 	},
 	"Time": {
 		"prefix": "time",
@@ -68,17 +74,24 @@
 	"Screen Position": {
 		"prefix": "screen_position",
 		"body": "GetScreenPosition(Parameters)",
-		"description": [".uv for screen coordinates", ".w is pixel position"]
+		"description": [
+			".uv for screen coordinates",
+			".w is pixel position"
+		]
 	},
 	"UVCoordinates": {
 		"prefix": "texture_coordinates",
 		"body": "Parameters.TexCoords[${1:0}].xy",
-		"description": ["Input texture coordinates."]
+		"description": [
+			"Input texture coordinates."
+		]
 	},
 	"TextureLookup_Color": {
 		"prefix": "texture_mip_biased",
 		"body": "ProcessMaterialColorTextureLookup(Texture2DSampleBias(Material.Texture2D_${2:0}, Material.Texture2D_${2:0}Sampler, ${3|Parameters.TexCoords[0].xy,UV|}, -1 + View.MaterialTextureMipBias)",
-		"description": ["Color texture lookup with mip-map biased"]
+		"description": [
+			"Color texture lookup with mip-map biased"
+		]
 	},
 	"TextureLookup_MipLevel": {
 		"prefix": "texture_mip_level",
@@ -102,17 +115,23 @@
 	"Vertex_All_Vectors": {
 		"prefix": "vertex_vectors_ws",
 		"body": "(float3x3)(Parameters.TangentToWorld)",
-		"description": ["Contains three vectors. local X/Y(surface tangenst), local Z(Normal). All outputs in world space."]
+		"description": [
+			"Contains three vectors. local X/Y(surface tangenst), local Z(Normal). All outputs in world space."
+		]
 	},
 	"Vertex_Tangent_X": {
 		"prefix": "vertex_tangent_x",
 		"body": "Parameters.TangentToWorld[0]",
-		"description": ["]Local X tangent per vertex"]
+		"description": [
+			"]Local X tangent per vertex"
+		]
 	},
 	"Vertex_Tangent_Y": {
 		"prefix": "vertex_tangent_y",
 		"body": "Parameters.TangentToWorld[1]",
-		"description": ["Local Y tangent per vertex"]
+		"description": [
+			"Local Y tangent per vertex"
+		]
 	},
 	"power UE4": {
 		"prefix": "power_ue4",
@@ -133,7 +152,9 @@
 	},
 	"ActorPosition": {
 		"prefix": "actor_position",
-		"body": ["GetActorWorldPosition(Parameters.PrimitiveId)"]
+		"body": [
+			"GetActorWorldPosition(Parameters.PrimitiveId)"
+		]
 	},
 	"Object Radius": {
 		"prefix": "object_radius",
@@ -142,11 +163,29 @@
 	"View Size": {
 		"prefix": "view_size",
 		"body": "View.ViewSizeAndInvSize.xy",
-		"description": ["Size of the screen in pixels."]
+		"description": [
+			"Size of the screen in pixels."
+		]
 	},
 	"Object Orientation": {
 		"prefix": "object_orientation",
 		"body": "GetObjectOrientation(Parameters.PrimitiveId)",
-		"description": ["At no rotation, Z is up for UE4"]
+		"description": [
+			"At no rotation, Z is up for UE4"
+		]
+	},
+	"LocalBoundsMin": {
+		"prefix": "object_bound_min",
+		"body": "GetPrimitiveData(Parameters.PrimitiveId).LocalObjectBoundsMin",
+		"description": [
+			"Tail end location of the object."
+		]
+	},
+	"LocalBoundsMax": {
+		"prefix": "object_bound_max",
+		"body": "GetPrimitiveData(Parameters.PrimitiveId).LocalObjectBoundsMax",
+		"description": [
+			"Head end location of the object."
+		]
 	}
 }

@@ -37,7 +37,7 @@
 	"uprop : Boolean": {
 		"body": [
 			"UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=\"Parameters\")",
-			"\t{1|bool,TArray<bool>|} $1;",
+			"\t${1|bool,TArray<bool>|} $2;",
 			"\n$0"
 		],
 		"prefix": "uprop_bool",
@@ -194,9 +194,19 @@
 	"ufunc": {
 		"prefix": "ufunc",
 		"body": [
-			"UFUNCTION(${1|BlueprintCallable,BlueprintImplementableEvent,BlueprintNativeEvent,BlueprintPure|}, Category = \"C++\")",
+			"UFUNCTION(BlueprintCallable, ${1|BlueprintImplementableEvent,BlueprintNativeEvent,BlueprintPure,|}, Category = \"C++\")",
 			"\t${2|void,int,float,FString|} $3();",
 			"\n$0"
+		],
+		"description": ["Iterate through specifiers with context keys."],
+		"category": "Functions"
+	},
+	"ufunc_bpevent": {
+		"prefix": "ufunc_bpevent",
+		"body": [
+			"UFUNCTION(BlueprintCallable, BlueprintImplementableEvent, Category = \"C++ Event\")",
+			"void {1:EventName}();",
+			"void {1:EventName}_Implementation() override;"
 		],
 		"description": ["Iterate through specifiers with context keys."],
 		"category": "Functions"
@@ -279,5 +289,17 @@
 			"\n$0"
 		],
 		"category": "UMG"
+	},
+	"uprop: scriptinterface": {
+		"prefix": "uscriptinterface",
+		"body": [
+			"TScriptInterface<${2:IPickupInterface}> ${1:BroadcastListener};"
+		],
+		"description": ["Utility to store references to interfaces. Set dynamically liek this",
+			"BroadcastListener.SetObject(ActorRefAsInterface);",
+			"BroadcastListener.SetInterface(Cast<IPickupInterface>(ActorRefAsInterface));",
+			"NOTE : You should cast to the actor for the interface first"
+		],
+		"category":  "Class Referencing"
 	}
 }
