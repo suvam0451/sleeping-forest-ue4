@@ -2,18 +2,25 @@
 
 ## [0.6.14]
 
-- Minor bug where a pop-up appears when running commands specifying paths to json files.
+There were a lot of disorganized snippets/functions/headerpacks added since last update. Maintaining and updating the wiki
+for them would have been very difficult...  So, I came up with multiple scripts that will read 
+this repo directly and update the documentation on the fly through the CI.
+
+Over the next few days, I will get that up running and make sure that reasonable docstrings are getting generated for every snippet.
+
+To preview how that would look like, heres the generated page for [uprop](http://localhost:8000/docs/sleeping-forest/snippet-lists/uprop)
+
+- **WARNING** : The texture packer will be unavailable for a few days since I made some changes to the API.
+I will add it along-with the documentation.
 
 - FEATURE : BP implementable event accessible via `ufunc_bpevent`(BP)
+- FEATURE : I am now bundling microservice binaries for linux and macos as well.
+I will add the support tutorials to use the CLI directly, but expect the platform support in alater date.
 
 - FIX : If the function is two tabs away, body doesn't get generated.
 - FIX : Struct functions definitions are now properly generated.
 - FIX : If code was formatted using uncoventional setting, function generator would break down.
 - FIX : Function body not being generated for two tabs (UE4 style default)
-
-#### Misc:
-
-- Added many hlsl nodes including internally used `object_bound_max`, `object_bound_min` nodes.
 
 ## [0.6.13] - 7 March 2020
 
