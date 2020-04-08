@@ -297,7 +297,7 @@
 		],
 		"description": ["Utility to store references to interfaces. Set dynamically liek this",
 			"BroadcastListener.SetObject(ActorRefAsInterface);",
-			"BroadcastListener.SetInterface(Cast<IPickupInterface>(ActorRefAsInterface));",
+			"BroadcastListener.SetInterface(Cast< IPickupInterface>(ActorRefAsInterface));",
 			"NOTE : You should cast to the actor for the interface first"
 		],
 		"category":  "Class Referencing"
