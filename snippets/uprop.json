@@ -6,13 +6,21 @@
 			"\n$0"
 		],
 		"prefix": "uprop_abilitysyscomp",
-		"description": [""],
+		"description": [
+			""
+		],
 		"category": "AbilitySystem"
 	},
 	"uprop: TextBlock": {
-		"body": ["UPROPERTY(meta = (BindWidget))", "\tUTextBlock* CurrentDialogue;", "\n$0"],
+		"body": [
+			"UPROPERTY(meta = (BindWidget))",
+			"\tUTextBlock* CurrentDialogue;",
+			"\n$0"
+		],
 		"prefix": "uprop_textblock",
-		"description": ["Adds UPROPERTY()"],
+		"description": [
+			"Adds UPROPERTY()"
+		],
 		"category": "UMG"
 	},
 	"uprop : AISightConfigData": {
@@ -21,7 +29,9 @@
 			"\tclass UAISenseConfig_Sight* SightConfig;",
 			"\n$0"
 		],
-		"description": ["Configure this in class body to give sight to bot."],
+		"description": [
+			"Configure this in class body to give sight to bot."
+		],
 		"prefix": "uprop_ai_sightconfig",
 		"category": "AIModule"
 	},
@@ -117,7 +127,9 @@
 			"\t${1|USplineComponent*,TArray<USplineComponent*>,TMap<int\\, USplineComponent*>|} $2;",
 			"\n$0"
 		],
-		"description": ["An array of spline components"],
+		"description": [
+			"An array of spline components"
+		],
 		"prefix": "uprop_spline",
 		"category": "LevelDesign"
 	},
@@ -145,12 +157,17 @@
 			"\t${1|FString,TArray<FString>|} $2;",
 			"\n$0"
 		],
-		"description": ["Add FString property/array."],
+		"description": [
+			"Add FString property/array."
+		],
 		"prefix": "uprop_string",
 		"category": "General"
 	},
 	"uprop : Timer(Handle + Del)": {
-		"body": ["FTimerDelegate Del$1; // context", "FTimerHandle Handle$1;"],
+		"body": [
+			"FTimerDelegate Del$1; // context",
+			"FTimerHandle Handle$1;"
+		],
 		"prefix": "uprop_timer",
 		"category": "Gameplay"
 	},
@@ -188,7 +205,9 @@
 			"\n$0"
 		],
 		"prefix": "uprop_subclass",
-		"description": ["Used to get references to blueprints. Activate context to get initializer."],
+		"description": [
+			"Used to get references to blueprints. Activate context to get initializer."
+		],
 		"category": "General"
 	},
 	"ufunc": {
@@ -198,7 +217,9 @@
 			"\t${2|void,int,float,FString|} $3();",
 			"\n$0"
 		],
-		"description": ["Iterate through specifiers with context keys."],
+		"description": [
+			"Iterate through specifiers with context keys."
+		],
 		"category": "Functions"
 	},
 	"ufunc_bpevent": {
@@ -208,7 +229,9 @@
 			"void {1:EventName}();",
 			"void {1:EventName}_Implementation() override;"
 		],
-		"description": ["Iterate through specifiers with context keys."],
+		"description": [
+			"Iterate through specifiers with context keys."
+		],
 		"category": "Functions"
 	},
 	"uprop : curves": {
@@ -218,7 +241,9 @@
 			"\t${1|UCurveFloat*,UCurveVector*,UCurveLinearCurve*|} $2;",
 			"\n$0"
 		],
-		"description": ["uprop for the following curves {float, vector and color}."],
+		"description": [
+			"uprop for the following curves {float, vector and color}."
+		],
 		"category": "LevelDesign"
 	},
 	"uprop : poselink": {
@@ -234,7 +259,10 @@
 	},
 	"uprop: poselink(component space)": {
 		"prefix": "uprop_poselink_componentspace",
-		"body": ["UPROPERTY(Category=Links)", "FComponentSpacePoseLink ${1:ComponentPose};"],
+		"body": [
+			"UPROPERTY(Category=Links)",
+			"FComponentSpacePoseLink ${1:ComponentPose};"
+		],
 		"category": "AnimGraph"
 	},
 	"uprop: animationnode": {
@@ -264,12 +292,20 @@
 	},
 	"uprop: blackboard": {
 		"prefix": "uprop_blackboard",
-		"body": ["UPROPERTY(transient)", "class UBlackboardComponent* ${1:BlackboardComp}", "\n$0"],
+		"body": [
+			"UPROPERTY(transient)",
+			"class UBlackboardComponent* ${1:BlackboardComp}",
+			"\n$0"
+		],
 		"category": "AIModule"
 	},
 	"uprop: behaviortree_comp": {
 		"prefix": "uprop_behaviortree_comp",
-		"body": ["UPROPERTY(transient)", "class UBehaviorTreeComponent* ${1:BehaviorComp}", "\n$0"],
+		"body": [
+			"UPROPERTY(transient)",
+			"class UBehaviorTreeComponent* ${1:BehaviorComp}",
+			"\n$0"
+		],
 		"category": "AIModule"
 	},
 	"uprop: behaviortree": {
@@ -295,11 +331,12 @@
 		"body": [
 			"TScriptInterface<${2:IPickupInterface}> ${1:BroadcastListener};"
 		],
-		"description": ["Utility to store references to interfaces. Set dynamically liek this",
+		"description": [
+			"Utility to store references to interfaces. Set dynamically liek this",
 			"BroadcastListener.SetObject(ActorRefAsInterface);",
 			"BroadcastListener.SetInterface(Cast< IPickupInterface>(ActorRefAsInterface));",
 			"NOTE : You should cast to the actor for the interface first"
 		],
-		"category":  "Class Referencing"
+		"category": "Class Referencing"
 	}
 }

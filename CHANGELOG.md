@@ -1,6 +1,6 @@
 # Change Log
 
-## [0.6.14]
+## [0.6.14] - 8 April 2020
 
 There were a lot of disorganized snippets/functions/headerpacks added since last update. Maintaining and updating the wiki
 for them would have been very difficult...  So, I came up with multiple scripts that will read 
@@ -8,7 +8,7 @@ this repo directly and update the documentation on the fly through the CI.
 
 Over the next few days, I will get that up running and make sure that reasonable docstrings are getting generated for every snippet.
 
-To preview how that would look like, heres the generated page for [uprop](http://localhost:8000/docs/sleeping-forest/snippet-lists/uprop)
+To preview how that would look like, heres the generated page for [uprop](https://suvam0451.netlify.com/docs/sleeping-forest/snippet-lists/uprop)
 
 - **WARNING** : The texture packer will be unavailable for a few days since I made some changes to the API.
 I will add it along-with the documentation.
