@@ -3,7 +3,7 @@ image: node:latest
 stages:
   - compile
   - assembly
-  - publish
+  - publish # Unfortunately yarn/npm version won't let us push uncommitted changes
 
 Default:
   stage: publish
@@ -40,6 +40,8 @@ PackageCritstrike:
     paths:
       - ./bin
 
+###
+
 # patch updates
 Shipping_Patch:
   stage: publish
@@ -49,7 +51,7 @@ Shipping_Patch:
     - yarn login --registry=https://npm.pkg.github.com
     - yarn install
     - yarn run webpack
-    - yarn vsce publish patch -p ${VSCODE_AUTH_TOKEN}
+    - yarn vsce publish patch -p ${VSCODE_AUTH_TOKEN} --yarn
   dependencies:
     - PackageCritstrike
   only:
@@ -68,7 +70,7 @@ Shipping_Minor:
     - yarn login --registry=https://npm.pkg.github.com
     - yarn install
     - yarn run webpack
-    - yarn vsce publish minor -p ${VSCODE_AUTH_TOKEN}
+    - yarn vsce publish minor -p ${VSCODE_AUTH_TOKEN} --yarn
   dependencies:
     - PackageCritstrike
   only:
@@ -87,7 +89,7 @@ Shipping_Major:
     - yarn login --registry=https://npm.pkg.github.com
     - yarn install
     - yarn run webpack
-    - yarn vsce publish major -p ${VSCODE_AUTH_TOKEN}
+    - yarn vsce publish major -p ${VSCODE_AUTH_TOKEN} --yarn
   dependencies:
     - PackageCritstrike
   only:
