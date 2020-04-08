@@ -23,7 +23,7 @@ Default:
     paths:
       - ./*.vsix
 
-# Compile the golang project in /devops folder
+# Compile the golang project in /devops folder.
 PackageCritstrike:
   image: golang:latest
   stage: compile
