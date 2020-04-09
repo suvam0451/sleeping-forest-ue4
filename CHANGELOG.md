@@ -1,5 +1,9 @@
 # Change Log
 
+## [0.6.15] - Unknown
+
+- FEATURE : Primitive support for USF/USH parsing added
+
 ## [0.6.14] - 8 April 2020
 
 There were a lot of disorganized snippets/functions/headerpacks added since last update. Maintaining and updating the wiki
