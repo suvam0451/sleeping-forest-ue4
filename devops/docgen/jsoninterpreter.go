@@ -1,3 +1,5 @@
+// © 2020 Debashish Patra Some Rights Reserved
+
 package docgen
 
 // go run snippetdocumentation.go
@@ -13,8 +15,8 @@ import (
 
 // SnippetEntry : Every entry in JSON file
 type SnippetEntry struct {
-	Prefix      string   `json: prefix`
-	Body        []string `json: body`
+	prefix      string   `json: "prefix"`
+	Body        []string `json: "body"`
 	Description []string `json: description, omitempty`
 	Category    string   `json: category, omitempty`
 	Context     string   `json: context, omitempty`
@@ -97,15 +99,5 @@ func ParseSnippetFile(inputpath, outputpath string) {
 				}
 			}
 		}
-
-		// var ParsedStruct []SnippetEntry
-		// jsonFile, jsonerr := os.Open(outputpath)
-		// if jsonerr == nil {
-		// 	byteValue, _ := ioutil.ReadAll(jsonFile)
-		// 	marshalError := json.Unmarshal(byteValue, &ParsedStruct)
-		// 	if marshalError != nil {
-		// 	}
-		// } else {
-		// }
 	}
 }

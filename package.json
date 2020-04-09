@@ -28,7 +28,8 @@
 		"onCommand:extension.sf.refreshAssetFolders",
 		"onCommand:extension.sf.tryInitialize",
 		"onCommand:extension.sf.addOverride",
-		"onCommand:extension.sf.RefactorAPI"
+		"onCommand:extension.sf.RefactorAPI",
+		"onCommand:extension.cs.ParseHLSLForUE4"
 	],
 	"main": "/dist/extension",
 	"keywords": [
@@ -83,6 +84,10 @@
 			{
 				"command": "extension.sf.RefactorAPI",
 				"title": "UE4 : Refactoring Tool"
+			},
+			{
+				"command": "extension.cs.ParseHLSLForUE4",
+				"title": "UE4 : Parse .usf/.ush file into python import file"
 			}
 		],
 		"menus": {
@@ -185,6 +190,10 @@
 			{
 				"language": "hlsl",
 				"path": "./snippets/usf/locals.json"
+			},
+			{
+				"language": "hlsl",
+				"path": "./snippets/usf/usf_metadata.json"
 			}
 		],
 		"configuration": {
@@ -221,6 +230,16 @@
 						"Engine/Source/Editor"
 					],
 					"description": "Folders to ignore while searching. For example, editor classes are not needed for gameplay scripting."
+				},
+				"SF.UE4PythonAPIOutputFile": {
+					"type": "string",
+					"default": [
+						""
+					],
+					"description": [
+						"This fullpath to file, where you want to output UE4 PythonAPI generated files.",
+						"If left blank, by default {User}/.vscode/data/extensions/UE4PythonAPI.py is used instead."
+					]
 				},
 				"SF.customShaderIncludePath": {
 					"type": "array",
@@ -261,6 +280,14 @@
 					"type": "array",
 					"default": [],
 					"description": "List any git submodules here."
+				},
+				"SF.ShaderSourceDirectoryMapping": {
+					"type": "string",
+					"default": "/CS",
+					"description": [
+						"This is the path you set as shader directory alias",
+						"This will be appended in the `code` field of all your custom nodes."
+					]
 				}
 			}
 		}

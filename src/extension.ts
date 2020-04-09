@@ -10,6 +10,7 @@ import InitializerModule from "./modules/InitializerModule";
 import { AddOverrideFunction } from "./modules/AddOverrideFunction";
 import RefactorAPI from "./modules/RefactorAPI";
 import os from "os";
+import UE4_HLSL_exporter from "./modules/HLSLParser"
 
 // entry point
 export function activate(context: vscode.ExtensionContext) {
@@ -90,7 +91,12 @@ export function activate(context: vscode.ExtensionContext) {
 		RefactorAPI();
 	});
 	context.subscriptions.push(RefactorAPI_Sub);
+
+	let HLSLToPythonUE4 = vscode.commands.registerCommand("extension.cs.ParseHLSLForUE4", () => {
+		UE4_HLSL_exporter();
+	})
+	context.subscriptions.push(HLSLToPythonUE4);
 }
 
 // this method is called when your extension is deactivated
-export function deactivate() {}
+export function deactivate() { }

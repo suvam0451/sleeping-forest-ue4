@@ -1,0 +1,9 @@
+{
+    "@param": {
+        "prefix": "@param",
+        "body": "@param\t\t\t\t$2\t\t${1|float,float2,float3,float4,Texture|}\t\t\t${3: No description provided.}",
+        "description": [
+            "Add a parameter reference"
+        ]
+    }
+}

@@ -1,3 +1,5 @@
+// © 2020 Debashish Patra Some Rights Reserved
+
 package docgen
 
 import (
@@ -124,7 +126,7 @@ func getSnippetList(inFile string) (retval []SnippetEntry, reterr error) {
 // formats and inserts a table entry for snippet data
 func writeSnippetDocEntryToFile(f *os.File, entry SnippetEntry) {
 	descriptionString := stringFromSlice(entry.Description)
-	f.WriteString("| " + entry.Prefix + " | " + descriptionString + " | " + entry.Context + " |" + "\n")
+	f.WriteString("| " + entry.prefix + " | " + descriptionString + " | " + entry.Context + " |" + "\n")
 }
 
 // Generates documentation from given input "snippet.json" file
