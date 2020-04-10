@@ -107,26 +107,29 @@ Every folder is inside an asset stream is scanned and indexed in JSON files. The
 
 ## Building from source
 
-**The golang executables** can be built by
+Run `Install.ps1` to run all the pipelines and generate the .vsix file. Install powershell core if you are not on Windows.
 
-```go
-go build texture_packer.go
+Linux 
+```powershell
+sudo apt-get install -y powershell
+pwsh
+./Install.ps1
 ```
-
-Don't forget to set GOOS/GOARCH environment variables.
-The executables should be copied to the appropriate bin folder after being built from the microservices folder.
-
-**The VSCode package** can be obtained by
-
-```npm
-yarn install
-yarn run webpack
-yarn vsce package
+MacOS
+```sh
+brew cask install powershell
+pwsh
+./Install.ps1
+```
+Windows 
+```powershell
+pwsh.exe
+./Install.ps1
 ```
 
 # Disclaimer
 
-I work on this extension in my free time. Community collaboration is very important to me. Please consider joining my discord and suggesting improvements.
+Please consider joining my discord and suggesting improvements.
 It is recommended you use it on casual projects. The project is undergoing rapid progress and we don't want remnant bugs to break anything.
 **Stability will be guaranteed post 1.0.0 launch.**
 
