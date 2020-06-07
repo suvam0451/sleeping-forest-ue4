@@ -1,44 +1,41 @@
 [
 	{
 		"id": "BeginPlay",
-		"comment": "// Called when the game starts or when spawned",
-		"signature": "virtual void BeginPlay() override;",
+		"body": ["Super::BeginPlay();"],
 		"field": "protected",
-		"body": ["Super::BeginPlay();"]
+		"comment": "// Called when the game starts or when spawned",
+		"signature": "virtual void BeginPlay() override;"
 	},
 	{
 		"id": "Tick",
-		"comment": "// Called every frame",
-		"signature": "virtual void Tick(float DeltaTime) override;",
+		"body": ["Super::Tick(DeltaTime);"],
 		"field": "public",
-		"body": ["Super::Tick(DeltaTime);"]
+		"comment": "// Called every frame",
+		"signature": "virtual void Tick(float DeltaTime) override;"
 	},
 	{
 		"id": "OnConstruction",
-		"comment": "// Called when an instance of this class is placed (in editor) or spawned.",
-		"signature": "virtual void OnConstruction(const FTransform &Transform) override;",
+		"body": ["// Function not implemented"],
 		"field": "private",
-		"body": ["// Function not implemented"]
+		"comment": "// Called when an instance of this class is placed (in editor) or spawned.",
+		"signature": "virtual void OnConstruction(const FTransform &Transform) override;"
 	},
 	{
 		"id": "SetupPlayerInputComponent",
-		"comment": "// Called to bind functionality to input",
-		"signature": "virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;",
+		"body": ["Super::SetupPlayerInputComponent(PlayerInputComponent);"],
 		"field": "public",
-		"body": ["Super::SetupPlayerInputComponent(PlayerInputComponent);"]
+		"comment": "// Called to bind functionality to input",
+		"signature": "virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;"
 	},
 	{
 		"id": "OnPossess",
-		"comment": "// ",
-		"signature": "virtual void OnPossess(APawn *MyPawn) override;",
+		"body": [],
 		"field": "protected",
-		"body": []
+		"comment": "// ",
+		"signature": "virtual void OnPossess(APawn *MyPawn) override;"
 	},
 	{
 		"id": "GetControlRotation",
-		"comment": "// ",
-		"signature": "virtual FRotator GetControlRotation() const override;",
-		"field": "private",
 		"body": [
 			"if(GetPawn() != nullptr){",
 			"\treturn FRotator(0.0f, GetPawn()->GetActorRotation().Yaw, 0.0f);",
@@ -46,34 +43,166 @@
 			"else{",
 			"\treturn FRotator(0.0f);",
 			"}"
-		]
+		],
+		"field": "private",
+		"comment": "// ",
+		"signature": "virtual FRotator GetControlRotation() const override;"
 	},
 	{
 		"id": "NativeUpdateAnimation",
-		"comment": "// Similar to Tick() for animations",
-		"signature": "virtual void NativeUpdateAnimation(float DeltaTimeX) override;",
+		"body": ["Super::NativeUpdateAnimation(DeltaTimeX);"],
 		"field": "protected",
-		"body": ["Super::NativeUpdateAnimation(DeltaTimeX);"]
+		"comment": "// Similar to Tick() for animations",
+		"signature": "virtual void NativeUpdateAnimation(float DeltaTimeX) override;"
 	},
 	{
 		"id": "NativeInitializeAnimation",
-		"comment": "// Similar to BeginPlay() for animations",
-		"signature": "virtual void NativeInitializeAnimation() override;",
+		"body": ["Super::NativeInitializeAnimation();"],
 		"field": "protected",
-		"body": ["Super::NativeInitializeAnimation();"]
+		"comment": "// Similar to BeginPlay() for animations",
+		"signature": "virtual void NativeInitializeAnimation() override;"
 	},
 	{
 		"id": "PreEditChange",
-		"comment": "",
-		"signature": "virtual void PreEditChange(UProperty* PropertyThatWillChange) override;",
+		"body": ["Super::PreEditChange(PropertyThatChanged);"],
 		"field": "protected",
-		"body": ["Super::PreEditChange(PropertyThatChanged);"]
+		"comment": "",
+		"signature": "virtual void PreEditChange(UProperty* PropertyThatWillChange) override;"
 	},
 	{
 		"id": "PostEditChangeProperty",
-		"comment": "",
-		"signature": "virtual void PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent) override;",
+		"body": ["// Not implemented"],
 		"field": "property",
-		"body": ["// Not implemented"]
+		"comment": "",
+		"signature": "virtual void PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent) override;"
+	},
+	{
+		"id": "TickComponent",
+		"body": ["// Function not implemented"],
+		"field": "protected",
+		"comment": "",
+		"signature": "virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) override;"
+	},
+	{
+		"id": "OnRegister",
+		"body": ["// Function not implemented"],
+		"field": "private",
+		"comment": "",
+		"signature": "virtual void OnRegister() override;"
+	},
+	{
+		"id": "CacheBones",
+		"body": ["// Function not implemented"],
+		"field": "private",
+		"comment": "",
+		"signature": "virtual void CacheBones(const FAnimationCacheBonesContext& Context) override;"
+	},
+	{
+		"id": "Update -- (Animation)",
+		"body": [
+			"EvaluateGraphExposedInputs.Execute(Context);",
+			"AActor* OwningActor = Context.AnimInstance->GetSkelMeshComponent()->GetOwner(); ",
+			"// BasePose.Update(Context)"
+		],
+		"field": "private",
+		"comment": "",
+		"signature": "virtual void Update_AnyThread(const FAnimationUpdateContext& Context) override;"
+	},
+	{
+		"id": "Evaluate -- (Animation)",
+		"body": ["// BasePose.Evaluate(Context)"],
+		"field": "private",
+		"comment": "",
+		"signature": "virtual void Evaluate_AnyThread(FPoseContext& Output) override;"
+	},
+	{
+		"id": "Initialize -- (Animation)",
+		"body": [
+			"// BasePose.Initialize(Context);",
+			"OwnerActor = Context.AnimInstance-> GetSkelMeshComponent()->GetOwner();",
+			"UWorld * TheWorld = Context.AnimInstance->GetWorld();",
+			"if (!TheWorld) return;"
+		],
+		"field": "private",
+		"comment": "",
+		"signature": "virtual void Initialize_AnyThread(const FAnimationInitializeContext& Context) override;"
+	},
+	{
+		"id": "CacheBones -- (Animation)",
+		"body": ["// BasePose.CacheBones(Context);"],
+		"field": "private",
+		"comment": "",
+		"signature": "virtual void CacheBones_AnyThread(const FAnimationCacheBonesContext& Context) override;"
+	},
+	{
+		"id": "Tick -- (Widget)",
+		"body": ["Super::Tick(MyGeometry, InDeltaTime);"],
+		"field": "private",
+		"comment": "",
+		"signature": "void Tick(FGeometry MyGeometry, float InDeltaTime);"
+	},
+	{
+		"id": "Landed",
+		"body": [""],
+		"field": "private",
+		"comment": "",
+		"signature": "virtual void Landed(const FHitResult& Hit) override;"
+	},
+	{
+		"id": "TickNode -- (BTService)",
+		"body": ["AAIController *OwnerAI = Cast<AAIController>(OwnerComp.GetAIOwner());"],
+		"field": "private",
+		"comment": "",
+		"signature": "virtual void TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds) override;"
+	},
+	{
+		"id": "ExecuteTask -- (BTTask)",
+		"body": [""],
+		"field": "private",
+		"comment": "",
+		"signature": "virtual EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory);"
+	},
+	{
+		"id": "OnPaint -- (SWidget)",
+		"body": [""],
+		"field": "private",
+		"comment": "",
+		"signature": "virtual int32 OnPaint(const FPaintArgs& Args, const FGeometry& AllottedGeometry, const FSlateRect& MyCullingRect, FSlateWindowElementList& OutDrawElements, int32 LayerId, const FWidgetStyle& InWidgetStyle, bool bParentEnabled) const override;"
+	},
+	{
+		"id": "OnMouseButtonDown -- (SWidget)",
+		"body": [
+			"if (${1|OnMouseButtonDownHandler}.IsBound())",
+			"{",
+			"\treturn ${1|OnMouseButtonDownHandler}.Execute(MyGeometry, MouseEvent);",
+			"}",
+			"else",
+			"{",
+			"\t// otherwise the event is unhandled.",
+			"\treturn FReply::Unhandled();",
+			"}"
+		],
+		"field": "private",
+		"comment": "",
+		"signature": "virtual FReply OnMouseButtonDown(const FGeometry& MyGeometry, const FPointerEvent& MouseEvent) override;"
+	},
+	{
+		"id": "Tick -- (SWidget)",
+		"body": [
+			"SLeafWidget::Tick(AllottedGeometry, InCurrentTime, InDeltaTime);",
+			"{",
+			"\tSCOPE_CYCLE_COUNTER(STAT_TickFlipbookWidget);",
+			"}"
+		],
+		"field": "private",
+		"comment": "",
+		"signature": "virtual void Tick(const FGeometry& AllottedGeometry, const double InCurrentTime, const float InDeltaTime) override"
+	},
+	{
+		"id": "ComputeDesiredSize -- SWidget",
+		"body": ["// Can use FSlateBrush::ImageSize or plain Vector2D."],
+		"field": "private",
+		"comment": "// Used to change size of widget on the fly.",
+		"signature": "virtual FVector2D ComputeDesiredSize(float) const override;"
 	}
 ]

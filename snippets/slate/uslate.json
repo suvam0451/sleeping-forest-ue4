@@ -1,0 +1,38 @@
+{
+	"uslate: slateargs": {
+		"prefix": "slate_args",
+		"body": [
+			"// Support for widget construction via SNew and SAssignNew",
+			"SLATE_BEGIN_ARGS(SPaperFlipbookWidget)",
+			"\t: _ColorAndOpacity(FLinearColor::White)",
+			"\t, _OnMouseButtonDown()",
+			"{",
+			"}\n",
+			"// SLATE_ATTRIBUTE(FSlateColor, ColorAndOpacity) // Color/Opacity attribute",
+			"// SLATE_EVENT(FPointerEventHandler, OnMouseButtonDown) // Event Delegate",
+			"// SLATE_EVENT(FSimpleDelegate, OnFinishedPlaying) // Other delegate",
+			"SLATE_END_ARGS()",
+			"",
+			"// ctor --> context",
+			"",
+			"// construct this widget",
+			"void Construct(const FArguments& InArgs);",
+			"",
+			"// !COPY",
+			"// void XYZ::Construct(Construct(const FArguments& InArgs))",
+			"// {",
+			"// // ColorAndOpacity = InArgs._ColorAndOpacity",
+			"// // OnMouseButtonDownHandler = InArgs._OnMouseButtonDown;",
+			"// }",
+
+			"// --------------- END BLOCK -----------------------------"
+		]
+	},
+	"uslate: invalidate": {
+		"prefix": "invalidate_widget",
+		"body": [
+			"Invalidate(EInvalidateWidget::None,Layout,Paint,Volatility,ChildOrder,RenderTransform,Visibility,PaintAndVolatility,LayoutAndVolatility);"
+		],
+		"description": ["NOTE: EInvalidateWidget will be deprecated soon"]
+	}
+}

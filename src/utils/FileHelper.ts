@@ -198,7 +198,7 @@ export function AddLinesToFile(filepath: string, body: string[]) {
  * 	@param filepath path to the file to be written
  * 	@param body list of strings to write
  */
-export function AddLinesToFileUsingStream(filepath: string, body: string[]) {
+export function AddLinesAtEndUsingStream(filepath: string, body: string[]) {
 	var stream = fs.createWriteStream(filepath, { flags: "a" });
 	_.forEach(body, (line) => {
 		stream.write(line);

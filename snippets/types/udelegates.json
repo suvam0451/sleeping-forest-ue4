@@ -1,0 +1,10 @@
+{
+	"PointerEventHandler": {
+		"prefix": "fpointer_eventhandler",
+		"body": "FPointerEventHandler OnMouseButtonDownHandler;"
+	},
+	"SimpleDelegate": {
+		"prefix": "fsimple_delegate",
+		"body": "FSimpleDelegate OnFinishedPlaying;"
+	}
+}

@@ -30,9 +30,11 @@ export async function AddOverrideFunction(): Promise<void> {
 	let modpath = filesys.RelativeToAbsolute("suvam0451.sleeping-forest-ue4", _functionModPath);
 	let extradata = filesys.ReadJSON<FunctionTemplate[]>(modpath!);
 	let data: FunctionTemplate[] = FuncDefs.concat(extradata);
+	console.log(data);
+	console.log(modpath);
 
 	let options: string[] = [];
-	data.forEach(o => {
+	data.forEach((o) => {
 		options.push(o.id);
 	});
 
@@ -41,10 +43,10 @@ export async function AddOverrideFunction(): Promise<void> {
 	let priv = vsfs.RegexMatchLine(filepath, /^private:$/);
 	let EOC = vsfs.RegexMatchLine(filepath, /^};$/);
 
-	Promise.all([pub, prot, priv, EOC]).then(vals => {
+	Promise.all([pub, prot, priv, EOC]).then((vals) => {
 		return new Promise<void>((resolve, reject) => {
-			vsui.QuickPick(options, false).then(sel => {
-				let choice = data.find(o => {
+			vsui.QuickPick(options, false).then((sel) => {
+				let choice = data.find((o) => {
 					return sel === o.id;
 				});
 				if (choice !== undefined) {

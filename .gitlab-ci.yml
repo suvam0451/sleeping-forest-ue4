@@ -10,7 +10,7 @@ Default:
   script:
     # Comment out to use github packages
     - yarn config set '//npm.pkg.github.com/:_authToken' "${GITHUB_AUTH_TOKEN}"
-    - npm config set '//npm.pkg.github.com/:_authToken' "${GITHUB_AUTH_TOKEN}"
+    - npm config set '//npm.pkg.github.com/:_authToken' "${GITHUB_AUTH_TOKEN}" # This alone will allow access
     - yarn login --registry=https://npm.pkg.github.com
     # Comment out to use gitlab packages
     # - npm config set '//gitlab.com/api/v4/packages/npm/:_authToken' "${GITLAB_AUTH_TOKEN}

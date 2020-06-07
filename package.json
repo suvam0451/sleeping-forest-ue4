@@ -176,6 +176,14 @@
 				"path": "./snippets/uclass.json"
 			},
 			{
+				"language": "cpp",
+				"path": "./snippets/slate/utypes.json"
+			},
+			{
+				"language": "cpp",
+				"path": "./snippets/slate/uslate.json"
+			},
+			{
 				"language": "hlsl",
 				"path": "./snippets/usf/functionlibrary.json"
 			},
@@ -293,7 +301,7 @@
 		}
 	},
 	"scripts": {
-		"compile": "tsc -p ./",
+		"compile": "tsc -p ./ && webpack --mode development",
 		"pretest": "yarn run compile",
 		"test": "node ./out/test/runTest.js",
 		"test-compile": "tsc -p ./",

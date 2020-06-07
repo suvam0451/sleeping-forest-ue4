@@ -9,7 +9,7 @@ import * as _ from "lodash";
 import context from "../data/ContextAutofill.json";
 import IncludeManager from "../modules/IncludeManager";
 import { GetMatchingSourceSync } from "../utils/FilesystemHelper";
-import { AddLinesToFile, AddLinesToFileUsingStream } from "../utils/FileHelper";
+import { AddLinesToFile, AddLinesAtEndUsingStream } from "../utils/FileHelper";
 import { AddOverrideFunction } from "../modules/AddOverrideFunction";
 import { vsui, vsed, vscfg } from "@suvam0451/vscode-geass";
 
@@ -96,10 +96,13 @@ export default async function InitializerModule(): Promise<void> {
 							// Values can't be assigned in .cpp definitions
 
 							let lineToWrite: string = edit.ResolveLines(rule.body, symbolarray, data.line, false);
-							let LineToWriteTmp : string[] = edit.ResolveLinesToSlice(rule.body, symbolarray, data.line);
-							console.log(lineToWrite, LineToWriteTmp);
+							let LineToWriteTmp: string[] = edit.ResolveLinesToSlice(
+								rule.body,
+								symbolarray,
+								data.line,
+							);
 							// Swap "$x" with the captured class/struct name symbol
-							let classname: string = edit.GetClassSymbol(data.line);
+							let classname = edit.GetClassSymbol(data.line); // Scans lines upward and finds class
 							lineToWrite = lineToWrite.replace("$x", classname);
 							LineToWriteTmp[0] = LineToWriteTmp[0].replace("$x", classname);
 							while (exValue.test(lineToWrite)) {
@@ -112,14 +115,15 @@ export default async function InitializerModule(): Promise<void> {
 							LineToWriteTmp[0] = edit.StringRemoveGlobal(LineToWriteTmp[0], "class ");
 							lineToWrite = edit.StringRemoveGlobal(lineToWrite, "class ");
 
+							// Allows user to either get the function implemented/copied to clipboard
 							let choice = vscfg.GetVSConfig<boolean>("SF", "autoAddFunctionsInSource");
 							if (choice) {
 								GetMatchingSourceSync(_file!).then((ret) => {
-									AddLinesToFileUsingStream(ret, LineToWriteTmp);
+									// FIXEDBUG : If pointer not on newline, the function starts right after the last(non-empty) line
+									AddLinesAtEndUsingStream(ret, ["\n"].concat(LineToWriteTmp));
 								});
 							} else {
 								let singleLine = LineToWriteTmp.join();
-								console.log(singleLine);
 								vscode.env.clipboard.writeText(lineToWrite);
 								vscode.window.showInformationMessage("Function body copied to clipboard.");
 							}

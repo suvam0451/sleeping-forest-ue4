@@ -35,15 +35,15 @@ interface ClassTemplate {
 /** ENTRY POINT of module */
 export default async function CreateClassModule(): Promise<void> {
 	return new Promise<void>((resolve, reject) => {
-		NamespaceSelection().then(ret => {
+		NamespaceSelection().then((ret) => {
 			// Gets { buildspace }
-			ModuleSelection(ret).then(ret2 => {
+			ModuleSelection(ret).then((ret2) => {
 				// Gets { modulename, modulepath }
-				ClassSelection(ret2).then(ret3 => {
+				ClassSelection(ret2).then((ret3) => {
 					// Gets { parentclass, classname }
-					GenerateFileData(ret3).then(ret4 => {
+					GenerateFileData(ret3).then((ret4) => {
 						// Gets { headerpath,  sourcepath }
-						ValidateRequest(ret4).then(ret5 => {
+						ValidateRequest(ret4).then((ret5) => {
 							if (ret5) {
 								HandleClassGeneration(ret4).then(() => {
 									// This needs to be purged
@@ -87,16 +87,16 @@ async function ClassSelection(data: ClassCreationKit): Promise<ClassCreationKit>
 	let json: Buildspace[] = _.concat(classData, extradata);
 	let bs = _.find(json, { buildspace: data.buildspace });
 	if (typeof bs !== "undefined") {
-		_.each(bs.templates, tmpl => {
+		_.each(bs.templates, (tmpl) => {
 			classList.push(tmpl.id);
 		});
 	}
 	return new Promise<ClassCreationKit>((resolve, reject) => {
-		vsui.QuickPick(classList, false).then(sel => {
+		vsui.QuickPick(classList, false).then((sel) => {
 			data.parentclass = sel;
 			vsui
 				.GetString()
-				.then(ret => {
+				.then((ret) => {
 					data.classname = ret;
 					vscode.window.showWarningMessage(
 						"Adding " + // user receipt
@@ -129,7 +129,7 @@ async function ModuleSelection(data: ClassCreationKit): Promise<ClassCreationKit
 		try {
 			// let lst = fs.readdirSync(pluginPath);
 			let lst = filesys.GetFolderList(pluginPath);
-			lst.forEach(folder => {
+			lst.forEach((folder) => {
 				let ret = GetPluginDataFromFolder(path.join(pluginPath, folder));
 				pluginDataArray = pluginDataArray.concat(ret);
 			});
@@ -144,15 +144,15 @@ async function ModuleSelection(data: ClassCreationKit): Promise<ClassCreationKit
 				isGameModule: true,
 			});
 			// let arr =_.concat(arr, pluginDataArray);
-			_.each(pluginDataArray, ret => {
+			_.each(pluginDataArray, (ret) => {
 				arr.push(ret.foldername);
 			});
 		} catch {
 			reject("Throw not implemented...");
 		}
 		// arr.push("Game");
-		vsui.QuickPick(arr, false).then(sel => {
-			let index = pluginDataArray.find(i => i.foldername === sel);
+		vsui.QuickPick(arr, false).then((sel) => {
+			let index = pluginDataArray.find((i) => i.foldername === sel);
 			if (typeof index !== "undefined") {
 				switch (index.foldername) {
 					case "Game": {
@@ -195,7 +195,7 @@ async function HandleClassGeneration(kit: ClassCreationKit): Promise<void> {
 	let data = basedata.concat(extradata);
 
 	return new Promise<void>((resolve, reject) => {
-		data.forEach(bs => {
+		data.forEach((bs) => {
 			if (bs.buildspace === kit.buildspace) {
 				bs.templates.forEach((tmpl: ClassTemplate) => {
 					if (tmpl.id === kit.parentclass) {
@@ -233,9 +233,9 @@ function GenerateSymbols(kit: ClassCreationKit): SymbolData {
 	let extradata = filesys.ReadJSON<Buildspace[]>(modpath!);
 
 	let data = basedata.concat(extradata);
-	data.forEach(val => {
+	data.forEach((val) => {
 		if (val.buildspace === kit.buildspace) {
-			val.templates.forEach(each => {
+			val.templates.forEach((each) => {
 				if (each.id === kit.parentclass) {
 					retval.parentclass = each.parent!;
 					retval.prefix = each.classprefix;
@@ -252,7 +252,7 @@ function GenerateSymbols(kit: ClassCreationKit): SymbolData {
 async function ParseAndWrite(filepath: string, data: string[], symbols: SymbolData): Promise<void> {
 	return new Promise<void>((resolve, reject) => {
 		let logger = fs.createWriteStream(filepath, { flags: "w" });
-		data.forEach(line => {
+		data.forEach((line) => {
 			line = line.replace("$1", symbols.classname);
 			line = line.replace("$1", symbols.classname); // Some bug causes 2nd symbol to not get replaced
 			line = line.replace("$2", symbols.apiname);
@@ -295,14 +295,14 @@ async function ValidateRequest(kit: ClassCreationKit): Promise<boolean> {
 				resolve(true);
 			}
 		}).then(
-			ret => {
+			(ret) => {
 				// IF no syntax errors, resolves to true...
 				resolve(ret);
 			},
-			err => {
+			(err) => {
 				// Let user decide if current request overwrites files...
 				let opt: string[] = ["Abort(default)", "I understand that my previous data will be lost."];
-				vscode.window.showQuickPick(opt).then(sel => {
+				vscode.window.showQuickPick(opt).then((sel) => {
 					if (sel === "I understand that my previous data will be lost.") {
 						resolve(true);
 					} else {
@@ -337,13 +337,13 @@ async function NamespaceSelection(): Promise<ClassCreationKit> {
 	let arr: string[] = [];
 	let data: Buildspace[] = basedata.concat(extradata);
 
-	data.forEach(val => {
+	data.forEach((val) => {
 		arr.push(val.buildspace);
 	});
 	return new Promise<ClassCreationKit>((resolve, reject) => {
 		vscode.window
 			.showQuickPick(arr)
-			.then(ret => {
+			.then((ret) => {
 				if (ret) {
 					retval.buildspace = ret;
 				} else {
