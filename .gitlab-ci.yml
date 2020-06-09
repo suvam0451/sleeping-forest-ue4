@@ -33,6 +33,8 @@ Default:
     - yarn install
     - yarn run webpack
     - yarn vsce package
+  dependencies:
+    - FetchCritstrike
   artifacts:
     paths:
       - ./*.vsix
@@ -48,7 +50,7 @@ Shipping_Patch:
     - yarn run webpack
     - yarn vsce publish patch -p ${VSCODE_AUTH_TOKEN} --yarn
   dependencies:
-    - PackageCritstrike
+    - FetchCritstrike
   only:
     variables:
       - $CI_COMMIT_MESSAGE =~ /-patch/
@@ -67,7 +69,7 @@ Shipping_Minor:
     - yarn run webpack
     - yarn vsce publish minor -p ${VSCODE_AUTH_TOKEN} --yarn
   dependencies:
-    - PackageCritstrike
+    - FetchCritstrike
   only:
     variables:
       - $CI_COMMIT_MESSAGE =~ /-minor/
@@ -86,7 +88,7 @@ Shipping_Major:
     - yarn run webpack
     - yarn vsce publish major -p ${VSCODE_AUTH_TOKEN} --yarn
   dependencies:
-    - PackageCritstrike
+    - FetchCritstrike
   only:
     variables:
       - $CI_COMMIT_MESSAGE =~ /-major/
