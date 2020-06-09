@@ -1,9 +1,23 @@
 image: node:latest
 
 stages:
-  - compile
   - assembly
   - publish # Unfortunately yarn/npm version won't let us push uncommitted changes
+
+# Compile the golang project in /devops folder.
+FetchCritstrike:
+  image: golang:latest
+  stage: assembly
+  script:
+    # Make the output folders
+    - mkdir -p bin/{linux,macos,win64}
+    # UPDATE: The binaries now have to be copied from approriate repo
+    - sudo wget -P ./bin/linux/critstrike https://github.com/suvam0451/critstrike-cli/releases/latest/download/critstrike
+    - sudo wget -P ./bin/macos/critstrike https://github.com/suvam0451/critstrike-cli/releases/latest/download/critstrike_mac
+    - sudo wget -P ./bin/win64/critstrike.exe https://github.com/suvam0451/critstrike-cli/releases/latest/download/critstrike.exe
+  artifacts:
+    paths:
+      - ./bin
 
 Default:
   stage: publish
@@ -22,25 +36,6 @@ Default:
   artifacts:
     paths:
       - ./*.vsix
-
-# Compile the golang project in /devops folder.
-PackageCritstrike:
-  image: golang:latest
-  stage: compile
-  script:
-    # Make the output folders
-    - mkdir -p bin/{linux,macos,win64}
-    # Switch folders and generate binaries
-    - cd devops
-    - GOOS=linux GOARCH=amd64 go build -o ../bin/linux/critstrike critstrike.go
-    - GOOS=darwin GOARCH=amd64 go build -o ../bin/macos/critstrike critstrike.go
-    - GOOS=windows GOARCH=amd64 go build -o ../bin/win64/critstrike.exe critstrike.go
-    - cd ..
-  artifacts:
-    paths:
-      - ./bin
-
-###
 
 # patch updates
 Shipping_Patch:
