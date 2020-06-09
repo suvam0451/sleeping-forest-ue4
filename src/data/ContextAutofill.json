@@ -83,9 +83,15 @@
 		"body": ["$1 $x::$2$3 {", "\t// Function not implemented", "}"],
 		"desc": "Generates function body for a target line.",
 		"action": "fnbodygen",
-		"pattern": "^\t?\t?(FORCEINLINE )?(virtual )?([a-z_A-Z<>,&*]*) ?([a-zA-Z_, :<>(=0-9\"*& ]*\\))( const)?( override)?;",
+		"pattern": "^\t?\t?(FORCEINLINE )?(virtual )?([a-z_A-Z&*0-9 ]+<?[a-z0-9, ]+>?) ([a-zA-Z0-9_, :<>(=0-9\"*& ]*\\))( const)?( override)?;",
 		"parsemap": [3, 4, 5],
-		"filepattern": ".h$"
+		"filepattern": ".h$",
+		"memo": [
+			"The first capture group is FOCEINLINE macro",
+			"second is virtual flag",
+			"Third is return type (word or number, <>, &*)",
+			"Fourth is function name"
+		]
 	},
 	{
 		"id": "booleanswitch",

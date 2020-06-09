@@ -38,6 +38,8 @@ interface FunctionTemplate {
 	field: string;
 	body: string[];
 }
+
+/** Looks for the function IDs by name and fille the signature and body from it. */
 export async function InjectFunctions(
 	headerpath: string,
 	sourcepath: string,
@@ -47,9 +49,10 @@ export async function InjectFunctions(
 	// Append the xyz with
 	let modpath = filesys.RelativeToAbsolute("suvam0451.sleeping-forest-ue4", _functionModPath);
 	let extradata = filesys.ReadJSON<FunctionTemplate[]>(modpath!);
-	let data: FunctionTemplate[] = FuncDefs.concat(extradata);
 
-	// let data = FuncDefs.concat(FuncDefs, FuncExts);
+	// Functions --> (Core + Ext)
+	let data = FuncDefs.concat(extradata);
+	console.log(data);
 
 	// Get header fields
 	let pub = await vsfs.RegexMatchLine(headerpath, /^public:$/);
@@ -61,25 +64,31 @@ export async function InjectFunctions(
 	let privAdd: string[] = [];
 	let srcAdd: string[] = [];
 
-	_.each(arr, (fnid) => {
-		let pnt = _.find(data, (o) => {
-			return o.id === fnid;
-		});
-		if (pnt) {
-			switch (pnt?.field) {
+	console.log(arr);
+
+	await arr.forEach((function_id) => {
+		console.log("target", function_id);
+
+		let matched_object = data.find((elem) => elem.id == function_id);
+		console.log("matched object was -->", matched_object);
+
+		if (matched_object) {
+			// TODO: remove this after fixing bugs
+			console.log("Function signatures were found...");
+			switch (matched_object?.field) {
 				case "public": {
-					pubAdd.push("\t" + pnt.comment);
-					pubAdd.push("\t" + pnt.signature + "\n");
+					pubAdd.push("\t" + matched_object.comment);
+					pubAdd.push("\t" + matched_object.signature + "\n");
 					break;
 				}
 				case "protected": {
-					protAdd.push("\t" + pnt.comment);
-					protAdd.push("\t" + pnt.signature + "\n");
+					protAdd.push("\t" + matched_object.comment);
+					protAdd.push("\t" + matched_object.signature + "\n");
 					break;
 				}
 				case "private": {
-					privAdd.push("\t" + pnt.comment);
-					privAdd.push("\t" + pnt.signature + "\n");
+					privAdd.push("\t" + matched_object.comment);
+					privAdd.push("\t" + matched_object.signature + "\n");
 					break;
 				}
 				default: {
@@ -87,7 +96,10 @@ export async function InjectFunctions(
 				}
 			}
 			// Add function body to source
-			srcAdd = _.concat(srcAdd, GeneratedSourceBody(pnt.signature, namespace, pnt.body));
+			srcAdd = _.concat(
+				srcAdd,
+				GeneratedSourceBody(matched_object.signature, namespace, matched_object.body),
+			);
 		}
 	});
 

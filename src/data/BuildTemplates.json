@@ -6,92 +6,118 @@
 				"classprefix": "A",
 				"id": "Actor",
 				"parent": "AActor",
-				"Functions": ["BeginPlay", "Tick", "OnConstruction"],
-				"Headers": ["CoreMinimal.h", "GameFramework/Actor.h"]
+				"functions": ["BeginPlay", "Tick", "OnConstruction"],
+				"headers": ["CoreMinimal.h", "GameFramework/Actor.h"]
 			},
 			{
 				"classprefix": "U",
 				"id": "ActorComponent",
 				"parent": "UActorComponent",
-				"Headers": ["CoreMinimal.h", "Components/ActorComponent.h"]
+				"headers": ["CoreMinimal.h", "Components/ActorComponent.h"]
 			},
 			{
 				"classprefix": "A",
 				"id": "Character",
 				"parent": "ACharacter",
-				"Functions": ["BeginPlay", "Tick", "SetupPlayerInputComponent"],
-				"Headers": ["CoreMinimal.h", "GameFramework/Character.h"]
+				"functions": ["BeginPlay", "Tick", "SetupPlayerInputComponent"],
+				"headers": ["CoreMinimal.h", "GameFramework/Character.h"]
 			},
 			{
 				"classprefix": "I",
 				"id": "Interface",
 				"parent": "UInterface",
-				"Headers": ["CoreMinimal.h", "UObject/Interface.h"]
+				"headers": ["CoreMinimal.h", "UObject/Interface.h"]
 			},
 			{
 				"classprefix": "U",
 				"id": "Object",
 				"parent": "UObject",
-				"Headers": []
+				"headers": []
 			},
 			{
 				"classprefix": "U",
 				"id": "DataAsset",
 				"parent": "UDataAsset",
-				"Headers": ["CoreMinimal.h", "Engine/DataAsset.h"]
+				"headers": ["CoreMinimal.h", "Engine/DataAsset.h"]
 			},
 			{
 				"classprefix": "A",
 				"id": "AIController",
 				"parent": "AAIController",
-				"Functions": ["BeginPlay", "Tick", "GetControlRotation", "OnPossess"],
-				"Headers": ["CoreMinimal.h", "AIController.h"]
+				"functions": ["BeginPlay", "Tick", "GetControlRotation", "OnPossess"],
+				"headers": ["CoreMinimal.h", "AIController.h"]
 			},
 			{
 				"classprefix": "U",
 				"id": "BTSerive",
 				"parent": "UBTService",
-				"Functions": ["TickNode"],
-				"Headers": ["CoreMinimal.h", "BehaviorTree/BTService.h"]
+				"functions": ["TickNode"],
+				"headers": ["CoreMinimal.h", "BehaviorTree/BTService.h"]
 			},
 			{
 				"classprefix": "U",
 				"id": "AnimInstance",
 				"parent": "UAnimInstance",
-				"Functions": ["NativeInitializeAnimation", "NativeUpdateAnimation"],
-				"Headers": ["CoreMinimal.h", "Animation/AnimInstance.h"]
+				"functions": ["NativeInitializeAnimation", "NativeUpdateAnimation"],
+				"headers": ["CoreMinimal.h", "Animation/AnimInstance.h"]
 			},
 			{
 				"classprefix": "U",
 				"id": "UserWidget",
 				"parent": "UUserWidget",
-				"Headers": ["Coreminimal.h", "Animation/AnimInstance.h"]
+				"headers": ["Coreminimal.h", "Animation/AnimInstance.h"]
 			},
 			{
 				"classprefix": "U",
 				"id": "CameraShake",
 				"parent": "UCameraShake",
-				"Headers": ["Camera/CameraShake.h"]
+				"headers": ["Camera/CameraShake.h"]
 			},
 			{
 				"classprefix": "A",
 				"id": "GameModeBase",
 				"parent": "AGameModeBase",
-				"Headers": ["GameFramework/GameModeBase.h"]
+				"headers": ["GameFramework/GameModeBase.h"]
 			},
 			{
 				"classprefix": "U",
 				"id": "BlueprintFunctionLibrary",
 				"parent": "UBlueprintFunctionLibrary",
-				"Headers": ["Kismet/BlueprintFunctionLibrary.h"],
+				"headers": ["Kismet/BlueprintFunctionLibrary.h"],
 				"noconstructor": true
 			},
 			{
 				"classprefix": "U",
 				"id": "BTTask(BlackboardBase)",
 				"parent": "UBTTask_BlackboardBase",
-				"Headers": ["BehaviorTree/Tasks/BTTask_BlackboardBase.h"],
-				"Functions": ["ExecuteTask"]
+				"headers": ["BehaviorTree/Tasks/BTTask_BlackboardBase.h"],
+				"functions": ["ExecuteTask"]
+			},
+			{
+				"classprefix": "S",
+				"id": "LeafWidget",
+				"parent": "SLeafWidget",
+				"headers": ["SlateBasics.h", "SlateExtras.h"],
+				"functions": [
+					"SWidget -- ComputeDesiredSize",
+					"SWidget -- OnMouseButtonDown",
+					"SWidget -- OnPaint",
+					"SWidget -- SupportsKeyboardFocus",
+					"SWidget -- Tick"
+				]
+			},
+			{
+				"classprefix": "S",
+				"id": "CompoundWidget",
+				"parent": "SCompoundWidget",
+				"headers": ["SlateBasics.h", "SlateExtras.h"],
+				"functions": [
+					"SWidget -- ComputeDesiredSize",
+					"SWidget -- OnMouseButtonDown",
+					"SWidget -- OnPaint",
+					"SWidget -- SupportsKeyboardFocus",
+					"SWidget -- Tick"
+				]
 			}
 		]
 	}

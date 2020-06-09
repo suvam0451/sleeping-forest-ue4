@@ -1,0 +1,34 @@
+{
+	"SOverlay": {
+		"prefix": "soverlay",
+		"body": [
+			"SNew(SOverlay)",
+			"+ SOverlay::Slot()",
+			".HAlign(HAlign_Fill)",
+			".VAlign(VAlign_Fill)",
+			"// .Padding(FMargin)",
+			"[",
+			"\t$0",
+			"]",
+			"+ SOverlay::Slot()",
+			".HAlign(HAlign_Fill)",
+			".VAlign(VAlign_Fill)",
+			"[",
+			"\t",
+			"]"
+		]
+	},
+	"SImage": {
+		"prefix": "simage",
+		"body": ["SNew(SImage)", ".ColorAndOpacity(FColor::Black)"],
+		"description": "Leaf widget"
+	},
+	"SVerticalBox": {
+		"prefix": "sverticalbox",
+		"body": ["SNew(SVerticalBox)", "+ SVerticalBox::Slot()", "[", "/t$0", "]"]
+	},
+	"STextBlock": {
+		"prefix": "stext",
+		"body": ["SNew(STextBlock)", ".Text(FText)"]
+	}
+}

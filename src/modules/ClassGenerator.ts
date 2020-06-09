@@ -7,7 +7,7 @@ import * as vscode from "vscode";
 import { GetPluginDataFromFolder } from "../utils/FilesystemHelper";
 import * as fs from "fs";
 import * as path from "path";
-import classData from "../data/BuildTemplates.json";
+
 // Header/Source file generation data...
 import Default_Actor_h from "../data/generators/Default_Actor_h.json";
 import Default_Actor_cpp from "../data/generators/Default_Actor_cpp.json";
@@ -16,6 +16,9 @@ import * as _ from "lodash";
 import * as filesys from "../utils/FilesystemHelper";
 import { vsui } from "@suvam0451/vscode-geass";
 import { ClassCreationKit, PluginPathInfo } from "./TypesExport";
+
+// Data files
+import classData from "../data/BuildTemplates.json";
 const _buildspaceModPath = "data/extensions/Buildspaces_Ext.json";
 
 interface Buildspace {
@@ -27,8 +30,8 @@ interface ClassTemplate {
 	classprefix: string;
 	id: string;
 	parent: string;
-	Functions?: string[];
-	Headers?: string[];
+	functions?: string[];
+	headers?: string[];
 	noconstructor?: boolean;
 }
 
@@ -192,6 +195,7 @@ async function HandleClassGeneration(kit: ClassCreationKit): Promise<void> {
 	let basedata: Buildspace[] = classData;
 	let extradata = filesys.ReadJSON<Buildspace[]>(modpath!);
 
+	// INFO : Build templates (Core + Templates)
 	let data = basedata.concat(extradata);
 
 	return new Promise<void>((resolve, reject) => {
@@ -199,11 +203,15 @@ async function HandleClassGeneration(kit: ClassCreationKit): Promise<void> {
 			if (bs.buildspace === kit.buildspace) {
 				bs.templates.forEach((tmpl: ClassTemplate) => {
 					if (tmpl.id === kit.parentclass) {
-						InjectHeaders(kit.headerpath, tmpl.Headers).then(() => {
+						InjectHeaders(kit.headerpath, tmpl.headers).then(() => {
+							// TODO: Remove this after fixing issue
+							console.log("Functions are -->");
+							console.log(tmpl.id, tmpl.parent, tmpl.functions);
+
 							InjectFunctions(
 								kit.headerpath,
 								kit.sourcepath,
-								tmpl.Functions === null ? tmpl.Functions : [],
+								tmpl.functions === null ? [] : tmpl.functions,
 								sym.prefix + sym.classname,
 							);
 							resolve();

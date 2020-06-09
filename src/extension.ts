@@ -2,7 +2,7 @@
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from "vscode";
 import IncludeManager from "./modules/IncludeManager";
-import CreateClassModule from "./modules/CreateClassModule";
+import CreateClassModule from "./modules/ClassGenerator";
 import InjectExcludeDefinition from "./modules/InjectExclusions";
 import * as AssetStream from "./modules/AssetStreamModule";
 import * as uauto from "./utils/UnrealAutomation";
@@ -10,7 +10,7 @@ import InitializerModule from "./modules/InitializerModule";
 import { AddOverrideFunction } from "./modules/AddOverrideFunction";
 import RefactorAPI from "./modules/RefactorAPI";
 import os from "os";
-import UE4_HLSL_exporter from "./modules/HLSLParser"
+import UE4_HLSL_exporter from "./modules/HLSLParser";
 
 // entry point
 export function activate(context: vscode.ExtensionContext) {
@@ -51,7 +51,7 @@ export function activate(context: vscode.ExtensionContext) {
 
 	//#region moduele:Class creation
 	let CreateClass = vscode.commands.registerCommand("extension.sf.createClass", () => {
-		CreateClassModule().catch(err => {
+		CreateClassModule().catch((err) => {
 			console.log("failed: " + err);
 		});
 	});
@@ -61,7 +61,7 @@ export function activate(context: vscode.ExtensionContext) {
 	let InitializeAssetFolder = vscode.commands.registerCommand(
 		"extension.sf.initializeAssetFolder",
 		() => {
-			AssetStream.InitializeStream().then(ret => {
+			AssetStream.InitializeStream().then((ret) => {
 				AssetStream.CopyBinaries(os.type(), ret);
 			});
 		},
@@ -94,9 +94,9 @@ export function activate(context: vscode.ExtensionContext) {
 
 	let HLSLToPythonUE4 = vscode.commands.registerCommand("extension.cs.ParseHLSLForUE4", () => {
 		UE4_HLSL_exporter();
-	})
+	});
 	context.subscriptions.push(HLSLToPythonUE4);
 }
 
 // this method is called when your extension is deactivated
-export function deactivate() { }
+export function deactivate() {}

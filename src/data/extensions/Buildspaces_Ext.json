@@ -6,22 +6,22 @@
 				"id": "Actor",
 				"classprefix": "A",
 				"parent": "AActor",
-				"Headers": ["CoreMinimal.h", "GameFramework/Actor.h"],
-				"Functions": ["BeginPlay", "Tick"]
+				"headers": ["CoreMinimal.h", "GameFramework/Actor.h"],
+				"functions": ["BeginPlay", "Tick"]
 			},
 			{
 				"id": "ActorComponent",
 				"classprefix": "A",
 				"parent": "AActorComponent",
-				"Headers": [],
-				"Functions": []
+				"headers": [],
+				"functions": []
 			},
 			{
 				"id": "AnotherSample",
 				"classprefix": "A",
 				"parent": "AActor",
-				"Headers": ["CoreMinimal.h"],
-				"Functions": ["Tick"]
+				"headers": ["CoreMinimal.h"],
+				"functions": ["Tick"]
 			}
 		]
 	}

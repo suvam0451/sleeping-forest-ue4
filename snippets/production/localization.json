@@ -1,0 +1,10 @@
+{
+	"loctext namespace": {
+		"prefix": "loctext_namspace",
+		"body": ["#define LOCTEXT_NAMESPACE \"${1|MainMenu}\"", "#undef LOCTEXT_NAMESPACE"]
+	},
+	"loctext": {
+		"prefix": "locatext",
+		"body": "const FText ${1|Name} = LOCTEXT(\"\", \"${2|Example Text}\")"
+	}
+}

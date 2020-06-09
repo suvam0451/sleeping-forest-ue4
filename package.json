@@ -184,6 +184,14 @@
 				"path": "./snippets/slate/uslate.json"
 			},
 			{
+				"language": "cpp",
+				"path": "./snippets/slate/widgets.json"
+			},
+			{
+				"language": "cpp",
+				"path": "./snippets/production/localization.json"
+			},
+			{
 				"language": "hlsl",
 				"path": "./snippets/usf/functionlibrary.json"
 			},
