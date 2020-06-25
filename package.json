@@ -311,7 +311,7 @@
 	"scripts": {
 		"compile": "tsc -p ./ && webpack --mode development",
 		"pretest": "yarn run compile",
-		"test": "node ./out/test/runTest.js",
+		"test": "yarn tsc test/snippetmodules.test.ts --resolveJsonModule --esModuleInterop && node test/snippetmodules.test.js",
 		"test-compile": "tsc -p ./",
 		"vscode:prepublish": "webpack --mode production",
 		"watch": "tsc -watch -p ./",
@@ -326,7 +326,7 @@
 		"@types/node": "^13.7.1",
 		"@types/vscode": "^1.39.0",
 		"babel-preset-es2015": "^6.24.1",
-		"mocha": "^7.0.1",
+		"mocha": "^8.0.1",
 		"ts-loader": "^6.2.1",
 		"tslint": "^6.0.0",
 		"typescript": "^3.6.4",
@@ -337,6 +337,9 @@
 	},
 	"dependencies": {
 		"@suvam0451/vscode-geass": "^0.0.27",
+		"@types/chai": "^4.2.11",
+		"@types/mocha": "^7.0.2",
+		"chai": "^4.2.0",
 		"lodash": "^4.17.15",
 		"xregexp": "^4.2.4"
 	}

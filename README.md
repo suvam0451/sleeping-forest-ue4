@@ -3,10 +3,10 @@
 [![](https://gitlab.com/winterwildfire/ue4/trailblazer/badges/master/pipeline.svg)](https://gitlab.com/suvam0451/sleeping-forest-ue4/pipelines/)
 ![](https://img.shields.io/badge/4.24%20--%204.24-supported-green)
 [![](https://img.shields.io/discord/573495259926102017)](https://discord.gg/8Qd8a66)
-![](https://img.shields.io/badge/platform-windows-lightgrey)
+![](https://img.shields.io/badge/platform-windows,macos,linux-lightgrey)
 ![](https://img.shields.io/badge/replication-not%20supported-red)
 
-[![Website](https://api.netlify.com/api/v1/badges/e3c2b5de-423f-417f-b57b-73d48f9e9c3f/deploy-status)](https://suvam0451.netlify.com/docs/sleeping-forest/getting-started)
+[![Website](https://api.netlify.com/api/v1/badges/e3c2b5de-423f-417f-b57b-73d48f9e9c3f/deploy-status)](https://suvam0451.netlify.app/docs/sleeping-forest/getting-started/)
 
 **Sleeping Forest** is a VSCode extension for _Unreal Engine 4_ that provides powerful **code-completion** and **command-line features** for programmers and **asset management**, **optimization tools** for designers.
 
@@ -109,19 +109,24 @@ Every folder is inside an asset stream is scanned and indexed in JSON files. The
 
 Run `Install.ps1` to run all the pipelines and generate the .vsix file. Install powershell core if you are not on Windows.
 
-Linux 
+Linux
+
 ```powershell
 sudo apt-get install -y powershell
 pwsh
 ./Install.ps1
 ```
+
 MacOS
+
 ```sh
 brew cask install powershell
 pwsh
 ./Install.ps1
 ```
-Windows 
+
+Windows
+
 ```powershell
 pwsh.exe
 ./Install.ps1

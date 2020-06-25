@@ -1,0 +1,79 @@
+[
+	{
+		"id": "BeginPlay",
+		"body": ["Super::BeginPlay();"],
+		"field": "protected",
+		"comment": "// Called when the game starts or when spawned",
+		"signature": "virtual void BeginPlay() override;"
+	},
+	{
+		"id": "Tick",
+		"body": ["Super::Tick(DeltaTime);"],
+		"field": "public",
+		"comment": "// Called every frame",
+		"signature": "virtual void Tick(float DeltaTime) override;"
+	},
+	{
+		"id": "OnConstruction",
+		"body": ["// Function not implemented"],
+		"field": "private",
+		"comment": "// Called when an instance of this class is placed (in editor) or spawned.",
+		"signature": "virtual void OnConstruction(const FTransform &Transform) override;"
+	},
+	{
+		"id": "SetupPlayerInputComponent",
+		"body": ["Super::SetupPlayerInputComponent(PlayerInputComponent);"],
+		"field": "public",
+		"comment": "// Called to bind functionality to input",
+		"signature": "virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;"
+	},
+	{
+		"id": "OnPossess",
+		"body": [],
+		"field": "protected",
+		"comment": "// ",
+		"signature": "virtual void OnPossess(APawn *MyPawn) override;"
+	},
+	{
+		"id": "GetControlRotation",
+		"body": [
+			"if(GetPawn() != nullptr){",
+			"\treturn FRotator(0.0f, GetPawn()->GetActorRotation().Yaw, 0.0f);",
+			"}",
+			"else{",
+			"\treturn FRotator(0.0f);",
+			"}"
+		],
+		"field": "private",
+		"comment": "// ",
+		"signature": "virtual FRotator GetControlRotation() const override;"
+	},
+	{
+		"id": "NativeUpdateAnimation",
+		"body": ["Super::NativeUpdateAnimation(DeltaTimeX);"],
+		"field": "protected",
+		"comment": "// Similar to Tick() for animations",
+		"signature": "virtual void NativeUpdateAnimation(float DeltaTimeX) override;"
+	},
+	{
+		"id": "NativeInitializeAnimation",
+		"body": ["Super::NativeInitializeAnimation();"],
+		"field": "protected",
+		"comment": "// Similar to BeginPlay() for animations",
+		"signature": "virtual void NativeInitializeAnimation() override;"
+	},
+	{
+		"id": "PreEditChange",
+		"body": ["Super::PreEditChange(PropertyThatChanged);"],
+		"field": "protected",
+		"comment": "",
+		"signature": "virtual void PreEditChange(UProperty* PropertyThatWillChange) override;"
+	},
+	{
+		"id": "PostEditChangeProperty",
+		"body": ["// Not implemented"],
+		"field": "protected",
+		"comment": "",
+		"signature": "virtual void PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent) override;"
+	}
+]

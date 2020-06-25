@@ -22,7 +22,7 @@ const assetdata = "assetdata.json";
 /** Generates module scaffold files for selected folder */
 export async function InitializeStream(): Promise<string> {
 	return new Promise<string>((resolve, reject) => {
-		vsui.GetAFolder().then(ret => {
+		vsui.GetAFolder().then((ret) => {
 			const _normalizedpath = ret.replace(/\\/g, "/");
 			try {
 				// folders
@@ -114,7 +114,7 @@ export function RefreshStreamForFolder(data: AssetStreamKit) {
 	if (/TexPacker/.test(data.folderpath)) {
 		return;
 	}
-	fs.readdirSync(data.folderpath).forEach(file => {
+	fs.readdirSync(data.folderpath).forEach((file) => {
 		let _path = path.join(data.folderpath, file); // Fullpath to file/folder
 		let stats = fs.lstatSync(_path);
 
@@ -166,7 +166,7 @@ export function RefreshListedStreams() {
 	// console.log("yeet");
 	let retval = vscfg.GetVSConfig<string[]>("SF", "assetFolders");
 	console.log(retval);
-	retval.forEach(entry => {
+	retval.forEach((entry) => {
 		console.log("path is: ", entry);
 		//
 		let _entry = path.join(entry, "Assets");
@@ -179,7 +179,7 @@ export function RefreshListedStreams() {
 		fill.Texture.list.length = 0;
 		fill.Audio.list.length = 0;
 		//
-		fs.readdirSync(_entry).forEach(file => {
+		fs.readdirSync(_entry).forEach((file) => {
 			// --> something.ext
 			let stats = fs.lstatSync(path.join(_entry, file));
 			// Handle if directory
@@ -224,25 +224,24 @@ export function RefreshListedStreams() {
 		const obj2: Array<IMusic> = [];
 		const obj3: Array<ITexture> = [];
 		// .fbx
-		fill.StaticMesh.list.forEach(el => {
+		fill.StaticMesh.list.forEach((el) => {
 			let enginePath = el.targetpath + "/" + el.name + "." + el.name;
 			InjectInDataTable(obj1, AssetType.StaticMesh, enginePath);
 		});
 		WriteJSONToFile(path.join(entry, "Audit", "SM.json"), obj1);
 		// .wav
-		fill.Audio.list.forEach(el => {
+		fill.Audio.list.forEach((el) => {
 			let enginePath = el.targetpath + "/" + el.name + "." + el.name;
 			InjectInDataTable(obj2, AssetType.SoundWave, enginePath);
 		});
 		WriteJSONToFile(path.join(entry, "Audit", "Music.json"), obj2);
 		// .png
-		fill.Audio.list.forEach(el => {
+		fill.Audio.list.forEach((el) => {
 			let enginePath = el.targetpath + "/" + el.name + "." + el.name;
 			InjectInDataTable(obj3, AssetType.Textures, enginePath);
 		});
 		WriteJSONToFile(path.join(entry, "Audit", "Tex.json"), obj3);
 		//
-		console.log(" I knew it was trouble...");
 		// -----------------------
 		// Run binary toolchains
 		// -----------------------
@@ -270,21 +269,15 @@ export function CopyBinaries(os: string, folderpath: string) {
 	let _extdir = "";
 	switch (os) {
 		case "Linux": {
-			vsui.Info(
-				"Hey! Linux support is off due to insufficient feedback. You can lend help fo this at discord.",
-			);
-			_binpath = "bin/linux";
+			_binpath = "bin/linux/critstrike";
 			break;
 		}
 		case "Darwin": {
-			vsui.Info(
-				"Hey! MacOS support is off due to insufficient feedback. You can lend help fo this at discord.",
-			);
-			_binpath = "bin/macos";
+			_binpath = "bin/macos/critstrike_mac";
 			break;
 		}
 		case "Windows_NT": {
-			_binpath = "bin/win64";
+			_binpath = "bin/win64/critstrike.exe";
 			break;
 		}
 		default:
@@ -295,10 +288,7 @@ export function CopyBinaries(os: string, folderpath: string) {
 
 	// _extdir = path.join(_extdir, _binpath);
 
-	fs.copyFileSync(
-		path.join(_extdir, _binpath, "texpack.exe"),
-		path.join(folderpath, "Binaries", "texpack.exe"),
-	);
+	fs.copyFileSync(path.join(_extdir, _binpath), path.join(folderpath, "Binaries/texpack.exe"));
 	fs.copyFileSync(
 		path.join(_extdir, "shared", "settings_texpacker.json"),
 		path.join(folderpath, "Audit", "settings_texpacker.json"),

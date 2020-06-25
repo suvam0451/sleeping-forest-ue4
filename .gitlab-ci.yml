@@ -12,9 +12,9 @@ FetchCritstrike:
     # Make the output folders
     - mkdir -p bin/{linux,macos,win64}
     # UPDATE: The binaries now have to be copied from approriate repo
-    - wget -P ./bin/linux/critstrike https://github.com/suvam0451/critstrike-cli/releases/latest/download/critstrike
-    - wget -P ./bin/macos/critstrike https://github.com/suvam0451/critstrike-cli/releases/latest/download/critstrike_mac
-    - wget -P ./bin/win64/critstrike.exe https://github.com/suvam0451/critstrike-cli/releases/latest/download/critstrike.exe
+    - wget -P ./bin/linux https://github.com/suvam0451/critstrike-cli/releases/latest/download/critstrike
+    - wget -P ./bin/macos https://github.com/suvam0451/critstrike-cli/releases/latest/download/critstrike_mac
+    - wget -P ./bin/win64 https://github.com/suvam0451/critstrike-cli/releases/latest/download/critstrike.exe
   artifacts:
     paths:
       - ./bin
