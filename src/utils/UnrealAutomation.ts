@@ -5,9 +5,11 @@
 
 var path = require("path");
 import * as vscode from "vscode";
-import * as _ from "lodash";
+import _ from "lodash";
+import { vsui } from "vscode-geass";
 
 export async function CompileShaders() {
+	vsui.Info("Compiling shaders...");
 	let projectpath =
 		vscode.workspace.workspaceFolders![0].uri.fsPath +
 		"/" +
@@ -33,6 +35,7 @@ export async function CompileShaders() {
 }
 
 export async function CompileCode() {
+	vsui.Info("Compiling code...");
 	let projectpath =
 		vscode.workspace.workspaceFolders![0].uri.fsPath +
 		"/" +

@@ -14,7 +14,7 @@ import Default_Actor_cpp from "../data/generators/Default_Actor_cpp.json";
 import { InjectHeaders, InjectFunctions } from "../utils/FileHelper";
 import * as _ from "lodash";
 import * as filesys from "../utils/FilesystemHelper";
-import { vsui } from "@suvam0451/vscode-geass";
+import { vsui } from "vscode-geass";
 import { ClassCreationKit, PluginPathInfo } from "./TypesExport";
 
 // Data files
@@ -95,10 +95,10 @@ async function ClassSelection(data: ClassCreationKit): Promise<ClassCreationKit>
 		});
 	}
 	return new Promise<ClassCreationKit>((resolve, reject) => {
-		vsui.QuickPick(classList, false).then((sel) => {
+		vsui.QuickPickAsync(classList, false).then((sel) => {
 			data.parentclass = sel;
 			vsui
-				.GetString()
+				.GetStringAsync()
 				.then((ret) => {
 					data.classname = ret;
 					vscode.window.showWarningMessage(
@@ -112,7 +112,7 @@ async function ClassSelection(data: ClassCreationKit): Promise<ClassCreationKit>
 					);
 				})
 				.then(() => {
-					vsui.QuickPick(["Yes", "No"], true, "Yes").then(() => {
+					vsui.QuickPickAsync(["Yes", "No"], true, "Yes").then(() => {
 						resolve(data);
 					});
 				});
@@ -154,7 +154,7 @@ async function ModuleSelection(data: ClassCreationKit): Promise<ClassCreationKit
 			reject("Throw not implemented...");
 		}
 		// arr.push("Game");
-		vsui.QuickPick(arr, false).then((sel) => {
+		vsui.QuickPickAsync(arr, false).then((sel) => {
 			let index = pluginDataArray.find((i) => i.foldername === sel);
 			if (typeof index !== "undefined") {
 				switch (index.foldername) {
@@ -203,6 +203,7 @@ async function HandleClassGeneration(kit: ClassCreationKit): Promise<void> {
 			if (bs.buildspace === kit.buildspace) {
 				bs.templates.forEach((tmpl: ClassTemplate) => {
 					if (tmpl.id === kit.parentclass) {
+						// FIXME: This is currently broken for extrnal files !!
 						InjectHeaders(kit.headerpath, tmpl.headers).then(() => {
 							// TODO: Remove this after fixing issue
 							console.log("Functions are -->");

@@ -1,7 +1,7 @@
 import * as vscode from "vscode";
 var path = require("path");
 import * as filesys from "./FilesystemHelper";
-import { vsui, vsed } from "@suvam0451/vscode-geass";
+import { vsui, vsed } from "vscode-geass";
 import * as _ from "lodash";
 
 export interface FunctionDefinition {

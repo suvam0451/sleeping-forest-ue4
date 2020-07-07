@@ -11,7 +11,7 @@ import IncludeManager from "../modules/IncludeManager";
 import { GetMatchingSourceSync } from "../utils/FilesystemHelper";
 import { AddLinesToFile, AddLinesAtEndUsingStream } from "../utils/FileHelper";
 import { AddOverrideFunction } from "../modules/AddOverrideFunction";
-import { vsui, vsed, vscfg } from "@suvam0451/vscode-geass";
+import { vsui, vsed, vscfg } from "vscode-geass";
 
 interface InitContextData {
 	line: number;

@@ -3,15 +3,15 @@
 // ExtensionHelperr.ts
 // Used to get information about extensions.
 
-import * as fs from "fs";
-import * as _ from "lodash";
+import fs from "fs";
+import _ from "lodash";
 import FuncDefs from "../data/extensions/Functions_Core.json";
 import * as filesys from "../utils/FilesystemHelper";
-import { vsfs } from "@suvam0451/vscode-geass";
+import { vsfs, vsed } from "vscode-geass";
 
 const _functionModPath = "data/extensions/Functions_Ext.json";
 
-export async function InjectHeaders(filepath: string, defs: string[]): Promise<number> {
+export async function InjectHeaders(filepath: string, defs: string[]): Promise<void> {
 	let num = await vsfs.RegexMatchLine(filepath, /^#include (.*?).h/);
 	let num2 = await vsfs.RegexMatchLine(filepath, /^#include (.*?).generated.h/);
 
@@ -19,15 +19,9 @@ export async function InjectHeaders(filepath: string, defs: string[]): Promise<n
 		return '#include "' + o + '"';
 	});
 
-	return new Promise<number>((resolve, reject) => {
-		WriteAtLine(filepath, num, defs).then(
-			() => {
-				resolve(0);
-			},
-			() => {
-				// rejection not handled
-			},
-		);
+	return new Promise((resolve, reject) => {
+		vsed.WriteAtLine_Silent(num + 1, defs); // Add lines below that line
+		resolve();
 	});
 }
 
@@ -52,7 +46,6 @@ export async function InjectFunctions(
 
 	// Functions --> (Core + Ext)
 	let data = FuncDefs.concat(extradata);
-	console.log(data);
 
 	// Get header fields
 	let pub = await vsfs.RegexMatchLine(headerpath, /^public:$/);
@@ -64,17 +57,10 @@ export async function InjectFunctions(
 	let privAdd: string[] = [];
 	let srcAdd: string[] = [];
 
-	console.log(arr);
-
 	await arr.forEach((function_id) => {
-		console.log("target", function_id);
-
 		let matched_object = data.find((elem) => elem.id == function_id);
-		console.log("matched object was -->", matched_object);
 
 		if (matched_object) {
-			// TODO: remove this after fixing bugs
-			console.log("Function signatures were found...");
 			switch (matched_object?.field) {
 				case "public": {
 					pubAdd.push("\t" + matched_object.comment);
@@ -105,10 +91,10 @@ export async function InjectFunctions(
 
 	return new Promise<void>((resolve, reject) => {
 		// Private --> Protected --> Public to avoid line re-calculation
-		WriteAtLine(headerpath, EOC, privAdd).then(() => {
-			WriteAtLine(headerpath, priv, protAdd).then(() => {
-				WriteAtLine(headerpath, prot, pubAdd);
-				WriteAtLine(sourcepath, EOC, srcAdd);
+		WriteAtLineAsync(headerpath, EOC, privAdd).then(() => {
+			WriteAtLineAsync(headerpath, priv, protAdd).then(() => {
+				WriteAtLineAsync(headerpath, prot, pubAdd);
+				WriteAtLineAsync(sourcepath, EOC, srcAdd);
 				resolve();
 			});
 		});
@@ -119,33 +105,40 @@ export async function InjectFunctions(
 //                INTERNAL FUNCTIONS
 // ---------------------------------------------------------------------
 
-/** Writes a list of lines to the file. */
-export async function WriteAtLine(filepath: string, at: number, lines: string[]): Promise<void> {
-	let content: string = "";
-	lines.forEach((str) => {
-		content += str + "\n";
-	});
+/** Writes to a file, starting at given line number.
+ * **NOTE: Use vsed.WriteAtLines if working with the active file.**
+ */
+export async function WriteAtLineAsync(
+	filepath: string,
+	at: number,
+	lines: string[],
+): Promise<void> {
+	let content = lines.reduce((prev, curr) => prev + "\n" + curr);
 	content = content.slice(0, content.length - 1); // Remove last newline character
 	return new Promise<void>((resolve, reject) => {
-		let data: string[] = fs.readFileSync(filepath).toString().split("\n");
-		data.splice(at, 0, content); // data.splice(at, 0, content);
+		try {
+			let data: string[] = fs.readFileSync(filepath).toString().split("\n");
+			data.splice(at, 0, content); // Adds content at "at", 0 items removed
 
-		// Using filestream
-		let stream = fs
-			.createWriteStream(filepath)
-			.on("error", () => {
-				console.log("Some error occured...");
-			})
-			.on("finish", () => {
-				resolve();
+			// Using filestream
+			let stream = fs
+				.createWriteStream(filepath)
+				.on("error", () => {
+					console.log("Some error occured...");
+				})
+				.on("finish", () => {
+					resolve();
+				});
+			data.forEach((line) => {
+				stream.write(line + "\n");
 			});
-		data.forEach((line) => {
-			stream.write(line + "\n");
-		});
-		stream.end();
+			stream.end();
+			resolve();
+		} catch {
+			reject("404");
+		}
 	});
 }
-
 /** Writes a list of lines to the file. */
 function WriteAtLineSync(filepath: string, at: number, lines: string[]) {
 	let content: string = "";

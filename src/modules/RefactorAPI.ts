@@ -8,15 +8,15 @@ import * as _ from "lodash";
 import * as fs from "fs";
 import * as filesys from "../utils/FilesystemHelper";
 import * as path from "path";
-import { vscfg, vsui } from "@suvam0451/vscode-geass";
+import { vscfg, vsui } from "vscode-geass";
 
-export default function RefactorAPI() {
+export default async function RefactorAPI(): Promise<void> {
 	vsui
-		.QuickPick(
+		.QuickPickAsync(
 			["4.24 --> 4.25 | UProperty --> FProperty", "4.24 <-- 4.25 | FProperty --> UProperty"],
 			false,
 		)
-		.then(ret => {
+		.then((ret) => {
 			switch (ret) {
 				case "4.24 --> 4.25 | UProperty --> FProperty": {
 					RegexReplaceEachLine(/(UProperty)\(.*?\)/, ["FProperty"]);
@@ -52,7 +52,7 @@ export async function RegexReplaceEachLine(ex: RegExp, replace: string[]) {
 
 		for (let i = 0; i < range_array.length; i++) {
 			await editor
-				.edit(editbuilder => {
+				.edit((editbuilder) => {
 					editbuilder.replace(range_array[i], edit_array[i]);
 				})
 				.then(() => {

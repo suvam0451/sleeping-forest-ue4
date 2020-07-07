@@ -14,7 +14,7 @@ import {
 	CreateDirIfMissing,
 } from "../utils/FilesystemHelper";
 import generator from "../data/templates/pythonGenerator.json";
-import { vsui, vscfg } from "@suvam0451/vscode-geass";
+import { vsui, vscfg } from "vscode-geass";
 
 const settings_pythonapi = "settings_pythonapi.json";
 const assetdata = "assetdata.json";
@@ -22,7 +22,7 @@ const assetdata = "assetdata.json";
 /** Generates module scaffold files for selected folder */
 export async function InitializeStream(): Promise<string> {
 	return new Promise<string>((resolve, reject) => {
-		vsui.GetAFolder().then((ret) => {
+		vsui.GetAFolderAsync().then((ret) => {
 			const _normalizedpath = ret.replace(/\\/g, "/");
 			try {
 				// folders
@@ -162,7 +162,7 @@ export function RefreshStreamForFolder(data: AssetStreamKit) {
 }
 
 /** Exported module */
-export function RefreshListedStreams() {
+export async function RefreshListedStreams(): Promise<void> {
 	// console.log("yeet");
 	let retval = vscfg.GetVSConfig<string[]>("SF", "assetFolders");
 	console.log(retval);

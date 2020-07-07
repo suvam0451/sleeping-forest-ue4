@@ -3,7 +3,7 @@
 // ErrorLogger.ts
 // Used to show information/warning/error messages as pop-ups.
 
-import { vsui } from "@suvam0451/vscode-geass";
+import { vsui } from "vscode-geass";
 
 export enum DErrorCode {
 	HEADER_NOT_FOUND,

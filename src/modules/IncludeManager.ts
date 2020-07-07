@@ -9,7 +9,7 @@ import DefaultData from "../data/IncludeTemplates.json";
 import * as _ from "lodash";
 import * as path from "path";
 import * as filesys from "../utils/FilesystemHelper";
-import { vsui } from "@suvam0451/vscode-geass";
+import { vsui } from "vscode-geass";
 
 interface IncludeJSON {
 	id: string;
@@ -28,7 +28,7 @@ export default async function IncludeManager(): Promise<void> {
 		let arr: IncludeJSON[] = _.concat(DefaultData, extdata);
 		let editor = vscode.window.activeTextEditor;
 		let marr: string[] = [];
-		arr.forEach(element => {
+		arr.forEach((element) => {
 			marr.push(element.id);
 		});
 
@@ -37,11 +37,11 @@ export default async function IncludeManager(): Promise<void> {
 				resolve();
 			}
 			// Use createQuickPick for advanced use cases...
-			vsui.QuickPick(marr, false).then(val => {
-				arr.forEach(element => {
+			vsui.QuickPickAsync(marr, false).then((val) => {
+				arr.forEach((element) => {
 					if (val === element.id) {
 						let myarr: string[] = element.headers;
-						myarr = myarr.map(o => {
+						myarr = myarr.map((o) => {
 							return '#include "' + o + '"';
 						});
 						edit.InjectHeaders(myarr);

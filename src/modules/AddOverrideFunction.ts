@@ -8,7 +8,7 @@ import _ from "lodash";
 import * as filesys from "../utils/FilesystemHelper";
 import FuncDefs from "../data/extensions/Functions_Core.json";
 import * as vs from "../utils/FileHelper";
-import { vsui, vsed, vsfs } from "@suvam0451/vscode-geass";
+import { vsui, vsed, vsfs } from "vscode-geass";
 import { ADDRGETNETWORKPARAMS } from "dns";
 
 const _functionModPath = "data/extensions/Functions_Ext.json";
@@ -45,7 +45,7 @@ export async function AddOverrideFunction(): Promise<void> {
 
 	Promise.all([pub, prot, priv, EOC]).then((vals) => {
 		return new Promise<void>((resolve, reject) => {
-			vsui.QuickPick(options, false).then((sel) => {
+			vsui.QuickPickAsync(options, false).then((sel) => {
 				let choice = data.find((o) => {
 					return sel === o.id;
 				});
@@ -69,7 +69,7 @@ export async function AddOverrideFunction(): Promise<void> {
 							break;
 						}
 					}
-					vs.WriteAtLine(filepath!, placeToWrite, ["\n\t" + choice.signature]);
+					vs.WriteAtLineAsync(filepath!, placeToWrite, ["\n\t" + choice.signature]);
 				}
 			});
 			resolve();

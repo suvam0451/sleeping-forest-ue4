@@ -9,7 +9,7 @@ import * as vscode from "vscode";
 import * as feedback from "./ErrorLogger";
 import * as fs from "fs";
 import * as _ from "lodash";
-import { vsui } from "@suvam0451/vscode-geass";
+import { vsui } from "vscode-geass";
 
 export interface FunctionAnatomy {
 	prototype: string;
@@ -51,7 +51,7 @@ export async function GetMatchingHeader(data: FileData): Promise<void> {
 		const a = ScanFolderWithRegex(data.folderpath, regex);
 		const b = ScanFolderWithRegex(path.join(data.folderpath, "../", "Public"), regex);
 
-		Promise.all([a, b]).then(values => {
+		Promise.all([a, b]).then((values) => {
 			if (values[0] !== "") {
 				data.headerpath = path.join(data.folderpath, values[0]);
 				resolve();
@@ -85,10 +85,10 @@ export async function GetMatchingSourceSync(path: string): Promise<string> {
 	};
 	return new Promise<string>((resolve, reject) => {
 		GetMatchingSource(data, _name).then(
-			ret => {
+			(ret) => {
 				resolve(ret);
 			},
-			err => {
+			(err) => {
 				console.log("Could not find source file: ", err);
 			},
 		);
@@ -109,7 +109,7 @@ export async function GetMatchingSource(data: FileData, filename?: string): Prom
 		const a = ScanFolderWithRegex(data.folderpath, regex);
 		const b = ScanFolderWithRegex(path.join(data.folderpath, "../", "Private"), regex);
 
-		Promise.all([a, b]).then(values => {
+		Promise.all([a, b]).then((values) => {
 			console.log("Regex results: ", a, b);
 			if (values[0] !== "") {
 				console.log("found in same folder.");
@@ -197,10 +197,7 @@ export async function WriteAtLine(
 		}
 	});
 	return new Promise<void>((resolve, reject) => {
-		let data: string[] = fs
-			.readFileSync(filepath)
-			.toString()
-			.split("\n");
+		let data: string[] = fs.readFileSync(filepath).toString().split("\n");
 		data.splice(at, 0, content);
 		console.log(data);
 		// Using filestream
@@ -232,7 +229,7 @@ export function GetPluginDataFromFolder(folder: string): PluginPathInfo[] {
 	try {
 		let folders = fs.readdirSync(targetpath);
 		// Every folder in a valid plug-in foler is assumed to be a module...
-		_.each(folders, folder => {
+		_.each(folders, (folder) => {
 			if (fs.statSync(path.join(targetpath, folder)).isDirectory() === true) {
 				retval.push({
 					foldername: folder,
@@ -242,7 +239,7 @@ export function GetPluginDataFromFolder(folder: string): PluginPathInfo[] {
 			}
 		});
 		// Filter out specific folders...
-		_.filter(retval, o => {
+		_.filter(retval, (o) => {
 			o.foldername !== "Python" && o.foldername !== "Shaders";
 		});
 		return retval;
@@ -256,7 +253,7 @@ export function GetFolderList(targetpath: string): string[] {
 	try {
 		let folders = fs.readdirSync(targetpath);
 		// Every folder in a valid plug-in foler is assumed to be a module...
-		_.each(folders, folder => {
+		_.each(folders, (folder) => {
 			if (fs.statSync(path.join(targetpath, folder)).isDirectory() === true) {
 				retval.push(folder);
 			}
@@ -279,7 +276,7 @@ export function ConfirmFileExists(targetfilepath: string): number {
 /** Uses a WriteStream to write an array of strings to a file. OVERWRITES content. */
 export function WriteLinesToFile(filepath: string, lines: string[]) {
 	let writer = fs.createWriteStream(filepath);
-	lines.forEach(line => {
+	lines.forEach((line) => {
 		writer.write(line + "\n");
 	});
 	writer.close();
@@ -306,7 +303,7 @@ export function CreateAndWrite(
 			if (typeof symbols === "undefined") {
 				WriteLinesToFile(mainpath, data);
 			} else {
-				data = data.map(line => {
+				data = data.map((line) => {
 					symbols.forEach((symbol, i) => {
 						let str = "\\$" + (i + 1).toString();
 						line = line.replace(RegExp(str, "g"), symbol);
@@ -343,7 +340,7 @@ export async function WriteFileAsync(
 			if (typeof symbols === "undefined") {
 				WriteLinesToFile(mainpath, data);
 			} else {
-				data = data.map(line => {
+				data = data.map((line) => {
 					symbols.forEach((symbol, i) => {
 						let str = "\\$" + (i + 1).toString();
 						line = line.replace(RegExp(str, "g"), symbol);

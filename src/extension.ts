@@ -1,101 +1,62 @@
-// The module 'vscode' contains the VS Code extensibility API
-// Import the module and reference it with the alias vscode in your code below
-import * as vscode from "vscode";
+import vscode from "vscode";
 import IncludeManager from "./modules/IncludeManager";
 import CreateClassModule from "./modules/ClassGenerator";
 import InjectExcludeDefinition from "./modules/InjectExclusions";
-import * as AssetStream from "./modules/AssetStreamModule";
-import * as uauto from "./utils/UnrealAutomation";
+import { RefreshListedStreams, InitializeStream, CopyBinaries } from "./modules/AssetStreamModule";
+import { CompileShaders, CompileCode } from "./utils/UnrealAutomation";
 import InitializerModule from "./modules/InitializerModule";
 import { AddOverrideFunction } from "./modules/AddOverrideFunction";
 import RefactorAPI from "./modules/RefactorAPI";
 import os from "os";
 import UE4_HLSL_exporter from "./modules/HLSLParser";
+import { vsui } from "vscode-geass";
+
+type SubscriptionMap = {
+	donemsg?: string;
+	path: string;
+	fn: () => Promise<void>;
+};
 
 // entry point
 export function activate(context: vscode.ExtensionContext) {
-	console.log('Congratulations, your extension "wan-chai" is now active!');
+	// cs --> critstrike project	  (GO)
+	// sf --> sleeping forest project (TS)
+	let subscriptionMap: SubscriptionMap[] = [
+		{ path: "extension.cs.ParseHLSLForUE4", fn: UE4_HLSL_exporter },
+		{ path: "extension.sf.includeManager", fn: IncludeManager },
+		{ path: "extension.sf.injectExcludes", fn: InjectExcludeDefinition },
+		{ path: "extension.sf.tryInitialize", fn: InitializerModule },
+		{ path: "extension.sf.addOverride", fn: AddOverrideFunction },
+		{ path: "extension.sf.RefactorAPI", fn: RefactorAPI },
+		{ path: "extension.sf.refreshAssetFolders", fn: RefreshListedStreams },
+		{ path: "extension.sf.compileShaders", fn: CompileShaders },
+		{ path: "extension.sf.compileCode", fn: CompileCode },
+		{ path: "extension.sf.createClass", fn: CreateClassModule },
+	];
 
-	//#region Compiles all shaders, Compiles all blueprints
-	let ShaderCompileCommand = vscode.commands.registerCommand("extension.sf.compileShaders", () => {
-		uauto.CompileShaders();
-		vscode.window.showInformationMessage("Compiling shaders...");
-	});
-	context.subscriptions.push(ShaderCompileCommand);
-	//#endregion
-
-	//#region Compiles all C++ code...
-	let CodeCompileCommand = vscode.commands.registerCommand("extension.sf.compileCode", () => {
-		uauto.CompileCode();
-		vscode.window.showInformationMessage("Compiling Code...");
-	});
-	context.subscriptions.push(CodeCompileCommand);
-	//#endregion
-
-	//#region extension.include.procedural
-	let IncludeCommandlet = vscode.commands.registerCommand("extension.sf.includeManager", () => {
-		IncludeManager();
-	});
-
-	context.subscriptions.push(IncludeCommandlet);
-	//#endregion
-
-	//#region
-	/** Injects exclusion  */
-	let InjectExclusions = vscode.commands.registerCommand("extension.sf.injectExcludes", () => {
-		InjectExcludeDefinition();
-	});
-
-	context.subscriptions.push(InjectExclusions);
-	//#endregion
-
-	//#region moduele:Class creation
-	let CreateClass = vscode.commands.registerCommand("extension.sf.createClass", () => {
-		CreateClassModule().catch((err) => {
-			console.log("failed: " + err);
+	let _subscriptions = subscriptionMap.map((ret) => {
+		return vscode.commands.registerCommand(ret.path, () => {
+			ret.fn().then(
+				() => {
+					ret.donemsg ? vsui.Info(ret.donemsg) : true;
+				},
+				(err) => {
+					vsui.Error(err);
+				},
+			);
 		});
 	});
-	context.subscriptions.push(CreateClass);
-	//#endregion
 
-	let InitializeAssetFolder = vscode.commands.registerCommand(
-		"extension.sf.initializeAssetFolder",
-		() => {
-			AssetStream.InitializeStream().then((ret) => {
-				AssetStream.CopyBinaries(os.type(), ret);
+	context.subscriptions.push(
+		vscode.commands.registerCommand("extension.sf.initializeAssetFolder", () => {
+			InitializeStream().then((ret) => {
+				CopyBinaries(os.type(), ret);
 			});
-		},
+		}),
 	);
-	context.subscriptions.push(InitializeAssetFolder);
 
-	let RefreshAssetFolder = vscode.commands.registerCommand(
-		"extension.sf.refreshAssetFolders",
-		() => {
-			console.log("Knnichiwa Desu");
-			AssetStream.RefreshListedStreams();
-		},
-	);
-	context.subscriptions.push(RefreshAssetFolder);
-
-	let TryInitialize = vscode.commands.registerCommand("extension.sf.tryInitialize", () => {
-		InitializerModule();
-	});
-	context.subscriptions.push(TryInitialize);
-
-	let AddOverride = vscode.commands.registerCommand("extension.sf.addOverride", () => {
-		AddOverrideFunction();
-	});
-	context.subscriptions.push(AddOverride);
-
-	let RefactorAPI_Sub = vscode.commands.registerCommand("extension.sf.RefactorAPI", () => {
-		RefactorAPI();
-	});
-	context.subscriptions.push(RefactorAPI_Sub);
-
-	let HLSLToPythonUE4 = vscode.commands.registerCommand("extension.cs.ParseHLSLForUE4", () => {
-		UE4_HLSL_exporter();
-	});
-	context.subscriptions.push(HLSLToPythonUE4);
+	context.subscriptions.push(..._subscriptions);
+	console.log('Congratulations, your extension "sleeping-forest" is now active!');
 }
 
 // this method is called when your extension is deactivated
