@@ -1,7 +1,7 @@
 # Sleeping Forest
 
 [![](https://gitlab.com/winterwildfire/ue4/trailblazer/badges/master/pipeline.svg)](https://gitlab.com/suvam0451/sleeping-forest-ue4/pipelines/)
-![](https://img.shields.io/badge/4.24%20--%204.24-supported-green)
+![](https://img.shields.io/badge/4.24%20--%204.25-supported-green)
 [![](https://img.shields.io/discord/573495259926102017)](https://discord.gg/8Qd8a66)
 ![](https://img.shields.io/badge/platform-windows,macos,linux-lightgrey)
 ![](https://img.shields.io/badge/replication-not%20supported-red)
@@ -20,12 +20,6 @@ As of now, only Windows support is available for micro-services.
 
 To install through VS Code extensions, Search for `Sleeping Forest - UE4 Multitool`
 
-To get the beta releases/requested patches, visit the [website](https://suvam0451.netlify.com/docs/sleeping-forest/getting-started/)
-
-The nightly builds are available below and updated daily.
-
-[![](https://gitlab.com/winterwildfire/ue4/trailblazer/badges/master/pipeline.svg)](https://gitlab.com/suvam0451/sleeping-forest-ue4/pipelines/)
-
 ## Key Features
 
 - Improved Intellisense
@@ -40,12 +34,16 @@ The nightly builds are available below and updated daily.
 
 ## Documentation
 
-- [Getting Started](https://suvam0451.netlify.com/docs/sleeping-forest/getting-started/)
-- [Context binding overview](https://suvam0451.netlify.com/docs/sleeping-forest/context-keys/)
-- [Asset streams overview](https://suvam0451.netlify.com/docs/sleeping-forest/hello-asset-streams)
-- [Modding/Customizing guide](https://suvam0451.netlify.com/docs/sleeping-forest/extension-files)
+- [Getting Started](https://suvam0451.netlify.app/docs/sleeping-forest/getting-started/)
+- [Context binding overview](https://suvam0451.netlify.app/docs/sleeping-forest/context-keys/)
+- [Asset streams overview](https://suvam0451.netlify.app/docs/sleeping-forest/hello-asset-streams)
+- [Modding/Customizing guide](https://suvam0451.netlify.app/docs/sleeping-forest/extension-files)
 
 ## Feature Overview
+
+### Snippets
+
+here is a short list of some of the most used snippets
 
 ### Better intellisense
 
@@ -57,16 +55,16 @@ Configurable setting to override configuration in the .code-workspace file for b
 
 150+ snippets and counting.
 Constantly updated support towards smart auto-completion at generic/repetitive blocks of code as shown below.
-(**// context keyword** after macro usage). Learn more abotu [context key](https://suvam0451.netlify.com/docs/sleeping-forest/context-keys/)
+(**// context keyword** after macro usage). Learn more abotu [context key](https://suvam0451.netlify.app/docs/sleeping-forest/context-keys/)
 
 ![Fast hit trace](https://i.imgur.com/6003uFY.gif)
 
-![More in docs](https://suvam0451.netlify.com/docs/sleeping-forestcontext-keys/)
+![More in docs](https://suvam0451.netlify.app/docs/sleeping-forest/context-keys/)
 
 ### Class/Header/Function generation
 
 Commands to add templated class files, headers from inside (.h/.cpp) files and automatically adding common functions liek BeginPlay in (.h/.cpp).
-These features can be customizing by your own JSON definitions. [See more...](https://suvam0451.netlify.com/docs/sleeping-forest/extension-files)
+These features can be customizing by your own JSON definitions. [See more...](https://suvam0451.netlify.app/docs/sleeping-forest/extension-files)
 
 ![header module](https://i.imgur.com/6758foW.png)
 ![function defs](https://i.imgur.com/XZPWFCg.gif)

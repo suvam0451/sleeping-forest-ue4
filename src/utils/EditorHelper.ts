@@ -71,18 +71,18 @@ export async function ActiveFileName(editor: vscode.TextEditor): Promise<string>
 	});
 }
 
+/** Adds headers uniquely to location */
 export function InjectHeaders(lines: string[]) {
 	let startingLine = vsed.MatchRegexInFile_Bounds(/^#include (.*?).h/); // returns range of match
 	let finishingLine = vsed.MatchRegexInFile(/^#include (.*?).generated.h/); // single match/false (.cpp/.h)
 
-	let arr = vsed.MatchRegexInFile_Bounds(/^#include (.*?).h/);
 	Promise.all([startingLine, finishingLine]).then((values) => {
 		if (values[1] !== -1) {
 			let request = RemoveDuplicates(lines, values[0][0], values[1]);
-			vsed.WriteAtLine_Silent(values[1], request);
+			vsed.WriteAtLine_Silent(values[1] + 1, request);
 		} else {
 			let request = RemoveDuplicates(lines, values[0][0], values[0][1]);
-			vsed.WriteAtLine_Silent(values[0][0], request);
+			vsed.WriteAtLine_Silent(values[0][0] + 1, request);
 		}
 	});
 }
