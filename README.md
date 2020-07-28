@@ -12,7 +12,7 @@
 
 The primary goal is to help in creating data-driven gameplay, optimized level design, shader authoring and faster development iteration through DevOps tools and smart code-completion. **Note that multiplayer is not supported as of yet.**
 
-Note that this the plug-in is **currently in beta** and undergoing improvements. If you want to tag along and suggest features, join [my discord](https://discord.gg/8Qd8a66) to help build the best gamedev extension for vscode !!!
+Note that this plug-in is **currently in beta** and undergoing improvements. If you want to tag along and suggest features, join [my discord](https://discord.gg/8Qd8a66) to help build the best gamedev extension for vscode !!!
 
 As of now, only Windows support is available for micro-services.
 
@@ -65,7 +65,7 @@ Constantly updated support towards smart auto-completion at generic/repetitive b
 
 ### Class/Header/Function generation
 
-Commands to add templated class files, headers from inside (.h/.cpp) files and automatically adding common functions liek BeginPlay in (.h/.cpp).
+Commands to add templated class files, headers from inside (.h/.cpp) files and automatically adding common functions like BeginPlay in (.h/.cpp).
 These features can be customizing by your own JSON definitions. [See more...](https://suvam0451.netlify.com/docs/sleeping-forest/extension-files)
 
 ![header module](https://i.imgur.com/6758foW.png)
