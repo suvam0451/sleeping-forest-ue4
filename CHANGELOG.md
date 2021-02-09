@@ -1,4 +1,13 @@
-# Change Log
+# Changelog
+
+All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+
+### [0.6.16](https://github.com/suvam0451/sleeping-forest-ue4/compare/v0.6.14...v0.6.16) (2021-02-09)
+
+
+### Features
+
+* add standard release support! ([ad59530](https://github.com/suvam0451/sleeping-forest-ue4/commit/ad5953087d39eb8ae30beaccd635e4509fa4c21d))
 
 ## [0.6.15] - Unknown
 
