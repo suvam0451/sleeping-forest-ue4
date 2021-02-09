@@ -13,7 +13,7 @@ logs
 out/*
 node_modules/
 test/**/public
-yarn.lock
+# yarn.lock
 package-lock.json
 dist/*
 *.exe
