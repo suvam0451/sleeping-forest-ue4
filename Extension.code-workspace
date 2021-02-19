@@ -17,7 +17,7 @@
 			".yarnrc": true,
 			".vscodeignore": false,
 			"LICENSE": true,
-			"node_modules/**": false,
+			"node_modules/**": true,
 			".gitignore": true,
 			".gitattributes": true,
 			"webpack.config.js": false,
@@ -28,33 +28,9 @@
 			"tests/**": true,
 			"dist/**": true,
 			"**.exe": true,
-			"**.dll": true,
-			"**.egstore": true,
-			"**.generated.h": true,
-			"**.uasset": true,
 			"**.gitignore": true,
 			"**.gitattributes": true,
-			"**/Intermediate": true,
-			"**/Saved": true,
-			"**/Binaries": true,
-			"**/Build": true,
-			"**/DerivedDataCache": true,
-			"**/Documentation": true,
-			"**/Programs": true,
-			"**/Shaders": true,
-			"**/FeaturePacks": true,
-			"**/Samples": true,
-			"**/Templates": true,
-			"**/Engine/Build": true,
-			"**/Engine/Extras": true,
-			"**/Engine/Content": true,
-			"**/Engine/Source/Editor": true,
-			"**/Content": true,
-			"**/Resources": true
-		},
-		"SF.assetFolders": [
-			"C:\\Users\\Debashish\\OneDrive\\Backup\\AssetStream",
-			"c:\\Users\\Debashish\\OneDrive\\Backup\\AssetStream"
-		]
+			"Install.ps1": true
+		}
 	}
 }
