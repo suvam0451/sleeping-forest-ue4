@@ -51,6 +51,21 @@ export default async function InjectExcludeDefinition(): Promise<void> {
 			retval_03["**/" + val] = true;
 		});
 
+		// Additional exclusion directives (Are used by IDEs aside from vscode)
+		const extraExclusions = [
+			"**.pri",
+			"*.pro",
+			"*.workspace",
+			".kdev4",
+			"*.kdev4",
+			"*.txt",
+			"Makefile",
+			"CMakeLists.txt",
+			".ignore",
+			"build/",
+		];
+		extraExclusions.forEach((e) => (retval_03[e] = true));
+
 		// update
 		config_01.update("exclude", retval_01, false).then(() => {
 			config_02.update("watcherExclude", retval_02, false).then(() => {
