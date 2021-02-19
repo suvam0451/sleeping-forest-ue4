@@ -23,7 +23,7 @@
 		"onCommand:extension.sf.onConstruction",
 		"onCommand:extension.sf.includeManager",
 		"onCommand:extension.sf.createClass",
-		"onCommand:extension.sf.injectExcludes",
+		"onCommand:extension.sf.configureWorkspace",
 		"onCommand:extension.sf.initializeAssetFolder",
 		"onCommand:extension.sf.refreshAssetFolders",
 		"onCommand:extension.sf.tryInitialize",
@@ -66,8 +66,8 @@
 				"title": "UE4 : Generate UE4 Class(.h/.cpp)"
 			},
 			{
-				"command": "extension.sf.injectExcludes",
-				"title": "UE4 : Inject exclude definitions in Workspace File"
+				"command": "extension.sf.configureWorkspace",
+				"title": "UE4 : Configure Workspace"
 			},
 			{
 				"command": "extension.sf.initializeAssetFolder",

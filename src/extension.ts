@@ -1,7 +1,7 @@
 import vscode from "vscode";
 import IncludeManager from "./modules/IncludeManager";
 import CreateClassModule from "./modules/ClassGenerator";
-import InjectExcludeDefinition from "./modules/InjectExclusions";
+import ConfigureWorkspace from "./modules/InjectExclusions";
 import { RefreshListedStreams, InitializeStream, CopyBinaries } from "./modules/AssetStreamModule";
 import { CompileShaders, CompileCode } from "./utils/UnrealAutomation";
 import InitializerModule from "./modules/InitializerModule";
@@ -24,7 +24,7 @@ export function activate(context: vscode.ExtensionContext) {
 	let subscriptionMap: SubscriptionMap[] = [
 		{ path: "extension.cs.ParseHLSLForUE4", fn: UE4_HLSL_exporter },
 		{ path: "extension.sf.includeManager", fn: IncludeManager },
-		{ path: "extension.sf.injectExcludes", fn: InjectExcludeDefinition },
+		{ path: "extension.sf.configureWorkspace", fn: ConfigureWorkspace },
 		{ path: "extension.sf.tryInitialize", fn: InitializerModule },
 		{ path: "extension.sf.addOverride", fn: AddOverrideFunction },
 		{ path: "extension.sf.RefactorAPI", fn: RefactorAPI },
